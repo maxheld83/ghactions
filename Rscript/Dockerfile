@@ -1,4 +1,4 @@
-FROM $GITHUB_REPOSITORY
+FROM repo:latest
 
 LABEL "com.github.actions.name"="Run some R"
 LABEL "com.github.actions.description"="Run Rscript'"
