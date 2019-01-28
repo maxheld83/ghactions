@@ -5,7 +5,7 @@ workflow "Build, compile and deploy" {
 
 action "Build image" {
   uses = "actions/docker/cli@c08a5fc9e0286844156fefff2c141072048141f6"
-  args = "build --tag=foo:bar ."
+  args = "build --tag=$GITHUB_REPOSITORY ."
 }
 
 action "1 Plus 1" {

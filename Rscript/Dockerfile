@@ -1,4 +1,4 @@
-FROM foo:bar
+FROM $GITHUB_REPOSITORY
 
 LABEL "com.github.actions.name"="Run some R"
 LABEL "com.github.actions.description"="Run Rscript'"
