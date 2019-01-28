@@ -10,6 +10,6 @@ action "Build image" {
 
 action "1 Plus 1" {
   needs = "Build image"
-  uses = "./Rscript"
+  uses = "./Rscript-byod"
   args = "-e '1+1'"
 }

@@ -1,7 +1,7 @@
 FROM repo:latest
 
-LABEL "com.github.actions.name"="Run some R"
-LABEL "com.github.actions.description"="Run Rscript'"
+LABEL "com.github.actions.name"="Rscript"
+LABEL "com.github.actions.description"="Run Rscript inside repo/Dockerfile'"
 LABEL "com.github.actions.icon"="terminal"
 LABEL "com.github.actions.color"="blue"
 
