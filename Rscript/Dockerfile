@@ -9,4 +9,4 @@ LABEL "repository"="http://github.com/maxheld83/ghactions"
 LABEL "homepage"="http://www.maxheld.de/ghactions"
 LABEL "maintainer"="Maximilian Held <info@maxheld.de>"
 
-ENTRYPOINT ["sh -c 'Rscript $*'"]
+ENTRYPOINT ["sh -c 'Rscript'"]
