@@ -5,4 +5,5 @@ workflow "Deploy on push" {
 
 action "Running Rscript" {
   uses = "./Rscript"
+  args = "-e '1+1'"
 }
