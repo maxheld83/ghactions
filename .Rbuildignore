@@ -1,0 +1,7 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+.config
+.rstudio
+Dockerfile
+launch.sh
+logo.*

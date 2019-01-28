@@ -1,0 +1,23 @@
+Package: ghactions
+Type: Package
+Title: GitHub actions for R
+Version: 0.0.0.9000
+Roxygen: list(markdown = TRUE)
+Authors@R: 
+  person("Maximilian", "Held", email = "info@maxheld.de", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-4703-5388"))
+URL: https://github.com/maxheld83/ghactions
+URLNote: https://github.com/maxheld83/ghactions
+BugReports: https://github.com/maxheld83/ghactions/issues
+Description: Provides GitHub actions and some R functions to create workflows.
+Depends:
+  R (>= 3.5.0)
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports:
+  checkmate (>= 1.8.1)
+Suggests:
+  testthat (>= 2.0.1),
+  knitr (>= 1.21)
+VignetteBuilder: knitr
+RoxygenNote: 6.1.1
