@@ -1,3 +1,3 @@
 #!/bin/sh -l
 
-sh -c "echo 'foo'"
+sh -c "Rscript -e '1+1'"

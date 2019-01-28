@@ -10,4 +10,4 @@ LABEL "homepage"="http://www.maxheld.de/ghactions"
 LABEL "maintainer"="Maximilian Held <info@maxheld.de>"
 
 ADD entrypoint.sh /entrypoint.sh
-ENTRYPOINT ["sh -c 'Rscript'"]
+ENTRYPOINT ["/entrypoint.sh"]
