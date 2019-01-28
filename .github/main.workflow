@@ -1,9 +1,15 @@
-workflow "Deploy on push" {
+workflow "Build, compile and deploy" {
   on = "push"
-  resolves = "Running Rscript"
+  resolves = "1 Plus 1"
 }
 
-action "Running Rscript" {
+action "Build image" {
+  uses = "actions/docker/cli@c08a5fc9e0286844156fefff2c141072048141f6"
+  args = "build --tag=foo:bar ."
+}
+
+action "1 Plus 1" {
+  needs = "Build image"
   uses = "./Rscript"
   args = "-e '1+1'"
 }
