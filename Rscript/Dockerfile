@@ -1,4 +1,5 @@
-FROM rocker/verse:3.5.2
+ARG FROM
+FROM $FROM
 
 LABEL "com.github.actions.name"="Run some R"
 LABEL "com.github.actions.description"="Run Rscript'"
