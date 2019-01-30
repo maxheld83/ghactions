@@ -1,6 +1,6 @@
 workflow "Build, Check and Document Package" {
   on = "push"
-  resolves = "Document"
+  resolves = ["Build and Check", "Document"]
 }
 
 action "Build Image" {
@@ -15,7 +15,7 @@ action "Build and Check" {
 }
 
 action "Document" {
-  needs = "Build and Check"
   uses = "./Rscript-byod"
+  needs = "Build Image"
   args = "-e 'pkgdown::build_site()'"
 }
