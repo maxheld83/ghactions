@@ -1,15 +1,15 @@
-workflow "Build, compile and deploy" {
+workflow "Build and Check" {
   on = "push"
-  resolves = "1 Plus 1"
+  resolves = "Check"
 }
 
-action "Build image" {
+action "Build Image" {
   uses = "actions/docker/cli@c08a5fc9e0286844156fefff2c141072048141f6"
   args = "build --tag=repo:latest ."
 }
 
-action "1 Plus 1" {
-  needs = "Build image"
+action "Check" {
+  needs = "Build Image"
   uses = "./Rscript-byod"
-  args = "-e '1+1'"
+  args = "-e 'devtools::check(error_on = \"note\")'"
 }
