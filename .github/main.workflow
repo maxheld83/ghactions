@@ -1,6 +1,6 @@
 workflow "Build and Check Package" {
   on = "push"
-  resolves = "Check Package"
+  resolves = "Build and Check"
 }
 
 action "Build Image" {
@@ -8,14 +8,8 @@ action "Build Image" {
   args = "build --tag=repo:latest ."
 }
 
-action "Build Package" {
+action "Build and Check" {
   needs = "Build Image"
   uses = "./Rscript-byod"
-  args = "-e 'devtools::build()'"
-}
-
-action "Check Package" {
-  needs = "Build Package"
-  uses = "./Rscript-byod"
-  args = "-e 'devtools::check_built(error_on = \"note\")'"
+  args = "-e 'devtools::check(error_on = \"note\")'"
 }
