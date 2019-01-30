@@ -1,3 +1,1 @@
-# GitHub actions for R
-
-<img src="https://github.com/maxheld83/ghactions/blob/master/logo.png?raw=true" width=200/> 
+# GitHub actions for R <img src="man/figures/logo.png" align="right" height=140/>
