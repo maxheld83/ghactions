@@ -9,3 +9,4 @@ launch.sh
 logo.*
 .github
 Rscript-byod/
+.tar.gz
