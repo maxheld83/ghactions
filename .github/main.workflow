@@ -4,6 +4,7 @@ workflow "Build, Check and Document Package" {
     "Check Package",
     "Build Image",
     "Document Package",
+    "Code Coverage",
   ]
 }
 
@@ -28,4 +29,11 @@ action "Document Package" {
   uses = "./Rscript-byod"
   needs = ["Build Package"]
   args = "-e 'pkgdown::build_site()'"
+}
+
+action "Code Coverage" {
+  uses = "./Rscript-byod"
+  needs = ["Build Package"]
+  args = "-e 'covr::codecov()'"
+  secrets = ["CODECOV_TOKEN"]
 }
