@@ -1,6 +1,6 @@
-workflow "Build and Check Package" {
+workflow "Build, Check and Document Package" {
   on = "push"
-  resolves = "Build and Check"
+  resolves = "Document"
 }
 
 action "Build Image" {
@@ -12,4 +12,10 @@ action "Build and Check" {
   needs = "Build Image"
   uses = "./Rscript-byod"
   args = "-e 'devtools::check(error_on = \"note\")'"
+}
+
+action "Document" {
+  needs = "Build and Check"
+  uses = "./Rscript-byod"
+  args = "-e 'pkgdown::build_site()'"
 }

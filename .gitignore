@@ -39,3 +39,5 @@ rsconnect/
 # docker image artifacts
 .rstudio/
 
+# pkgdown
+/docs

@@ -3,8 +3,9 @@ Type: Package
 Title: GitHub actions for R
 Version: 0.0.0.9000
 Roxygen: list(markdown = TRUE)
-Authors@R: 
-  person("Maximilian", "Held", email = "info@maxheld.de", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-4703-5388"))
+Authors@R: c(
+  person("Maximilian", "Held", email = "info@maxheld.de", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-4703-5388")),
+  person("Verena", "Held", email = "info@verenaheld.in", role = c("ctb")))
 URL: https://github.com/maxheld83/ghactions
 URLNote: https://github.com/maxheld83/ghactions
 BugReports: https://github.com/maxheld83/ghactions/issues

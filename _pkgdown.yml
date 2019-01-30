@@ -1,0 +1,13 @@
+url: http://www.maxheld.de/ghactions
+authors:
+  Maximilian Held:
+    href: http://www.maxheld.de
+  Verena Held:
+    href: http://www.verenaheld.in
+development:
+  mode: devel
+template:
+  params:
+    bootswatch: cosmo
+    ganalytics: UA-48816137-1
+
