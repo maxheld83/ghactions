@@ -100,14 +100,14 @@ action "Build image" {
 
 action "Render rmarkdown" {
   needs = "Build image"
-  uses = "maxheld83/ghactions/Rscript-byod@5067aa82efa4750d1e71482dcba8f77a8558574a"
+  uses = "maxheld83/ghactions/Rscript-byod@master"
   args = "-e 'rmarkdown::render_site()'"
 }
 ```
 
 Of course, you can also use the visual workflow editor in GitHub, which is highly recommended.
 
-The cryptic-seeming `uses = "maxheld83/ghactions/Rscript-byod@5067aa82efa4750d1e71482dcba8f77a8558574a"` in the above is simply a way to take a *particular* version of this action as a dependency.
-The long number is just a commit SHA from my (= the action developer's) repo.
+The cryptic-seeming `uses = "maxheld83/ghactions/Rscript-byod@master"` in the above is simply a way to take a *particular* version of this action as a dependency.
+The part after `@` is a git tag, or release from my (= the action developer's) repo.
 It is generally recommended to specify dependencies in GitHub actions as narrowly as you can.
 That way, your workflow won't break if the maintainer of the action changes things up.
