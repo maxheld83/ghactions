@@ -6,8 +6,8 @@ authors:
     href: http://www.verenaheld.in
 development:
   mode: devel
+  destination: "."
 template:
   params:
     bootswatch: cosmo
     ganalytics: UA-48816137-1
-
