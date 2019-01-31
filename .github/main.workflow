@@ -1,10 +1,10 @@
-workflow "Build, Check and Document Package" {
+workflow "Build, Check, Document and Deploy" {
   on = "push"
   resolves = [
-    "Check Package",
     "Build Image",
     "Document Package",
     "Code Coverage",
+    "Deploy to GitHub Pages",
   ]
 }
 
@@ -36,4 +36,19 @@ action "Code Coverage" {
   needs = ["Build Package"]
   args = "-e 'covr::codecov()'"
   secrets = ["CODECOV_TOKEN"]
+}
+
+action "Filter Master Branch" {
+  uses = "actions/bin/filter@c6471707d308175c57dfe91963406ef205837dbd"
+  needs = ["Check Package", "Document Package"]
+  args = "branch master"
+}
+
+action "Deploy to GitHub Pages" {
+  uses = "maxheld83/ghaction-ghpages@master"
+  env = {
+    BUILD_DIR = "docs"
+  }
+  secrets = ["GH_PAT"]
+  needs = ["Filter Master Branch"]
 }
