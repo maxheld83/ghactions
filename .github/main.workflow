@@ -45,7 +45,7 @@ action "Filter Master Branch" {
 }
 
 action "Deploy to GitHub Pages" {
-  uses = "maxheld83/ghaction-ghpages@v0.1"
+  uses = "maxheld83/ghpages@v0.1.1"
   env = {
     BUILD_DIR = "docs"
   }
