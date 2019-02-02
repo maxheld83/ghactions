@@ -1,0 +1,22 @@
+{{! this is based on the action spec from https://developer.github.com/actions/creating-workflows/workflow-configuration-options/}}
+
+action "{{IDENTIFIER}}" {
+{{! IDENTIFIER field is mandatory}}
+{{#needs}}
+  needs = {{{needs}}}{{/needs}}
+{{#runs}}
+  runs = "{{runs}}"{{/runs}}
+{{#args}}
+  args = {{{args}}}{{/args}}
+{{#env}}
+  env = {
+    {{{env}}}
+  }{{/env}}
+{{#secrets}}
+  secrets = {{{secrets}}}
+{{/secrets}}
+{{!uses field must be last to avoid mustache syntax error of unbalanced braces
+see https://github.com/maxheld83/ghactions/issues/12}}
+{{!uses field is mandatory}}
+  uses = "{{uses}}"
+}
