@@ -1,4 +1,7 @@
-# Actions ====
+
+
+
+# one action ====
 #' @title Create GitHub Actions syntax for one action.
 #'
 #' @description
@@ -102,12 +105,8 @@ make_action <- function(IDENTIFIER,
     null.ok = TRUE
   )
 
-  # find path to template, which changes depending on compilation vs source
-  path <- system.file("templates", "action", package = "ghactions")
-  template <- readr::read_file(file = path)
-  res <- whisker::whisker.render(
-    template = template,
-    data = list(
+  make_template(
+    l = list(
       IDENTIFIER = IDENTIFIER,
       # some parts of above HCL are just JSON arrays, so we can just use that
       # below function, sadly, will *not* include linebreaks, so long vectors may not be easily readable
@@ -118,7 +117,19 @@ make_action <- function(IDENTIFIER,
       args = toTOML(args),
       env = toTOML(env),
       secrets = toTOML(secrets)
-    )
+    ),
+    template = "action"
+  )
+}
+
+# make template string from template and list
+make_template <- function(l, template) {
+  # find path to template, which changes depending on compilation vs source
+  path <- system.file("templates", template, package = "ghactions")
+  template <- readr::read_file(file = path)
+  res <- whisker::whisker.render(
+    template = template,
+    data = l
   )
   glue::as_glue(res)
 }
@@ -148,3 +159,73 @@ toTOML <- function(x) {
     sep = "\n    "
   )
 }
+
+
+# one workflow ====
+
+# all supported events to trigger gh action from https://developer.github.com/actions/creating-workflows/workflow-configuration-options/#events-supported-in-workflow-files
+ghactions_events <- c(
+  "check_run",
+  "check-suite",
+  "commit_comment",
+  "create",
+  "delete",
+  "deployment",
+  "deployment_status",
+  "fork",
+  "gollum",
+  "issue_comment",
+  "issues",
+  "label",
+  "member",
+  "milestone",
+  "page_build",
+  "project",
+  "project_card",
+  "project_column",
+  "public",
+  "pull_request",
+  "pull_request_review_comment",
+  "pull_request_review",
+  "push",
+  "repository_dispatch",
+  "release",
+  "status",
+  "watch"
+)
+
+#' @describeIn make_action Create GitHub Actions syntax for one workflow heading.
+#'
+#' @param on `[character(1)]`
+#' giving the [GitHub Event](https://developer.github.com/webhooks/#events) on which to trigger the workflow.
+#' Defaults to `"push"`, in which case the workflow is triggered on every push event.
+#'
+#' @param resolves `[character()]`
+#' giving the action(s) to invoke.
+#'
+#' @export
+make_workflow <- function(IDENTIFIER, on = "push", resolves) {
+  # input validation ====
+  checkmate::assert_string(
+    x = IDENTIFIER,
+    null.ok = FALSE
+  )
+  rlang::arg_match(arg = on, values = ghactions_events)
+  checkmate::assert_character(
+    x = resolves,
+    any.missing = FALSE,
+    unique = TRUE,  # cannot have two identical dependencies
+    null.ok = TRUE
+  )
+
+  make_template(
+    l = list(
+      IDENTIFIER = IDENTIFIER,
+      on = on,
+      resolves = toTOML(resolves)
+    ),
+    template = "workflow"
+  )
+}
+
+make_workflow(IDENTIFIER = "Run calculation", on = "push", resolves = "Simple Addition")

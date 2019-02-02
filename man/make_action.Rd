@@ -2,10 +2,13 @@
 % Please edit documentation in R/template.R
 \name{make_action}
 \alias{make_action}
+\alias{make_workflow}
 \title{Create GitHub Actions syntax for one action.}
 \usage{
 make_action(IDENTIFIER, needs = NULL, uses, runs = NULL, args = NULL,
   env = NULL, secrets = NULL)
+
+make_workflow(IDENTIFIER, on = "push", resolves)
 }
 \arguments{
 \item{IDENTIFIER}{\code{[character(1)]}
@@ -39,6 +42,13 @@ The \emph{values} of secrets must be set in your repository's "Settings" tab.
 \strong{Do not store secrets in your repository.}
 GitHub advises against using GitHub actions for production secrets during the public beta period.
 Defaults to \code{NULL} for no secrets.}
+
+\item{on}{\code{[character(1)]}
+giving the \href{https://developer.github.com/webhooks/#events}{GitHub Event} on which to trigger the workflow.
+Defaults to \code{"push"}, in which case the workflow is triggered on every push event.}
+
+\item{resolves}{\code{[character()]}
+giving the action(s) to invoke.}
 }
 \value{
 \code{[character(1)]}
@@ -50,6 +60,11 @@ For details on the arguments, see \href{https://developer.github.com/actions/cre
 \details{
 The \code{main.workflow} files used in \href{http://github.com/features/actions}{GitHub Actions} is comprised of several actions.
 }
+\section{Functions}{
+\itemize{
+\item \code{make_workflow}: Create GitHub Actions syntax for one workflow heading.
+}}
+
 \examples{
 make_action(
   IDENTIFIER = "Simple Addition",
