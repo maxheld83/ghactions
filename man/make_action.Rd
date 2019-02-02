@@ -50,4 +50,13 @@ For details on the arguments, see \href{https://developer.github.com/actions/cre
 \details{
 The \code{main.workflow} files used in \href{http://github.com/features/actions}{GitHub Actions} is comprised of several actions.
 }
+\examples{
+make_action(
+  IDENTIFIER = "Simple Addition",
+  uses = "maxheld83/ghactions/Rscript-byod@master",
+  needs = "Build Image",
+  args = "-e '1+1'"
+)
+
+}
 \keyword{internal}

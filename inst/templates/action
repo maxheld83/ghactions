@@ -4,18 +4,14 @@ action "{{IDENTIFIER}}" {
   needs = [
     {{{needs}}}
   ]{{/needs}}
-  uses = "{{uses}}"
-{{#runs}}
-  runs = "{{runs}}"{{/runs}}
-{{#args}}
+  uses = "{{uses}}"{{#runs}}
+  runs = "{{runs}}"{{/runs}}{{#args}}
   args = [
     {{{args}}}
-  ]{{/args}}
-{{#env}}
+  ]{{/args}}{{#env}}
   env = {
     {{{env}}}
-  }{{/env}}
-{{#secrets}}
+  }{{/env}}{{#secrets}}
   secrets = [
     {{{secrets}}}
   ]{{/secrets}}

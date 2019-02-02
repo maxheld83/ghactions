@@ -40,6 +40,14 @@
 #' @details
 #' The `main.workflow` files used in [GitHub Actions](http://github.com/features/actions) is comprised of several actions.
 #'
+#' @examples
+#' make_action(
+#'   IDENTIFIER = "Simple Addition",
+#'   uses = "maxheld83/ghactions/Rscript-byod@master",
+#'   needs = "Build Image",
+#'   args = "-e '1+1'"
+#' )
+#'
 #' @keywords internal
 #'
 #' @return `[character(1)]`
@@ -94,8 +102,10 @@ make_action <- function(IDENTIFIER,
     null.ok = TRUE
   )
 
-  template <- readr::read_file(file = "inst/templates/action")
-  whisker::whisker.render(
+  # find path to template, which changes depending on compilation vs source
+  path <- system.file("templates", "action", package = "ghactions")
+  template <- readr::read_file(file = path)
+  res <- whisker::whisker.render(
     template = template,
     data = list(
       IDENTIFIER = IDENTIFIER,
@@ -110,6 +120,7 @@ make_action <- function(IDENTIFIER,
       secrets = toTOML(secrets)
     )
   )
+  glue::as_glue(res)
 }
 
 # little helper to serialise objects into TOML
@@ -137,20 +148,3 @@ toTOML <- function(x) {
     sep = "\n    "
   )
 }
-
-# test case
-make_action(
-  IDENTIFIER = "Deploy with rsync",
-  uses = "./",
-  needs = "Write sha",
-  secrets = c("SSH_PRIVATE_KEY", "SSH_PUBLIC_KEY"),
-  env = list(
-    HOST_NAME = "karli.rrze.uni-erlangen.de",
-    HOST_IP = "131.188.16.138",
-    HOST_FINGERPRINT = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFHJVSekYKuF5pMKyHe1jS9mUkXMWoqNQe0TTs2sY1OQj379e6eqVSqGZe+9dKWzL5MRFpIiySRKgvxuHhaPQU4="
-  ),
-  runs = "zap",
-  args = c(
-    "$GITHUB_WORKSPACE/index.html",
-    "pfs400wm@$HOST_NAME:/proj/websource/docs/FAU/fakultaet/phil/www.datascience.phil.fau.de/websource/ghaction-rsync")
-)
