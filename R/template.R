@@ -1,10 +1,57 @@
-make_ghaction <- function(IDENTIFIER,
-                          needs = NULL,
-                          uses,
-                          runs = NULL,
-                          args = NULL,
-                          env = NULL,
-                          secrets = NULL) {
+# Actions ====
+#' @title Create GitHub Actions syntax for one action.
+#'
+#' @description
+#' Creates the syntax for *one* GitHub action as a string.
+#' For details on the arguments, see [here](https://developer.github.com/actions/creating-workflows/workflow-configuration-options/).-
+#'
+#' @param IDENTIFIER `[character(1)]`
+#' giving the name of the action.
+#' Shown on github.com and used in the `needs` fields of other actions.
+#'
+#' @param needs `[character()]`
+#' giving the actions (by their `IDENTIFIER`s) that must complete successfully before this action will be invoked.
+#' Defaults to `NULL` for no upstream dependencies.
+#'
+#' @param uses `[character(1)]`
+#' giving the Docker image that will run the action.
+#'
+#' @param runs `[character(1)]`
+#' giving the command to run in the docker image.
+#' Overrides the `Dockerfile` `ENTRYPOINT`.
+#' Defaults to `NULL` for no commands (recommended).
+#'
+#' @param args `[character()]`
+#' giving the arguments to pass to the action.
+#' Arguments get appended to the last command in `ENTRYPOINT`.
+#' Defaults to `NULL` for no arguments.
+#'
+#' @param env `[list(character(1)]`
+#' giving the environment variables to set in the action's runtime environment.
+#' Defaults to `NULL` for no environment variables.
+#'
+#' @param secrets `[character()]`
+#' giving the *names* of the secret variables to set in the runtime enviornment, which the action can access as an environment variable.
+#' The *values* of secrets must be set in your repository's "Settings" tab.
+#' **Do not store secrets in your repository.**
+#' GitHub advises against using GitHub actions for production secrets during the public beta period.
+#' Defaults to `NULL` for no secrets.
+#'
+#' @details
+#' The `main.workflow` files used in [GitHub Actions](http://github.com/features/actions) is comprised of several actions.
+#'
+#' @keywords internal
+#'
+#' @return `[character(1)]`
+#'
+#' @export
+make_action <- function(IDENTIFIER,
+                        needs = NULL,
+                        uses,
+                        runs = NULL,
+                        args = NULL,
+                        env = NULL,
+                        secrets = NULL) {
   # input validation ====
   # all of this is as per the gh action spec https://developer.github.com/actions/creating-workflows/workflow-configuration-options/
   checkmate::assert_string(
@@ -92,7 +139,7 @@ toTOML <- function(x) {
 }
 
 # test case
-make_ghaction(
+make_action(
   IDENTIFIER = "Deploy with rsync",
   uses = "./",
   needs = "Write sha",

@@ -1,5 +1,3 @@
-{{! this is based on the action spec from https://developer.github.com/actions/creating-workflows/workflow-configuration-options/}}
-
 action "{{IDENTIFIER}}" {
 {{! IDENTIFIER field is mandatory}}
 {{#needs}}

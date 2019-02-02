@@ -7,6 +7,13 @@ authors:
 development:
   mode: devel
   destination: "."
+reference:
+  - title: "Templating functions"
+    desc: >
+      Functions to generate GitHub Actions `main.workflow` syntax.
+      For internal purposes, not recommended for package users.
+    contents:
+      - make_action
 template:
   params:
     bootswatch: cosmo
