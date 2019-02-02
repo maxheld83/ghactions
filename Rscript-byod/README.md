@@ -1,6 +1,4 @@
-# Run `Rscript`, but *bring-your-own-dockerfile* (byod)
-
-This is a very **simple** GitHub action; it just runs in Rscript whatever you provide as the `args` field (see below).
+This is a very **simple** GitHub action; it just runs in `Rscript` whatever you provide as the `args` field (see below).
 This action is meant for **generic** R projects with **arbitrary build environments**; you therefore **have to bring your own dockerfile**.
 If you are targeting a specific build or runtime environment (say, `R CMD build` or [shinyapps.io](https://www.shinyapps.io)), some of the other actions may be more suitable for your purposes.
 If you are *not* targeting a specific environment, and don't know much about docker, you can easily start with one of the popular rocker images as in the below example. 

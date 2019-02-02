@@ -24,7 +24,8 @@ Imports:
   usethis (>= 1.4.0),
   whisker (>= 0.3-2)
 Suggests:
-  testthat (>= 2.0.1),
-  knitr (>= 1.21)
+    testthat (>= 2.0.1),
+    knitr,
+    rmarkdown
 VignetteBuilder: knitr
 RoxygenNote: 6.1.1

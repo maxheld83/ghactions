@@ -15,7 +15,22 @@ reference:
     contents:
       - make_workflow_block
       - make_action_block
+navbar:
+  title: "ghactions"
+  left:
+    - icon: fa-home
+      href: index.html
+    - text: Reference
+      href: reference/index.html
+    - text: Actions
+      menu:
+        - text: "Rscript-byod"
+          href: articles/rscript-byod.html
+  right:
+    - icon: fa-github
+      href: https://github.com/maxheld83/ghactions
+theme: cosmo
 template:
   params:
-    bootswatch: cosmo
     ganalytics: UA-48816137-1
+    bootswatch: cosmo

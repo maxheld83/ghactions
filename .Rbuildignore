@@ -10,3 +10,4 @@ logo.*
 .github
 Rscript-byod/
 .tar.gz
+vignettes/rscript-byod.Rmd
