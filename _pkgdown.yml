@@ -10,10 +10,11 @@ development:
 reference:
   - title: "Templating functions"
     desc: >
-      Functions to generate GitHub Actions `main.workflow` syntax.
+      Functions to generate *blocks* of GitHub actions syntax.
       For internal purposes, not recommended for package users.
     contents:
-      - make_action
+      - make_workflow_block
+      - make_action_block
 template:
   params:
     bootswatch: cosmo

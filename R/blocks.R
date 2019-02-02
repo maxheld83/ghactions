@@ -1,16 +1,65 @@
-
-
-
-# one action ====
-#' @title Create GitHub Actions syntax for one action.
+#' @title Create GitHub Actions syntax blocks
 #'
 #' @description
-#' Creates the syntax for *one* GitHub action as a string.
-#' For details on the arguments, see [here](https://developer.github.com/actions/creating-workflows/workflow-configuration-options/).-
+#' Creates the syntax building blocks for GitHub actions: workflows and actions.
+#' For details on the syntax and arguments, see [here](https://developer.github.com/actions/creating-workflows/workflow-configuration-options/).
 #'
 #' @param IDENTIFIER `[character(1)]`
-#' giving the name of the action.
-#' Shown on github.com and used in the `needs` fields of other actions.
+#' giving the name of the action or workflow block.
+#' Used:
+#' - as informative label on GitHub.com,
+#' - in the `needs` fields of other *action blocks* to express dependencies.
+#' - in the `resolves` fields of other *workflow blocks* to express dependencies.
+#'
+#' @keywords internal
+#'
+#' @return `[character(1)]`
+#'
+#' @name make_blocks
+NULL
+
+#' @describeIn make_blocks Create GitHub Actions syntax for *one* workflow block.
+#'
+#' @param on `[character(1)]`
+#' giving the [GitHub Event](https://developer.github.com/webhooks/#events) on which to trigger the workflow.
+#' Defaults to `"push"`, in which case the workflow is triggered on every push event.
+#'
+#' @param resolves `[character()]`
+#' giving the action(s) to invoke.
+#'
+#' @examples
+#' make_workflow_block(
+#'   IDENTIFIER = "Run calculation",
+#'   on = "push",
+#'   resolves = "Simple Addition"
+#' )
+#'
+#' @export
+make_workflow_block <- function(IDENTIFIER, on = "push", resolves) {
+  # input validation ====
+  checkmate::assert_string(
+    x = IDENTIFIER,
+    null.ok = FALSE
+  )
+  rlang::arg_match(arg = on, values = ghactions_events)
+  checkmate::assert_character(
+    x = resolves,
+    any.missing = FALSE,
+    unique = TRUE,  # cannot have two identical dependencies
+    null.ok = TRUE
+  )
+
+  make_template(
+    l = list(
+      IDENTIFIER = IDENTIFIER,
+      on = on,
+      resolves = toTOML(resolves)
+    ),
+    template = "workflow"
+  )
+}
+
+#' @describeIn make_blocks Create GitHub Actions syntax for *one* action block.
 #'
 #' @param needs `[character()]`
 #' giving the actions (by their `IDENTIFIER`s) that must complete successfully before this action will be invoked.
@@ -40,23 +89,26 @@
 #' GitHub advises against using GitHub actions for production secrets during the public beta period.
 #' Defaults to `NULL` for no secrets.
 #'
-#' @details
-#' The `main.workflow` files used in [GitHub Actions](http://github.com/features/actions) is comprised of several actions.
-#'
 #' @examples
-#' make_action(
+#' # many R project will need this block to first build an image from a DOCKERFILE
+#' make_action_block(
+#'   IDENTIFIER = "Build Image",
+#'   uses = "actions/docker/cli@c08a5fc9e0286844156fefff2c141072048141f6",
+#'   # this is an external github action, referenced tightly by sha
+#'   args = "build --tag=repo:latest ."
+#' )
+#'
+#' make_action_block(
 #'   IDENTIFIER = "Simple Addition",
 #'   uses = "maxheld83/ghactions/Rscript-byod@master",
 #'   needs = "Build Image",
 #'   args = "-e '1+1'"
 #' )
 #'
-#' @keywords internal
-#'
-#' @return `[character(1)]`
+#' # pasted together, these three blocks make a simple, valid main.workflow file.
 #'
 #' @export
-make_action <- function(IDENTIFIER,
+make_action_block <- function(IDENTIFIER,
                         needs = NULL,
                         uses,
                         runs = NULL,
@@ -160,9 +212,6 @@ toTOML <- function(x) {
   )
 }
 
-
-# one workflow ====
-
 # all supported events to trigger gh action from https://developer.github.com/actions/creating-workflows/workflow-configuration-options/#events-supported-in-workflow-files
 ghactions_events <- c(
   "check_run",
@@ -193,39 +242,3 @@ ghactions_events <- c(
   "status",
   "watch"
 )
-
-#' @describeIn make_action Create GitHub Actions syntax for one workflow heading.
-#'
-#' @param on `[character(1)]`
-#' giving the [GitHub Event](https://developer.github.com/webhooks/#events) on which to trigger the workflow.
-#' Defaults to `"push"`, in which case the workflow is triggered on every push event.
-#'
-#' @param resolves `[character()]`
-#' giving the action(s) to invoke.
-#'
-#' @export
-make_workflow <- function(IDENTIFIER, on = "push", resolves) {
-  # input validation ====
-  checkmate::assert_string(
-    x = IDENTIFIER,
-    null.ok = FALSE
-  )
-  rlang::arg_match(arg = on, values = ghactions_events)
-  checkmate::assert_character(
-    x = resolves,
-    any.missing = FALSE,
-    unique = TRUE,  # cannot have two identical dependencies
-    null.ok = TRUE
-  )
-
-  make_template(
-    l = list(
-      IDENTIFIER = IDENTIFIER,
-      on = on,
-      resolves = toTOML(resolves)
-    ),
-    template = "workflow"
-  )
-}
-
-make_workflow(IDENTIFIER = "Run calculation", on = "push", resolves = "Simple Addition")
