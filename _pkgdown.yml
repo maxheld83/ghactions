@@ -24,8 +24,25 @@ navbar:
       href: reference/index.html
     - text: Actions
       menu:
+        - text: "Arbitrary R Code"
         - text: "Rscript-byod"
           href: articles/rscript-byod.html
+        - text: "-----"
+        - text: "Deploy Targets"
+        - text: "GitHub Pages"
+          href: https://github.com/maxheld83/ghpages
+        - text: "Webserver via Rsync & SSH"
+          href: https://github.com/maxheld83/rsync
+        - text: "Netlify (External Action)"
+          href: https://github.com/netlify/actions/tree/master/cli
+        - text: "Google Firebase (External Action)"
+          href: https://github.com/w9jds/firebase-action
+        - text: "Google Cloud Platform (External Action)"
+          href: https://github.com/actions/gcloud
+        - text: "Amazon Web Services (External Action)"
+          href: https://github.com/actions/aws/tree/master/cli
+        - text: "Microsoft Azure (External Action)"
+          href: https://github.com/Azure/github-actions
   right:
     - icon: fa-github
       href: https://github.com/maxheld83/ghactions
