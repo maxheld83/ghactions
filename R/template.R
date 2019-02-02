@@ -55,27 +55,48 @@ make_ghaction <- function(IDENTIFIER,
       # some parts of above HCL are just JSON arrays, so we can just use that
       # below function, sadly, will *not* include linebreaks, so long vectors may not be easily readable
       # but they are valid json
-      needs = jsonlite::toJSON(x = needs),
+      needs = toTOML(needs),
       uses = uses,
       runs = runs,
-      args = jsonlite::toJSON(x = args),
-      env = glue::glue_collapse(x = toTOML(l = env), sep = "\n    "),
-      secrets = jsonlite::toJSON(x = secrets)
+      args = toTOML(args),
+      env = toTOML(env),
+      secrets = toTOML(secrets)
     )
   )
 }
 
-# little helper to serialise named lists into TOML
+# little helper to serialise objects into TOML
 # below function DOES NOT DO ALL TOML, only this specific subset
 # would be nice to use an actual r2toml pkg here, but that seems not to exist
-toTOML <- function(l) {
-  res <- glue::double_quote(l)
-  res <- purrr::imap(.x = res, .f = function(x, y) {
-    glue::glue_collapse(x = c(y, x), sep = " = ")
-  })
-  res
+# see https://github.com/maxheld83/ghactions/issues/13
+# named lists become name = value pairs
+# vectors (named or unnamed) become comma-separated arrays
+toTOML <- function(x) {
+  res <- glue::double_quote(x)
+  if (is.list(x)) {
+    res <- purrr::imap(.x = res, .f = function(x, y) {
+      glue::glue_collapse(x = c(y, x), sep = " = ")
+    })
+  } else {
+    # this is pretty ugly, causes trailing comas
+    # some JSON accepts trailing comas, and happily, ghactions appears to accept it too
+    res <- glue::glue('{res}, ')
+  }
+  glue::glue_collapse(
+    x = res,
+    # ugly hack to fix indentation in resulting file
+    sep = "\n    "
+  )
 }
 
+# this is a hacky replacement for jsonlite::toJSON, which doesn't offer linebreaks
+toJSON <- function(x) {
+  res <- glue::double_quote(x)
+  res <- purrr::imap
+}
+
+
+# test case
 make_ghaction(
   IDENTIFIER = "Deploy with rsync",
   uses = "./",
@@ -90,4 +111,5 @@ make_ghaction(
   args = c(
     "$GITHUB_WORKSPACE/index.html",
     "pfs400wm@$HOST_NAME:/proj/websource/docs/FAU/fakultaet/phil/www.datascience.phil.fau.de/websource/ghaction-rsync")
-)
+) %>%
+  glue::as_glue()
