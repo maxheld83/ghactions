@@ -78,9 +78,11 @@ toTOML <- function(x) {
       glue::glue_collapse(x = c(y, x), sep = " = ")
     })
   } else {
-    # this is pretty ugly, causes trailing comas
-    # some JSON accepts trailing comas, and happily, ghactions appears to accept it too
-    res <- glue::glue('{res}, ')
+    # below is an ugly hack to avoid trailing comas
+    n_with_comas <- length(res) - 1
+    if (n_with_comas > 0) {
+      res[1:n_with_comas] <- glue::glue('{res[1:n_with_comas]}, ')
+    }
   }
   glue::glue_collapse(
     x = res,
@@ -88,13 +90,6 @@ toTOML <- function(x) {
     sep = "\n    "
   )
 }
-
-# this is a hacky replacement for jsonlite::toJSON, which doesn't offer linebreaks
-toJSON <- function(x) {
-  res <- glue::double_quote(x)
-  res <- purrr::imap
-}
-
 
 # test case
 make_ghaction(
@@ -111,5 +106,4 @@ make_ghaction(
   args = c(
     "$GITHUB_WORKSPACE/index.html",
     "pfs400wm@$HOST_NAME:/proj/websource/docs/FAU/fakultaet/phil/www.datascience.phil.fau.de/websource/ghaction-rsync")
-) %>%
-  glue::as_glue()
+)
