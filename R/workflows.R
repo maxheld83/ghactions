@@ -6,7 +6,7 @@ use_ghactions <- function(workflow = workflows$website$rmarkdown$fau()) {
   usethis:::check_uses_github()
 
   # make project-specific action blocks with leading workflow block
-  res <- make_workflow(l = workflow)
+  res <- list2ghact(x = workflow)
 
   # write out to disc
   # this is modelled on use_template, but because we already have the full string in above res, we don't need to go through whisker/mustache again
@@ -19,35 +19,34 @@ use_ghactions <- function(workflow = workflows$website$rmarkdown$fau()) {
     quiet = TRUE
   )
 
-  usethis::ui_done(x = "GitHub actions is set up and ready to go.")
-  usethis::ui_todo(x = "Commit and push the changes.")
-  # TODO maybe automatically open webpage via browse_ghactions here
-  usethis::ui_todo(x = "Visit the actions tab of your repository on github.com to check the results.")
+  if (new) {
+    usethis::ui_done(x = "GitHub actions is set up and ready to go.")
+    usethis::ui_todo(x = "Commit and push the changes.")
+    # TODO maybe automatically open webpage via browse_ghactions here
+    usethis::ui_todo(
+      x = "Visit the actions tab of your repository on github.com to check the results."
+    )
+  }
 
   # return true/false for changed files as in original use_template
   invisible(new)
 }
 
-make_workflow <- function(l,
-                          IDENTIFIER = "Build and deploy",
-                          on = "push",
-                          resolves = names(l)[length(l)]) {
+# helper to turn lists into strings
+list2ghact <- function(x) {
   res <- make_workflow_block(
-    IDENTIFIER = IDENTIFIER,
-    on = on,
-    resolves = resolves
+    IDENTIFIER = x$IDENTIFIER,
+    on = x$on,
+    resolves = x$resolves
   )
-  res <- c(res, list2action_blocks(l))
-  res <- glue::as_glue(res)
-  res
-}
-
-list2action_blocks <- function(l) {
-  res <- purrr::imap_chr(
-    .x = l,
-    .f = function(x, y) {
-      rlang::exec(.fn = make_action_block, !!!c(IDENTIFIER = y, x))
-    }
+  res <- c(
+    res,
+    purrr::imap_chr(
+      .x = x$actions,
+      .f = function(x, y) {
+        rlang::exec(.fn = make_action_block, !!!c(IDENTIFIER = y, x))
+      }
+    )
   )
   # this makes it easier to read in debugging; above imap kills s3 attributes
   res <- glue::as_glue(x = res)
@@ -55,14 +54,30 @@ list2action_blocks <- function(l) {
 }
 
 # Objects: workflow blocks ===
+
 workflows <- NULL
 workflows$website <- NULL
 workflows$website$rmarkdown <- NULL
-workflows$website$rmarkdown$fau <- function(reponame = NULL) {
+workflows$website$rmarkdown$fau <- function(IDENTIFIER = "Build and deploy",
+                                            on = "push",
+                                            resolves = c("Render RMarkdown", "Deploy with rsync"),
+                                            reponame = NULL) {
+
   if (is.null(reponame)) {
     reponame <- usethis:::github_repo()
   }
-  list(
+
+  # make workflow block
+  # can only be one per workflow, obviously
+  res <- rlang::exec(.fn = list, !!!list(
+    IDENTIFIER = IDENTIFIER,
+    on = on,
+    resolves = resolves,
+    actions = NULL
+  ))
+
+  # make action blocks
+  res$actions <- list(
     `Build image` = list(
       uses = "actions/docker/cli@c08a5fc9e0286844156fefff2c141072048141f6",
       args = "build --tag=repo:latest ."
@@ -92,4 +107,5 @@ workflows$website$rmarkdown$fau <- function(reponame = NULL) {
       )
     )
   )
+  res
 }
