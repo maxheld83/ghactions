@@ -1,4 +1,4 @@
-use_ghactions <- function(workflow = website$rmarkdown$fau()) {
+use_ghactions <- function(workflow = workflows$website$rmarkdown$fau()) {
   # input validation
   # TODO infer project kind
 
@@ -55,9 +55,10 @@ list2action_blocks <- function(l) {
 }
 
 # Objects: workflow blocks ===
-website <- NULL
-website$rmarkdown <- NULL
-website$rmarkdown$fau <- function(reponame = NULL) {
+workflows <- NULL
+workflows$website <- NULL
+workflows$website$rmarkdown <- NULL
+workflows$website$rmarkdown$fau <- function(reponame = NULL) {
   if (is.null(reponame)) {
     reponame <- usethis:::github_repo()
   }
