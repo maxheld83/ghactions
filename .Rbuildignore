@@ -1,3 +1,4 @@
+^\.github$
 ^docs$
 ^_pkgdown\.yml$
 ^.*\.Rproj$
@@ -7,7 +8,6 @@
 Dockerfile
 launch.sh
 logo.*
-.github
 Rscript-byod/
 .tar.gz
 vignettes/rscript-byod.Rmd

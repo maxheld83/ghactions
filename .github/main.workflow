@@ -22,7 +22,7 @@ action "Build Package" {
 action "Check Package" {
   uses = "./Rscript-byod"
   needs = ["Build Package"]
-  args = "-e 'devtools::check_built(path = \".\", error_on = \"note\")'"
+  args = "-e 'devtools::check_built(path = \".\", error_on = \"warning\")'"
 }
 
 action "Document Package" {

@@ -177,6 +177,7 @@ make_action_block <- function(IDENTIFIER,
 # make template string from template and list
 make_template <- function(l, template) {
   # find path to template, which changes depending on compilation vs source
+  # TODO might use usethis::render_template() here, but that is not exported
   path <- system.file("templates", template, package = "ghactions")
   template <- readr::read_file(file = path)
   res <- whisker::whisker.render(
