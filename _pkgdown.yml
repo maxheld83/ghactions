@@ -51,3 +51,6 @@ template:
   params:
     ganalytics: UA-48816137-1
     bootswatch: cosmo
+    docsearch:
+      api_key: 8f10ced26cbc746213d4922f059ceb49
+      index_name: ghactions
