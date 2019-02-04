@@ -71,9 +71,14 @@ website$rmarkdown$fau <- function(reponame = NULL) {
       needs = "Build image",
       args = "-e 'rmarkdown::render_site()'"
     ),
+    Master = list(
+      uses = "actions/bin/filter@c6471707d308175c57dfe91963406ef205837dbd",
+      needs = "Render RMarkdown",
+      args = "branch master"
+    ),
     `Deploy with rsync` = list(
       uses = "maxheld83/rsync@v0.1.1",
-      needs = "Render RMarkdown",
+      needs = "Master",
       secrets = c("SSH_PRIVATE_KEY", "SSH_PUBLIC_KEY"),
       env = list(
         HOST_NAME = "karli.rrze.uni-erlangen.de",
