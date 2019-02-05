@@ -1,3 +1,24 @@
+#' @title Workflow automation with GitHub Actions
+#'
+#' @description
+#' Sets up workflow automation, including continuous integration and deployment (CI/CD) for a different kinds of R projects on GitHub actions.
+#' This function
+#' - Picks a set of sensible defaults for your project.
+#' - Transforms a list of workflow and action blocks into the GitHub actions syntax.
+#' - Adds a `.github/main.workflow` file to your repository.
+#'
+#' @param workflow `[list()]`
+#' A named list of blocks nested as:
+#' - arguments to `make_workflow_block` as a named list *and*
+#' - `actions`, which in turn comprises the
+#'   - arguments to `make_action_block` as a named list.
+#' Defaults ti `NULL`, in which case one of the `workflows` functions is chosen based on the configuration files in your repository.
+#'
+#' @examples
+#' \dontrun{
+#' use_ghactions(workflow = workflows$website$rmarkdown)
+#' }
+#' @export
 use_ghactions <- function(workflow = workflows$website$rmarkdown$fau()) {
   # input validation
   # TODO infer project kind
@@ -64,6 +85,7 @@ workflows$website$rmarkdown$fau <- function(IDENTIFIER = "Build and deploy",
                                             reponame = NULL) {
 
   if (is.null(reponame)) {
+    # unexported function; gh::gh_tree_remote() might help
     reponame <- usethis:::github_repo()
   }
 

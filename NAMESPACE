@@ -2,3 +2,4 @@
 
 export(make_action_block)
 export(make_workflow_block)
+export(use_ghactions)
