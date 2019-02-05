@@ -2,7 +2,7 @@
 % Please edit documentation in R/actions.R
 \name{rscript_byod}
 \alias{rscript_byod}
-\title{Rscript \emph{bring-your-own-dockerfile}}
+\title{Rscript-byod}
 \usage{
 rscript_byod(uses = "maxheld83/ghactions/Rscript-byod@master",
   needs = "Build image", args)
@@ -21,6 +21,7 @@ Arguments get appended to the last command in \code{ENTRYPOINT}.
 Defaults to \code{NULL} for no arguments.}
 }
 \description{
+Run arbitrary \code{Rscript}, but \emph{bring-your-own-dockerfile}
 Minimal wrapper around the (internal) \href{https://github.com/maxheld83/ghactions/tree/master/Rscript-byod}{Rscript-byod} action.
 }
 \details{
@@ -51,11 +52,17 @@ This is just my convention, not a magic name.
 But it is very important you \emph{use exactly this name}, because otherwise downstream actions (\emph{this} action) cannot base their own work on it.
 This isn't terribly elegant, but currently appears to be the only way on GitHub actions to identify images from past actions (see \href{https://github.com/maxheld83/ghactions/issues/1}{this issue}).
 
-Once your "bring-your-own-dockerfile" has been build into an image, the present action then simply runs whatever you pass \code{Rscript} \emph{in} that image.Environment Variables
+Once your "bring-your-own-dockerfile" has been build into an image, the present action then simply runs whatever you pass \code{Rscript} \emph{in} that image.
 
-None so far.Secrets
+@section Environment Variables
 
-nada.Required Arguments
+None so far.
+
+@section Secrets
+
+nada.
+
+@section Required Arguments
 
 Whatever your provide in \code{args} simply gets appended to the \code{Rscript} call.
 So just image \code{Rscript} in front of it; if it is a valid shell command, you're good to go.
@@ -70,9 +77,13 @@ which is appended to \code{Rscript} by this action, so you're really running\pre
 }
 
 which \code{Rscript} passes to the R console, where you know it as\preformatted{rmarkdown::render_site()
-}Optional Arguments
+}
 
-Nope.Example Usage
+@section Optional Arguments
+
+Nope.
+
+@section Example Usage
 
 Here is a complete \code{main.workflow} that first builds your (byod) image, and then runs \code{rmarkdown::render_site()} on it.\preformatted{workflow "Build then render" Render rmarkdown
 

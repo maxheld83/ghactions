@@ -10,6 +10,5 @@ launch.sh
 logo.*
 Rscript-byod/
 .tar.gz
-vignettes/rscript-byod.Rmd
 pkgdown/
 ^man-roxygen$

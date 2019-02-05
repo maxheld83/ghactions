@@ -17,9 +17,12 @@
 #'
 #' @inherit usethis::use_template return
 #'
+#' @family setup
+#'
 #' @examples
 #' \dontrun{
-#' use_ghactions(workflow = workflows$website$rmarkdown)
+#' use_ghactions(workflow = workflows$fau())
+
 #' }
 #' @export
 use_ghactions <- function(workflow = NULL) {
@@ -62,8 +65,10 @@ use_ghactions <- function(workflow = NULL) {
 #' @examples
 #' # this will print the result to the console for inspection
 #' \dontrun{
-#' list2ghact(workflow = workflows$website$rmarkdown$fau())
+#' list2ghact(workflow = workflows$fau())
 #' }
+#'
+#' @family setup
 #'
 #' @export
 list2ghact <- function(workflow = NULL) {

@@ -10,9 +10,10 @@ docker_cli <- function(uses = "actions/docker/cli@c08a5fc9e0286844156fefff2c1410
   list(uses = uses, args = args)
 }
 
-#' @title Rscript *bring-your-own-dockerfile*
+#' @title Rscript-byod
 #'
 #' @description
+#' Run arbitrary `Rscript`, but *bring-your-own-dockerfile*
 #' Minimal wrapper around the (internal) [Rscript-byod](https://github.com/maxheld83/ghactions/tree/master/Rscript-byod) action.
 #'
 #' @template actions

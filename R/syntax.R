@@ -34,6 +34,8 @@ NULL
 #'   resolves = "Simple Addition"
 #' )
 #'
+#' @family syntax
+#'
 #' @export
 make_workflow_block <- function(IDENTIFIER, on = "push", resolves) {
   # input validation ====
@@ -106,6 +108,8 @@ make_workflow_block <- function(IDENTIFIER, on = "push", resolves) {
 #' )
 #'
 #' # pasted together, these three blocks make a simple, valid main.workflow file.
+#'
+#' @family syntax
 #'
 #' @export
 make_action_block <- function(IDENTIFIER,

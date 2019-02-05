@@ -8,19 +8,28 @@ development:
   mode: devel
   destination: "."
 reference:
-  - title: "Setup helpers"
+  - title: "Setup"
     desc: >
       Functions to help you get started with GitHub actions.
     contents:
-      - use_ghactions
-      - list2ghact
-  - title: "Templating functions"
+      - has_concept("setup")
+  - title: "Workflows"
+    desc: >
+      Functions with GitHub actions workflows for common R projects with sensible defaults.
+    contents:
+      - has_concept("workflows")
+  - title: "Actions"
+    desc: >
+      Functions to (thinly) wrap relevant GitHub actions.
+      This includes GitHub actions from outside sources.
+    contents:
+      - has_concept("actions")
+  - title: "Syntax"
     desc: >
       Functions to generate *blocks* of GitHub actions syntax.
       For internal purposes, not recommended for package users.
     contents:
-      - make_workflow_block
-      - make_action_block
+      - has_concept("syntax")
 navbar:
   title: "ghactions"
   left:
@@ -28,27 +37,6 @@ navbar:
       href: index.html
     - text: Reference
       href: reference/index.html
-    - text: Actions
-      menu:
-        - text: "Arbitrary R Code"
-        - text: "Rscript-byod"
-          href: articles/rscript-byod.html
-        - text: "-----"
-        - text: "Deploy Targets"
-        - text: "GitHub Pages"
-          href: https://github.com/maxheld83/ghpages
-        - text: "Webserver via Rsync & SSH"
-          href: https://github.com/maxheld83/rsync
-        - text: "Netlify (External Action)"
-          href: https://github.com/netlify/actions/tree/master/cli
-        - text: "Google Firebase (External Action)"
-          href: https://github.com/w9jds/firebase-action
-        - text: "Google Cloud Platform (External Action)"
-          href: https://github.com/actions/gcloud
-        - text: "Amazon Web Services (External Action)"
-          href: https://github.com/actions/aws/tree/master/cli
-        - text: "Microsoft Azure (External Action)"
-          href: https://github.com/Azure/github-actions
   right:
     - icon: fa-github
       href: https://github.com/maxheld83/ghactions
