@@ -44,9 +44,9 @@ workflows$fau <- function(IDENTIFIER = "Render and Deploy",
     actions = NULL
   ))
   res$actions <- list(
-    `Build image` = actions$build_image(),
-    Render = actions$rscript_byod(args = "-e 'rmarkdown::render_site()'"),
-    Deploy = actions$rsync(
+    `Build image` = docker_cli(),
+    Render = rscript_byod(args = "-e 'rmarkdown::render_site()'"),
+    Deploy = rsync(
       env = list(
         HOST_NAME = "karli.rrze.uni-erlangen.de",
         HOST_IP = "131.188.16.138",

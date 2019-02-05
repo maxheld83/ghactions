@@ -73,8 +73,6 @@ which `Rscript` passes to the R console, where you know it as
 rmarkdown::render_site()
 ```
 
-Remember to be careful with quoting; you can use `'`, `"` and ``` but they must be nested correctly.
-
 
 ## Optional Arguments
 
