@@ -3,7 +3,6 @@ workflow "Build, Check, Document and Deploy" {
   resolves = [
     "Build Image",
     "Document Package",
-    "Code Coverage",
     "Deploy to GitHub Pages",
   ]
 }
