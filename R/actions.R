@@ -20,10 +20,9 @@ docker_cli <- function(uses = "actions/docker/cli@c08a5fc9e0286844156fefff2c1410
 #' @eval readme2sections()
 #'
 #' @export
-rscript_byod <- function(uses = "maxheld83/ghactions/Rscript-byod@master",
-                         needs = "Build image",
+rscript_byod <- function(needs = "Build image",
                          args) {
-  list(uses = uses, needs = needs, args = args)
+  list(uses = "maxheld83/ghactions/Rscript-byod@master", needs = needs, args = args)
 }
 
 #' @title Filter
@@ -38,10 +37,16 @@ filter <- function(uses = "actions/bin/filter@c6471707d308175c57dfe91963406ef205
 #' @title Rsync
 #'
 #' @template actions
-rsync <- function(uses = "maxheld83/rsync@v0.1.1",
-                  needs = "Master",
-                  secrets = c("SSH_PRIVATE_KEY", "SSH_PUBLIC_KEY"),
+rsync <- function(needs = "Master",
                   env,
                   args) {
-  list(uses = uses, needs = needs, secrets = secrets, env = env, args = args)
+  list(uses = "maxheld83/rsync@v0.1.1", needs = needs, secrets = c("SSH_PRIVATE_KEY", "SSH_PUBLIC_KEY"), env = env, args = args)
+}
+
+#' @title ghpages
+#'
+#' @template actions
+ghpages <- function(needs,
+                    env = "BUILD_DIR = 'public/'") {
+  list(uses = "maxheld83/ghpages@v0.1.2", needs = needs, secrets = "GH_PAT", env = env)
 }
