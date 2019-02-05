@@ -7,19 +7,22 @@
 #' - Transforms a list of workflow and action blocks into the GitHub actions syntax.
 #' - Adds a `.github/main.workflow` file to your repository.
 #'
-#' @param workflow `[list()]`
+#' @param workflow `[list(list())]`
 #' A named list of blocks nested as:
-#' - arguments to `make_workflow_block` as a named list *and*
-#' - `actions`, which in turn comprises the
-#'   - arguments to `make_action_block` as a named list.
-#' Defaults ti `NULL`, in which case one of the `workflows` functions is chosen based on the configuration files in your repository.
+#' - **The workflow block**: arguments to [make_workflow_block()] as a named list *and*
+#' - `$actions``, which in turn comprises of the
+#'   - **Several action blocks** with arguments to [make_action_block()] as a named list.
+#' Defaults to `NULL`, in which case one of the workflows functions is chosen based on the configuration files in your repository.
+# TODO link workflows in the above to docs
+#'
+#' @inherit usethis::use_template return
 #'
 #' @examples
 #' \dontrun{
 #' use_ghactions(workflow = workflows$website$rmarkdown)
 #' }
 #' @export
-use_ghactions <- function(workflow = workflows$website$rmarkdown$fau()) {
+use_ghactions <- function(workflow = NULL) {
   # input validation
   # TODO infer project kind
 
@@ -27,7 +30,7 @@ use_ghactions <- function(workflow = workflows$website$rmarkdown$fau()) {
   usethis:::check_uses_github()
 
   # make project-specific action blocks with leading workflow block
-  res <- list2ghact(x = workflow)
+  res <- list2ghact(workflow = workflow)
 
   # write out to disc
   # this is modelled on use_template, but because we already have the full string in above res, we don't need to go through whisker/mustache again
@@ -53,17 +56,26 @@ use_ghactions <- function(workflow = workflows$website$rmarkdown$fau()) {
   invisible(new)
 }
 
-# helper to turn lists into strings
-list2ghact <- function(x) {
+#' @describeIn use_ghactions Helper to turn block lists into strings.
+#' Useful when you want the result printed to console, not written to file.
+#'
+#' @examples
+#' # this will print the result to the console for inspection
+#' \dontrun{
+#' list2ghact(workflow = workflows$website$rmarkdown$fau())
+#' }
+#'
+#' @export
+list2ghact <- function(workflow = NULL) {
   res <- make_workflow_block(
-    IDENTIFIER = x$IDENTIFIER,
-    on = x$on,
-    resolves = x$resolves
+    IDENTIFIER = workflow$IDENTIFIER,
+    on = workflow$on,
+    resolves = workflow$resolves
   )
   res <- c(
     res,
     purrr::imap_chr(
-      .x = x$actions,
+      .x = workflow$actions,
       .f = function(x, y) {
         rlang::exec(.fn = make_action_block, !!!c(IDENTIFIER = y, x))
       }

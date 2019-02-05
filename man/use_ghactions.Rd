@@ -2,21 +2,27 @@
 % Please edit documentation in R/workflows.R
 \name{use_ghactions}
 \alias{use_ghactions}
+\alias{list2ghact}
 \title{Workflow automation with GitHub Actions}
 \usage{
-use_ghactions(workflow = workflows$website$rmarkdown$fau())
+use_ghactions(workflow = NULL)
+
+list2ghact(workflow = NULL)
 }
 \arguments{
-\item{workflow}{\code{[list()]}
+\item{workflow}{\code{[list(list())]}
 A named list of blocks nested as:
 \itemize{
-\item arguments to \code{make_workflow_block} as a named list \emph{and}
-\item \code{actions}, which in turn comprises the
+\item \strong{The workflow block}: arguments to \code{\link[=make_workflow_block]{make_workflow_block()}} as a named list \emph{and}
+\item `$actions``, which in turn comprises of the
 \itemize{
-\item arguments to \code{make_action_block} as a named list.
-Defaults ti \code{NULL}, in which case one of the \code{workflows} functions is chosen based on the configuration files in your repository.
+\item \strong{Several action blocks} with arguments to \code{\link[=make_action_block]{make_action_block()}} as a named list.
+Defaults to \code{NULL}, in which case one of the workflows functions is chosen based on the configuration files in your repository.
 }
 }}
+}
+\value{
+A logical vector indicating if file was modified.
 }
 \description{
 Sets up workflow automation, including continuous integration and deployment (CI/CD) for a different kinds of R projects on GitHub actions.
@@ -27,8 +33,19 @@ This function
 \item Adds a \code{.github/main.workflow} file to your repository.
 }
 }
+\section{Functions}{
+\itemize{
+\item \code{list2ghact}: Helper to turn block lists into strings.
+Useful when you want the result printed to console, not written to file.
+}}
+
 \examples{
 \dontrun{
 use_ghactions(workflow = workflows$website$rmarkdown)
 }
+# this will print the result to the console for inspection
+\dontrun{
+list2ghact(workflow = workflows$website$rmarkdown$fau())
+}
+
 }
