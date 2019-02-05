@@ -8,6 +8,12 @@ development:
   mode: devel
   destination: "."
 reference:
+  - title: "Setup helpers"
+    desc: >
+      Functions to help you get started with GitHub actions.
+    contents:
+      - use_ghactions
+      - list2ghact
   - title: "Templating functions"
     desc: >
       Functions to generate *blocks* of GitHub actions syntax.
