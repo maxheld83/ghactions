@@ -22,6 +22,7 @@ NULL
 #'
 #' @param on `[character(1)]`
 #' giving the [GitHub Event](https://developer.github.com/webhooks/#events) on which to trigger the workflow.
+#' Must be one of [ghactions_events].
 #' Defaults to `"push"`, in which case the workflow is triggered on every push event.
 #'
 #' @param resolves `[character()]`
@@ -51,6 +52,7 @@ make_workflow_block <- function(IDENTIFIER, on = "push", resolves) {
     null.ok = TRUE
   )
 
+  # body ====
   make_template(
     l = list(
       IDENTIFIER = IDENTIFIER,
@@ -60,6 +62,50 @@ make_workflow_block <- function(IDENTIFIER, on = "push", resolves) {
     template = "workflow"
   )
 }
+
+
+#' @title Supported events to trigger GitHub actions
+#'
+#' @description
+#' You can trigger GitHub actions from these events.
+#' List is taken from [official spec](https://developer.github.com/actions/creating-workflows/workflow-configuration-options/#events-supported-in-workflow-files).
+#'
+#' @family syntax
+#'
+#' @examples
+#' ghactions_events
+#'
+#' @export
+ghactions_events <- c(
+  "check_run",
+  "check-suite",
+  "commit_comment",
+  "create",
+  "delete",
+  "deployment",
+  "deployment_status",
+  "fork",
+  "gollum",
+  "issue_comment",
+  "issues",
+  "label",
+  "member",
+  "milestone",
+  "page_build",
+  "project",
+  "project_card",
+  "project_column",
+  "public",
+  "pull_request",
+  "pull_request_review_comment",
+  "pull_request_review",
+  "push",
+  "repository_dispatch",
+  "release",
+  "status",
+  "watch"
+)
+
 
 #' @describeIn make_blocks Create GitHub Actions syntax for *one* action block.
 #'
@@ -92,7 +138,7 @@ make_workflow_block <- function(IDENTIFIER, on = "push", resolves) {
 #' Defaults to `NULL` for no secrets.
 #'
 #' @examples
-#' # many R project will need this block to first build an image from a DOCKERFILE
+#' # many R projects will need this block to first build an image from a DOCKERFILE
 #' make_action_block(
 #'   IDENTIFIER = "Build Image",
 #'   uses = "actions/docker/cli@c08a5fc9e0286844156fefff2c141072048141f6",
@@ -113,12 +159,12 @@ make_workflow_block <- function(IDENTIFIER, on = "push", resolves) {
 #'
 #' @export
 make_action_block <- function(IDENTIFIER,
-                        needs = NULL,
-                        uses,
-                        runs = NULL,
-                        args = NULL,
-                        env = NULL,
-                        secrets = NULL) {
+                              needs = NULL,
+                              uses,
+                              runs = NULL,
+                              args = NULL,
+                              env = NULL,
+                              secrets = NULL) {
   # input validation ====
   # all of this is as per the gh action spec https://developer.github.com/actions/creating-workflows/workflow-configuration-options/
   checkmate::assert_string(
@@ -161,6 +207,7 @@ make_action_block <- function(IDENTIFIER,
     null.ok = TRUE
   )
 
+  # body ====
   make_template(
     l = list(
       IDENTIFIER = IDENTIFIER,
@@ -178,7 +225,20 @@ make_action_block <- function(IDENTIFIER,
   )
 }
 
-# make template string from template and list
+#' @title Fill in template
+#'
+#' @param l `[list()]`
+#' giving the named list of HCL fields.
+#'
+#' @param template `[character(1)]`
+#' giving the name of the template file.
+#'
+#' @return `[character()]`
+#' of class [glue::glue], giving the syntax for one workflow or action block.
+#'
+#' @keywords internal
+#'
+#' @noRd
 make_template <- function(l, template) {
   # find path to template, which changes depending on compilation vs source
   # TODO might use usethis::render_template() here, but that is not exported
@@ -191,12 +251,21 @@ make_template <- function(l, template) {
   glue::as_glue(res)
 }
 
-# little helper to serialise objects into TOML
-# below function DOES NOT DO ALL TOML, only this specific subset
-# would be nice to use an actual r2toml pkg here, but that seems not to exist
-# see https://github.com/maxheld83/ghactions/issues/13
-# named lists become name = value pairs
-# vectors (named or unnamed) become comma-separated arrays
+#' @title Serialise objects into TOMLish
+#'
+#' @param x `[list()]` or `[character()]`
+#' giving the objects to be converted to TOML.
+#' Named lists become name = value pairs.
+#' Vectors (named or unnamed) become comma-separated arrays
+#'
+#'
+#' @details
+#' Below function *do not do all TOML*, only this specific subset of features.
+#' It would be nice to use an actual r2toml pkg here, but that seems not to exist, as per [this issue](https://github.com/maxheld83/ghactions/issues/13).
+#'
+#' @keywords internal
+#'
+#' @noRd
 toTOML <- function(x) {
   res <- glue::double_quote(x)
   if (is.list(x)) {
@@ -216,34 +285,3 @@ toTOML <- function(x) {
     sep = "\n    "
   )
 }
-
-# all supported events to trigger gh action from https://developer.github.com/actions/creating-workflows/workflow-configuration-options/#events-supported-in-workflow-files
-ghactions_events <- c(
-  "check_run",
-  "check-suite",
-  "commit_comment",
-  "create",
-  "delete",
-  "deployment",
-  "deployment_status",
-  "fork",
-  "gollum",
-  "issue_comment",
-  "issues",
-  "label",
-  "member",
-  "milestone",
-  "page_build",
-  "project",
-  "project_card",
-  "project_column",
-  "public",
-  "pull_request",
-  "pull_request_review_comment",
-  "pull_request_review",
-  "push",
-  "repository_dispatch",
-  "release",
-  "status",
-  "watch"
-)

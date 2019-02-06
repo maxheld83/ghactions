@@ -23,6 +23,7 @@ Used:
 
 \item{on}{\code{[character(1)]}
 giving the \href{https://developer.github.com/webhooks/#events}{GitHub Event} on which to trigger the workflow.
+Must be one of \link{ghactions_events}.
 Defaults to \code{"push"}, in which case the workflow is triggered on every push event.}
 
 \item{resolves}{\code{[character()]}
@@ -77,7 +78,7 @@ make_workflow_block(
   resolves = "Simple Addition"
 )
 
-# many R project will need this block to first build an image from a DOCKERFILE
+# many R projects will need this block to first build an image from a DOCKERFILE
 make_action_block(
   IDENTIFIER = "Build Image",
   uses = "actions/docker/cli@c08a5fc9e0286844156fefff2c141072048141f6",
@@ -94,5 +95,12 @@ make_action_block(
 
 # pasted together, these three blocks make a simple, valid main.workflow file.
 
+}
+\seealso{
+Other syntax: \code{\link{ghactions_events}}
+
+Other syntax: \code{\link{ghactions_events}}
+
+Other syntax: \code{\link{ghactions_events}}
 }
 \concept{syntax}

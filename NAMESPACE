@@ -3,6 +3,7 @@
 export(docker_cli)
 export(fau)
 export(filter)
+export(ghactions_events)
 export(ghpages)
 export(list2ghact)
 export(make_action_block)
