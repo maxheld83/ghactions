@@ -14,7 +14,7 @@
 #' @param .f `[character(1)]`
 #' giving the render function, typically something like `rmarkdown::render_site()`.
 #'
-#' @param static_dir `[character(1)]``
+#' @param static_dir `[character(1)]`
 #' giving the path to the generated static assets from the repository root.
 #' Typically something like `_site/` for `rmarkdown::render_site()`.
 # TODO infer this automagically?
@@ -61,7 +61,6 @@ website <- function(IDENTIFIER = "Render and Deploy",
   res$actions <- c(res$actions, filter_then_deploy())
   res
 }
-
 
 filter_then_deploy <- function(master = deploy_ghpages(needs = "Master"), needs = "Render") {
   #TODO needs argument in master above is kinda stupid
