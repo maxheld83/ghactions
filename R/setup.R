@@ -26,7 +26,7 @@
 #' }
 #' @export
 use_ghactions <- function(workflow = NULL) {
-  # input validation
+  # TODO input validation
   # TODO infer project kind
 
   # check for github
