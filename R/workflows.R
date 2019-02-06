@@ -29,7 +29,7 @@ website <- function(IDENTIFIER = "Render and Deploy",
                     .f = "rmarkdown::render_site()",
                     # TODO need to accept this as a function call, then deparse
                     static_dir = "_site",
-                    deploy = list(master = NULL)) {
+                    deploy = NULL) {
   # Input validation
   # TODO somehow check .f
   checkmate::assert_list(
@@ -37,7 +37,7 @@ website <- function(IDENTIFIER = "Render and Deploy",
     types = "function",
     any.missing = FALSE,
     len = 1,
-    null.ok = FALSE
+    null.ok = TRUE
   )
   # TODO check whether name is a real branch
 
@@ -56,50 +56,44 @@ website <- function(IDENTIFIER = "Render and Deploy",
     Render = rscript_byod(
       needs = "Build image",
       args = glue::glue_collapse(x = c("-e", .f))
-    ),
-    # TODO use actual branch name
-    # TODO factor this all out
-    Master = ghactions::filter(
-      needs = "Render",
+    )
+  )
+  res$actions <- c(res$actions, filter_then_deploy())
+  res
+}
+
+
+filter_then_deploy <- function(master = deploy_ghpages(needs = "Master"), needs = "Render") {
+  #TODO needs argument in master above is kinda stupid
+  list(
+    Master = filter(
+      needs = needs,
       args = "branch master"
       # TODO need to actually use the chosen branch here
     ),
-    Deploy = ghpages(
-      needs = "Master"
-    )
+    Deploy = master
   )
-  glue::as_glue(res)
 }
 
-fau <- function(IDENTIFIER = "Render and Deploy",
-                          on = "push",
-                          resolves = c("Render", "Deploy")) {
-  # make workflow block
-  # can only be one per workflow, obviously
-  res <- rlang::exec(.fn = list, !!!list(
-    IDENTIFIER = IDENTIFIER,
-    on = on,
-    resolves = resolves,
-    actions = NULL
-  ))
-  res$actions <- list(
-    `Build image` = docker_cli(),
-    Render = rscript_byod(args = "-e 'rmarkdown::render_site()'"),
-    Deploy = rsync(
-      env = list(
-        HOST_NAME = "karli.rrze.uni-erlangen.de",
-        HOST_IP = "131.188.16.138",
-        HOST_FINGERPRINT = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFHJVSekYKuF5pMKyHe1jS9mUkXMWoqNQe0TTs2sY1OQj379e6eqVSqGZe+9dKWzL5MRFpIiySRKgvxuHhaPQU4="
-      ),
-      args = c(
-        "$GITHUB_WORKSPACE/_site/",
-        fs::path(
-          "pfs400wm@$HOST_NAME:/proj/websource/docs/FAU/fakultaet/phil/www.datascience.phil.fau.de/websource",
-          # unexported function; gh::gh_tree_remote() might help
-          usethis:::github_repo()
-        )
+deploy_ghpages <- function(static_dir = "_site", needs) {
+  ghpages(env = glue::glue("BUILD_DIR = '{static_dir}'"), needs = needs)
+}
+
+deploy_fau <- function(static_dir = "_site", needs) {
+  rsync(
+    needs = needs,
+    env = list(
+      HOST_NAME = "karli.rrze.uni-erlangen.de",
+      HOST_IP = "131.188.16.138",
+      HOST_FINGERPRINT = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFHJVSekYKuF5pMKyHe1jS9mUkXMWoqNQe0TTs2sY1OQj379e6eqVSqGZe+9dKWzL5MRFpIiySRKgvxuHhaPQU4="
+    ),
+    args = c(
+      fs::path("$GITHUB_WORKSPACE", static_dir),
+      fs::path(
+        "pfs400wm@$HOST_NAME:/proj/websource/docs/FAU/fakultaet/phil/www.datascience.phil.fau.de/websource",
+        # unexported function; gh::gh_tree_remote() might help
+        usethis:::github_repo()
       )
     )
   )
-  res
 }

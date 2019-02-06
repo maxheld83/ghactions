@@ -6,7 +6,7 @@
 \usage{
 website(IDENTIFIER = "Render and Deploy",
   .f = "rmarkdown::render_site()", static_dir = "_site",
-  deploy = list(master = NULL))
+  deploy = NULL)
 }
 \arguments{
 \item{IDENTIFIER}{\code{[character(1)]}
