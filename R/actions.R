@@ -13,6 +13,8 @@
 #'
 #' @inheritParams make_action_block
 #'
+#' @family actions
+#'
 #' @name actions
 NULL
 

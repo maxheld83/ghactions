@@ -96,4 +96,3 @@ make_action_block(
 
 }
 \concept{syntax}
-\keyword{internal}

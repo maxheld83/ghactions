@@ -11,9 +11,9 @@
 #' - in the `needs` fields of other *action blocks* to express dependencies.
 #' - in the `resolves` fields of other *workflow blocks* to express dependencies.
 #'
-#' @keywords internal
-#'
 #' @return `[character(1)]`
+#'
+#' @family syntax
 #'
 #' @name make_blocks
 NULL
