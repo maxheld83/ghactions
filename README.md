@@ -21,7 +21,6 @@ This repository, **ghactions**, offers three avenues to **bring GitHub actions t
   These functions are styled after the popular [usethis](http://usethis.r-lib.org) package.
   They don't do much: They just set you up with some configuration files for your project, using sensible defaults.
 3. Documenting experiences and evolving [**best practices**](http://www.maxheld.de/ghactions/articles/why) for how to make the most of GitHub actions for R.
-  
 
 
 ## Getting Started
@@ -72,3 +71,29 @@ ghaction::use_ghaction(type = "package", covr = TRUE, pkgdown = TRUE, deploy_tar
 
 
 ## Why You Should Care
+
+
+## Thanks
+
+ghactions doesn't really do much work, let alone hard work.
+It leaves that to other open source software and their generous authors.
+
+First and foremost, GitHub Actions is build on top of Docker, and so, by extension, is this package.
+It would not work without the tremendous work of [Carl Boettiger](https://www.carlboettiger.info) and [Dirk Edelbuettel](http://dirk.eddelbuettel.com), who carefully maintain versioned Docker images for R through their [Rocker Project](http://rocker-project.org).
+
+This package is also heavily modeled on, and indebted to the [usethis](https://usethis.r-lib.org) package by [Jenny Bryan](https://jennybryan.org) and [Hadley Wickham](http://hadley.nz).
+
+
+## Related and Prior Work
+
+There are plenty of other proven ways to run CI/CD for R.
+Many rely on the [R support on TravisCI](https://docs.travis-ci.com/user/languages/r/), maintained by [Jeron Ooms](https://github.com/jeroen) and [Jim Hester](https://www.jimhester.com).
+The [travis](https://ropenscilabs.github.io/travis/) and [tic](https://ropenscilabs.github.io/tic/) packages make it easier to work with them.
+You can use [AppVeyor](http://appveyor.com)'s Windows-based system via the [r-appveyor](https://github.com/krlmlr/r-appveyor) package.
+
+For serious, cross-platform testing of packages, there's the [r-hub](http://r-hub.io) project.
+
+There are also other and additional ways to use R and Docker together.
+The recommended way to use Dockere here is to simply edit a `DOCKERFILE` by hand, but the [containerit](http://o2r.info/containerit/) package can also, miraculously, do this for you by parsing your project files.
+We are here primarily concerned with running R *inside Docker* (inside GitHub actions), but there are also some packages that allow you to control Docker from *inside R*, including [stevedore](https://richfitz.github.io/stevedore/), [harbor](https://github.com/wch/harbor) and [docker](https://bhaskarvk.github.io/docker/)., though it facilitates running Docker *inside R*, whereas GitHub Actions runs R *inside Docker*.
+The broader topic of reproducibility in R with the help of Docker is also adressed by the [rrtools](https://github.com/benmarwick/rrtools) and [liftr](https://liftr.me) packages, as well as the [o2r](https://o2r.info) and [ropensci](https://ropensci.org) projects.
