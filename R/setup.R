@@ -22,7 +22,6 @@
 #' @examples
 #' \dontrun{
 #' use_ghactions(workflow = workflows$fau())
-
 #' }
 #' @export
 use_ghactions <- function(workflow = website()) {
@@ -38,6 +37,20 @@ use_ghactions <- function(workflow = website()) {
 
   # check conditions ====
   usethis:::check_uses_github()
+
+  if (!fs::file_exists("DOCKERFILE")) {
+    usethis::ui_warn(x = glue::glue(
+      'Could not find a {usethis::ui_code("DOCKERFILE")} at your repository root.'
+    ))
+    use_dockerfile()
+    usethis::ui_todo(x = glue::glue(
+      'Please edit the {usethis::ui_code("DOCKERFILE")} if you need additional dependencies.'
+    ))
+  } else {
+    usethis::ui_line(x = glue::glue(
+      'Using the {usethis::ui_code("DOCKERFILE")} found at your repository root.'
+    ))
+  }
 
   # body ====
   # make project-specific action blocks with leading workflow block
@@ -95,3 +108,27 @@ list2ghact <- function(workflow) {
   res <- glue::as_glue(x = res)
   res
 }
+
+#' @title Set up a simple `Dockerfile`
+#'
+#' @param FROM `[character(1)]`
+#' giving the base docker image.
+#' See details.
+#'
+#' @details
+#' Every project to be run on GitHub actions needs a `Dockerfile` at the root of the repository.
+#' For many projects, the popular [`verse`](https://hub.docker.com/r/rocker/verse) image, maintained by the [Rocker Project](http://rocker-project.org/) will suffice; it includes RStudio, the tidyverse, many frequently used packages and system dependencies.
+#' If you need more (or want less), you can always edit your `Dockerfile` by hand.
+#' Learn more about [extending images in the context of R](https://www.rocker-project.org/use/extending/).
+#'
+#' @family setup
+#'
+#' @export
+use_dockerfile <- function(FROM = "rocker/verse:3.5.2") {
+  checkmate::assert_string(x = FROM, na.ok = FALSE, null.ok = FALSE)
+  usethis::ui_line(glue::glue("Choosing {FROM} as your base docker image."))
+  new <- usethis::write_over(path = "Dockerfile", lines = "FROM rocker/verse:3.5.2")
+  # return true/false for changed files as in original use_template
+  invisible(new)
+}
+

@@ -47,4 +47,9 @@ use_ghactions(workflow = workflows$fau())
 list2ghact(workflow = website())
 
 }
+\seealso{
+Other setup: \code{\link{use_dockerfile}}
+
+Other setup: \code{\link{use_dockerfile}}
+}
 \concept{setup}
