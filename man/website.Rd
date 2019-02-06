@@ -2,11 +2,15 @@
 % Please edit documentation in R/workflows.R
 \name{website}
 \alias{website}
+\alias{fau}
 \title{Render and deploy R projects to static hosting.}
 \usage{
 website(IDENTIFIER = "Render and Deploy",
   .f = "rmarkdown::render_site()", static_dir = "_site",
   deploy = NULL)
+
+fau(IDENTIFIER = "Render and Deploy", .f = "rmarkdown::render_site()",
+  static_dir = "_site")
 }
 \arguments{
 \item{IDENTIFIER}{\code{[character(1)]}
@@ -21,7 +25,9 @@ Used:
 \item{.f}{\code{[character(1)]}
 giving the render function, typically something like \code{rmarkdown::render_site()}.}
 
-\item{static_dir}{\code{[character(1)]`` giving the path to the generated static assets from the repository root. Typically something like }_site/\code{for}rmarkdown::render_site()`.}
+\item{static_dir}{\code{[character(1)]}
+giving the path to the generated static assets from the repository root.
+Typically something like \code{_site/} for \code{rmarkdown::render_site()}.}
 
 \item{deploy}{\code{[list()]}
 giving the name of the branch to deploy \emph{from}, and the function to deploy \emph{with}.}
@@ -30,7 +36,7 @@ giving the name of the branch to deploy \emph{from}, and the function to deploy 
 A list as specified in the \code{workflow} argument to \code{\link[=use_ghactions]{use_ghactions()}}.
 }
 \description{
-This function generates workflows suitable for R \code{website} projects, such as:
+These functions generate workflows suitable for R \code{website} projects, such as:
 \itemize{
 \item \href{https://rmarkdown.rstudio.com/lesson-13.html}{RMarkdown websites}
 \item \href{http://bookdown.org}{Bookdown websites}
@@ -38,4 +44,10 @@ This function generates workflows suitable for R \code{website} projects, such a
 \item and other similar projects with an R static site generator.
 }
 }
+\section{Functions}{
+\itemize{
+\item \code{fau}: Includes defaults for deployment at Friedrich-Alexander Universität Erlangen-Nürnberg
+}}
+
 \concept{workflows}
+\keyword{internal}

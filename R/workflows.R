@@ -1,7 +1,7 @@
 #' @title Render and deploy R projects to static hosting.
 #'
 #' @description
-#' This function generates workflows suitable for R `website` projects, such as:
+#' These functions generate workflows suitable for R `website` projects, such as:
 #' - [RMarkdown websites](https://rmarkdown.rstudio.com/lesson-13.html)
 #' - [Bookdown websites](http://bookdown.org)
 #' - [Blogdown websites](https://bookdown.org/yihui/blogdown/)
@@ -34,7 +34,8 @@ website <- function(IDENTIFIER = "Render and Deploy",
   # TODO somehow check .f
   checkmate::assert_list(
     x = deploy,
-    types = "function",
+    # types = "function",
+    # not really, it's a function call, not the same
     any.missing = FALSE,
     len = 1,
     null.ok = TRUE
@@ -60,6 +61,24 @@ website <- function(IDENTIFIER = "Render and Deploy",
   )
   res$actions <- c(res$actions, filter_then_deploy())
   res
+}
+
+#' @describeIn website Includes defaults for deployment at Friedrich-Alexander Universität Erlangen-Nürnberg
+#'
+#' @family workflows
+#'
+#' @keywords internal
+#'
+#' @export
+fau <- function(IDENTIFIER = "Render and Deploy",
+                .f = "rmarkdown::render_site()",
+                static_dir = "_site") {
+  website(
+    IDENTIFIER = IDENTIFIER,
+    .f = .f,
+    static_dir = static_dir,
+    deploy = list(master = deploy_fau(needs = "Master"))
+  )
 }
 
 filter_then_deploy <- function(master = deploy_ghpages(needs = "Master"), needs = "Render") {
