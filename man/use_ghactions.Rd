@@ -5,9 +5,9 @@
 \alias{list2ghact}
 \title{Workflow automation with GitHub Actions}
 \usage{
-use_ghactions(workflow = NULL)
+use_ghactions(workflow = website())
 
-list2ghact(workflow = NULL)
+list2ghact(workflow)
 }
 \arguments{
 \item{workflow}{\code{[list(list())]}
@@ -25,7 +25,7 @@ Defaults to \code{NULL}, in which case one of the workflows functions is chosen 
 A logical vector indicating if file was modified.
 }
 \description{
-Sets up workflow automation, including continuous integration and deployment (CI/CD) for a different kinds of R projects on GitHub actions.
+Sets up workflow automation, including continuous integration and deployment (CI/CD) for different kinds of R projects on GitHub actions.
 This function
 \itemize{
 \item Picks a set of sensible defaults for your project.
@@ -44,9 +44,7 @@ Useful when you want the result printed to console, not written to file.
 use_ghactions(workflow = workflows$fau())
 }
 # this will print the result to the console for inspection
-\dontrun{
-list2ghact(workflow = workflows$fau())
-}
+list2ghact(workflow = website())
 
 }
 \concept{setup}

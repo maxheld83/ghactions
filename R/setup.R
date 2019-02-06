@@ -1,7 +1,7 @@
 #' @title Workflow automation with GitHub Actions
 #'
 #' @description
-#' Sets up workflow automation, including continuous integration and deployment (CI/CD) for a different kinds of R projects on GitHub actions.
+#' Sets up workflow automation, including continuous integration and deployment (CI/CD) for different kinds of R projects on GitHub actions.
 #' This function
 #' - Picks a set of sensible defaults for your project.
 #' - Transforms a list of workflow and action blocks into the GitHub actions syntax.
@@ -25,13 +25,21 @@
 
 #' }
 #' @export
-use_ghactions <- function(workflow = NULL) {
-  # TODO input validation
+use_ghactions <- function(workflow = website()) {
+  # input validation ====
+  checkmate::assert_list(
+    x = workflow,
+    any.missing = FALSE,
+    names = "named",
+    null.ok = FALSE
+  )
+
   # TODO infer project kind
 
-  # check for github
+  # check conditions ====
   usethis:::check_uses_github()
 
+  # body ====
   # make project-specific action blocks with leading workflow block
   res <- list2ghact(workflow = workflow)
 
@@ -39,7 +47,6 @@ use_ghactions <- function(workflow = NULL) {
   # this is modelled on use_template, but because we already have the full string in above res, we don't need to go through whisker/mustache again
   usethis::use_directory(path = ".github", ignore = TRUE)
 
-  # TODO not sure its kosher to use this function; it's exported but marked as internal
   new <- usethis::write_over(
     path = ".github/main.workflow",
     lines = res,
@@ -64,14 +71,12 @@ use_ghactions <- function(workflow = NULL) {
 #'
 #' @examples
 #' # this will print the result to the console for inspection
-#' \dontrun{
-#' list2ghact(workflow = workflows$fau())
-#' }
+#' list2ghact(workflow = website())
 #'
 #' @family setup
 #'
 #' @export
-list2ghact <- function(workflow = NULL) {
+list2ghact <- function(workflow) {
   res <- make_workflow_block(
     IDENTIFIER = workflow$IDENTIFIER,
     on = workflow$on,

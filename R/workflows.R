@@ -94,7 +94,12 @@ filter_then_deploy <- function(master = deploy_ghpages(needs = "Master"), needs 
 }
 
 deploy_ghpages <- function(static_dir = "_site", needs) {
-  ghpages(env = glue::glue("BUILD_DIR = '{static_dir}'"), needs = needs)
+  ghpages(
+    env = list(
+      BUILD_DIR = static_dir
+    ),
+    needs = needs
+  )
 }
 
 deploy_fau <- function(static_dir = "_site", needs) {
