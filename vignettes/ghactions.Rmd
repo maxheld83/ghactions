@@ -31,7 +31,9 @@ Because you're likely only to ever use it *once*, **you need not take on ghactio
 
 ## Quick Start
 
-If you just want to get started quickly, run
+GitHub actions just requires a special file in a special directory at the root of your repository to work: `.github/main.workflow`.
+
+To quickly set up such a file for frequently used project kinds, run:
 
 ```r
 ghactions::use_ghactions(workflow = website())
@@ -41,6 +43,8 @@ ghactions::use_ghactions(workflow = website())
 
 Then push to GitHub and go to the actions tab in your repository.
 Enjoy.
+
+To learn more about GitHub actions and how to use it for and in R, read on.
 
 
 ## Docker First
@@ -148,13 +152,7 @@ These action wrappers, in short, are useful only in the *very* narrow case where
 
 This function generates `main.workflow` files for common workflow configurations of R projects.
 
-Typical invocations may include:
-
-```r
-# this is just pseudcode; functions don't exist yet
-ghaction::use_ghaction(type = "rmarkdown", deploy_target = "rsync")
-ghaction::use_ghaction(type = "package", covr = TRUE, pkgdown = TRUE, deploy_target = "ghpages")
-```
+Workflows are documented in the workflow category.
 
 
 ## Why You Should Care
