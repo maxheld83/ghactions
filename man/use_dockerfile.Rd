@@ -18,7 +18,7 @@ Set up a simple \code{Dockerfile}
 Every project to be run on GitHub actions needs a \code{Dockerfile} at the root of the repository.
 For many projects, the popular \href{https://hub.docker.com/r/rocker/verse}{verse} image, maintained by the \href{http://rocker-project.org/}{Rocker Project} will suffice; it includes RStudio, the tidyverse, many frequently used packages and system dependencies.
 If you need more (or want less), you can always edit your \code{Dockerfile} by hand.
-Learn more about \href{https://www.rocker-project.org/use/extending/}{extending images in the context of R}.
+Learn more about \href{https://www.rocker-project.org/use/extending/}{extending images in the context of R} at the Rocker Project.
 }
 \seealso{
 Other setup: \code{\link{use_ghactions}}

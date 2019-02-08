@@ -78,7 +78,7 @@ make_workflow_block <- function(IDENTIFIER, on = "push", resolves) {
 #' @export
 ghactions_events <- c(
   "check_run",
-  "check-suite",
+  "check_suite",
   "commit_comment",
   "create",
   "delete",

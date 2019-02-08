@@ -17,7 +17,6 @@ A named list of blocks nested as:
 \item `$actions``, which in turn comprises of the
 \itemize{
 \item \strong{Several action blocks} with arguments to \code{\link[=make_action_block]{make_action_block()}} as a named list.
-Defaults to \code{NULL}, in which case one of the workflows functions is chosen based on the configuration files in your repository.
 }
 }}
 }

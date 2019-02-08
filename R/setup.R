@@ -12,7 +12,7 @@
 #' - **The workflow block**: arguments to [make_workflow_block()] as a named list *and*
 #' - `$actions``, which in turn comprises of the
 #'   - **Several action blocks** with arguments to [make_action_block()] as a named list.
-#' Defaults to `NULL`, in which case one of the workflows functions is chosen based on the configuration files in your repository.
+# #' Defaults to `NULL`, in which case one of the workflows functions is chosen based on the configuration files in your repository.
 # TODO link workflows in the above to docs
 #'
 #' @inherit usethis::use_template return
@@ -105,8 +105,7 @@ list2ghact <- function(workflow) {
     )
   )
   # this makes it easier to read in debugging; above imap kills s3 attributes
-  res <- glue::as_glue(x = res)
-  res
+  glue::as_glue(x = res)
 }
 
 #' @title Set up a simple `Dockerfile`
@@ -119,7 +118,7 @@ list2ghact <- function(workflow) {
 #' Every project to be run on GitHub actions needs a `Dockerfile` at the root of the repository.
 #' For many projects, the popular [`verse`](https://hub.docker.com/r/rocker/verse) image, maintained by the [Rocker Project](http://rocker-project.org/) will suffice; it includes RStudio, the tidyverse, many frequently used packages and system dependencies.
 #' If you need more (or want less), you can always edit your `Dockerfile` by hand.
-#' Learn more about [extending images in the context of R](https://www.rocker-project.org/use/extending/).
+#' Learn more about [extending images in the context of R](https://www.rocker-project.org/use/extending/) at the Rocker Project.
 #'
 #' @family setup
 #'
