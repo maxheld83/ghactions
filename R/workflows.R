@@ -1,4 +1,4 @@
-#' @title Render and deploy R projects to static hosting.
+#' @title Render and deploy R projects to static hosting
 #'
 #' @description
 #' These functions generate workflows suitable for R `website` projects, such as:
