@@ -1,40 +1,9 @@
 This is a very **simple** GitHub action; it just runs in `Rscript` whatever you provide as the `args` field (see below).
-This action is meant for **generic** R projects with **arbitrary build environments**; you therefore **have to bring your own dockerfile**.
-If you are targeting a specific build or runtime environment (say, `R CMD build` or [shinyapps.io](https://www.shinyapps.io)), some of the other actions may be more suitable for your purposes.
-If you are *not* targeting a specific environment, and don't know much about docker, you can easily start with one of the popular rocker images as in the below example. 
-Learn more about docker and R from the [rocker project](http://rocker-project.org).
+This action is meant for **generic** R projects with **arbitrary build environments**; you therefore [**have to bring your own dockerfile**](http://www.maxheld.de/ghactions/articles/ghactions.html#docker).
 
-A dockerfile is simply a text file called `Dockerfile` at the root of your repository.
-At a minimum, it should include a `FROM` statement as in the below.
-You are highly recommended to always use versioned images.
-
-```
-FROM rocker/verse:3.5.2
-```
-
-Because a dockerfile is just a *recipe* for a build environment, **you first have to build your `repo/Dockerfile`** into an image.
-Happily, GitHub actions already provides an [action for that](https://github.com/actions/docker), which you should run as a first step in your `main.workflow` with minimal customization:
-
-```
-action "Build image" {
-  uses = "actions/docker/cli@c08a5fc9e0286844156fefff2c141072048141f6"
-  args = "build --tag=repo:latest ."
-}
-```
-
-This just runs `docker build --tag=repo:latest .`, where `.` is the root of your repository.
-Docker will then pick whichever `Dockerfile` it finds there, and well, *build* it.
-Your dockerfile recipe has now been prepared into a meal, and this meal (the docker *image*) now exists in your `/github/workspace`.
-This is a special directory that you won't ever see anywhere.
-GitHub actions provisions this directory, and lets it *persist as long as your `main.workflow` runs*.
-
-Any downstream actions (such as *this* action!) can now use the prepared image, but they have to know its name.
-The `--tag=repo:latest` part of the above call simply names your image, literally "repo:latest".
-This is just my convention, not a magic name.
-But it is very important you *use exactly this name*, because otherwise downstream actions (*this* action) cannot base their own work on it.
-This isn't terribly elegant, but currently appears to be the only way on GitHub actions to identify images from past actions (see [this issue](https://github.com/maxheld83/ghactions/issues/1)).
-
-Once your "bring-your-own-dockerfile" has been build into an image, the present action then simply runs whatever you pass `Rscript` *in* that image.
+**This action expects that a built image called `repo:latest` exists in your `/github/workspace`.**
+Whatever you pass `Rscript` will simply run *in* that image.
+Hence the name: **bring-your-own-dockerfile**, or rather, **docker image**.
 
 
 ## Environment Variables
@@ -82,6 +51,7 @@ Nope.
 ## Example Usage
 
 Here is a complete `main.workflow` that first builds your (byod) image, and then runs `rmarkdown::render_site()` on it.
+You can also get this automatically by running one of the workflow functions in the ghactions package.
 
 ```
 workflow "Build then render" {

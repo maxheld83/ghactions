@@ -22,16 +22,3 @@ This repository, **ghactions**, offers three avenues to **bring GitHub actions t
   These functions are styled after the popular [usethis](http://usethis.r-lib.org) package.
   They don't do much: They just set you up with some configuration files for your project, using sensible defaults.
 3. Documenting experiences and evolving [**best practices**](http://www.maxheld.de/ghactions/articles/ghactions.html) for how to make the most of GitHub actions for R.
-
-
-## Getting Started
-
-If you haven't gotten access yet, [sign up](https://github.com/features/actions) for the closed beta of GitHub actions.
-
-To install, run:
-
-```r
-devtools::install_github("maxheld83/ghactions")
-```
-
-Because you're likely only to ever use ghactions *once*, you need not take it on as a dependency to your projects.
