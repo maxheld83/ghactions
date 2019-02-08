@@ -23,7 +23,7 @@ action "Build Package" {
 action "Install Package" {
   uses = "./Rscript-byod"
   needs = ["Build Package"]
-  args = "-e 'devtools::install()'"
+  args = "-e 'devtools::install(dependencies = FALSE)'"
 }
 
 action "Check Package" {
