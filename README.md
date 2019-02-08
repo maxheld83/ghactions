@@ -15,10 +15,10 @@ This repository, **ghactions**, offers three avenues to **bring GitHub actions t
   These actions are maintained in this repository, but are not technically part of the accompanying ghactions R package.
   You can use these actions independently from the package; they are freely available on GitHub marketplace.
   In fact, the whole idea of GitHub actions is that people re-use such small building blocks any way they like.
-2. The accompanying [**ghactions R package**](#workflows) furnishes you with some out-of-the-box **workflows** for many kinds of projects.
+2. The accompanying [**ghactions R package**](#workflows) furnishes you with some out-of-the-box **workflows** for different kinds of projects.
   These functions are styled after the popular [usethis](http://usethis.r-lib.org) package.
   They don't do much: They just set you up with some configuration files for your project, using sensible defaults.
-3. Documenting experiences and evolving [**best practices**](http://www.maxheld.de/ghactions/articles/why) for how to make the most of GitHub actions for R.
+3. Documenting experiences and evolving [**best practices**](http://www.maxheld.de/ghactions/articles/ghactions.html) for how to make the most of GitHub actions for R.
 
 
 ## Getting Started
@@ -31,67 +31,4 @@ To install, run:
 devtools::install_github("maxheld83/ghactions")
 ```
 
-
-## Actions
-
-The below workflow function(s) paste together individual actions.
-There are also separate functions to generate these individual actions, which again, are simple paste jobs.
-
-They only exist as R functions to simplify the documentation in *one* place and to reuse them elegantly across several actions.
-
-
-```
-# just pseudocode, does not exist yet
-ghaction::Rsync_byod(
-  title = "Render rmarkdown", 
-  needs = "Build image", 
-  uses = "maxheld83/ghactions/Rscript-byod@master"
-  args = "-e 'rmarkdown::render_site()'"
-)
-```
-
-
-## Workflows
-
-This function generates `main.workflow` files for common workflow configurations of R projects.
-
-Typical invocations may include:
-
-```r
-# this is just pseudcode; functions don't exist yet
-ghaction::use_ghaction(type = "rmarkdown", deploy_target = "rsync")
-ghaction::use_ghaction(type = "package", covr = TRUE, pkgdown = TRUE, deploy_target = "ghpages")
-```
-
-
-## Docker
-
-
-
-## Why You Should Care
-
-
-## Thanks
-
-ghactions doesn't really do much work, let alone hard work.
-It leaves that to other open source software and their generous authors.
-
-First and foremost, GitHub Actions is build on top of Docker, and so, by extension, is this package.
-It would not work without the tremendous work of [Carl Boettiger](https://www.carlboettiger.info) and [Dirk Edelbuettel](http://dirk.eddelbuettel.com), who carefully maintain versioned Docker images for R through their [Rocker Project](http://rocker-project.org).
-
-This package is also heavily modeled on, and indebted to the [usethis](https://usethis.r-lib.org) package by [Jenny Bryan](https://jennybryan.org) and [Hadley Wickham](http://hadley.nz).
-
-
-## Related and Prior Work
-
-There are plenty of other proven ways to run CI/CD for R.
-Many rely on the [R support on TravisCI](https://docs.travis-ci.com/user/languages/r/), maintained by [Jeron Ooms](https://github.com/jeroen) and [Jim Hester](https://www.jimhester.com).
-The [travis](https://ropenscilabs.github.io/travis/) and [tic](https://ropenscilabs.github.io/tic/) packages make it easier to work with them.
-You can use [AppVeyor](http://appveyor.com)'s Windows-based system via the [r-appveyor](https://github.com/krlmlr/r-appveyor) package.
-
-For serious, cross-platform testing of packages, there's the [r-hub](http://r-hub.io) project.
-
-There are also other and additional ways to use R and Docker together.
-The recommended way to use Dockere here is to simply edit a `DOCKERFILE` by hand, but the [containerit](http://o2r.info/containerit/) package can also, miraculously, do this for you by parsing your project files.
-We are here primarily concerned with running R *inside Docker* (inside GitHub actions), but there are also some packages that allow you to control Docker from *inside R*, including [stevedore](https://richfitz.github.io/stevedore/), [harbor](https://github.com/wch/harbor) and [docker](https://bhaskarvk.github.io/docker/)., though it facilitates running Docker *inside R*, whereas GitHub Actions runs R *inside Docker*.
-The broader topic of reproducibility in R with the help of Docker is also adressed by the [rrtools](https://github.com/benmarwick/rrtools) and [liftr](https://liftr.me) packages, as well as the [o2r](https://o2r.info) and [ropensci](https://ropensci.org) projects.
+Because you're likely only to ever use ghactions *once*, you need not take it on as a dependency to your projects.
