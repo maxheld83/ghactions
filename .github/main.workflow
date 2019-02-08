@@ -20,6 +20,12 @@ action "Build Package" {
   args = "-e 'devtools::build(path = \".\")'"
 }
 
+action "Install Package" {
+  uses = "./Rscript-byod"
+  needs = ["Build Package"]
+  args = "-e 'devtools::install()'"
+}
+
 action "Check Package" {
   uses = "./Rscript-byod"
   needs = ["Build Package"]
@@ -52,10 +58,4 @@ action "Deploy to GitHub Pages" {
   }
   secrets = ["GH_PAT"]
   needs = ["Filter Master Branch"]
-}
-
-action "Install Package" {
-  uses = "./Rscript-byod"
-  needs = ["Build Package"]
-  args = "-e 'pkgdown::install()'"
 }
