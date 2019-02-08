@@ -74,3 +74,5 @@ ghpages <- function(needs,
     env = env
   )
 }
+
+netlify = NULL
