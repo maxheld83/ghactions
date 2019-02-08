@@ -14,3 +14,4 @@ pkgdown/
 ^man-roxygen$
 vignettes/rscript-byod.Rmd
 vignettes/ghactions.Rmd
+pkgwf.gif

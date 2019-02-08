@@ -2,7 +2,7 @@
 % Please edit documentation in R/workflows.R
 \name{website}
 \alias{website}
-\title{Render and deploy R projects to static hosting.}
+\title{Render and deploy R projects to static hosting}
 \usage{
 website(IDENTIFIER = "Render and Deploy",
   .f = "rmarkdown::render_site()", static_dir = "_site",
