@@ -5,6 +5,7 @@ workflow "Build, Check, Document and Deploy" {
     "Document Package",
     "Code Coverage",
     "Deploy to GitHub Pages",
+    "Install Package",
   ]
 }
 
@@ -27,7 +28,7 @@ action "Check Package" {
 
 action "Document Package" {
   uses = "./Rscript-byod"
-  needs = ["Build Package"]
+  needs = ["Install Package"]
   args = "-e 'pkgdown::build_site()'"
 }
 
@@ -51,4 +52,10 @@ action "Deploy to GitHub Pages" {
   }
   secrets = ["GH_PAT"]
   needs = ["Filter Master Branch"]
+}
+
+action "Install Package" {
+  uses = "./Rscript-byod"
+  needs = ["Build Package"]
+  args = "-e 'pkgdown::install()'"
 }
