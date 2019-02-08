@@ -49,14 +49,14 @@ To learn more about GitHub actions and how to use it for and in R, read on.
 
 ## Docker First
 
-Every GitHub *action* (not just the entire workflow) runs in its own little virtual machine (but thinner) called a Docker container.
+Every GitHub *action* (not just the entire workflow) runs in its own little virtual machine, called a Docker container.
 If you already know what this is, skip ahead.
 If you're not familiar with Docker, it's easy to learn.
 
-A Docker container (loosely speaking) exists in several forms.
+A Docker container exists in several forms.
 It starts from a simple text file called `Dockerfile`, listing some instructions to build a virtual machine.
 Think of this as the *recipe* to make your computing environment.
-Using the `docker build` shell command, you can then, well, *build* a container *image*, which gets stored somewhere on your computer and which you can share with others.
+Using the `docker build` shell command, you can *build* a container *image*, which gets stored somewhere on your computer and which you can share with others.
 Think of this as the prepared *meal*, which you've then put in the freezer for later.
 Finally, you can `docker start` an image to boot said virtual machine.
 Figuratively, you've now microwaved your pre-cooked meal and can *finally* enjoy it.
@@ -65,14 +65,14 @@ Docker images can also be *layered*.
 For example, you can base a `Dockerfile` on an already existing docker *image*, and just add your *additional* instructions.
 In the now tired frozen food analogy, you can use frozen pizza dough from the store as an *ingredient* to your own home-cooked meal.
 
-Some GitHub actions use one of the many publicly available images to get their work done, such as, for example, the [action to publish to GitHub Pages](https://github.com/maxheld83/ghpages).
+Some GitHub actions use one of the many publicly available images to get their work done, such as the [action to publish to GitHub Pages](https://github.com/maxheld83/ghpages).
 This would also make sense for those R projects, where you know *precisely* the build or runtime environment you need to adhere to, such as if you are deploying to [shinyapps.io](https://www.shinyapps.io) (their respective dockerfile is [here](https://github.com/rstudio/shinyapps-package-dependencies)).
 
 For many other R projects, such as some R markdown project, there is *no* such standard computing environment, and you actually *want* to have the flexibility to provision one for yourself (say, because you need some obscure version of a system dependency such as the GSL or LaTeX).
 In these situations, you have to **bring-your-own-`Dockerfile`**.
 In fact, it's always safer to **byod**.
 Happily, there are some great docker images for R projects maintained by the [Rocker Project](http://rocker-project.org).
-Because containers can be layered, you can just base your *own* `Dockerfile` on of those popular images, such as `rocker/verse`, which includes R, RStudio, the tidyverse, LaTeX and many other packages and system dependencies.
+Because containers can be layered, you can just base your *own* `Dockerfile` on one of those popular images. `rocker/verse` for example includes: R, RStudio, the tidyverse, LaTeX and many other packages and system dependencies.
 
 A dockerfile is simply a text file called `Dockerfile` at the root of your repository.
 At a minimum, it should include a `FROM` statement as in the below.
@@ -106,10 +106,10 @@ action "Build image" {
 ```
 
 This just runs `docker build --tag=repo:latest .`, where `.` is the root of your repository.
-Docker will then pick whichever `Dockerfile` it finds there, and well, *build* it.
-Your dockerfile recipe has now been prepared into a meal, and this meal (the docker *image*) now exists in your `/github/workspace`.
+Docker will then pick whichever `Dockerfile` it finds there and *build* it.
+Your dockerfile recipe has now been prepared into a meal, and this meal (the docker *image*) exists in your `/github/workspace`.
 This is a special directory that you won't ever see anywhere.
-GitHub actions provisions this directory, and lets it *persist as long as your `main.workflow` runs*.
+GitHub actions provisions this directory and lets it *persist as long as your `main.workflow` runs*.
 
 The `--tag=repo:latest` part of the above call simply names your image, literally "repo:latest".
 This is just my convention, not a magic name.
@@ -159,9 +159,9 @@ Workflows are documented in the workflow category.
 
 It's still very early days, but it seems as if GitHub actions might have some potential for R projects:
 
-- It's built on an open-source, cross-platform foundation that you can easily reason about and reproduce on your machine (Docker!).
+- It's built on an open-source, cross-platform foundation, that you can easily reason about and reproduce on your machine (Docker!).
 - It seems pretty darn fast compared to TravisCI: an `R CMD check` for a small project with all bells and whistles is at <4 minutes. (This is anecdotal evidence, if you'd like a real benchmarking, chip in [here](https://github.com/maxheld83/ghactions/issues/35)).
-- There's one less service to deal with and one less authentication to go through, especially for smaller projects. No more PATs.
+- There's one less service to deal with and one less authentication to go through, especially for smaller projects.
 - The GUI makes it easier to build and reason about complex CI/CD chains.
 - The sharing model seems promising.
 - GitHub actions can be tied into almost *anything* in the GitHub API. Let's go nuts!
@@ -172,9 +172,9 @@ Of course there might be some vendor lock-in, though arguably less so than with 
 ## What This Package *Doesn't* Do
 
 The ghactions package is quite limited, and deliberately so:
-GitHub actions already provides most of the things we might want, and in a cross-platform (if somewhat vendor-locked) way:
+GitHub actions already provides most of the things we might want, and in a cross-platform way:
 
-- a succinct and human-readable text file representation (a subset of the [Hashicorp Configuration Language (HCL)](https://github.com/hashicorp/hcl)) of the [directed acyclic graphs (DAG)](https://en.wikipedia.org/wiki/Directed_acyclic_graph) here used to model code automation workflows,
+- a succinct and human-readable text file representation (a subset of the [Hashicorp Configuration Language (HCL)](https://github.com/hashicorp/hcl)) of the [directed acyclic graphs (DAG)](https://en.wikipedia.org/wiki/Directed_acyclic_graph) used to model code automation workflows,
 - a neat graphical user interface that makes to edit your `main.workflow` files in their native graph form,
 - a convenient model and marketplace to share actions.
 
