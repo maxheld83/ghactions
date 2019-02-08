@@ -96,8 +96,6 @@ Because a `Dockerfile` is just a *recipe* for a build environment, **you first h
 Happily, GitHub actions already provides an [action for that](https://github.com/actions/docker).
 Most workflow function in this package start with a block such as the below.
 
-You can type this by hand, or have ghactions write it for you:
-
 ```
 action "Build image" {
   uses = "actions/docker/cli@c08a5fc9e0286844156fefff2c141072048141f6"
