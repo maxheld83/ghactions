@@ -7,8 +7,6 @@
 #' - [Blogdown websites](https://bookdown.org/yihui/blogdown/)
 #' - and other similar projects with an R static site generator.
 #'
-#' @family workflows
-#'
 #' @inheritParams make_workflow_block
 #'
 #' @param .f `[character(1)]`
@@ -23,6 +21,8 @@
 #' giving the name of the branch to deploy *from*, and the function to deploy *with*.
 #'
 #' @return A list as specified in the `workflow` argument to [use_ghactions()].
+#'
+#' @family workflows
 #'
 #' @export
 website <- function(IDENTIFIER = "Render and Deploy",
@@ -63,13 +63,16 @@ website <- function(IDENTIFIER = "Render and Deploy",
   res
 }
 
-#' @describeIn website Includes defaults for deployment at Friedrich-Alexander Universität Erlangen-Nürnberg
+#' @title Quick setup for projects at FAU.
+#'
+#' @description
+#' For internal use at FAU only.
+#'
+#' @inheritParams website
 #'
 #' @family workflows
 #'
-#' @keywords internal
-#'
-#' @export
+#' @noRd
 fau <- function(IDENTIFIER = "Render and Deploy",
                 .f = "rmarkdown::render_site()",
                 static_dir = "_site") {

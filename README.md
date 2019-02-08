@@ -9,8 +9,6 @@
 [GitHub actions](https://github.com/features/actions) are a new workflow automation feature of the popular code repository host GitHub.
 The product is currently in **limited beta**.
 
-Here are a few reasons why GitHub actions is worth a try, especially for R projects.
-
 This repository, **ghactions**, offers three avenues to **bring GitHub actions to the `#rstats` community**:
 
 1. Some [**actions**](#actions) to run R-specific jobs on GitHub, including [arbitrary R code](http://www.maxheld.de/ghactions/articles/rscript-byod.html) or deploying to [shinyapps.io](http://shinyapps.io).

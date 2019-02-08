@@ -37,6 +37,8 @@ navbar:
       href: "index.html"
     - text: "Get Started"
       href: "articles/ghactions.html"
+    - text: "Reference"
+      href: "reference/index.html"
     - text: "Wrapped Actions"
       menu:
       - text: "from this repo:"
@@ -50,8 +52,6 @@ navbar:
         href: "https://github.com/maxheld83/rsync"
       - text: "Netlify CLI"
         href: "https://github.com/netlify/actions/tree/master/cli"
-    - text: "Reference"
-      href: "reference/index.html"
     -
   right:
     - icon: fa-github

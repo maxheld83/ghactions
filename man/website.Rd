@@ -2,15 +2,11 @@
 % Please edit documentation in R/workflows.R
 \name{website}
 \alias{website}
-\alias{fau}
 \title{Render and deploy R projects to static hosting.}
 \usage{
 website(IDENTIFIER = "Render and Deploy",
   .f = "rmarkdown::render_site()", static_dir = "_site",
   deploy = NULL)
-
-fau(IDENTIFIER = "Render and Deploy", .f = "rmarkdown::render_site()",
-  static_dir = "_site")
 }
 \arguments{
 \item{IDENTIFIER}{\code{[character(1)]}
@@ -44,10 +40,4 @@ These functions generate workflows suitable for R \code{website} projects, such 
 \item and other similar projects with an R static site generator.
 }
 }
-\section{Functions}{
-\itemize{
-\item \code{fau}: Includes defaults for deployment at Friedrich-Alexander Universität Erlangen-Nürnberg
-}}
-
 \concept{workflows}
-\keyword{internal}
