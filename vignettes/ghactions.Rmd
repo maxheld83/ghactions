@@ -90,7 +90,9 @@ Beginners might be better off writing their own `Dockerfile`s.
 There is one last step before we can use the `Dockerfile` in a GitHub action.
 Because a `Dockerfile` is just a *recipe* for a build environment, **you first have to build your `repo/Dockerfile`** into an image.
 Happily, GitHub actions already provides an [action for that](https://github.com/actions/docker).
-Most workflow function in this package start with a block such as the below, added via `ghactions::docker_cli()`.
+Most workflow function in this package start with a block such as the below.
+
+You can type this by hand, or have ghactions write it for you:
 
 ```
 action "Build image" {
@@ -116,21 +118,30 @@ This isn't terribly elegant, but currently appears to be the only way on GitHub 
 
 ## Actions
 
-Actions are the parts that make up a workflow.
+GitHub actions workflows are made up of individual blocks called -- you guessed it -- *actions*. 
 In other CI/CD services, these are sometimes known as *steps*, though GitHub actions are more flexible.
+You can read more about actions in [the GitHub documentation](https://developer.github.com/actions/).
 
-The below workflow function(s) paste together individual actions and make them work together.
+This repository includes some custom R actions, but also relies greatly on outside actions (such as for deployment to, say, Netlify).
+You can find a list in the actions category.
 
+The below workflow-generating functions of this package add together individual actions and make them work together.
 
+If you really wanted to, you can also use the templating functions to create action block syntax through ghactions:
+
+```{r}
+library(ghactions)
+x <- rscript_byod(  # this just creates a list with sensible defaults
+  needs = "Build image", # this is the necessary prior step
+  # the uses field is hard-coded in the function to keep everything compatible
+  args = "-e '1+1'"
+) 
+do.call(what = make_action_block, args = c(IDENTIFIER = "Summation", x))
 ```
-# just pseudocode, does not exist yet
-ghaction::Rsync_byod(
-  title = "Render rmarkdown", 
-  needs = "Build image", 
-  uses = "maxheld83/ghactions/Rscript-byod@master"
-  args = "-e 'rmarkdown::render_site()'"
-)
-```
+
+This isn't a very convincing use of R, and you'd be better off typing the action block by hand, or even just using the visual editor on GitHub.com.
+To avoid duplication, there also isn't much documentation in these action wrappers; they just link to their respective repositories.
+These action wrappers, in short, are useful only in the *very* narrow case where you might want to programmatically build your own templates.
 
 
 ## Workflows
