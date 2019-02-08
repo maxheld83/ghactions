@@ -6,10 +6,13 @@
 [![codecov](https://codecov.io/gh/maxheld83/ghactions/branch/master/graph/badge.svg)](https://codecov.io/gh/maxheld83/ghactions)
 [![License: MIT](https://img.shields.io/github/license/maxheld83/ghactions.svg?style=flat)](https://opensource.org/licenses/MIT)
 
+
 [GitHub actions](https://github.com/features/actions) are a new workflow automation feature of the popular code repository host GitHub.
 The product is currently in **limited beta**.
 
 This repository, **ghactions**, offers three avenues to **bring GitHub actions to the `#rstats` community**:
+
+<img src="https://github.com/maxheld83/ghactions/blob/master/pkgwf.gif?raw=true" width=400/ align=right style="padding-left: 20px">
 
 1. Some [**actions**](#actions) to run R-specific jobs on GitHub, including [arbitrary R code](http://www.maxheld.de/ghactions/articles/rscript-byod.html) or deploying to [shinyapps.io](http://shinyapps.io).
   These actions are maintained in this repository, but are not technically part of the accompanying ghactions R package.
