@@ -12,3 +12,5 @@ Rscript-byod/
 .tar.gz
 pkgdown/
 ^man-roxygen$
+vignettes/rscript-byod.Rmd
+vignettes/ghactions.Rmd

@@ -34,9 +34,25 @@ navbar:
   title: "ghactions"
   left:
     - icon: fa-home
-      href: index.html
-    - text: Reference
-      href: reference/index.html
+      href: "index.html"
+    - text: "Get Started"
+      href: "articles/ghactions.html"
+    - text: "Wrapped Actions"
+      menu:
+      - text: "from this repo:"
+      - text: "Rscript-byod"
+        href: "articles/rscript-byod.html"
+      - text: "---------"
+      - text: "from elsewhere:"
+      - text: "GitHub Pages"
+        href: "https://github.com/maxheld83/ghpages"
+      - text: "Rsync over SSH"
+        href: "https://github.com/maxheld83/rsync"
+      - text: "Netlify CLI"
+        href: "https://github.com/netlify/actions/tree/master/cli"
+    - text: "Reference"
+      href: "reference/index.html"
+    -
   right:
     - icon: fa-github
       href: https://github.com/maxheld83/ghactions
