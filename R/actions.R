@@ -75,4 +75,13 @@ ghpages <- function(needs,
   )
 }
 
-netlify = NULL
+#' @describeIn actions [netlify](https://github.com/netlify/actions/tree/645ae7398cf5b912a3fa1eb0b88618301aaa85d0/cli/)
+#' @export
+netlify <- function(needs,
+                   args = "deploy --dir=site --functions=functions") {
+  list(
+    uses = "netlify/actions/cli@645ae7398cf5b912a3fa1eb0b88618301aaa85d0",
+    needs = needs,
+    secrets = c("NETLIFY_AUTH_TOKEN", "NETLIFY_SITE_ID")
+  )
+}

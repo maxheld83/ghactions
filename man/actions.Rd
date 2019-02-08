@@ -7,6 +7,7 @@
 \alias{filter}
 \alias{rsync}
 \alias{ghpages}
+\alias{netlify}
 \title{R wrappers around GitHub actions}
 \usage{
 docker_cli(args = "build --tag=repo:latest .")
@@ -18,6 +19,8 @@ filter(needs, args = "branch master")
 rsync(needs, env, args)
 
 ghpages(needs, env = "BUILD_DIR = 'public/'")
+
+netlify(needs, args = "deploy --dir=site --functions=functions")
 }
 \arguments{
 \item{args}{\code{[character()]}
@@ -55,6 +58,8 @@ The \code{uses} field is always hardcoded to a particular commit or tag of the u
 \item \code{rsync}: \href{https://github.com/maxheld83/rsync/tree/v0.1.1}{rsync}
 
 \item \code{ghpages}: \href{https://github.com/maxheld83/ghpages/tree/v0.1.2}{ghpages}
+
+\item \code{netlify}: \href{https://github.com/netlify/actions/tree/645ae7398cf5b912a3fa1eb0b88618301aaa85d0/cli/}{netlify}
 }}
 
 \concept{actions}
