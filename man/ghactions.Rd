@@ -6,8 +6,6 @@
 \alias{ghactions-package}
 \title{ghactions: GitHub actions for R}
 \description{
-\if{html}{\figure{logo.png}{options: align='right'}}
-
 Provides GitHub actions and some R functions to create workflows.
 }
 \seealso{
