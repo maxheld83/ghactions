@@ -64,13 +64,15 @@ website_rmarkdown <- purrr::partial(
 
 fau <- purrr::partial(
   .f = website_rmarkdown,
-  deploy = rsync_fau(
-    needs = "Filter master",
-    SRC = "_site",
-    DEST = paste0(
-      "/proj/websource/docs/FAU/fakultaet/phil/www.datascience.phil.fau.de/websource",
-      # unexported function; gh::gh_tree_remote() might help
-      usethis:::github_repo()
+  deploy = list(
+    master = rsync_fau(
+      needs = "Filter master",
+      SRC = "_site",
+      DEST = paste0(
+        "/proj/websource/docs/FAU/fakultaet/phil/www.datascience.phil.fau.de/websource",
+        # unexported function; gh::gh_tree_remote() might help
+        usethis:::github_repo()
+      )
     )
   )
 )
