@@ -52,9 +52,9 @@ website <- function(IDENTIFIER = "Render and Deploy",
   ))
 
   res$actions <- list(
-    `Build image` = docker_cli(),
+    docker_cli(),
     # TODO this is awkward; docker_cli has hardcoded build defaults
-    Render = rscript_byod(
+    rscript_byod(
       needs = "Build image",
       args = glue::glue_collapse(x = c("-e", .f))
     )

@@ -20,8 +20,10 @@ NULL
 
 #' @describeIn actions [Docker CLI](https://github.com/actions/docker/tree/aea64bb1b97c42fa69b90523667fef56b90d7cff)
 #' @export
-docker_cli <- function(args = "build --tag=repo:latest .") {
+docker_cli <- function(IDENTIFIER = "Build Image",
+                       args = "build --tag=repo:latest .") {
   list(
+    IDENTIFIER = IDENTIFIER,
     uses = "actions/docker/cli@aea64bb1b97c42fa69b90523667fef56b90d7cff",
     args = args
   )
@@ -29,9 +31,11 @@ docker_cli <- function(args = "build --tag=repo:latest .") {
 
 #' @describeIn actions [Rscript-byod](https://github.com/maxheld83/ghactions/tree/master/Rscript-byod)
 #' @export
-rscript_byod <- function(needs,
+rscript_byod <- function(IDENTIFIER = "Arbitrary Rscript",
+                         needs,
                          args) {
   list(
+    IDENTIFIER = IDENTIFIER,
     uses = "maxheld83/ghactions/Rscript-byod@master",
     # this actually does *not* need a harder dependency, because it is versioned in this repo
     needs = needs,
@@ -40,9 +44,11 @@ rscript_byod <- function(needs,
 
 #' @describeIn actions [filter](https://github.com/actions/bin/tree/a9036ccda9df39c6ca7e1057bc4ef93709adca5f/filter)
 #' @export
-filter <- function(needs,
+filter <- function(IDENTIFIER = "Filter",
+                   needs,
                    args = "branch master") {
   list(
+    IDENTIFIER = IDENTIFIER,
     uses = "actions/bin/filter@a9036ccda9df39c6ca7e1057bc4ef93709adca5f",
     needs = needs,
     args = args
@@ -51,10 +57,12 @@ filter <- function(needs,
 
 #' @describeIn actions [rsync](https://github.com/maxheld83/rsync/tree/v0.1.1)
 #' @export
-rsync <- function(needs,
+rsync <- function(IDENTIFIER = "Rsync",
+                  needs,
                   env,
                   args) {
   list(
+    IDENTIFIER = IDENTIFIER,
     uses = "maxheld83/rsync@v0.1.1",
     needs = needs,
     secrets = c("SSH_PRIVATE_KEY", "SSH_PUBLIC_KEY"),
@@ -65,9 +73,11 @@ rsync <- function(needs,
 
 #' @describeIn actions [ghpages](https://github.com/maxheld83/ghpages/tree/v0.1.2)
 #' @export
-ghpages <- function(needs,
+ghpages <- function(IDENTIFIER = "Deploy to GitHub Pages",
+                    needs,
                     env = "BUILD_DIR = 'public/'") {
   list(
+    IDENTIFIER = IDENTIFIER,
     uses = "maxheld83/ghpages@v0.1.2",
     needs = needs,
     secrets = "GH_PAT",
@@ -77,9 +87,11 @@ ghpages <- function(needs,
 
 #' @describeIn actions [netlify](https://github.com/netlify/actions/tree/645ae7398cf5b912a3fa1eb0b88618301aaa85d0/cli/)
 #' @export
-netlify <- function(needs,
-                   args = "deploy --dir=site --functions=functions") {
+netlify <- function(IDENTIFIER = "Deploy to Netlify",
+                    needs,
+                    args = "deploy --dir=site --functions=functions") {
   list(
+    IDENTIFIER = IDENTIFIER,
     uses = "netlify/actions/cli@645ae7398cf5b912a3fa1eb0b88618301aaa85d0",
     needs = needs,
     secrets = c("NETLIFY_AUTH_TOKEN", "NETLIFY_SITE_ID")

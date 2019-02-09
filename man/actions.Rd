@@ -10,19 +10,31 @@
 \alias{netlify}
 \title{R wrappers around GitHub actions}
 \usage{
-docker_cli(args = "build --tag=repo:latest .")
+docker_cli(IDENTIFIER = "Build Image",
+  args = "build --tag=repo:latest .")
 
-rscript_byod(needs, args)
+rscript_byod(IDENTIFIER = "Arbitrary Rscript", needs, args)
 
-filter(needs, args = "branch master")
+filter(IDENTIFIER = "Filter", needs, args = "branch master")
 
-rsync(needs, env, args)
+rsync(IDENTIFIER = "Rsync", needs, env, args)
 
-ghpages(needs, env = "BUILD_DIR = 'public/'")
+ghpages(IDENTIFIER = "Deploy to GitHub Pages", needs,
+  env = "BUILD_DIR = 'public/'")
 
-netlify(needs, args = "deploy --dir=site --functions=functions")
+netlify(IDENTIFIER = "Deploy to Netlify", needs,
+  args = "deploy --dir=site --functions=functions")
 }
 \arguments{
+\item{IDENTIFIER}{\code{[character(1)]}
+giving the name of the action or workflow block.
+Used:
+\itemize{
+\item as informative label on GitHub.com,
+\item in the \code{needs} fields of other \emph{action blocks} to express dependencies.
+\item in the \code{resolves} fields of other \emph{workflow blocks} to express dependencies.
+}}
+
 \item{args}{\code{[character()]}
 giving the arguments to pass to the action.
 Arguments get appended to the last command in \code{ENTRYPOINT}.

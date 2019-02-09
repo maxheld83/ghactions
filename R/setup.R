@@ -97,10 +97,10 @@ list2ghact <- function(workflow) {
   )
   res <- c(
     res,
-    purrr::imap_chr(
+    purrr::map(
       .x = workflow$actions,
-      .f = function(x, y) {
-        rlang::exec(.fn = make_action_block, !!!c(IDENTIFIER = y, x))
+      .f = function(x) {
+        rlang::exec(.fn = make_action_block, !!!x)
       }
     )
   )
