@@ -39,7 +39,7 @@ action "Code Coverage" {
   secrets = ["CODECOV_TOKEN"]
 }
 
-action "Filter Master Branch" {
+action "Master Branch" {
   uses = "actions/bin/filter@c6471707d308175c57dfe91963406ef205837dbd"
   needs = ["Check Package", "Document Package"]
   args = "branch master"
@@ -51,5 +51,5 @@ action "Deploy to GitHub Pages" {
     BUILD_DIR = "docs"
   }
   secrets = ["GH_PAT"]
-  needs = ["Filter Master Branch"]
+  needs = ["Master Branch"]
 }
