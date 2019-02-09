@@ -258,7 +258,6 @@ make_template <- function(l, template) {
 #' Named lists become name = value pairs.
 #' Vectors (named or unnamed) become comma-separated arrays
 #'
-#'
 #' @details
 #' Below function *do not do all TOML*, only this specific subset of features.
 #' It would be nice to use an actual r2toml pkg here, but that seems not to exist, as per [this issue](https://github.com/maxheld83/ghactions/issues/13).
