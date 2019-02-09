@@ -2,42 +2,42 @@
 % Please edit documentation in R/workflows.R
 \name{website}
 \alias{website}
+\alias{website_rmarkdown}
 \title{Render and deploy R projects to static hosting}
 \usage{
-website(IDENTIFIER = "Render and Deploy",
-  .f = "rmarkdown::render_site()", static_dir = "_site",
-  deploy = NULL)
+website(IDENTIFIER, fun, deploy = list(master = ghpages()))
+
+website_rmarkdown(...)
 }
 \arguments{
 \item{IDENTIFIER}{\code{[character(1)]}
 giving the name of the action or workflow block.
+
 Used:
 \itemize{
-\item as informative label on GitHub.com,
-\item in the \code{needs} fields of other \emph{action blocks} to express dependencies.
-\item in the \code{resolves} fields of other \emph{workflow blocks} to express dependencies.
+\item as an informative label on GitHub.com,
+\item in the \code{needs} fields of other \emph{action blocks} to model the workflow graph.
+\item in the \code{resolves} fields of other \emph{workflow blocks} to model the workflow graph.
 }}
 
-\item{.f}{\code{[character(1)]}
-giving the render function, typically something like \code{rmarkdown::render_site()}.}
+\item{fun}{\code{[character(1)]}
+giving the function call.}
 
-\item{static_dir}{\code{[character(1)]}
-giving the path to the generated static assets from the repository root.
-Typically something like \code{_site/} for \code{rmarkdown::render_site()}.}
-
-\item{deploy}{\code{[list()]}
+\item{deploy}{\code{[list(1)]}
 giving the name of the branch to deploy \emph{from}, and the function to deploy \emph{with}.}
+
+\item{...}{arguments passed on to other methods, not currently used.}
 }
 \value{
 A list as specified in the \code{workflow} argument to \code{\link[=use_ghactions]{use_ghactions()}}.
 }
 \description{
-These functions generate workflows suitable for R \code{website} projects, such as:
+These functions generate workflows suitable for R \code{website} projects.
+You can use some of the below defaults, or call an arbitrary R function that generates static assets.
+}
+\section{Functions}{
 \itemize{
-\item \href{https://rmarkdown.rstudio.com/lesson-13.html}{RMarkdown websites}
-\item \href{http://bookdown.org}{Bookdown websites}
-\item \href{https://bookdown.org/yihui/blogdown/}{Blogdown websites}
-\item and other similar projects with an R static site generator.
-}
-}
+\item \code{website_rmarkdown}: \href{https://rmarkdown.rstudio.com/lesson-13.html}{RMarkdown websites}
+}}
+
 \concept{workflows}

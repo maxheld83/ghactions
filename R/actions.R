@@ -1,52 +1,61 @@
-#' @title R wrappers around GitHub actions
-#'
-#' @description
-#' These functions are for **advanced users** knowledgeable about GitHub actions.
-#' Novice users may be better served by the complete templates in workflows.
-#'
-#' These functions provide very thin wrappers around existing GitHub actions, including actions from other repositories.
-#' For documentation on these actions, consult their respective `README.md`s linked in the below.
-#' Some of these action wrappers include sensible defaults for most uses in R.
-#' You can always create action blocks entirely from scratch using [make_action_block()].
-#'
-#' The `uses` field is always hardcoded to a particular commit or tag of the underlying github action to ensure.
-#'
-#' @inheritParams make_action_block
-#'
-#' @family actions
-#'
-#' @name actions
-NULL
-
-#' @describeIn actions [Docker CLI](https://github.com/actions/docker/tree/aea64bb1b97c42fa69b90523667fef56b90d7cff)
+#' @title Create [Docker CLI action](https://github.com/actions/docker/tree/aea64bb1b97c42fa69b90523667fef56b90d7cff) to run [Docker](http://docker.com).
+#' @template actions
 #' @export
-docker_cli <- function(IDENTIFIER = "Build Image",
-                       args = "build --tag=repo:latest .") {
+docker_cli <- function(IDENTIFIER,
+                       needs,
+                       args) {
   list(
     IDENTIFIER = IDENTIFIER,
+    needs = needs,
     uses = "actions/docker/cli@aea64bb1b97c42fa69b90523667fef56b90d7cff",
     args = args
   )
 }
 
-#' @describeIn actions [Rscript-byod](https://github.com/maxheld83/ghactions/tree/master/Rscript-byod)
+#' @describeIn docker_cli Build image called `repo:latest` from `Dockerfile` at repository root.
+build_image <- purrr::partial(
+  .f = docker_cli,
+  IDENTIFIER = "Build image",
+  needs = NULL, # because it's always the first step
+  args = "build --tag=repo:latest ."
+)
+
+
+#' @title Create [Rscript-byod action](https://github.com/maxheld83/ghactions/tree/master/Rscript-byod) to run arbitrary R code.
+#'
+#' @description
+#' **Requires a Docker image called *literally* `repo:latest` in `github/workspace`.**
+#' Use [build_image()] to create one in a prior action.
+#'
+#' @param fun `[character(1)]`
+#' giving the function call.
+#'
+#' @template actions
+#'
 #' @export
-rscript_byod <- function(IDENTIFIER = "Arbitrary Rscript",
+rscript_byod <- function(IDENTIFIER,
                          needs,
-                         args) {
+                         fun,
+                         args = NULL) {
   list(
     IDENTIFIER = IDENTIFIER,
     uses = "maxheld83/ghactions/Rscript-byod@master",
     # this actually does *not* need a harder dependency, because it is versioned in this repo
     needs = needs,
-    args = args)
+    args = c(
+      args,
+      glue::glue('-e "{fun}"')
+    )
+  )
 }
 
-#' @describeIn actions [filter](https://github.com/actions/bin/tree/a9036ccda9df39c6ca7e1057bc4ef93709adca5f/filter)
+
+#' @title Create [filter action](https://github.com/actions/bin/tree/a9036ccda9df39c6ca7e1057bc4ef93709adca5f/filter).
+#' @template actions
 #' @export
-filter <- function(IDENTIFIER = "Filter",
+filter <- function(IDENTIFIER,
                    needs,
-                   args = "branch master") {
+                   args) {
   list(
     IDENTIFIER = IDENTIFIER,
     uses = "actions/bin/filter@a9036ccda9df39c6ca7e1057bc4ef93709adca5f",
@@ -55,45 +64,164 @@ filter <- function(IDENTIFIER = "Filter",
   )
 }
 
-#' @describeIn actions [rsync](https://github.com/maxheld83/rsync/tree/v0.1.1)
+#' @describeIn filter Filter on branch.
+#'
+#' @param branch `[character(1)]`
+#' giving the name of the branch to filter on.
+#'
 #' @export
-rsync <- function(IDENTIFIER = "Rsync",
+filter_branch <- function(needs, branch = "master") {
+  filter(
+    IDENTIFIER = glue::glue('Filter {branch}'),
+    needs = needs,
+    args = glue::glue('branch {branch}')
+  )
+}
+
+
+#' @title Create [rsync action](https://github.com/maxheld83/rsync/tree/v0.1.1) to deploy via [Rsync](https://rsync.samba.org) over SSH.
+#'
+#' @param HOST_NAME `[character(1)]`
+#' giving the name of the server you wish to deploy to, such as `foo.example.com`.
+#'
+#' @param HOST_IP `[character(1)]`
+#' giving the IP of the server you wish to deploy to, such as `111.111.11.111`.
+#'
+#' @param HOST_FINGERPRINT `[character(1)]`
+#' giving the fingerprint of the server you wish to deploy to, can have different formats.
+#'
+#' @param SRC `[character(1)]`
+#' giving the source directory, relative path *from* `/github/workspace`.
+#'
+#' @param USER `[character(1)]`
+#' giving the user at the target `HOST_NAME`.
+#'
+#' @param DEST `[character(1)]`
+#' giving the directory from the root of the `HOST_NAME` target to write to.
+#'
+#' @description
+#' **Remember to provide `SSH_PRIVATE_KEY` and `SSH_PUBLIC_KEY` as secrets to the GitHub UI.**.
+#'
+#' @template actions
+#'
+#' @export
+rsync <- function(IDENTIFIER,
                   needs,
-                  env,
-                  args) {
+                  HOST_NAME,
+                  HOST_IP,
+                  HOST_FINGERPRINT,
+                  SRC,
+                  USER,
+                  DEST,
+                  env = NULL,
+                  args = NULL) {
   list(
     IDENTIFIER = IDENTIFIER,
     uses = "maxheld83/rsync@v0.1.1",
     needs = needs,
     secrets = c("SSH_PRIVATE_KEY", "SSH_PUBLIC_KEY"),
-    env = env,
-    args = args
+    env = c(
+      env, # more envs
+      list(
+        HOST_NAME = HOST_NAME,
+        HOST_IP = HOST_IP,
+        HOST_FINGERPRINT = HOST_FINGERPRINT
+      )
+    ),
+    args = c(
+      fs::path("$GITHUB_WORKSPACE", SRC),  # source
+      glue::glue('{USER}@{HOST_NAME}:{DEST}'),  # target and destination
+      args # more args
+    )
   )
 }
 
-#' @describeIn actions [ghpages](https://github.com/maxheld83/ghpages/tree/v0.1.2)
+rsync_fau <- purrr::partial(
+  IDENTIFIER = "Deploy",
+  .f = rsync,
+  HOST_NAME = "karli.rrze.uni-erlangen.de",
+  HOST_IP = "131.188.16.138",
+  HOST_FINGERPRINT = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFHJVSekYKuF5pMKyHe1jS9mUkXMWoqNQe0TTs2sY1OQj379e6eqVSqGZe+9dKWzL5MRFpIiySRKgvxuHhaPQU4=",
+  USER = "pfs400wm"
+)
+
+
+#' @title Create [ghpages action](https://github.com/maxheld83/ghpages/tree/v0.1.2) to deploy to [GitHub Pages](https://pages.github.com).
+#'
+#' @description
+#' **Remember to provide `GH_PAT` as a secret to the GitHub UI.**
+#' See above docs.
+#'
+#' @param BUILD_DIR `[character(1)]`
+#' giving the path relative from your `/github/workspace` to the directory to be published.
+#'
+#' @template actions
+#'
 #' @export
-ghpages <- function(IDENTIFIER = "Deploy to GitHub Pages",
-                    needs,
-                    env = "BUILD_DIR = 'public/'") {
+ghpages <- function(IDENTIFIER = "Deploy",
+                    needs = "Filter on master",
+                    BUILD_DIR = "_site",
+                    env = NULL) {
   list(
     IDENTIFIER = IDENTIFIER,
     uses = "maxheld83/ghpages@v0.1.2",
     needs = needs,
     secrets = "GH_PAT",
-    env = env
+    env = c(
+      env,
+      list(
+        BUILD_DIR = BUILD_DIR
+      )
+    )
   )
 }
+help(partial)
 
-#' @describeIn actions [netlify](https://github.com/netlify/actions/tree/645ae7398cf5b912a3fa1eb0b88618301aaa85d0/cli/)
+
+#' @title Create [netlify cli action](https://github.com/netlify/actions/tree/645ae7398cf5b912a3fa1eb0b88618301aaa85d0/cli/) to use the [Netlify CLI](http://netlify.com).
+#'
+#' @description
+#' **Remember to provide `NETLIFY_AUTH_TOKEN` and `NETLIFY_SITE_ID` (optional) as secrets to the GitHub UI.**
+#'
+#' @template actions
+#'
 #' @export
-netlify <- function(IDENTIFIER = "Deploy to Netlify",
+netlify <- function(IDENTIFIER,
                     needs,
-                    args = "deploy --dir=site --functions=functions") {
+                    args) {
   list(
     IDENTIFIER = IDENTIFIER,
     uses = "netlify/actions/cli@645ae7398cf5b912a3fa1eb0b88618301aaa85d0",
     needs = needs,
+    args = args,
     secrets = c("NETLIFY_AUTH_TOKEN", "NETLIFY_SITE_ID")
+  )
+}
+
+#' @describeIn netlify Deploy to netlify
+#'
+#' @param dir `[character(1)]`
+#' giving the path relative from your `/github/workspace` to the directory to be published.
+#'
+#' @param prod `[logical(1)]`
+#' giving whether the deploy should be to production.
+#'
+#' @param site `[character(1)]`
+#' giving a site ID to deploy to.
+#'
+#' @export
+netlify_deploy <- function(IDENTIFIER = "Deploy",
+                           needs,
+                           dir,
+                           prod = TRUE,
+                           site = NULL) {
+  netlify(
+    IDENTIFIER = IDENTIFIER,
+    needs = needs,
+    args = c(
+      glue::glue('--dir {dir}'),
+      if (prod) "prod" else NULL,
+      glue::glue('--site {site}')
+    )
   )
 }

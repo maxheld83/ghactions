@@ -134,10 +134,10 @@ If you really wanted to, you can also use the templating functions to create act
 ```{r}
 library(ghactions)
 x <- rscript_byod(  # this just creates a list with sensible defaults
-  
+  IDENTIFIER = "Summation",
   needs = "Build image", # this is the necessary prior step
   # the uses field is hard-coded in the function to keep everything compatible
-  args = "-e '1+1'"
+  fun = "1+1"
 ) 
 do.call(what = make_action_block, args = x)
 ```

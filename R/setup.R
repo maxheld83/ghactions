@@ -12,8 +12,6 @@
 #' - **The workflow block**: arguments to [make_workflow_block()] as a named list *and*
 #' - `$actions``, which in turn comprises of the
 #'   - **Several action blocks** with arguments to [make_action_block()] as a named list.
-# #' Defaults to `NULL`, in which case one of the workflows functions is chosen based on the configuration files in your repository.
-# TODO link workflows in the above to docs
 #'
 #' @inherit usethis::use_template return
 #'
@@ -21,7 +19,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' use_ghactions(workflow = workflows$fau())
+#' use_ghactions(workflow = website_rmarkdown())
 #' }
 #' @export
 use_ghactions <- function(workflow = website()) {
@@ -84,7 +82,7 @@ use_ghactions <- function(workflow = website()) {
 #'
 #' @examples
 #' # this will print the result to the console for inspection
-#' list2ghact(workflow = website())
+#' list2ghact(workflow = website_rmarkdown())
 #'
 #' @family setup
 #'

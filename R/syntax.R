@@ -6,10 +6,11 @@
 #'
 #' @param IDENTIFIER `[character(1)]`
 #' giving the name of the action or workflow block.
+#'
 #' Used:
-#' - as informative label on GitHub.com,
-#' - in the `needs` fields of other *action blocks* to express dependencies.
-#' - in the `resolves` fields of other *workflow blocks* to express dependencies.
+#' - as an informative label on GitHub.com,
+#' - in the `needs` fields of other *action blocks* to model the workflow graph.
+#' - in the `resolves` fields of other *workflow blocks* to model the workflow graph.
 #'
 #' @return `[character(1)]`
 #'
@@ -18,7 +19,7 @@
 #' @name make_blocks
 NULL
 
-#' @describeIn make_blocks Create GitHub Actions syntax for *one* workflow block.
+#' @describeIn make_blocks Write GitHub Actions syntax for *one* workflow block.
 #'
 #' @param on `[character(1)]`
 #' giving the [GitHub Event](https://developer.github.com/webhooks/#events) on which to trigger the workflow.

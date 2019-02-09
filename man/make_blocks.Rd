@@ -14,11 +14,12 @@ make_action_block(IDENTIFIER, needs = NULL, uses, runs = NULL,
 \arguments{
 \item{IDENTIFIER}{\code{[character(1)]}
 giving the name of the action or workflow block.
+
 Used:
 \itemize{
-\item as informative label on GitHub.com,
-\item in the \code{needs} fields of other \emph{action blocks} to express dependencies.
-\item in the \code{resolves} fields of other \emph{workflow blocks} to express dependencies.
+\item as an informative label on GitHub.com,
+\item in the \code{needs} fields of other \emph{action blocks} to model the workflow graph.
+\item in the \code{resolves} fields of other \emph{workflow blocks} to model the workflow graph.
 }}
 
 \item{on}{\code{[character(1)]}
@@ -66,7 +67,7 @@ For details on the syntax and arguments, see \href{https://developer.github.com/
 }
 \section{Functions}{
 \itemize{
-\item \code{make_workflow_block}: Create GitHub Actions syntax for \emph{one} workflow block.
+\item \code{make_workflow_block}: Write GitHub Actions syntax for \emph{one} workflow block.
 
 \item \code{make_action_block}: Create GitHub Actions syntax for \emph{one} action block.
 }}
