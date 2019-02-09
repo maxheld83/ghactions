@@ -5,7 +5,7 @@ workflow "Build, Check, Document and Deploy" {
     "Document Package",
     "Code Coverage",
     "Deploy to GitHub Pages",
-    "Install Package",
+    "Build Package",
   ]
 }
 
@@ -20,12 +20,6 @@ action "Build Package" {
   args = "-e 'devtools::build(path = \".\")'"
 }
 
-action "Install Package" {
-  uses = "./Rscript-byod"
-  needs = ["Build Package"]
-  args = "-e 'devtools::install(dependencies = FALSE)'"
-}
-
 action "Check Package" {
   uses = "./Rscript-byod"
   needs = ["Build Package"]
@@ -34,8 +28,8 @@ action "Check Package" {
 
 action "Document Package" {
   uses = "./Rscript-byod"
-  needs = ["Install Package"]
-  args = "-e 'pkgdown::build_site()'"
+  needs = ["Build Package"]
+  args = "-e 'devtools::install(); pkgdown::build_site()'"
 }
 
 action "Code Coverage" {
