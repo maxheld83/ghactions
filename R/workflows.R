@@ -68,7 +68,7 @@ fau <- purrr::partial(
     master = rsync_fau(
       needs = "Filter master",
       SRC = "_site",
-      DEST = paste0(
+      DEST = fs::path(
         "/proj/websource/docs/FAU/fakultaet/phil/www.datascience.phil.fau.de/websource",
         # unexported function; gh::gh_tree_remote() might help
         usethis:::github_repo()
