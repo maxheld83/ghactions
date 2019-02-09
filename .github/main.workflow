@@ -17,7 +17,7 @@ action "Build Image" {
 action "Build Package" {
   needs = "Build Image"
   uses = "./Rscript-byod"
-  args = "-e 'devtools::build(path = ".")'"
+  args = "-e 'devtools::build(path = \'.\')'"
 }
 
 action "Check Package" {
