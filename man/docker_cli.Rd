@@ -16,7 +16,7 @@ giving the name of the action or workflow block.
 Used:
 \itemize{
 \item as an informative label on GitHub.com,
-\item in the \code{needs} fields of other \emph{action blocks} to model the workflow graph.
+\item in the \code{needs} fields of other \emph{action blocks} to model the workflow graph,
 \item in the \code{resolves} fields of other \emph{workflow blocks} to model the workflow graph.
 }}
 

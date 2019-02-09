@@ -9,7 +9,7 @@
 #'
 #' Used:
 #' - as an informative label on GitHub.com,
-#' - in the `needs` fields of other *action blocks* to model the workflow graph.
+#' - in the `needs` fields of other *action blocks* to model the workflow graph,
 #' - in the `resolves` fields of other *workflow blocks* to model the workflow graph.
 #'
 #' @return `[character(1)]`
