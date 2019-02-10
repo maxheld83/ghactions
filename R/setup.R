@@ -130,3 +130,21 @@ use_dockerfile <- function(FROM = "rocker/verse:3.5.2") {
   invisible(new)
 }
 
+
+#' @title README badges
+#'
+#' @description Add markdown syntax for README badge, see [usethis::use_badge()].
+#'
+#' @inheritParams usethis::use_badge
+#'
+#' @family setup
+#'
+#' @export
+use_ghactions_badge <- function() {
+  reposlug <- glue::glue('{gh::gh_tree_remote()$username}/{gh::gh_tree_remote()$repo}')
+  usethis::use_badge(
+    href = glue::glue('https://github.com/{reposlug}/actions'),
+    src = glue::glue('https://wdp9fww0r9.execute-api.us-west-2.amazonaws.com/production/badge/{reposlug}'),
+    badge_name = "Actions Status"
+  )
+}

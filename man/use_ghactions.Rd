@@ -47,8 +47,10 @@ list2ghact(workflow = website_rmarkdown())
 
 }
 \seealso{
-Other setup: \code{\link{use_dockerfile}}
+Other setup: \code{\link{use_dockerfile}},
+  \code{\link{use_ghactions_badge}}
 
-Other setup: \code{\link{use_dockerfile}}
+Other setup: \code{\link{use_dockerfile}},
+  \code{\link{use_ghactions_badge}}
 }
 \concept{setup}

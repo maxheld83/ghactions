@@ -70,8 +70,7 @@ fau <- purrr::partial(
       SRC = "_site",
       DEST = fs::path(
         "/proj/websource/docs/FAU/fakultaet/phil/www.datascience.phil.fau.de/websource",
-        # unexported function; gh::gh_tree_remote() might help
-        usethis:::github_repo()
+        gh::gh_tree_remote()$repo
       )
     )
   )
