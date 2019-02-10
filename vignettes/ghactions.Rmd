@@ -96,7 +96,7 @@ In the now tired cooking analogy, you can use frozen pizza dough from the store 
 Some GitHub actions use one of the many publicly available images to get their work done, such as the [action to publish to GitHub Pages](https://github.com/maxheld83/ghpages).
 This would also make sense for those R projects, where you know *precisely* the build or runtime environment you need to adhere to, such as if you are deploying to [shinyapps.io](https://www.shinyapps.io) (their respective dockerfile is [here](https://github.com/rstudio/shinyapps-package-dependencies)).
 
-For many other R projects, such as some R markdown project, there is *no* such standard computing environment, and you actually *want* to have the flexibility to provision one for yourself (say, because you need some obscure version of a system dependency such as the GSL or LaTeX).
+For many other R projects, such as some R markdown project, there is *no* such standard computing environment, and you actually *want* to have the flexibility to provision one for yourself (say, because you need some version of a system dependency such as the GSL or LaTeX).
 In these situations, you have to **bring-your-own-`Dockerfile`**.
 In fact, it's always safer to **byod**.
 
@@ -157,12 +157,13 @@ This isn't terribly elegant, but currently appears to be the only way on GitHub 
 It's still very early days, but it seems as if GitHub actions might have some potential for R projects:
 
 - It's built on an open-source, cross-platform foundation, that you can easily reason about and reproduce on your machine (Docker!).
-- It seems pretty darn fast compared to TravisCI: an `R CMD check` for a small project with all bells and whistles is at <4 minutes. (This is anecdotal evidence, if you'd like a real benchmarking, chip in [here](https://github.com/maxheld83/ghactions/issues/35)).
+- It seems pretty fast compared to TravisCI: an `R CMD check` for a small project with all bells and whistles is at <4 minutes. (This is anecdotal evidence, if you'd like a real benchmarking, chip in [here](https://github.com/maxheld83/ghactions/issues/35)).
 - There's one less service to deal with and one less authentication to go through, especially for smaller projects.
 - The GUI makes it easier to build and reason about complex CI/CD chains.
 - The sharing model seems promising.
 - GitHub actions can be tied into almost *anything* in the GitHub API. Let's go nuts!
 
+<!-- TODO: mention that GitHub opened the spec -->
 Of course there might be some vendor lock-in, though arguably less so than with other CI/CD services, because there's a thinner proprietary layer on top of Docker.
 
 
