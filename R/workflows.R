@@ -1,8 +1,12 @@
-#' @title Render and deploy R projects to static hosting
+#' @title Render and deploy a website
 #'
 #' @description
-#' These functions generate workflows suitable for R `website` projects.
-#' You can use some of the below defaults, or call an arbitrary R function that generates static assets.
+#' This workflow renders some Rmarkdown via its (custom) site generator and deploys the result.
+#' Suitable for:
+#' - [RMarkdown websites](https://rmarkdown.rstudio.com/lesson-13.html)
+#' - [Bookdown websites](https://bookdown.org)
+#' - [Blogdown websites](https://bookdown.org/yihui/blogdown/) (**experimental**)
+#' - any other custom site generators that can be called via `rmarkdown::render_site()` (**experimental**)
 #'
 #' @inheritParams make_workflow_block
 #'
@@ -14,8 +18,7 @@
 #' giving the name of the branch to deploy *from*, and the function to deploy *with*.
 #'
 #' @export
-website <- function(IDENTIFIER,
-                    fun,
+website <- function(IDENTIFIER = "Render and Deploy RMarkdown Website",
                     deploy = list(master = ghpages())) {
   # Input validation
   # TODO somehow check .f
@@ -43,7 +46,7 @@ website <- function(IDENTIFIER,
     rscript_byod(
       IDENTIFIER = "Render",
       needs = "Build image",
-      fun = fun
+      fun = "rmarkdown::render_site(encoding = 'UTF-8')"
     ),
     filter_branch(
       needs = "Render",
@@ -54,16 +57,8 @@ website <- function(IDENTIFIER,
   res
 }
 
-#' @describeIn website [RMarkdown websites](https://rmarkdown.rstudio.com/lesson-13.html)
-#' @export
-website_rmarkdown <- purrr::partial(
-  .f = website,
-  IDENTIFIER = "Render and Deploy RMarkdown Website",
-  fun = "rmarkdown::render_site()"
-)
-
 fau <- purrr::partial(
-  .f = website_rmarkdown,
+  .f = website,
   deploy = list(
     master = rsync_fau(
       needs = "Filter master",

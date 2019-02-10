@@ -2,12 +2,10 @@
 % Please edit documentation in R/workflows.R
 \name{website}
 \alias{website}
-\alias{website_rmarkdown}
-\title{Render and deploy R projects to static hosting}
+\title{Render and deploy a website}
 \usage{
-website(IDENTIFIER, fun, deploy = list(master = ghpages()))
-
-website_rmarkdown(...)
+website(IDENTIFIER = "Render and Deploy RMarkdown Website",
+  deploy = list(master = ghpages()))
 }
 \arguments{
 \item{IDENTIFIER}{\code{[character(1)]}
@@ -20,24 +18,20 @@ Used:
 \item in the \code{resolves} fields of other \emph{workflow blocks} to model the workflow graph.
 }}
 
-\item{fun}{\code{[character(1)]}
-giving the function call.}
-
 \item{deploy}{\code{[list(1)]}
 giving the name of the branch to deploy \emph{from}, and the function to deploy \emph{with}.}
-
-\item{...}{arguments passed on to other methods, not currently used.}
 }
 \value{
 A list as specified in the \code{workflow} argument to \code{\link[=use_ghactions]{use_ghactions()}}.
 }
 \description{
-These functions generate workflows suitable for R \code{website} projects.
-You can use some of the below defaults, or call an arbitrary R function that generates static assets.
-}
-\section{Functions}{
+This workflow renders some Rmarkdown via its (custom) site generator and deploys the result.
+Suitable for:
 \itemize{
-\item \code{website_rmarkdown}: \href{https://rmarkdown.rstudio.com/lesson-13.html}{RMarkdown websites}
-}}
-
+\item \href{https://rmarkdown.rstudio.com/lesson-13.html}{RMarkdown websites}
+\item \href{https://bookdown.org}{Bookdown websites}
+\item \href{https://bookdown.org/yihui/blogdown/}{Blogdown websites}
+\item any other custom site generators that can be called via \code{rmarkdown::render_site()}
+}
+}
 \concept{workflows}

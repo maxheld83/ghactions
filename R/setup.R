@@ -19,7 +19,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' use_ghactions(workflow = website_rmarkdown())
+#' use_ghactions(workflow = website())
 #' }
 #' @export
 use_ghactions <- function(workflow = website()) {
@@ -93,7 +93,7 @@ use_ghactions <- function(workflow = website()) {
 #'
 #' @examples
 #' # this will print the result to the console for inspection
-#' list2ghact(workflow = website_rmarkdown())
+#' list2ghact(workflow = website())
 #'
 #' @family setup
 #'

@@ -40,10 +40,10 @@ Useful when you want the result printed to console, not written to file.
 
 \examples{
 \dontrun{
-use_ghactions(workflow = website_rmarkdown())
+use_ghactions(workflow = website())
 }
 # this will print the result to the console for inspection
-list2ghact(workflow = website_rmarkdown())
+list2ghact(workflow = website())
 
 }
 \seealso{
