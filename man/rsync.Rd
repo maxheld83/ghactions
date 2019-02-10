@@ -32,7 +32,7 @@ giving the IP of the server you wish to deploy to, such as \code{111.111.11.111}
 giving the fingerprint of the server you wish to deploy to, can have different formats.}
 
 \item{SRC}{\code{[character(1)]}
-giving the source directory, relative path \emph{from} \code{/github/workspace}.}
+giving the source directory, relative path \emph{from} \code{/github/workspace} \strong{without trailing slash}.}
 
 \item{USER}{\code{[character(1)]}
 giving the user at the target \code{HOST_NAME}.}

@@ -91,7 +91,7 @@ filter_branch <- function(needs, branch = "master") {
 #' giving the fingerprint of the server you wish to deploy to, can have different formats.
 #'
 #' @param SRC `[character(1)]`
-#' giving the source directory, relative path *from* `/github/workspace`.
+#' giving the source directory, relative path *from* `/github/workspace` **without trailing slash**.
 #'
 #' @param USER `[character(1)]`
 #' giving the user at the target `HOST_NAME`.
@@ -129,7 +129,7 @@ rsync <- function(IDENTIFIER,
       )
     ),
     args = c(
-      fs::path("$GITHUB_WORKSPACE", SRC),  # source
+      paste0("$GITHUB_WORKSPACE", "/", SRC, "/"),  # source
       glue::glue('{USER}@{HOST_NAME}:{DEST}'),  # target and destination
       args # more args
     )
