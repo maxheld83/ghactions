@@ -34,7 +34,18 @@ use_ghactions <- function(workflow = website()) {
   # TODO infer project kind
 
   # check conditions ====
-  usethis:::check_uses_github()
+  #
+  # TODO would be better to use usethis::check_uses_github, but currently not exported. see https://github.com/maxheld83/ghactions/issues/46
+  tryCatch(
+    expr = gh::gh_tree_remote(),
+    error = function(cnd) {
+      usethis::ui_stop(
+        c("This project does not have a GitHub remote configured as {usethis::ui_value('origin')}.",
+        "Do you need to run {usethis::ui_code('usethis::use_github()')}?"
+        )
+      )
+    }
+  )
 
   if (!fs::file_exists("DOCKERFILE")) {
     usethis::ui_warn(x = glue::glue(
