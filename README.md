@@ -16,7 +16,6 @@ This repository, **ghactions**, offers three avenues to **bring GitHub actions t
 
 1. Some **actions** to run R-specific jobs on GitHub, including [arbitrary R code](http://www.maxheld.de/ghactions/articles/rscript-byod.html) or deploying to [shinyapps.io](http://shinyapps.io).
   These actions are maintained in this repository, but are not technically part of the accompanying ghactions R package.
-  
   You can use these actions independently from the package; they are freely available on GitHub marketplace.
   In fact, the whole idea of GitHub actions is that people re-use such small building blocks any way they like.
 2. The accompanying [**ghactions R package**](#workflows) furnishes you with some out-of-the-box **workflows** for different kinds of projects.
