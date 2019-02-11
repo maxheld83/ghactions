@@ -159,7 +159,7 @@ rsync_fau <- purrr::partial(
 #'
 #' @export
 ghpages <- function(IDENTIFIER = "Deploy",
-                    needs = "Filter on master",
+                    needs = "Filter master",
                     BUILD_DIR = "_site",
                     env = NULL) {
   list(
