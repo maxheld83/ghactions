@@ -53,7 +53,8 @@ To render an action block completely from scratch, you can always use the templa
 }
 \seealso{
 Other actions: \code{\link{docker_cli}},
-  \code{\link{filter}}, \code{\link{ghpages}},
-  \code{\link{netlify}}, \code{\link{rsync}}
+  \code{\link{filter}}, \code{\link{firebase}},
+  \code{\link{ghpages}}, \code{\link{netlify}},
+  \code{\link{rsync}}
 }
 \concept{actions}

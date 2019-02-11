@@ -175,7 +175,6 @@ ghpages <- function(IDENTIFIER = "Deploy",
     )
   )
 }
-help(partial)
 
 
 #' @title Create [netlify cli action](https://github.com/netlify/actions/tree/645ae7398cf5b912a3fa1eb0b88618301aaa85d0/cli/) to use the [Netlify CLI](https://www.netlify.com).
@@ -223,5 +222,49 @@ netlify_deploy <- function(IDENTIFIER = "Deploy",
       if (prod) "prod" else NULL,
       glue::glue('--site {site}')
     )
+  )
+}
+
+#' @title Create [Google Firebase CLI action](https://github.com/w9jds/firebase-action) to use [Firebase](http://firebase.google.com)
+#'
+#' @description
+#' **Remember to provide `FIREBASE_TOKEN` as a secret to the GitHub UI.**
+#'
+#' @template actions
+#'
+#' @param PROJECT_ID `[character(1)]`
+#' giving a specific project to use for all commands, not required if you specify a project in your `.firebaserc`` file.
+#'
+#' @export
+firebase <- function(IDENTIFIER,
+                     needs,
+                     args,
+                     PROJECT_ID = NULL) {
+  list(
+    IDENTIFIER = IDENTIFIER,
+    uses = "w9jds/firebase-action@v1.0.1",
+    needs = needs,
+    args = args,
+    secrets = c("FIREBASE_TOKEN"),
+    env = list(
+      PROJECT_ID = PROJECT_ID
+    )
+  )
+}
+
+#' @describeIn firebase Deploy static assets to Firebase Hosting
+#'
+#' @description
+#' Configuration details other than `PROJECT_ID` are read from the `firebase.json` at the root of your repository.
+#'
+#' @export
+firebase_deploy <- function(IDENTIFIER = "Deploy",
+                            needs,
+                            PROJECT_ID = NULL) {
+  firebase(
+    IDENTIFIER = IDENTIFIER,
+    needs = needs,
+    args = "deploy --only hosting",
+    PROJECT_ID = PROJECT_ID
   )
 }

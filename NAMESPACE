@@ -3,6 +3,8 @@
 export(docker_cli)
 export(filter)
 export(filter_branch)
+export(firebase)
+export(firebase_deploy)
 export(ghactions_events)
 export(ghpages)
 export(list2ghact)
