@@ -32,6 +32,8 @@ To install, run:
 devtools::install_github("maxheld83/ghactions")
 ```
 
+ghactions currently relies on a dev version of [usethis](http://usethis.r-lib.org), which should be automatically installed alongside it.
+Sometimes, you may **need to restart the R session** before ghactions can find the dev usethis (RStudio > Session > Restart R).
 Because you're likely only to ever use it *once*, **you need not take on ghactions as a dependency in your projects.**
 
 
