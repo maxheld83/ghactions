@@ -2,7 +2,7 @@
 % Please edit documentation in R/actions.R
 \name{rscript_byod}
 \alias{rscript_byod}
-\title{Create \href{https://github.com/maxheld83/ghactions/tree/master/Rscript-byod}{Rscript-byod action} to run arbitrary R code.}
+\title{Create \href{https://github.com/maxheld83/ghactions/tree/master/Rscript-byod}{Rscript-byod action} to run arbitrary R code}
 \usage{
 rscript_byod(IDENTIFIER, needs, fun, args = NULL)
 }
@@ -32,10 +32,6 @@ Defaults to \code{NULL} for no arguments.}
 \item{...}{arguments passed on to other methods, not currently used.}
 }
 \description{
-\strong{Requires a Docker image called \emph{literally} \code{repo:latest} in \code{github/workspace}.}
-See \href{https://www.maxheld.de/ghactions/articles/ghactions.html}{vignette} for details.
-Use \code{\link[=build_image]{build_image()}} to create one in a prior action.
-
 Thin wrapper around GitHub actions.
 }
 \details{
@@ -52,10 +48,25 @@ The \code{uses} field is \emph{always} hardcoded to a particular commit or tag o
 
 To render an action block completely from scratch, you can always use the templating function \code{\link[=make_action_block]{make_action_block()}}.
 }
+\section{Docker}{
+
+This action \strong{requires a Docker image called \emph{literally} \code{repo:latest} in \code{github/workspace}.}
+See \href{https://www.maxheld.de/ghactions/articles/ghactions.html}{vignette} for details.
+Use \code{\link[=build_image]{build_image()}} to create one in a prior action.
+
+This action or workflow requires that you \emph{bring-your-own-dockerfile} (byod).
+There has to be a \code{Dockerfile} at the root of your repository.
+It's easy to set one up using \code{\link[=use_dockerfile]{use_dockerfile()}}.
+To learn more, consider the \href{https://www.maxheld.de/ghactions/articles/ghactions.html}{vignette}.
+}
+
 \seealso{
 Other actions: \code{\link{docker_cli}},
   \code{\link{filter}}, \code{\link{firebase}},
   \code{\link{ghpages}}, \code{\link{netlify}},
   \code{\link{rsync}}
+
+Other byod: \code{\link{website}}
 }
 \concept{actions}
+\concept{byod}

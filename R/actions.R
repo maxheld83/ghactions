@@ -1,4 +1,4 @@
-#' @title Create [Docker CLI action](https://github.com/actions/docker/tree/aea64bb1b97c42fa69b90523667fef56b90d7cff) to run [Docker](http://docker.com).
+#' @title Create [Docker CLI action](https://github.com/actions/docker/tree/aea64bb1b97c42fa69b90523667fef56b90d7cff) to run [Docker](http://docker.com)
 #' @template actions
 #' @export
 docker_cli <- function(IDENTIFIER,
@@ -12,7 +12,7 @@ docker_cli <- function(IDENTIFIER,
   )
 }
 
-#' @describeIn docker_cli Build image called `repo:latest` from `Dockerfile` at repository root.
+#' @describeIn docker_cli Build image called `repo:latest` from `Dockerfile` at repository root
 build_image <- purrr::partial(
   .f = docker_cli,
   IDENTIFIER = "Build image",
@@ -21,17 +21,13 @@ build_image <- purrr::partial(
 )
 
 
-#' @title Create [Rscript-byod action](https://github.com/maxheld83/ghactions/tree/master/Rscript-byod) to run arbitrary R code.
-#'
-#' @description
-#' **Requires a Docker image called *literally* `repo:latest` in `github/workspace`.**
-#' See [vignette](https://www.maxheld.de/ghactions/articles/ghactions.html) for details.
-#' Use [build_image()] to create one in a prior action.
+#' @title Create [Rscript-byod action](https://github.com/maxheld83/ghactions/tree/master/Rscript-byod) to run arbitrary R code
 #'
 #' @param fun `[character(1)]`
 #' giving the function call.
 #'
 #' @template actions
+#' @template byod
 #'
 #' @export
 rscript_byod <- function(IDENTIFIER,
@@ -51,7 +47,7 @@ rscript_byod <- function(IDENTIFIER,
 }
 
 
-#' @title Create [filter action](https://github.com/actions/bin/tree/a9036ccda9df39c6ca7e1057bc4ef93709adca5f/filter).
+#' @title Create [filter action](https://github.com/actions/bin/tree/a9036ccda9df39c6ca7e1057bc4ef93709adca5f/filter)
 #' @template actions
 #' @export
 filter <- function(IDENTIFIER,
@@ -65,7 +61,7 @@ filter <- function(IDENTIFIER,
   )
 }
 
-#' @describeIn filter Filter on branch.
+#' @describeIn filter Filter on branch
 #'
 #' @param branch `[character(1)]`
 #' giving the name of the branch to filter on.
@@ -80,7 +76,7 @@ filter_branch <- function(needs, branch = "master") {
 }
 
 
-#' @title Create [rsync action](https://github.com/maxheld83/rsync/tree/v0.1.1) to deploy via [Rsync](https://rsync.samba.org) over SSH.
+#' @title Create [rsync action](https://github.com/maxheld83/rsync/tree/v0.1.1) to deploy via [Rsync](https://rsync.samba.org) over SSH
 #'
 #' @param HOST_NAME `[character(1)]`
 #' giving the name of the server you wish to deploy to, such as `foo.example.com`.
@@ -147,7 +143,7 @@ rsync_fau <- purrr::partial(
 )
 
 
-#' @title Create [ghpages action](https://github.com/maxheld83/ghpages/tree/v0.1.2) to deploy to [GitHub Pages](https://pages.github.com).
+#' @title Create [ghpages action](https://github.com/maxheld83/ghpages/tree/v0.1.2) to deploy to [GitHub Pages](https://pages.github.com)
 #'
 #' @description
 #' **Remember to provide `GH_PAT` as a secret to the GitHub UI.**
@@ -178,7 +174,7 @@ ghpages <- function(IDENTIFIER = "Deploy",
 }
 
 
-#' @title Create [netlify cli action](https://github.com/netlify/actions/tree/645ae7398cf5b912a3fa1eb0b88618301aaa85d0/cli/) to use the [Netlify CLI](https://www.netlify.com).
+#' @title Create [netlify cli action](https://github.com/netlify/actions/tree/645ae7398cf5b912a3fa1eb0b88618301aaa85d0/cli/) to use the [Netlify CLI](https://www.netlify.com)
 #'
 #' @description
 #' **Remember to provide `NETLIFY_AUTH_TOKEN` and `NETLIFY_SITE_ID` (optional) as secrets to the GitHub UI.**

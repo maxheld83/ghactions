@@ -3,7 +3,7 @@
 \name{netlify}
 \alias{netlify}
 \alias{netlify_deploy}
-\title{Create \href{https://github.com/netlify/actions/tree/645ae7398cf5b912a3fa1eb0b88618301aaa85d0/cli/}{netlify cli action} to use the \href{https://www.netlify.com}{Netlify CLI}.}
+\title{Create \href{https://github.com/netlify/actions/tree/645ae7398cf5b912a3fa1eb0b88618301aaa85d0/cli/}{netlify cli action} to use the \href{https://www.netlify.com}{Netlify CLI}}
 \usage{
 netlify(IDENTIFIER, needs, args)
 

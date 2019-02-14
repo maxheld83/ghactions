@@ -3,7 +3,7 @@
 \name{filter}
 \alias{filter}
 \alias{filter_branch}
-\title{Create \href{https://github.com/actions/bin/tree/a9036ccda9df39c6ca7e1057bc4ef93709adca5f/filter}{filter action}.}
+\title{Create \href{https://github.com/actions/bin/tree/a9036ccda9df39c6ca7e1057bc4ef93709adca5f/filter}{filter action}}
 \usage{
 filter(IDENTIFIER, needs, args)
 
@@ -53,7 +53,7 @@ To render an action block completely from scratch, you can always use the templa
 }
 \section{Functions}{
 \itemize{
-\item \code{filter_branch}: Filter on branch.
+\item \code{filter_branch}: Filter on branch
 }}
 
 \seealso{

@@ -34,4 +34,20 @@ Suitable for:
 \item any other custom site generators that can be called via \code{rmarkdown::render_site()} (\strong{experimental})
 }
 }
+\section{Docker}{
+
+This action \strong{requires a Docker image called \emph{literally} \code{repo:latest} in \code{github/workspace}.}
+See \href{https://www.maxheld.de/ghactions/articles/ghactions.html}{vignette} for details.
+Use \code{\link[=build_image]{build_image()}} to create one in a prior action.
+
+This action or workflow requires that you \emph{bring-your-own-dockerfile} (byod).
+There has to be a \code{Dockerfile} at the root of your repository.
+It's easy to set one up using \code{\link[=use_dockerfile]{use_dockerfile()}}.
+To learn more, consider the \href{https://www.maxheld.de/ghactions/articles/ghactions.html}{vignette}.
+}
+
+\seealso{
+Other byod: \code{\link{rscript_byod}}
+}
+\concept{byod}
 \concept{workflows}

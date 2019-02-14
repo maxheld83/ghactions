@@ -13,6 +13,7 @@
 #' @inheritParams rscript_byod
 #'
 #' @template workflows
+#' @template byod
 #'
 #' @param deploy `[list(1)]`
 #' giving the name of the branch to deploy *from*, and the function to deploy *with*.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/actions.R
 \name{ghpages}
 \alias{ghpages}
-\title{Create \href{https://github.com/maxheld83/ghpages/tree/v0.1.2}{ghpages action} to deploy to \href{https://pages.github.com}{GitHub Pages}.}
+\title{Create \href{https://github.com/maxheld83/ghpages/tree/v0.1.2}{ghpages action} to deploy to \href{https://pages.github.com}{GitHub Pages}}
 \usage{
 ghpages(IDENTIFIER = "Deploy", needs = "Filter master",
   BUILD_DIR = "_site", env = NULL)

@@ -2,7 +2,7 @@
 % Please edit documentation in R/actions.R
 \name{rsync}
 \alias{rsync}
-\title{Create \href{https://github.com/maxheld83/rsync/tree/v0.1.1}{rsync action} to deploy via \href{https://rsync.samba.org}{Rsync} over SSH.}
+\title{Create \href{https://github.com/maxheld83/rsync/tree/v0.1.1}{rsync action} to deploy via \href{https://rsync.samba.org}{Rsync} over SSH}
 \usage{
 rsync(IDENTIFIER, needs, HOST_NAME, HOST_IP, HOST_FINGERPRINT, SRC, USER,
   DEST, env = NULL, args = NULL)

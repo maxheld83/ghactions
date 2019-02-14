@@ -3,7 +3,7 @@
 \name{docker_cli}
 \alias{docker_cli}
 \alias{build_image}
-\title{Create \href{https://github.com/actions/docker/tree/aea64bb1b97c42fa69b90523667fef56b90d7cff}{Docker CLI action} to run \href{http://docker.com}{Docker}.}
+\title{Create \href{https://github.com/actions/docker/tree/aea64bb1b97c42fa69b90523667fef56b90d7cff}{Docker CLI action} to run \href{http://docker.com}{Docker}}
 \usage{
 docker_cli(IDENTIFIER, needs, args)
 
@@ -50,7 +50,7 @@ To render an action block completely from scratch, you can always use the templa
 }
 \section{Functions}{
 \itemize{
-\item \code{build_image}: Build image called \code{repo:latest} from \code{Dockerfile} at repository root.
+\item \code{build_image}: Build image called \code{repo:latest} from \code{Dockerfile} at repository root
 }}
 
 \seealso{
