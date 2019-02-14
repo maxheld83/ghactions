@@ -33,6 +33,7 @@ Defaults to \code{NULL} for no arguments.}
 }
 \description{
 \strong{Requires a Docker image called \emph{literally} \code{repo:latest} in \code{github/workspace}.}
+See \href{https://www.maxheld.de/ghactions/articles/ghactions.html}{vignette} for details.
 Use \code{\link[=build_image]{build_image()}} to create one in a prior action.
 
 Thin wrapper around GitHub actions.

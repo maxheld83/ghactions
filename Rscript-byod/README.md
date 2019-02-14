@@ -1,9 +1,18 @@
 This is a very **simple** GitHub action; it just runs in `Rscript` whatever you provide as the `args` field (see below).
 This action is meant for **generic** R projects with **arbitrary build environments**; you therefore [**have to bring your own dockerfile**](http://www.maxheld.de/ghactions/articles/ghactions.html#docker).
+Such a `Dockerfile` has to exist at the root of your repository.
 
-**This action expects that a built image called `repo:latest` exists in your `/github/workspace`.**
-Whatever you pass `Rscript` will simply run *in* that image.
-Hence the name: **bring-your-own-dockerfile**, or rather, **docker image**.
+Whatever you pass `Rscript` will simply run *in* an image build from that `Dockerfile`.
+Hence the name: **bring-your-own-dockerfile**.
+
+You can find popular Docker images for R projects at the [Rocker Project](https://www.rocker-project.org/).
+
+You can use the `ghactions::use_dockerfile()` function to set up a simple `Dockerfile` in your repository.
+
+If you're using this action on your own, remember that **this action expects a built image called `repo:latest` in your `/github/workspace`.**
+Use `ghactions::build_image()` to build such an image from your `Dockerfile` first.
+
+If this all sounds rather complicated, consider the [short documentation](http://www.maxheld.de/ghactions/articles/ghactions.html#docker).
 
 
 ## Environment Variables
@@ -19,7 +28,7 @@ nada.
 ## Required Arguments
 
 Whatever your provide in `args` simply gets appended to the `Rscript` call.
-So just image `Rscript` in front of it; if it is a valid shell command, you're good to go.
+So just imagine `Rscript` in front of it; if it is a valid shell command, you're good to go.
 Remember that `Rscript` is the ([now preferred](https://stackoverflow.com/questions/18306362/run-r-script-from-command-line/18306656#18306656)) way to run R from a system shell (*not* the R console).
 We have to use `Rscript`, because there's no GUI that could hook us up directly to the R console in our non-interactive image run.
 [Here](https://stat.ethz.ch/R-manual/R-devel/library/utils/html/Rscript.html) is the full documentation.
@@ -51,7 +60,7 @@ Nope.
 ## Example Usage
 
 Here is a complete `main.workflow` that first builds your (byod) image, and then runs `rmarkdown::render_site()` on it.
-You can also get this automatically by running one of the workflow functions in the ghactions package.
+You can also get this automatically by running one of the `ghactions::website()` function in the ghactions package.
 
 ```
 workflow "Build then render" {

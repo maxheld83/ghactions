@@ -25,6 +25,7 @@ build_image <- purrr::partial(
 #'
 #' @description
 #' **Requires a Docker image called *literally* `repo:latest` in `github/workspace`.**
+#' See [vignette](https://www.maxheld.de/ghactions/articles/ghactions.html) for details.
 #' Use [build_image()] to create one in a prior action.
 #'
 #' @param fun `[character(1)]`
