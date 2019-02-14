@@ -47,10 +47,12 @@ list2ghact(workflow = website())
 
 }
 \seealso{
-Other setup: \code{\link{use_dockerfile}},
+Other setup: \code{\link{edit_workflow}},
+  \code{\link{use_dockerfile}},
   \code{\link{use_ghactions_badge}}
 
-Other setup: \code{\link{use_dockerfile}},
+Other setup: \code{\link{edit_workflow}},
+  \code{\link{use_dockerfile}},
   \code{\link{use_ghactions_badge}}
 }
 \concept{setup}
