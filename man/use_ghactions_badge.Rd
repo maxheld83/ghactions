@@ -10,7 +10,7 @@ use_ghactions_badge()
 Add markdown syntax for README badge, see \code{\link[usethis:use_badge]{usethis::use_badge()}}.
 }
 \seealso{
-Other setup: \code{\link{edit_workflow}},
-  \code{\link{use_dockerfile}}, \code{\link{use_ghactions}}
+Other setup: \code{\link{use_dockerfile}},
+  \code{\link{use_ghactions}}
 }
 \concept{setup}

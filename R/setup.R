@@ -159,16 +159,3 @@ use_ghactions_badge <- function() {
     badge_name = "Actions Status"
   )
 }
-
-#' @title Open workflow file for editing
-#'
-#' @inherit usethis::edit_file
-#'
-#' @family setup
-#'
-#' @export
-edit_workflow <- function() {
-  usethis::ui_todo("Commit and push for the changes to take effect.")
-  path <- usethis::proj_path(".github", "main.workflow")
-  invisible(usethis::edit_file(path))
-}
