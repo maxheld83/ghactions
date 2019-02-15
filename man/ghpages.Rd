@@ -2,7 +2,7 @@
 % Please edit documentation in R/actions.R
 \name{ghpages}
 \alias{ghpages}
-\title{Create \href{https://github.com/maxheld83/ghpages/tree/v0.1.2}{ghpages action} to deploy to \href{https://pages.github.com}{GitHub Pages}}
+\title{Create \href{https://github.com/maxheld83/ghpages/tree/v0.2.0}{ghpages action} to deploy to \href{https://pages.github.com}{GitHub Pages}}
 \usage{
 ghpages(IDENTIFIER = "Deploy", needs = "Filter master",
   BUILD_DIR = "_site", env = NULL)
@@ -42,7 +42,7 @@ Remember that this PAT is \emph{not} for your local machine, but for GitHub acti
 The secret must be called \code{GH_PAT}.
 }
 
-For details, see docs of the \href{https://github.com/maxheld83/ghpages/tree/v0.1.2}{ghpages action}.
+For details, see docs of the \href{https://github.com/maxheld83/ghpages/tree/v0.2.0}{ghpages action}.
 
 Thin wrapper around GitHub actions.
 }
