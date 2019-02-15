@@ -146,8 +146,15 @@ rsync_fau <- purrr::partial(
 #' @title Create [ghpages action](https://github.com/maxheld83/ghpages/tree/v0.1.2) to deploy to [GitHub Pages](https://pages.github.com)
 #'
 #' @description
-#' **Remember to provide `GH_PAT` as a secret to the GitHub UI.**
-#' See above docs.
+#' **Remember to provide a GitHub personal access token secret named `GH_PAT` to the GitHub UI.**
+#' 1. Set up a new PAT.
+#'    You can use [usethis::browse_github_pat()] to get to the right page.
+#'    Remember that this PAT is *not* for your local machine, but for GitHub actions.
+#' 2. Copy the PAT to your clipboard.
+#' 3. Go to the settings of your repository, and paste the PAT as a secret.
+#'    The secret must be called `GH_PAT`.
+#'
+#' For details, see docs of the [ghpages action](https://github.com/maxheld83/ghpages/tree/v0.1.2).
 #'
 #' @param BUILD_DIR `[character(1)]`
 #' giving the path relative from your `/github/workspace` to the directory to be published.
