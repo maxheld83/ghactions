@@ -13,6 +13,7 @@ reference:
       Functions to help you get started with GitHub actions.
     contents:
       - has_concept("setup")
+      - edit_workflow
   - title: "Workflows"
     desc: >
       Functions with GitHub actions workflows for common R projects with sensible defaults.
