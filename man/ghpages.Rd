@@ -32,8 +32,17 @@ Defaults to \code{NULL} for no environment variables.}
 \item{...}{arguments passed on to other methods, not currently used.}
 }
 \description{
-\strong{Remember to provide \code{GH_PAT} as a secret to the GitHub UI.}
-See above docs.
+\strong{Remember to provide a GitHub personal access token secret named \code{GH_PAT} to the GitHub UI.}
+\enumerate{
+\item Set up a new PAT.
+You can use \code{\link[usethis:browse_github_pat]{usethis::browse_github_pat()}} to get to the right page.
+Remember that this PAT is \emph{not} for your local machine, but for GitHub actions.
+\item Copy the PAT to your clipboard.
+\item Go to the settings of your repository, and paste the PAT as a secret.
+The secret must be called \code{GH_PAT}.
+}
+
+For details, see docs of the \href{https://github.com/maxheld83/ghpages/tree/v0.1.2}{ghpages action}.
 
 Thin wrapper around GitHub actions.
 }
