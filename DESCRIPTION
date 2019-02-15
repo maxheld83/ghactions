@@ -1,7 +1,7 @@
 Package: ghactions
 Type: Package
 Title: GitHub actions for R
-Version: 0.0.0.9000
+Version: 0.1.0
 Roxygen: list(markdown = TRUE)
 Authors@R: c(
   person("Maximilian", "Held", email = "info@maxheld.de", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-4703-5388")),
