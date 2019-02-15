@@ -160,3 +160,11 @@ use_ghactions_badge <- function() {
     badge_name = "Actions Status"
   )
 }
+
+#' @importFrom usethis edit_workflow
+#' @export
+usethis::edit_workflow
+
+#' @importFrom usethis browse_github_actions
+#' @export
+usethis::browse_github_actions
