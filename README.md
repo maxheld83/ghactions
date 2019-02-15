@@ -29,11 +29,13 @@ This repository, **ghactions**, offers three avenues to **bring GitHub actions t
 To install, run:
 
 ```r
-devtools::install_github("maxheld83/ghactions")
+remotes::install_github("maxheld83/ghactions")
 ```
 
 ghactions currently relies on a dev version of [usethis](http://usethis.r-lib.org), which should be automatically installed alongside it.
-Sometimes, you may **need to restart the R session** before ghactions can find the dev usethis (RStudio > Session > Restart R).
+
+If you're using `devtools::install_github()` or otherwise currently have usethis loaded, you **may need to your the R session** before ghactions can find the dev usethis (RStudio > Session > Restart R).
+
 Because you're likely only to ever use it *once*, **you need not take on ghactions as a dependency in your projects.**
 
 
