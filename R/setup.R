@@ -138,6 +138,7 @@ use_dockerfile <- function(FROM = "rocker/verse:3.5.2") {
   # TODO this should be ui_line, not ui_done, but that isn't exported yet
   new <- usethis::write_over(path = "Dockerfile", lines = "FROM rocker/verse:3.5.2")
   # return true/false for changed files as in original use_template
+  usethis::use_build_ignore(files = "Dockerfile")
   invisible(new)
 }
 
