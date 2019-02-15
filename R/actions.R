@@ -159,7 +159,11 @@ ghpages <- function(IDENTIFIER = "Deploy",
                     needs = "Filter master",
                     BUILD_DIR = "_site",
                     env = NULL) {
-  usethis::ui_todo("Remember to provide `GH_PAT` as a secret to the GitHub UI.")
+  usethis::ui_todo(c(
+    "Remember to provide `GH_PAT` as a secret to the GitHub UI.",
+    "For more information about Personal Access Token (PAT) for ghpages go to {usethis::ui_path('https://github.com/maxheld83/ghpages')}.",
+    "See {usethis::ui_code('usethis::browse_github_pat()')} for help setting this up."
+  ))
   list(
     IDENTIFIER = IDENTIFIER,
     uses = "maxheld83/ghpages@v0.1.2",
