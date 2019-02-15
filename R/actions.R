@@ -21,10 +21,18 @@ build_image <- purrr::partial(
 )
 
 
-#' @title Create [Rscript-byod action](https://github.com/maxheld83/ghactions/tree/master/Rscript-byod) to run arbitrary R code
+#' @title Create [Rscript-byod action](https://github.com/maxheld83/ghactions/tree/master/Rscript-byod) to run arbitrary R expressions
 #'
-#' @param fun `[character(1)]`
-#' giving the function call.
+#' @details
+#' Notice that the `args` argument are passed as arguments to [utils::Rscript].
+#' `args` in [utils::Rscript] and any GitHub action have the same name, *and* they also work the same way.
+#' They simply get appended to the `RScript` command *after* `options`, `expr`essions and `file`.
+#' The argument has the same name as in all other actions and their wrappers, and gets appended to the command in the same way.
+#'
+#' You can only provide `expr` *or* `file`.
+#'
+#' @inheritParams utils::Rscript
+#' @inherit utils::Rscript Details
 #'
 #' @template actions
 #' @template byod
@@ -32,16 +40,46 @@ build_image <- purrr::partial(
 #' @export
 rscript_byod <- function(IDENTIFIER,
                          needs,
-                         fun,
+                         options = c("--verbose", "--echo"),  # makes for better logs
+                         expr = NULL,
+                         file = NULL,
                          args = NULL) {
+  # TODO the part in here that checks and makes an Rscript call probably has to be factored out at some point
+
+  # input validation ====
+  checkmate::assert_character(
+    x = options,
+    pattern = "^[--]",  # options must always start with -- as per RScript docs
+    any.missing = FALSE,
+    null.ok = TRUE
+  )
+
+  if (is.null(file)) {
+    # TODO expr validation only after it is an actual expression
+  } else {
+    checkmate::assert_null(x = expr)  # there can only be expr OR file
+    checkmate::assert_file_exists(
+      x = file,
+      extension = "R"
+    )
+  }
+  checkmate::assert_character(
+    x = args,
+    any.missing = FALSE,
+    null.ok = TRUE
+  )
+
+  # create list ====
   list(
     IDENTIFIER = IDENTIFIER,
     uses = "maxheld83/ghactions/Rscript-byod@master",
     # this actually does *not* need a harder dependency, because it is versioned in this repo
     needs = needs,
     args = c(
-      args,
-      glue::glue('-e "{fun}"')
+      options,
+      glue::glue('-e "{expr}"'),
+      file,
+      args
     )
   )
 }

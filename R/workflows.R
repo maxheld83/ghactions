@@ -47,7 +47,7 @@ website <- function(IDENTIFIER = "Render and Deploy RMarkdown Website",
     rscript_byod(
       IDENTIFIER = "Render",
       needs = "Build image",
-      fun = "rmarkdown::render_site(encoding = 'UTF-8')"
+      expr = "rmarkdown::render_site(encoding = 'UTF-8')"
     ),
     filter_branch(
       needs = "Render",

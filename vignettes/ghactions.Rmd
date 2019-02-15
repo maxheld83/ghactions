@@ -58,7 +58,7 @@ x <- rscript_byod(  # this just creates a list with sensible defaults
   IDENTIFIER = "Summation",
   needs = "Build image", # this is the necessary prior step
   # the uses field is hard-coded in the function to keep everything compatible
-  fun = "1+1"
+  expr = "1+1"
 ) 
 do.call(what = make_action_block, args = x)
 ```

@@ -2,9 +2,10 @@
 % Please edit documentation in R/actions.R
 \name{rscript_byod}
 \alias{rscript_byod}
-\title{Create \href{https://github.com/maxheld83/ghactions/tree/master/Rscript-byod}{Rscript-byod action} to run arbitrary R code}
+\title{Create \href{https://github.com/maxheld83/ghactions/tree/master/Rscript-byod}{Rscript-byod action} to run arbitrary R expressions}
 \usage{
-rscript_byod(IDENTIFIER, needs, fun, args = NULL)
+rscript_byod(IDENTIFIER, needs, options = c("--verbose", "--echo"),
+  expr = NULL, file = NULL, args = NULL)
 }
 \arguments{
 \item{IDENTIFIER}{\code{[character(1)]}
@@ -21,13 +22,16 @@ Used:
 giving the actions (by their \code{IDENTIFIER}s) that must complete successfully before this action will be invoked.
 Defaults to \code{NULL} for no upstream dependencies.}
 
-\item{fun}{\code{[character(1)]}
-giving the function call.}
+\item{options}{a list of options, all beginning with \samp{--}.  These
+    can be any of the options of the standard \R front-end, and also those
+    described in the details.}
 
-\item{args}{\code{[character()]}
-giving the arguments to pass to the action.
-Arguments get appended to the last command in \code{ENTRYPOINT}.
-Defaults to \code{NULL} for no arguments.}
+\item{expr}{\R expression(s), properly quoted.}
+
+\item{file}{the name of a file containing \R commands.  \samp{-}
+    indicates \file{stdin}.}
+
+\item{args}{arguments to be passed to the script in \code{file}.}
 
 \item{...}{arguments passed on to other methods, not currently used.}
 }
@@ -35,6 +39,13 @@ Defaults to \code{NULL} for no arguments.}
 Thin wrapper around GitHub actions.
 }
 \details{
+Notice that the \code{args} argument are passed as arguments to \link[utils:Rscript]{utils::Rscript}.
+\code{args} in \link[utils:Rscript]{utils::Rscript} and any GitHub action have the same name, \emph{and} they also work the same way.
+They simply get appended to the \code{RScript} command \emph{after} \code{options}, \code{expr}essions and \code{file}.
+The argument has the same name as in all other actions and their wrappers, and gets appended to the command in the same way.
+
+You can only provide \code{expr} \emph{or} \code{file}.
+
 These functions are for \strong{advanced users} knowledgeable about GitHub actions.
 Novice users may be better served by the complete templates in workflows.
 
