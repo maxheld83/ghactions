@@ -166,6 +166,7 @@ ghpages <- function(IDENTIFIER = "Deploy",
                     needs = "Filter master",
                     BUILD_DIR = "_site",
                     env = NULL) {
+  usethis::ui_todo("Remember to provide `GH_PAT` as a secret to the GitHub UI.")
   list(
     IDENTIFIER = IDENTIFIER,
     uses = "maxheld83/ghpages@v0.1.2",
@@ -179,7 +180,6 @@ ghpages <- function(IDENTIFIER = "Deploy",
     )
   )
 }
-
 
 #' @title Create [netlify cli action](https://github.com/netlify/actions/tree/645ae7398cf5b912a3fa1eb0b88618301aaa85d0/cli/) to use the [Netlify CLI](https://www.netlify.com)
 #'
