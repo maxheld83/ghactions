@@ -31,7 +31,7 @@ Suitable for:
 \item \href{https://rmarkdown.rstudio.com/lesson-13.html}{RMarkdown websites}
 \item \href{https://bookdown.org}{Bookdown websites}
 \item \href{https://bookdown.org/yihui/blogdown/}{Blogdown websites} (\strong{experimental})
-\item any other custom site generators that can be called via \code{rmarkdown::render_site()} (\strong{experimental})
+\item any other site generators that can be called via \code{rmarkdown::render_site()} and returns the path to the compiled assets (\strong{experimental}).
 }
 }
 \section{Docker}{

@@ -26,7 +26,7 @@ Defaults to \code{NULL} for no upstream dependencies.}
     can be any of the options of the standard \R front-end, and also those
     described in the details.}
 
-\item{expr}{\R expression(s), properly quoted.}
+\item{expr}{any syntactically valid R expression.}
 
 \item{file}{the name of a file containing \R commands.  \samp{-}
     indicates \file{stdin}.}
@@ -39,10 +39,11 @@ Defaults to \code{NULL} for no upstream dependencies.}
 Thin wrapper around GitHub actions.
 }
 \details{
-Notice that the \code{args} argument are passed as arguments to \link[utils:Rscript]{utils::Rscript}.
-\code{args} in \link[utils:Rscript]{utils::Rscript} and any GitHub action have the same name, \emph{and} they also work the same way.
-They simply get appended to the \code{RScript} command \emph{after} \code{options}, \code{expr}essions and \code{file}.
-The argument has the same name as in all other actions and their wrappers, and gets appended to the command in the same way.
+\code{expr} here accepts R expressions (say, \code{1+1}) for your convenience, \emph{not} quoted expressions (say, \code{"1+1"}) as in the original \link{Rscript}.
+\code{expr} is best used for very few lines; if you have more code, consider placing it in a separate R script for \code{file}.
+
+\code{args} differs from the generic \code{args} in other GitHub actions:
+It only gets appended to the \code{Rscript} call when a \code{file} is provided.
 
 You can only provide \code{expr} \emph{or} \code{file}.
 

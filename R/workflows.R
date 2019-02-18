@@ -6,7 +6,7 @@
 #' - [RMarkdown websites](https://rmarkdown.rstudio.com/lesson-13.html)
 #' - [Bookdown websites](https://bookdown.org)
 #' - [Blogdown websites](https://bookdown.org/yihui/blogdown/) (**experimental**)
-#' - any other custom site generators that can be called via `rmarkdown::render_site()` (**experimental**)
+#' - any other site generators that can be called via `rmarkdown::render_site()` and returns the path to the compiled assets (**experimental**).
 #'
 #' @inheritParams make_workflow_block
 #'
@@ -47,7 +47,7 @@ website <- function(IDENTIFIER = "Render and Deploy RMarkdown Website",
     rscript_byod(
       IDENTIFIER = "Render",
       needs = "Build image",
-      expr = "rmarkdown::render_site(encoding = 'UTF-8')"
+      expr = rmarkdown::render_site(encoding = 'UTF-8')
     ),
     filter_branch(
       needs = "Render",

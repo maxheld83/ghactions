@@ -24,15 +24,17 @@ build_image <- purrr::partial(
 #' @title Create [Rscript-byod action](https://github.com/maxheld83/ghactions/tree/master/Rscript-byod) to run arbitrary R expressions
 #'
 #' @details
-#' Notice that the `args` argument are passed as arguments to [utils::Rscript].
-#' `args` in [utils::Rscript] and any GitHub action have the same name, *and* they also work the same way.
-#' They simply get appended to the `RScript` command *after* `options`, `expr`essions and `file`.
-#' The argument has the same name as in all other actions and their wrappers, and gets appended to the command in the same way.
+#' `expr` here accepts R expressions (say, `1+1`) for your convenience, *not* quoted expressions (say, `"1+1"`) as in the original [Rscript].
+#' `expr` is best used for very few lines; if you have more code, consider placing it in a separate R script for `file`.
+#'
+#' `args` differs from the generic `args` in other GitHub actions:
+#' It only gets appended to the `Rscript` call when a `file` is provided.
 #'
 #' You can only provide `expr` *or* `file`.
 #'
+#' @param expr any syntactically valid R expression.
+#'
 #' @inheritParams utils::Rscript
-#' @inherit utils::Rscript Details
 #'
 #' @template actions
 #' @template byod
@@ -55,7 +57,12 @@ rscript_byod <- function(IDENTIFIER,
   )
 
   if (is.null(file)) {
-    # TODO expr validation only after it is an actual expression
+    expr <- rlang::enexpr(expr)
+    checkmate::assert_true(x = rlang::is_expression(expr))
+    checkmate::assert_null(x = args)
+
+    # deparse expr must only happen under this condition, otherwise below glue writes bad Rscript argument
+    expr <- deparse(expr)  # rlang::quo_text adds linebreaks, which break Rscript
   } else {
     checkmate::assert_null(x = expr)  # there can only be expr OR file
     checkmate::assert_file_exists(
