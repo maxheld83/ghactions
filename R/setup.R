@@ -93,7 +93,9 @@ use_ghactions <- function(workflow = website()) {
 #'
 #' @examples
 #' # this will print the result to the console for inspection
+#' \dontrun{
 #' list2ghact(workflow = website())
+#' }
 #'
 #' @family setup
 #'

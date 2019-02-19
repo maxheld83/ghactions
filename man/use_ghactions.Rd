@@ -43,7 +43,9 @@ Useful when you want the result printed to console, not written to file.
 use_ghactions(workflow = website())
 }
 # this will print the result to the console for inspection
+\dontrun{
 list2ghact(workflow = website())
+}
 
 }
 \seealso{

@@ -310,6 +310,11 @@ firebase <- function(IDENTIFIER,
 #' @description
 #' Configuration details other than `PROJECT_ID` are read from the `firebase.json` at the root of your repository.
 #'
+#' @details
+#' Because firebase gets the deploy directory from a `firebase.json` file, it cannot automatically find the appropriate path.
+#' Manually edit your `firebase.json` to provide the deploy path.
+# tracked in https://github.com/maxheld83/ghactions/issues/80
+#'
 #' @export
 firebase_deploy <- function(IDENTIFIER = "Deploy",
                             needs,

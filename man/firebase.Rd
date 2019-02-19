@@ -54,6 +54,9 @@ Some variants of these action wrappers include sensible defaults for frequent us
 The \code{uses} field is \emph{always} hardcoded to a particular commit or tag of the underlying github action to ensure compatibility.
 
 To render an action block completely from scratch, you can always use the templating function \code{\link[=make_action_block]{make_action_block()}}.
+
+Because firebase gets the deploy directory from a \code{firebase.json} file, it cannot automatically find the appropriate path.
+Manually edit your \code{firebase.json} to provide the deploy path.
 }
 \section{Functions}{
 \itemize{

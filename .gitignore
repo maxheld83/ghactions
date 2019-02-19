@@ -1,3 +1,4 @@
+.deploy_dir
 inst/doc
 # History files
 .Rhistory

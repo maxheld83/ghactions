@@ -6,7 +6,7 @@
 #' - [RMarkdown websites](https://rmarkdown.rstudio.com/lesson-13.html)
 #' - [Bookdown websites](https://bookdown.org)
 #' - [Blogdown websites](https://bookdown.org/yihui/blogdown/) (**experimental**)
-#' - any other site generators that can be called via `rmarkdown::render_site()` and returns the path to the compiled assets (**experimental**).
+#' - any other site generators that can be called via `rmarkdown::render_site()` and returns the path to the rendered assets (**experimental**).
 #'
 #' @inheritParams make_workflow_block
 #'
@@ -14,6 +14,15 @@
 #'
 #' @template workflows
 #' @template byod
+#'
+#' @details
+#' Rmarkdown site generators can write to arbitary directories, and these output directory can be set in a number of places.
+#' Happily, `rmarkdown::render_site()` (invisibly) returns the path to the rendered assets.
+#' The `website()` workflow automatically retrieves this path, and writes it to a special `.deploy_dir` text file.
+#' Downstream deploy actions such as `ghpages()` default to deploying from the directory specified in such a `.deploy_dir`.
+#' This isn't a terribly elegant way of doing this, but because each action runs it's own container, and *only* the `github/workspace` directory persists between them, it is currently the only way to pass the path to the deploy actions.
+#'
+#' Users will probably never see the `.deploy_dir` file, and need not worry about it.
 #'
 #' @param deploy `[list(1)]`
 #' giving the name of the branch to deploy *from*, and the function to deploy *with*.
@@ -42,12 +51,20 @@ website <- function(IDENTIFIER = "Render and Deploy RMarkdown Website",
     actions = NULL
   ))
 
+  # these *may* appear locally should a user somehow run github actions locally
+  usethis::use_build_ignore(files = ".deploy_dir", escape = FALSE)
+  # usethis::use_git_ignore(ignores = ".deploy_dir")
+
   res$actions <- list(
     build_image(),
     rscript_byod(
       IDENTIFIER = "Render",
       needs = "Build image",
-      expr = rmarkdown::render_site(encoding = 'UTF-8')
+      expr = {
+        deploy_dir <- rmarkdown::render_site(encoding = 'UTF-8')
+        # there's no way to pass env vars between actions, so can only use disc
+        readr::write_lines(x = deploy_dir, path = ".deploy_dir", append = FALSE)
+      }
     ),
     filter_branch(
       needs = "Render",

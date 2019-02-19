@@ -31,8 +31,17 @@ Suitable for:
 \item \href{https://rmarkdown.rstudio.com/lesson-13.html}{RMarkdown websites}
 \item \href{https://bookdown.org}{Bookdown websites}
 \item \href{https://bookdown.org/yihui/blogdown/}{Blogdown websites} (\strong{experimental})
-\item any other site generators that can be called via \code{rmarkdown::render_site()} and returns the path to the compiled assets (\strong{experimental}).
+\item any other site generators that can be called via \code{rmarkdown::render_site()} and returns the path to the rendered assets (\strong{experimental}).
 }
+}
+\details{
+Rmarkdown site generators can write to arbitary directories, and these output directory can be set in a number of places.
+Happily, \code{rmarkdown::render_site()} (invisibly) returns the path to the rendered assets.
+The \code{website()} workflow automatically retrieves this path, and writes it to a special \code{.deploy_dir} text file.
+Downstream deploy actions such as \code{ghpages()} default to deploying from the directory specified in such a \code{.deploy_dir}.
+This isn't a terribly elegant way of doing this, but because each action runs it's own container, and \emph{only} the \code{github/workspace} directory persists between them, it is currently the only way to pass the path to the deploy actions.
+
+Users will probably never see the \code{.deploy_dir} file, and need not worry about it.
 }
 \section{Docker}{
 

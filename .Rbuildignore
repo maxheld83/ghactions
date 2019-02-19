@@ -1,3 +1,4 @@
+.deploy_dir
 ^\.github$
 ^docs$
 ^_pkgdown\.yml$
