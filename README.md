@@ -6,11 +6,13 @@
 [![codecov](https://codecov.io/gh/maxheld83/ghactions/branch/master/graph/badge.svg)](https://codecov.io/gh/maxheld83/ghactions)
 [![License: MIT](https://img.shields.io/github/license/maxheld83/ghactions.svg?style=flat)](https://opensource.org/licenses/MIT)
 
-
 [GitHub actions](https://github.com/features/actions) are a new workflow automation feature of the popular code repository host GitHub.
 The product is currently in **limited beta**.
+It may offer a better way to adopt continuous integration and delivery best practices in the R community.
+GitHub actions is a convenient service layer on top of the popular container standard docker, and is itself partly open source, thus limiting vendor lock-in.
+Most importantly, **it is simple to reason about** if things go wrong.
 
-This repository, **ghactions**, offers three avenues to **bring GitHub actions to the `#rstats` community**:
+The **ghactions** project offers three avenues to **bring GitHub actions to the `#rstats` community**:
 
 <img src="https://github.com/maxheld83/ghactions/blob/master/pkgwf.gif?raw=true" width=400/ align=right style="padding-left: 20px">
 
