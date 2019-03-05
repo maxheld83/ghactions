@@ -21,7 +21,9 @@ By programmatically triggering CI/CD, output versions (say, a PDF report or comp
 
 For widespread adoption of this best practice in the R community, CI/CD needs to be simple, fast, and easy to reason about if things go wrong.
 
-[GitHub actions](https://github.com/features/actions), a new workflow automation feature of the popular code repository host GitHub, 
+[GitHub actions](https://github.com/features/actions), is a new workflow automation feature of the popular code repository host GitHub.
+It is a convenient service layer on top of the popular container standard docker, and is itself partly open source, thus limiting vendor lock-in.
+GitHub actions may offer better CI/CD for the R community, but most importantly, it is simple to reason about if things go wrong.
 
 
 ## Workflows
@@ -160,7 +162,7 @@ The good news is that any downstream actions can now use the prepared image.
 
 The awkward part is that these actions have to **call the image by its exact name: `repo:latest`**.
 
-This step to build an image is wrapped in [build_image()].
+This step to build an image is wrapped in `build_image()`.
 
 The workflow functions in this package take care of this automatically.
 This isn't terribly elegant, but currently appears to be the only way on GitHub actions to identify images from past actions (see [this issue](https://github.com/maxheld83/ghactions/issues/1)).
