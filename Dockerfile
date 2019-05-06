@@ -11,7 +11,6 @@ LABEL "com.github.actions.icon"="package"
 LABEL "com.github.actions.color"="blue"
 
 RUN Rscript -e "install.packages('remotes')"
-RUN Rscript -e "remotes::install_cran('dplyr')"
 
 COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
