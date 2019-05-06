@@ -10,8 +10,7 @@ LABEL "com.github.actions.description"="Build and Check R Packages with R-hub."
 LABEL "com.github.actions.icon"="package"
 LABEL "com.github.actions.color"="blue"
 
-ADD https://raw.githubusercontent.com/r-hub/rhub/master/inst/bin/rhub-linux-docker.sh /rhub-linux-docker.sh
-RUN . ./rhub-linux-docker.sh && install_remotes
+RUN Rscript -e "install.packages('remotes')"
 
 COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
