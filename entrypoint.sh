@@ -2,6 +2,6 @@
 
 set -e
 
-Rscript -e "remotes::install_cran('dplyr')"
+Rscript -e "remotes::install_deps(pkgdir = 'tests/', upgrade = 'always')"
 
 echo "Hello world"
