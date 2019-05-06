@@ -1,6 +1,6 @@
 workflow "Test Action" {
   on = "push",
-  resolves = ["Hello World", "Shellcheck"]
+  resolves = ["Shellcheck", "Test dependency installation"]
 }
 
 action "Shellcheck" {
@@ -8,6 +8,12 @@ action "Shellcheck" {
   args = "*.sh"
 }
 
-action "Hello World" {
+action "Install Dependencies" {
   uses = "./"
+}
+
+action "Test dependency installation" {
+  uses = "maxheld83/ghactions_testthat@a2ffb9c63c98a76b5c6977097c53980de7d119ba"
+  args = "testthat::test_dir(path = \"tests/testthat/\")"
+  needs = "Install Dependencies"
 }
