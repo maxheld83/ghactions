@@ -14,6 +14,6 @@ action "Install Dependencies" {
 
 action "Test dependency installation" {
   uses = "maxheld83/ghactions_check@master"
-  args = "testthat::test_dir(path = \"tests/testthat/\", stop_on_warning = FALSE)"
+  args = "testthat::test_dir(path = \"tests/testthat/\", stop_on_failure = TRUE)"
   needs = "Install Dependencies"
 }
