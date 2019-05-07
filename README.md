@@ -1,1 +1,1 @@
-# GitHub Action to Build and Test R Packages using R-hub
+# GitHub Action to Install Package Dependencies
