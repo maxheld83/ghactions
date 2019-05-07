@@ -1,6 +1,6 @@
 workflow "Test Action" {
   on = "push",
-  resolves = ["Shellcheck", "Test dependency installation"]
+  resolves = ["Install Dependencies"]
 }
 
 action "Shellcheck" {

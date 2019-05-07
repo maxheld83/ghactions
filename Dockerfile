@@ -11,6 +11,7 @@ LABEL "com.github.actions.icon"="package"
 LABEL "com.github.actions.color"="blue"
 
 RUN Rscript -e "install.packages('remotes')"
+# above installation must happen before R library is set to persist in entrypoint.sh
 
 COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
