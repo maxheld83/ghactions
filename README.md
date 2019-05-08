@@ -2,7 +2,7 @@
 
 This action lets you install R packages (and their R dependencies) by running `remotes::install_deps()`.
 
-By default, it installs packages into a subdirectory in your workflow's home directory (`/github/home`, a.k.a. `$HOME`).
+By default, it installs packages into a subdirectory in your workflow's home directory (`/github/home`, a.k.a. [`$HOME`](https://developer.github.com/actions/creating-github-actions/accessing-the-runtime-environment/#filesystem)).
 By installing libraries into this persistent directory, later actions can use these dependencies, if passed the appropriate `R_LIBS_USER` environment variable (see below.)
 
 Notice that this action installs *R packages* with *R package dependencies*, not ~~system dependencies~~.
