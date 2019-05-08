@@ -36,6 +36,17 @@ action "Install Dependencies" {
 }
 ```
 
+Set `R_LIBS_USER` to an empty string for standard R behavior (not recommended).
+
+```
+action "Install Dependencies" {
+  uses = "./"
+  env = {
+    R_LIBS_USER = ""
+  }
+}
+```
+
 
 ## Caveat 
 
