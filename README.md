@@ -1,4 +1,4 @@
-# GitHub Action to Install Package Dependencies
+# GitHub Action to Install R Package Dependencies
 
 This action lets you install R packages (and their R dependencies) into your workflow's home directory (`/github/home`, a.k.a. `$HOME`).
 By installing libraries into this persistent directory, later actions can use these dependencies.
@@ -27,7 +27,7 @@ None.
 ## Example Usage
 
 ```
-action "Install R Dependencies" {
-  uses = "maxheld83/ghactions-inst-rdep@master"
+action "Install Dependencies" {
+  uses = "maxheld83/ghactions-install-deps@master"
 }
 ```
