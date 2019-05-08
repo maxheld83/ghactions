@@ -8,7 +8,6 @@ set -e
 R_LIB_PATH="$HOME"/lib/R/library # imitating idiomatic path from ~
 # R user library directories must exist before they can be used 
 mkdir -p "$R_LIB_PATH"
-# this sets up R accordingly; all downstream actions using the same container must be set up in this way.
 echo R_LIBS_USER="$R_LIB_PATH" >> "$HOME"/.Renviron
 
 cat "$HOME"/.Renviron
