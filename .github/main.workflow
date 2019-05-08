@@ -13,7 +13,7 @@ action "Install Dependencies" {
 }
 
 action "Test dependency installation" {
-  uses = "maxheld83/ghactions_check@master"
+  uses = "maxheld83/ghactions_check@78652ea60553d2fd92d256876cd2873264cb9233"
   args = "testthat::test_dir(path = \"tests/testthat/\", stop_on_failure = TRUE)"
   needs = "Install Dependencies"
 }
