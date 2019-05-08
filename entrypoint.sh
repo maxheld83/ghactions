@@ -8,13 +8,13 @@ set -e
 R_LIB_PATH="$HOME"/lib/R/library # imitating idiomatic path from ~
 # R user library directories must exist before they can be used 
 mkdir -p "$R_LIB_PATH"
-echo R_LIBS_USER="$R_LIB_PATH" >> "$HOME"/.Renviron
+# echo R_LIBS_USER="$R_LIB_PATH" >> "$HOME"/.Renviron
 
-cat "$HOME"/.Renviron
+# cat "$HOME"/.Renviron
 echo "$HOME"
 
-Rscript -e "remotes::install_deps(pkgdir = 'tests/testthat/descriptions/good', upgrade = 'always')"
-
+Rscript -e "remotes::install_deps(pkgdir = 'tests/testthat/descriptions/good', upgrade = 'always', lib = '/github/home/lib/R/library')"
+echo "this is ghactions-install-deps talking"
 ls -a "$R_LIB_PATH"
 
 Rscript -e ".libPaths()"
