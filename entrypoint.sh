@@ -1,6 +1,7 @@
 #!/bin/sh
 
-set -eu
+set -o errexit  # exit on any non-zero status
+set -o nounset  # exit on unset vars
 
 if [ ! -z "$R_LIBS_USER" ]
 then
@@ -10,7 +11,7 @@ fi
 
 if [ $# -eq 0 ]
   then
-    Rscript -e "remotes::install_deps(dependencies = TRUE)"
+    Rscript --verbose -e "remotes::install_deps(dependencies = TRUE)"
   else
     sh -c "$*"
 fi
