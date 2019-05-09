@@ -12,7 +12,8 @@ action "Install Dependencies" {
   uses = "./"
   # custom arg is for test only
   args = [
-    "Rscript -e \"remotes::install_deps(pkgdir = 'tests/testthat/descriptions/good')\""
+    "Rscript -e \"remotes::install_deps(pkgdir = 'tests/testthat/descriptions/good')\"",
+    "Rscript -e \"remotes::install_deps(pkgdir = 'tests/testthat/descriptions/bad')\""
   ]
 }
 
