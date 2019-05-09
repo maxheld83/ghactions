@@ -11,7 +11,8 @@ LABEL "com.github.actions.icon"="arrow-down-circle"
 LABEL "com.github.actions.color"="blue"
 
 # below installation is baked into this image, but should not persist across actions
-RUN Rscript -e "install.packages('remotes')"
+RUN Rscript -e "install.packages(c('remotes', 'curl', 'git2r', 'pkgbuild'))"
+# curl and git2r speed up pkg installation as per docs https://remotes.r-lib.org/index.html
 
 # now we set the user library to a persistent folder, so that any installations *inside* the container will persist across actions
 ENV R_LIBS_USER="/github/home/lib/R/library"
