@@ -25,10 +25,12 @@ None.
 
 ## Arguments
 
-None.
+- ... arbitrary shell commands, defaults to `remotes::install_deps(dependencies = TRUE)`.
 
 
 ## Example Usage
+
+### Simple (Recommended)
 
 ```
 action "Install Dependencies" {
@@ -36,16 +38,23 @@ action "Install Dependencies" {
 }
 ```
 
-Set `R_LIBS_USER` to an empty string for standard R behavior (not recommended).
+### Advanced Usage (Not Recommended)
 
 ```
-action "Install Dependencies" {
+action "Custom Installation" {
   uses = "./"
   env = {
     R_LIBS_USER = ""
   }
+  args = [
+    "Rscript -e \"1+1\"",
+    "Rscript -e \"2+2\""
+  ]
 }
 ```
+
+- Set `R_LIBS_USER` to an empty string for standard R behavior.
+- Setting any `args` will overwrite the default.
 
 
 ## Caveat 

@@ -8,7 +8,12 @@ then
   mkdir -p "$R_LIBS_USER"
 fi
 
-Rscript -e "remotes::install_deps(pkgdir = 'tests/testthat/descriptions/good', upgrade = 'always')"
+if [ $# -eq 0 ]
+  then
+    Rscript -e "remotes::install_deps(dependencies = TRUE)"
+  else
+    sh -c "$*"
+fi
 
 echo "this is ghactions-install-deps talking"
 Rscript -e ".libPaths()"
