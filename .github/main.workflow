@@ -18,7 +18,7 @@ action "Install Dependencies" {
 }
 
 action "Test dependency installation" {
-  uses = "maxheld83/ghactions_check@19e9741dc6d08851fc8b621baf32c5362d463fc3"
-  args = "testthat::test_dir(path = \"tests/testthat/\", stop_on_failure = TRUE)"
+  uses = "maxheld83/ghactions_check@170644a789b3fd0c319829aea0a56813a497e837"
+  args = "Rscript -e \"testthat::test_dir(path = 'tests/testthat/', stop_on_failure = TRUE)\""
   needs = "Install Dependencies"
 }
