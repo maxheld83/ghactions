@@ -1,7 +1,9 @@
-url: http://www.maxheld.de/ghactions
+url: https://r-lib.github.io/ghactions/
 authors:
-  Maximilian Held:
+  Max Held:
     href: http://www.maxheld.de
+  Jim Hester:
+    href: https://jimhester.com/
   Verena Held:
     href: http://www.verenaheld.in
 development:
@@ -50,7 +52,6 @@ navbar:
 theme: cosmo
 template:
   params:
-    ganalytics: UA-48816137-1
     bootswatch: cosmo
     docsearch:
       api_key: 8f10ced26cbc746213d4922f059ceb49

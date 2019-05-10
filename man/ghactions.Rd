@@ -11,17 +11,23 @@ Provides GitHub actions and some R functions to create workflows.
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/maxheld83/ghactions}
-  \item Report bugs at \url{https://github.com/maxheld83/ghactions/issues}
+  \item \url{https://github.com/r-lib/ghactions}
+  \item Report bugs at \url{https://github.com/r-lib/ghactions/issues}
 }
 
 }
 \author{
-\strong{Maintainer}: Maximilian Held \email{info@maxheld.de} (0000-0002-4703-5388)
+\strong{Maintainer}: Max Held \email{info@maxheld.de} (0000-0002-4703-5388)
+
+Authors:
+\itemize{
+  \item Jim Hester \email{james.f.hester@gmail.com} (0000-0002-2739-7082)
+}
 
 Other contributors:
 \itemize{
   \item Verena Held \email{info@verenaheld.in} [contributor]
+  \item RStudio Inc. [copyright holder, funder]
 }
 
 }

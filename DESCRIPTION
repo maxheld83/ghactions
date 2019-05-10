@@ -1,20 +1,39 @@
 Package: ghactions
-Type: Package
 Title: GitHub actions for R
-Version: 0.1.0
-Roxygen: list(markdown = TRUE)
-Authors@R: c(
-  person("Maximilian", "Held", email = "info@maxheld.de", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-4703-5388")),
-  person("Verena", "Held", email = "info@verenaheld.in", role = c("ctb")))
-URL: https://github.com/maxheld83/ghactions
-URLNote: https://github.com/maxheld83/ghactions
-BugReports: https://github.com/maxheld83/ghactions/issues
+Version: 0.1.1.9000
+Authors@R: 
+  c(
+    person(
+      given = "Max",
+      family = "Held",
+      role = c("aut", "cre"),
+      email = "info@maxheld.de",
+      comment = c(ORCID = "0000-0002-4703-5388")
+    ),
+    person(
+      given = "Jim",
+      family = "Hester",
+      role = c("aut"),
+      email = "james.f.hester@gmail.com",
+      comment = c(ORCID = "0000-0002-2739-7082")
+    ),
+    person(
+      given = "Verena",
+      family = "Held", 
+      email = "info@verenaheld.in", 
+      role = "ctb"
+    ),
+    person(
+      given = "RStudio Inc.",
+      role = c("cph", "fnd")
+    )
+  )
 Description: Provides GitHub actions and some R functions to create workflows.
+License: MIT + file LICENSE
+URL: https://github.com/r-lib/ghactions
+BugReports: https://github.com/r-lib/ghactions/issues
 Depends:
   R (>= 3.5.0)
-License: MIT + file LICENSE
-Encoding: UTF-8
-LazyData: true
 Imports:
   checkmate (>= 1.8.1),
   fs (>= 1.2.6),
@@ -27,10 +46,15 @@ Imports:
   usethis (>= 1.4.0),
   whisker (>= 0.3-2)
 Suggests:
-    testthat (>= 2.0.1),
-    knitr,
-    rmarkdown
-VignetteBuilder: knitr
-RoxygenNote: 6.1.1
+  testthat (>= 2.0.1),
+  knitr,
+  rmarkdown
 Remotes:
   r-lib/usethis#629
+VignetteBuilder:
+  knitr
+Encoding: UTF-8
+Language: en-US
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 6.1.1
