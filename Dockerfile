@@ -1,4 +1,4 @@
-FROM rhub/debian-gcc-release
+FROM rhub/debian-gcc-release:latest
 # github actions recommends debian, and this is the one closest to cran https://developer.github.com/actions/creating-github-actions/creating-a-docker-container/
 
 LABEL "maintainer"="Maximilian Held <info@maxheld.de>"
