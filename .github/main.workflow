@@ -5,5 +5,5 @@ workflow "Test" {
 
 action "test testthat" {
   uses = "./"
-  args = "testthat::test_dir(path = \"tests/testthat/\", stop_on_failure = TRUE)"
+  args = "Rscript -e \"testthat::test_dir(path = 'tests/testthat/', stop_on_failure = TRUE)\""
 }
