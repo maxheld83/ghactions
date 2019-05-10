@@ -19,5 +19,3 @@ if [ $# -eq 0 ]
     echo "Running custom commands ..."
     sh -c "$*"
 fi
-
-echo "Completed dependency installation."

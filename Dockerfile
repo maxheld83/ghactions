@@ -6,7 +6,7 @@ LABEL "repository"="http://github.com/maxheld83/ghactions-install-deps"
 LABEL "homepage"="http://github.com/maxheld83/ghactions-install-deps"
 
 LABEL "com.github.actions.name"="Install R Package Dependencies"
-LABEL "com.github.actions.description"="Install Package Dependencies for Rstats."
+LABEL "com.github.actions.description"="Install Package Dependencies for rstats."
 LABEL "com.github.actions.icon"="arrow-down-circle"
 LABEL "com.github.actions.color"="blue"
 

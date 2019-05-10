@@ -15,7 +15,7 @@ None.
 
 ## Environment Variables
 
-- [**`R_LIBS_USER`**](https://stat.ethz.ch/R-manual/R-devel/library/base/html/libPaths.html), the path for the R user library of packages.
+- [**`R_LIBS_USER`**](https://stat.ethz.ch/R-manual/R-devel/library/base/html/libPaths.html), the path to the R user library of packages.
     
     Defaults to `/github/home/lib/R/library`, a directory that persists across actions in the same run and workflow.
     Gets prepended to the library trees of [`.libPaths()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/libPaths.html), so that this path becomes the first place where R will look for a package.
@@ -42,7 +42,7 @@ action "Install Dependencies" {
 
 ```
 action "Custom Installation" {
-  uses = "./"
+  uses = "maxheld83/ghactions-install-deps@master"
   env = {
     R_LIBS_USER = ""
   }
@@ -55,6 +55,8 @@ action "Custom Installation" {
 
 - Set `R_LIBS_USER` to an empty string for standard R behavior.
 - Setting any `args` will overwrite the default.
+    **Warning**: When you provide custom commands, you loose the checks usually run by this package. 
+    You're on your own.
 
 
 ## Caveat 
