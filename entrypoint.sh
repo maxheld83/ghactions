@@ -14,7 +14,7 @@ fi
 
 if [ $# -eq 0 ]
   then
-    Rscript --verbose -e "remotes::install_deps(dependencies = TRUE)"
+    Rscript install.R
   else
     echo "Running custom commands ..."
     sh -c "$*"

@@ -17,5 +17,6 @@ RUN Rscript -e "install.packages(c('remotes', 'curl', 'git2r', 'pkgbuild'))"
 # now we set the user library to a persistent folder, so that any installations *inside* the container will persist across actions
 ENV R_LIBS_USER="/github/home/lib/R/library"
 
+COPY install.R /install.R
 COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
