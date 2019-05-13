@@ -55,9 +55,10 @@ action "Custom Installation" {
 
 - Set `R_LIBS_USER` to an empty string for standard R behavior.
 - Setting any `args` will overwrite the default.
+    To pass a file to `Rscript` provide it with a relative path from the repository root.
+    
     **Warning**: When you provide custom commands, you loose the checks usually run by this package. 
     You're on your own.
-
 
 ## Caveat 
 

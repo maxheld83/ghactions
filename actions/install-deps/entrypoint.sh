@@ -14,7 +14,7 @@ fi
 
 if [ $# -eq 0 ]
   then
-    Rscript install.R
+    Rscript /install.R
   else
     echo "Running custom commands ..."
     sh -c "$*"
