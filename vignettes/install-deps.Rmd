@@ -1,0 +1,20 @@
+---
+title: "GitHub Action to Install R Package Dependencies"
+author: "Maximilian Held"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_document
+vignette: >
+   %\VignetteIndexEntry{Rscript-byod}
+   %\VignetteEngine{knitr::rmarkdown}
+   %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r readme, child="../actions/install-deps/README.md"}
+```
