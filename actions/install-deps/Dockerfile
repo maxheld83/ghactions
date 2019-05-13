@@ -10,6 +10,9 @@ LABEL "com.github.actions.description"="Install Package Dependencies for rstats.
 LABEL "com.github.actions.icon"="arrow-down-circle"
 LABEL "com.github.actions.color"="blue"
 
+# seems to be required for (gh?) pkg, should move upstream as per 
+RUN apt-get install -y --no-install-recommends libssl-dev
+
 # below installation is baked into this image, but should not persist across actions
 RUN Rscript -e "install.packages(c('remotes', 'curl', 'git2r', 'pkgbuild'))"
 # curl and git2r speed up pkg installation as per docs https://remotes.r-lib.org/index.html
