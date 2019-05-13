@@ -34,7 +34,7 @@ None.
 
 ```
 action "Install Dependencies" {
-  uses = "maxheld83/ghactions-install-deps@master"
+  uses = "r-lib/ghactions/actions/install-deps@master"
 }
 ```
 
@@ -42,7 +42,7 @@ action "Install Dependencies" {
 
 ```
 action "Custom Installation" {
-  uses = "maxheld83/ghactions-install-deps@master"
+  uses = "r-lib/ghactions/actions/install-deps@master"
   env = {
     R_LIBS_USER = ""
   }
