@@ -1,55 +1,49 @@
 workflow "Build, Check, Document and Deploy" {
   on = "push"
   resolves = [
-    "Build Image",
-    "Document Package",
-    "Code Coverage",
-    "Deploy to GitHub Pages",
-    "Build Package",
+    "Install Dependencies"
   ]
 }
 
-action "Build Image" {
-  uses = "actions/docker/cli@c08a5fc9e0286844156fefff2c141072048141f6"
-  args = "build --tag=repo:latest ."
+action "Install Dependencies" {
+  uses = "./actions/install-deps"
 }
 
-action "Build Package" {
-  needs = "Build Image"
-  uses = "./actions/rscript-byod"
-  args = "-e 'devtools::build(path = \".\")'"
-}
-
-action "Check Package" {
-  uses = "./actions/rscript-byod"
-  needs = ["Build Package"]
-  args = "-e 'devtools::check_built(path = \".\", error_on = \"warning\")'"
-}
-
-action "Document Package" {
-  uses = "./actions/rscript-byod"
-  needs = ["Build Package"]
-  args = "-e 'devtools::install(); pkgdown::build_site()'"
-}
-
-action "Code Coverage" {
-  uses = "./actions/rscript-byod"
-  needs = ["Build Package"]
-  args = "-e 'covr::codecov()'"
-  secrets = ["CODECOV_TOKEN"]
-}
-
-action "Master Branch" {
-  uses = "actions/bin/filter@c6471707d308175c57dfe91963406ef205837dbd"
-  needs = ["Check Package", "Document Package"]
-  args = "branch master"
-}
-
-action "Deploy to GitHub Pages" {
-  uses = "maxheld83/ghpages@v0.1.1"
-  env = {
-    BUILD_DIR = "docs"
-  }
-  secrets = ["GH_PAT"]
-  needs = ["Master Branch"]
-}
+# action "Build Package" {
+#   uses = "./actions/rscript-byod"
+#   args = "-e 'devtools::build(path = \".\")'"
+# }
+# 
+# action "Check Package" {
+#   uses = "./actions/rscript-byod"
+#   needs = ["Build Package"]
+#   args = "-e 'devtools::check_built(path = \".\", error_on = \"warning\")'"
+# }
+# 
+# action "Document Package" {
+#   uses = "./actions/rscript-byod"
+#   needs = ["Build Package"]
+#   args = "-e 'devtools::install(); pkgdown::build_site()'"
+# }
+# 
+# action "Code Coverage" {
+#   uses = "./actions/rscript-byod"
+#   needs = ["Build Package"]
+#   args = "-e 'covr::codecov()'"
+#   secrets = ["CODECOV_TOKEN"]
+# }
+# 
+# action "Master Branch" {
+#   uses = "actions/bin/filter@c6471707d308175c57dfe91963406ef205837dbd"
+#   needs = ["Check Package", "Document Package"]
+#   args = "branch master"
+# }
+# 
+# action "Deploy to GitHub Pages" {
+#   uses = "maxheld83/ghpages@v0.1.1"
+#   env = {
+#     BUILD_DIR = "docs"
+#   }
+#   secrets = ["GH_PAT"]
+#   needs = ["Master Branch"]
+# }
