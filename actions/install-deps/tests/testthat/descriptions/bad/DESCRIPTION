@@ -1,0 +1,13 @@
+Package: bad description
+Type: Package
+Title: What the Package Does Using Title Case
+Version: 1.0
+Date: 2019-05-06
+Author: Max Held
+Maintainer: Max Held <info@maxheld.de>
+Description: More details about what the package does. See
+        <http://http://cran.r-project.org/doc/manuals/r-release/R-exts.html#The-DESCRIPTION-file>
+        for details on how to write this part.
+License: GPL (>= 2)
+Imports:
+  nonexistentpackage
