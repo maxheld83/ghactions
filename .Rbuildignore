@@ -7,11 +7,10 @@
 .config
 .rstudio
 ^Dockerfile$
-launch.sh
 logo.*
-Rscript-byod/
+^actions$
 .tar.gz
-pkgdown/
+^pkgdown$
 ^man-roxygen$
 vignettes/rscript-byod.Rmd
 vignettes/ghactions.Rmd
