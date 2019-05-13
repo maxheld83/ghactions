@@ -16,5 +16,5 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r readme, child="../actions/Rscript-byod/README.md"}
+```{r readme, child="../actions/rscript-byod/README.md"}
 ```

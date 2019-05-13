@@ -16,24 +16,24 @@ action "Build Image" {
 
 action "Build Package" {
   needs = "Build Image"
-  uses = "./actions/Rscript-byod"
+  uses = "./actions/rscript-byod"
   args = "-e 'devtools::build(path = \".\")'"
 }
 
 action "Check Package" {
-  uses = "./actions/Rscript-byod"
+  uses = "./actions/rscript-byod"
   needs = ["Build Package"]
   args = "-e 'devtools::check_built(path = \".\", error_on = \"warning\")'"
 }
 
 action "Document Package" {
-  uses = "./actions/Rscript-byod"
+  uses = "./actions/rscript-byod"
   needs = ["Build Package"]
   args = "-e 'devtools::install(); pkgdown::build_site()'"
 }
 
 action "Code Coverage" {
-  uses = "./actions/Rscript-byod"
+  uses = "./actions/rscript-byod"
   needs = ["Build Package"]
   args = "-e 'covr::codecov()'"
   secrets = ["CODECOV_TOKEN"]
