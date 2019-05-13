@@ -60,7 +60,19 @@ action "Custom Installation" {
     **Warning**: When you provide custom commands, you loose the checks usually run by this package. 
     You're on your own.
 
-## Caveat 
 
-So as not to interfere with your repository payload or build artifacts, packages are *not* installed into ~~`/github/workspace` a.k.a. `$GITHUB_WORKSPACE`~~.
-Though [not explicitly](https://github.com/maxheld83/ghactions-inst-rdep/issues/10) mentioned in the [github actions documentation](https://developer.github.com/actions/creating-github-actions/accessing-the-runtime-environment/#filesystem), `/github/workspace` also [appears to persist](https://github.com/maxheld83/persistent-home).
+## Caveats
+
+### No Caching
+
+GitHub actions currently has no native caching support.
+While the `R_LIBS_USER` directory of installed packages persists across actions, all dependencies have to be reinstalled for every workflow or run.
+This can take some time.
+For more information, see [this issue]()
+
+
+### Reliance on Semi-Documented Behavior for `$HOME`
+
+The [GitHub actions documentation](https://developer.github.com/actions/creating-github-actions/accessing-the-runtime-environment/#filesystem) only explicitly lists directory to persist across actions: `/github/workspace` (`$GITHUB_WORKSPACE`).
+However, that directory is not ideal to store the R user package library, because the repository content and build artifacts are created in the same place, potentially causing conflicts.
+`R_LIBS_USER` is therefore set to `/github/home` (`$HOME`), which also [appears to persist](https://github.com/maxheld83/persistent-home).
