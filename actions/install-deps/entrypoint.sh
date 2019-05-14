@@ -14,6 +14,7 @@ fi
 
 if [ $# -eq 0 ]
   then
+    Rscript -e "install.packages('devtools')"
     Rscript /install.R
   else
     echo "Running custom commands ..."

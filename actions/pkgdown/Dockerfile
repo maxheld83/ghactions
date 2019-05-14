@@ -10,6 +10,9 @@ LABEL "com.github.actions.description"="Create website for rstats packages with 
 LABEL "com.github.actions.icon"="book-open"
 LABEL "com.github.actions.color"="blue"
 
+# seems to be required for (gh?) pkg, should move upstream as per 
+RUN apt-get install -y --no-install-recommends libxml2-dev
+
 # bake pkgdown into image, but do not let it persist across actions
 RUN Rscript -e "install.packages('pkgdown')"
 

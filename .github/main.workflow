@@ -2,7 +2,8 @@ workflow "Build, Check, Document and Deploy" {
   on = "push"
   resolves = [
     "Check Package",
-    "Document Package"
+    "Document Package",
+    "Deploy to GitHub Pages"
   ]
 }
 

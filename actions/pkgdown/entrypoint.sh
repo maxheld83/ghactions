@@ -19,6 +19,7 @@ fi
 
 if [ $# -eq 0 ]
   then
+    Rscript -e "install.packages('pkgdown')"
     Rscript -e "pkgdown::build_site()"
   else
     echo "Running custom commands ..."
