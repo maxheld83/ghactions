@@ -11,9 +11,9 @@ LABEL "com.github.actions.icon"="check-circle"
 LABEL "com.github.actions.color"="blue"
 
 # bake testthat into image, but do not let it persist across actions
-RUN Rscript -e "install.packages('testthat')"
+RUN Rscript -e "install.packages(c('testthat', 'rcmdcheck'))"
 
-# now we set the user library to a persistent folder, so that R inside the container can find the dependencies installed in earlier actions
+# use persistent library
 ENV R_LIBS_USER="/github/home/lib/R/library"
 
 COPY entrypoint.sh /entrypoint.sh
