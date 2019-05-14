@@ -1,10 +1,10 @@
 ---
-title: "GitHub Action to Install R Package Dependencies"
+title: "GitHub Action to Build an R Package"
 author: "Maximilian Held"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_document
 vignette: >
-   %\VignetteIndexEntry{install-deps}
+   %\VignetteIndexEntry{build}
    %\VignetteEngine{knitr::rmarkdown}
    %\VignetteEncoding{UTF-8}
 ---
@@ -16,5 +16,5 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r readme, child="../actions/install-deps/README.md"}
+```{r readme, child="../actions/build/README.md"}
 ```

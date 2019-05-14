@@ -1,7 +1,7 @@
 workflow "Build, Check, Document and Deploy" {
   on = "push"
   resolves = [
-    "Install Dependencies"
+    "Build Package"
   ]
 }
 
@@ -9,10 +9,10 @@ action "Install Dependencies" {
   uses = "./actions/install-deps"
 }
 
-# action "Build Package" {
-#   uses = "./actions/rscript-byod"
-#   args = "-e 'devtools::build(path = \".\")'"
-# }
+action "Build Package" {
+  uses = "./actions/build"
+  needs = "Install Dependencies"
+}
 # 
 # action "Check Package" {
 #   uses = "./actions/rscript-byod"

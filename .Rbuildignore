@@ -12,6 +12,7 @@ logo.*
 .tar.gz
 ^pkgdown$
 ^man-roxygen$
+vignettes/install-deps.Rmd
+vignettes/build.Rmd
 vignettes/rscript-byod.Rmd
-vignettes/ghactions.Rmd
 pkgwf.gif

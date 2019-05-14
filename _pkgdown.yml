@@ -44,6 +44,10 @@ navbar:
       href: "reference/index.html"
     - text: "R Actions"
       menu:
+      - text: "Install Dependencies"
+        href: "articles/install-deps.html"
+      - text: "Build Package"
+        href: "articles/build.html"
       - text: "Rscript-byod"
         href: "articles/rscript-byod.html"
   right:
