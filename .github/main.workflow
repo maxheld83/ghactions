@@ -1,7 +1,8 @@
 workflow "Build, Check, Document and Deploy" {
   on = "push"
   resolves = [
-    "Check Package"
+    "Check Package",
+    "Document Package"
   ]
 }
 
@@ -13,17 +14,16 @@ action "Build Package" {
   uses = "./actions/build"
   needs = ["Install Dependencies"]
 }
-# 
+
 action "Check Package" {
   uses = "./actions/check"
   needs = ["Build Package"]
 }
-# 
-# action "Document Package" {
-#   uses = "./actions/rscript-byod"
-#   needs = ["Build Package"]
-#   args = "-e 'devtools::install(); pkgdown::build_site()'"
-# }
+
+action "Document Package" {
+  uses = "./actions/pkgdown"
+  needs = ["Build Package"]
+}
 # 
 # action "Code Coverage" {
 #   uses = "./actions/rscript-byod"
