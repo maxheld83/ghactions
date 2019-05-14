@@ -1,12 +1,14 @@
-This action installs a source package.
+## Install a Package
+
+This GitHub action installs a source package.
 
 
-## Secrets
+### Secrets
 
 None.
 
 
-## Environment Variables
+### Environment Variables
 
 - [**`R_LIBS_USER`**](https://stat.ethz.ch/R-manual/R-devel/library/base/html/libPaths.html), the path to the R user library of packages.
 
@@ -15,13 +17,13 @@ None.
     See the `install-docs` action for more details.
 
 
-## Arguments
+### Arguments
 
 - ... arbitrary shell commands, defaults to `R CMD install .``
     See below for an example.
 
 
-## Example Usage
+### Example Usage
 
 ```
 action "Install Package" {

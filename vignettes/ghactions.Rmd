@@ -4,7 +4,7 @@ author: "Maximilian Held"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_document
 vignette: >
-   %\VignetteIndexEntry{Rscript-byod}
+   %\VignetteIndexEntry{ghactions}
    %\VignetteEngine{knitr::rmarkdown}
    %\VignetteEncoding{UTF-8}
 ---

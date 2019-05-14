@@ -1,12 +1,14 @@
-This action builds a documentation website using for R packages using [pkgdown](https://pkgdown.r-lib.org/).
+## Render Package Website With *pkgdown*
+
+This GitHub action renders a documentation website using for R packages using [pkgdown](https://pkgdown.r-lib.org/).
 
 
-## Secrets
+### Secrets
 
 None.
 
 
-## Environment Variables
+### Environment Variables
 
 - [**`R_LIBS_USER`**](https://stat.ethz.ch/R-manual/R-devel/library/base/html/libPaths.html), the path to the R user library of packages.
 
@@ -15,13 +17,13 @@ None.
     See the `install-docs` action for more details.
 
 
-## Arguments
+### Arguments
 
 - ... arbitrary shell commands, defaults to `rcmdcheck::rcmdcheck(error_on = 'warning')`.
     See below for an example.
 
 
-## Example Usage
+### Example Usage
 
 ```
 action "Check Package" {

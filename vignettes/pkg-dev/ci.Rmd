@@ -1,0 +1,35 @@
+---
+title: "Continuous Integration"
+author: "Maximilian Held"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_document
+vignette: >
+   %\VignetteIndexEntry{ci}
+   %\VignetteEngine{knitr::rmarkdown}
+   %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+These GitHub actions are useful for running continuous integration tasks, narrowly defined, such as building, installing and checking.
+
+
+```{r readme, child="../../actions/install-deps/README.md"}
+```
+
+```{r readme, child="../../actions/build/README.md"}
+```
+
+```{r readme, child="../../actions/check/README.md"}
+```
+
+```{r readme, child="../../actions/install/README.md"}
+```
+
+```{r readme, child="../../actions/pkgdown/README.md"}
+```

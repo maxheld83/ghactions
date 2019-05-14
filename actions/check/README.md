@@ -1,12 +1,14 @@
-This action tests an R package.
+## Check a Package
+
+This GitHub action tests an R package.
 
 
-## Secrets
+### Secrets
 
 None.
 
 
-## Environment Variables
+### Environment Variables
 
 - [**`R_LIBS_USER`**](https://stat.ethz.ch/R-manual/R-devel/library/base/html/libPaths.html), the path to the R user library of packages.
 
@@ -15,16 +17,16 @@ None.
     See the `install-docs` action for more details.
 
 
-## Arguments
+### Arguments
 
 - ... arbitrary shell commands, defaults to `rcmdcheck::rcmdcheck(error_on = 'warning')`.
     See below for an example.
 
 
-## Example Usage
+### Example Usage
 
 
-### Simple (Recommended)
+#### Simple (Recommended)
 
 ```
 action "Check Package" {
@@ -33,7 +35,7 @@ action "Check Package" {
 ```
 
 
-### Advanced Usage (Not Recommended)
+#### Advanced Usage (Not Recommended)
 
 Because this action ships with [*testthat*](https://testthat.r-lib.org), you can also use it to run arbitrary tests.
 

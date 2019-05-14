@@ -1,4 +1,6 @@
-This action lets you install R packages (and their R dependencies) by running `remotes::install_deps()`.
+## Install Package Dependencies
+
+This GitHub action installs R packages (and their R dependencies).
 
 By default, it installs packages into a subdirectory in your workflow's home directory (`/github/home`, a.k.a. [`$HOME`](https://developer.github.com/actions/creating-github-actions/accessing-the-runtime-environment/#filesystem)).
 By installing libraries into this persistent directory, later actions can use these dependencies, if passed the appropriate `R_LIBS_USER` environment variable (see below.)
@@ -6,12 +8,12 @@ By installing libraries into this persistent directory, later actions can use th
 Notice that this action installs *R packages* with *R package dependencies*, not ~~system dependencies~~.
 
 
-## Secrets
+### Secrets
 
 None.
 
 
-## Environment Variables
+### Environment Variables
 
 - [**`R_LIBS_USER`**](https://stat.ethz.ch/R-manual/R-devel/library/base/html/libPaths.html), the path to the R user library of packages.
     
@@ -21,14 +23,14 @@ None.
     To let later actions in the same run and workflow use these packages, set the same `R_LIBS_USER` environment variable in those downstream actions.
 
 
-## Arguments
+### Arguments
 
 - ... arbitrary shell commands, defaults to `remotes::install_deps(dependencies = TRUE)`.
 
 
-## Example Usage
+### Example Usage
 
-### Simple (Recommended)
+#### Simple (Recommended)
 
 ```
 action "Install Dependencies" {
@@ -36,7 +38,7 @@ action "Install Dependencies" {
 }
 ```
 
-### Advanced Usage (Not Recommended)
+#### Advanced Usage (Not Recommended)
 
 ```
 action "Custom Installation" {
@@ -59,9 +61,9 @@ action "Custom Installation" {
     You're on your own.
 
 
-## Caveats
+### Caveats
 
-### No Caching
+#### No Caching
 
 GitHub actions currently has no native caching support.
 While the `R_LIBS_USER` directory of installed packages persists across actions, all dependencies have to be reinstalled for every workflow or run.
@@ -69,7 +71,7 @@ This can take some time.
 For more information, see [this issue]()
 
 
-### Reliance on Semi-Documented Behavior for `$HOME`
+#### Reliance on Semi-Documented Behavior for `$HOME`
 
 The [GitHub actions documentation](https://developer.github.com/actions/creating-github-actions/accessing-the-runtime-environment/#filesystem) only explicitly lists directory to persist across actions: `/github/workspace` (`$GITHUB_WORKSPACE`).
 However, that directory is not ideal to store the R user package library, because the repository content and build artifacts are created in the same place, potentially causing conflicts.

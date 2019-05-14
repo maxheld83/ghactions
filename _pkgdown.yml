@@ -33,6 +33,18 @@ reference:
       For internal purposes, not recommended for package users.
     contents:
       - has_concept("syntax")
+articles:
+  - title: "Overview"
+    contents:
+      - ghactions
+  - title: "Actions for Package Development"
+    desc: >
+      These actions are useful in package development.
+    contents:
+      - pkg-dev/ci
+  - title: "Other Actions"
+    contents:
+      - Rscript-byod
 navbar:
   title: "ghactions"
   left:
@@ -42,14 +54,8 @@ navbar:
       href: "articles/ghactions.html"
     - text: "Reference"
       href: "reference/index.html"
-    - text: "R Actions"
-      menu:
-      - text: "Install Dependencies"
-        href: "articles/install-deps.html"
-      - text: "Build Package"
-        href: "articles/build.html"
-      - text: "Rscript-byod"
-        href: "articles/rscript-byod.html"
+    - text: "Articles"
+      href: "articles/index.html"
   right:
     - icon: fa-github
       href: https://github.com/maxheld83/ghactions
