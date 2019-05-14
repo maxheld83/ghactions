@@ -19,6 +19,7 @@ fi
 
 if [ $# -eq 0 ]
   then
+    Rscript -e ".libPaths()"
     Rscript -e "devtools::install()"
   else
     echo "Running custom commands ..."
