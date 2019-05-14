@@ -19,7 +19,7 @@ fi
 
 if [ $# -eq 0 ]
   then
-    R CMD install $GITHUB_WORKSPACE
+    Rscript -e "devtools::install()"
   else
     echo "Running custom commands ..."
     sh -c "$*"

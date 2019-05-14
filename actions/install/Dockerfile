@@ -10,6 +10,9 @@ LABEL "com.github.actions.description"="Install R package."
 LABEL "com.github.actions.icon"="play-circle"
 LABEL "com.github.actions.color"="blue"
 
+# below installation is baked into this image, but should not persist across actions
+RUN Rscript -e "install.packages(c('devtools'))"
+
 # use persistent library
 ENV R_LIBS_USER="/github/home/lib/R/library"
 
