@@ -1,8 +1,8 @@
 workflow "Build, Check, Document and Deploy" {
   on = "push"
   resolves = [
-    "Document Package",
-    "Deploy to GitHub Pages"
+    "Check Package",
+    "Document Package"
   ]
 }
 
@@ -22,7 +22,7 @@ action "Check Package" {
 
 action "Install Package" {
   uses = "./actions/install"
-  needs = ["Check Package"]
+  needs = ["Build Package"]
 }
 
 action "Document Package" {
@@ -39,7 +39,7 @@ action "Document Package" {
 # 
 action "Master Branch" {
   uses = "actions/bin/filter@c6471707d308175c57dfe91963406ef205837dbd"
-  needs = ["Document Package"]
+  needs = ["Check Package", "Document Package"]
   args = "branch master"
 }
 
