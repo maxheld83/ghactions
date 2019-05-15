@@ -1,0 +1,23 @@
+---
+title: "Programmatic Code Review"
+author: "Maximilian Held"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_document
+vignette: >
+   %\VignetteIndexEntry{review}
+   %\VignetteEngine{knitr::rmarkdown}
+   %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+These GitHub actions are useful for programmatically conducting code review.
+
+
+```{r readme, child="../../actions/covr/README.md"}
+```

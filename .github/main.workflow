@@ -3,7 +3,8 @@ workflow "Build, Check, Document and Deploy" {
   resolves = [
     "Check Package",
     "Document Package",
-    "Deploy to GitHub Pages"
+    "Deploy to GitHub Pages",
+    "Code Coverage"
   ]
 }
 
@@ -14,6 +15,12 @@ action "Install Dependencies" {
 action "Build Package" {
   uses = "./actions/build"
   needs = ["Install Dependencies"]
+}
+
+action "Code Coverage" {
+  uses = "./actions/covr"
+  needs = ["Build Package"]
+  secrets = ["CODECOV_TOKEN"]
 }
 
 action "Check Package" {
@@ -30,14 +37,7 @@ action "Document Package" {
   uses = "./actions/pkgdown"
   needs = ["Install Package"]
 }
-# 
-# action "Code Coverage" {
-#   uses = "./actions/rscript-byod"
-#   needs = ["Build Package"]
-#   args = "-e 'covr::codecov()'"
-#   secrets = ["CODECOV_TOKEN"]
-# }
-# 
+
 action "Master Branch" {
   uses = "actions/bin/filter@c6471707d308175c57dfe91963406ef205837dbd"
   needs = ["Check Package", "Document Package"]
