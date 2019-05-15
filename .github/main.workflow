@@ -8,8 +8,16 @@ workflow "Build, Check, Document and Deploy" {
   ]
 }
 
+action "Build Image" {
+  uses = "actions/docker/cli@aea64bb1b97c42fa69b90523667fef56b90d7cff"
+  args = [
+    "build --tag=repo:latest ."
+  ]
+}
+
 action "Install Dependencies" {
   uses = "./actions/install-deps"
+  needs = "Build Image"
 }
 
 action "Build Package" {
