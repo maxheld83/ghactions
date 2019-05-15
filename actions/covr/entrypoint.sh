@@ -20,7 +20,7 @@ fi
 if [ $# -eq 0 ]
   then
     Rscript -e "install.packages(c('covr'))"
-    Rscript -e "covr::codecov()"
+    Rscript -e "covr::codecov(commit = '$GITHUB_SHA', branch = '$GITHUB_REF')"
   else
     echo "Running custom commands ..."
     sh -c "$*"
