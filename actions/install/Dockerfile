@@ -10,6 +10,9 @@ LABEL "com.github.actions.description"="Install R package."
 LABEL "com.github.actions.icon"="play-circle"
 LABEL "com.github.actions.color"="blue"
 
+# required for devtools
+RUN apt-get install -y --no-install-recommends libssl-dev
+
 # below installation is baked into this image, but should not persist across actions
 RUN Rscript -e "install.packages(c('devtools'))"
 

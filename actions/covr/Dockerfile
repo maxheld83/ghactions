@@ -10,7 +10,7 @@ LABEL "com.github.actions.description"="Measure test coverage using covr."
 LABEL "com.github.actions.icon"="pie-chart"
 LABEL "com.github.actions.color"="blue"
 
-# seems to be required for (gh?) pkg, should move upstream as per
+# required for covr
 RUN apt-get install -y --no-install-recommends libssl-dev
 
 # below installation is baked into this image, but should not persist across actions
