@@ -16,7 +16,7 @@ action "GCP Authenticate" {
 
 action "Download Cache" {
   uses = "actions/gcloud/cli@d124d4b82701480dc29e68bb73a87cfb2ce0b469"
-  runs = "gsutil cp -r gs://ghactions-cache/library /github/home/lib/R/library"
+  runs = "mkdir -p /github/home/lib/R/library && gsutil -m cp -r gs://ghactions-cache/library /github/home/lib/R/library"
   needs = "GCP Authenticate"
 }
 
@@ -27,7 +27,7 @@ action "Install Dependencies" {
 
 action "Upload Cache" {
   uses = "actions/gcloud/cli@d124d4b82701480dc29e68bb73a87cfb2ce0b469"
-  runs = "gsutil cp -r /github/home/lib/R/library gs://ghactions-cache/library"
+  runs = "gsutil -m cp -r /github/home/lib/R/library gs://ghactions-cache/library"
   needs = "Install Dependencies"
 }
 
