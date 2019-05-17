@@ -8,8 +8,14 @@ workflow "Build, Check, Document and Deploy" {
   ]
 }
 
+action "Setup Google Cloud" {
+  uses = "actions/gcloud/auth@master"
+  secrets = ["GCLOUD_AUTH"]
+}
+
 action "Install Dependencies" {
   uses = "./actions/install-deps"
+  needs = "Setup Google Cloud"
 }
 
 action "Build Package" {

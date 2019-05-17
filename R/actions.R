@@ -1,11 +1,11 @@
-#' @title Create [Docker CLI action](https://github.com/actions/docker/tree/aea64bb1b97c42fa69b90523667fef56b90d7cff) to run [Docker](http://docker.com)
+#' @title create [docker cli action](https://github.com/actions/docker/tree/aea64bb1b97c42fa69b90523667fef56b90d7cff) to run [docker](http://docker.com)
 #' @template actions
 #' @export
-docker_cli <- function(IDENTIFIER,
+docker_cli <- function(identifier,
                        needs,
                        args) {
   list(
-    IDENTIFIER = IDENTIFIER,
+    identifier = identifier,
     needs = needs,
     uses = "actions/docker/cli@aea64bb1b97c42fa69b90523667fef56b90d7cff",
     args = args
