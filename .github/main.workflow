@@ -15,7 +15,7 @@ action "GCP Authenticate" {
 
 action "Download Cache" {
   uses = "actions/gcloud/cli@d124d4b82701480dc29e68bb73a87cfb2ce0b469"
-  runs = "gsutil ls gs://ghactions-cache" 
+  runs = "gcloud config list" 
   needs = "GCP Authenticate"
 }
 
