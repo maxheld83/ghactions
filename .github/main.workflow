@@ -16,12 +16,12 @@ action "GCP Authenticate" {
 
 action "Make Local Library" {
   uses = "actions/bin/sh@master"
-  args = ["mkdir -p github/home/lib/R/library"]
+  args = ["mkdir -p /github/home/lib/R/library"]
 }
 
 action "Download Cache" {
   uses = "actions/gcloud/cli@d124d4b82701480dc29e68bb73a87cfb2ce0b469"
-  runs = "gsutil -m cp -r gs://ghactions-cache/library /github/home/lib/R/library/"
+  runs = "gsutil -m cp -r gs://ghactions-cache/library /github/home/lib/R/library"
   needs = [
     "GCP Authenticate",
     "Make Local Library"
