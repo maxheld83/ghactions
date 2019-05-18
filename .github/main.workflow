@@ -15,21 +15,31 @@ action "GCP Authenticate" {
 
 action "Download Cache" {
   uses = "actions/gcloud/cli@d124d4b82701480dc29e68bb73a87cfb2ce0b469"
-  runs = "gsutil -m cp -r gs://ghactions-cache/lib /github/home/"
-  needs = [
-    "GCP Authenticate"
-  ]
+  runs = "gsutil -m cp -r gs://ghactions-cache/lib.tar.gz /github/home/"
+  needs = "GCP Authenticate"
+}
+
+action "Decompress Cache" {
+  uses = "actions/bin/sh@5968b3a61ecdca99746eddfdc3b3aab7dc39ea31"
+  runs = "tar -zxvf /github/home/lib.tar.gz"
+  needs = "Download Cache"
 }
 
 action "Install Dependencies" {
   uses = "./actions/install-deps"
-  needs = "Download Cache"
+  needs = "Decompress Cache"
+}
+
+action "Compress Cache" {
+  uses = "actions/bin/sh@5968b3a61ecdca99746eddfdc3b3aab7dc39ea31"
+  runs = "tar -zcvf lib.tar.gz /github/home/lib"
+  needs = "Install Dependencies"
 }
 
 action "Upload Cache" {
   uses = "actions/gcloud/cli@d124d4b82701480dc29e68bb73a87cfb2ce0b469"
-  runs = "gsutil -m cp -r /github/home/lib gs://ghactions-cache/"
-  needs = "Install Dependencies"
+  runs = "gsutil -m cp lib.tar.gz gs://ghactions-cache/"
+  needs = "Compress Cache"
 }
 
 action "Build Package" {
