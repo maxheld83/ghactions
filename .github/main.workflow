@@ -4,7 +4,6 @@ workflow "Build, Check, Document and Deploy" {
     "Check Package",
     "Build Website",
     "Upload Cache",
-    "Deploy to GitHub Pages",
     "Code Coverage"
   ]
 }
@@ -35,7 +34,7 @@ action "Install Dependencies" {
 
 action "Upload Cache" {
   uses = "actions/gcloud/cli@d124d4b82701480dc29e68bb73a87cfb2ce0b469"
-  runs = "gsutil -m cp -r /github/home/lib/R/library gs://ghactions-cache/library"
+  runs = "gsutil -m cp -r /github/home/lib/R/library gs://ghactions-cache/library/"
   needs = "Install Dependencies"
 }
 
@@ -63,19 +62,4 @@ action "Install Package" {
 action "Build Website" {
   uses = "./actions/pkgdown"
   needs = ["Install Package"]
-}
-
-action "Master Branch" {
-  uses = "actions/bin/filter@c6471707d308175c57dfe91963406ef205837dbd"
-  needs = ["Check Package", "Build Website"]
-  args = "branch master"
-}
-
-action "Deploy to GitHub Pages" {
-  uses = "maxheld83/ghpages@v0.1.1"
-  env = {
-    BUILD_DIR = "docs"
-  }
-  secrets = ["GH_PAT"]
-  needs = ["Master Branch"]
 }
