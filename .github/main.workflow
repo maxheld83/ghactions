@@ -21,7 +21,7 @@ action "Download Cache" {
 
 action "Decompress Cache" {
   uses = "actions/bin/sh@5968b3a61ecdca99746eddfdc3b3aab7dc39ea31"
-  runs = "tar -zxvf /github/home/lib.tar.gz"
+  runs = "tar -zxvf --directory /github/home/lib /github/home/lib.tar.gz"
   needs = "Download Cache"
 }
 
