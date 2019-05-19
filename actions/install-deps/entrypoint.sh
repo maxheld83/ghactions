@@ -2,7 +2,7 @@
 
 set -o errexit  # exit on any non-zero status
 set -o nounset  # exit on unset vars
-
+date +"%D %T"
 echo "Starting dependency installation ..."
 
 if [ ! -z "$R_LIBS_USER" ]
@@ -11,7 +11,7 @@ then
   echo "Creating user library directory at $R_LIBS_USER ..."
   mkdir -p "$R_LIBS_USER"
 fi
-
+date +"%D %T"
 if [ $# -eq 0 ]
   then
     Rscript /install.R
@@ -19,3 +19,4 @@ if [ $# -eq 0 ]
     echo "Running custom commands ..."
     sh -c "$*"
 fi
+date +"%D %T"
