@@ -32,7 +32,7 @@ action "Install Dependencies" {
 
 action "Compress Cache" {
   uses = "actions/bin/sh@5968b3a61ecdca99746eddfdc3b3aab7dc39ea31"
-  runs = "tar -zcvf lib.tar.gz /github/home/lib"
+  runs = "tar -zcf lib.tar.gz --directory /github/home/lib/ ."
   needs = "Install Dependencies"
 }
 
