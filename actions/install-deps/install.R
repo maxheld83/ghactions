@@ -2,7 +2,7 @@
 message("Recording already installed dependencies ...")
 deps_exp <- remotes::dev_package_deps(dependencies = TRUE)$package
 message("Installing dependencies ...")
-remotes::install_deps(dependencies = TRUE, verbose = TRUE)
+remotes::install_deps(dependencies = TRUE, verbose = TRUE, quiet = TRUE)
 message("Checking installation success ...")
 # this includes *all* pkg libs, not just $R_LIBS_USER, because above install_deps will not reinstall pkgs already baked into the image, so we must include those in the test
 deps_present <- installed.packages()[,"Package"]

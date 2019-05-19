@@ -10,6 +10,7 @@ then
   # R user library directories must exist before they can be used
   echo "Creating user library directory at $R_LIBS_USER ..."
   mkdir -p "$R_LIBS_USER"
+  ls -a "$R_LIBS_USER"
 fi
 
 if [ $# -eq 0 ]
