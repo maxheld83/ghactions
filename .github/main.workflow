@@ -41,7 +41,7 @@ action "Compress Cache" {
   uses = "actions/bin/sh@5968b3a61ecdca99746eddfdc3b3aab7dc39ea31"
   runs = "tar -zcf lib.tar.gz --directory /github/home lib"
   needs = [
-    "Install Dependencies"
+    "Filter Not Act"
   ]
 }
 
@@ -95,7 +95,7 @@ action "Upload Cache" {
   uses = "actions/gcloud/cli@d124d4b82701480dc29e68bb73a87cfb2ce0b469"
   runs = "gsutil -m cp lib.tar.gz gs://ghactions-cache/"
   needs = [
-    "Filter Not Act"
+    "Compress Cache"
   ]
 }
 
