@@ -31,3 +31,5 @@ rsconnect/
 .rstudio/
 # pkgdown
 /docs
+# tokens to run ghactions locally with act
+*.json
