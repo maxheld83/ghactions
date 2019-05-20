@@ -1,10 +1,16 @@
-workflow "Build, Check, Document and Deploy" {
+workflow "Build and Check" {
+  on = "push"
+  resolves = [
+    "Check Package",
+    "Build Website"
+  ]
+}
+
+workflow "Deploy" {
   on = "push"
   resolves = [
     "Upload Cache",
     "Code Coverage",
-    "Check Package",
-    "Build Website",
     "Deploy Website"
   ]
 }
@@ -51,7 +57,8 @@ action "Upload Cache" {
   uses = "actions/gcloud/cli@d124d4b82701480dc29e68bb73a87cfb2ce0b469"
   runs = "gsutil -m cp lib.tar.gz gs://ghactions-cache/"
   needs = [
-    "Compress Cache"
+    "Compress Cache",
+    "Filter Not Act"
   ]
 }
 
@@ -62,10 +69,16 @@ action "Build Package" {
   ]
 }
 
+action "Filter Not Act" {
+  uses = "actions/bin/filter@master"
+  args = "not actor nektos/act"
+}
+
 action "Code Coverage" {
   uses = "./actions/covr"
   needs = [
-    "Build Package"
+    "Check Package",
+    "Filter Not Act"
   ]
   secrets = [
     "CODECOV_TOKEN"
@@ -100,7 +113,7 @@ action "Master Branch" {
     "Build Website"
   ]
   args = "branch master"
-}	
+}
 
 action "Deploy Website" {
   uses = "maxheld83/ghpages@v0.1.1"
@@ -109,6 +122,7 @@ action "Deploy Website" {
   }
   secrets = ["GH_PAT"]
   needs = [
-    "Master Branch"
+    "Master Branch",
+    "Filter Not Act"
   ]
 }
