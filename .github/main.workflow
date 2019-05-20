@@ -85,8 +85,7 @@ action "Filter Not Act" {
 action "Filter Master" {
   uses = "actions/bin/filter@c6471707d308175c57dfe91963406ef205837dbd"
   needs = [
-    "Check Package", 
-    "Build Website"
+    "Filter Not Act"
   ]
   args = "branch master"
 }
@@ -116,7 +115,6 @@ action "Deploy Website" {
   }
   secrets = ["GH_PAT"]
   needs = [
-    "Filter Master",
-    "Filter Not Act"
+    "Filter Master"
   ]
 }
