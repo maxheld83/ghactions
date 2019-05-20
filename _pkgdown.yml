@@ -37,6 +37,7 @@ articles:
   - title: "Overview"
     contents:
       - ghactions
+      - local
   - title: "Actions for Package Development"
     desc: >
       These actions are useful in package development.
