@@ -38,6 +38,7 @@ articles:
     contents:
       - ghactions
       - local
+      - performance
   - title: "Actions for Package Development"
     desc: >
       These actions are useful in package development.
