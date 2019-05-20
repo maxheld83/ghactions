@@ -85,7 +85,8 @@ action "Filter Not Act" {
 action "Filter Master" {
   uses = "actions/bin/filter@c6471707d308175c57dfe91963406ef205837dbd"
   needs = [
-    "Filter Not Act"
+    "Upload Cache",
+    "Code Coverage"
   ]
   args = "branch master"
 }
