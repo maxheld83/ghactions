@@ -16,4 +16,5 @@ vignettes/Rscript-byod.Rmd
 pkgwf.gif
 
 # tokens to run ghactions locally with act
-*.json
+.secrets/
+.envrc

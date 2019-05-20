@@ -32,4 +32,4 @@ rsconnect/
 # pkgdown
 /docs
 # tokens to run ghactions locally with act
-*.json
+/.secrets
