@@ -19,7 +19,7 @@ fi
 
 if [ $# -eq 0 ]
   then
-    Rscript -e "covr::codecov(commit = '$GITHUB_SHA', branch = '$GITHUB_REF“')"
+    Rscript -e "covr::codecov(commit = '$GITHUB_SHA', branch = '$GITHUB_REF')"
   else
     echo "Running custom commands ..."
     sh -c "$*"
