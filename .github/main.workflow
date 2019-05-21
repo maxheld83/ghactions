@@ -102,8 +102,7 @@ action "Upload Cache" {
 action "Code Coverage" {
   uses = "./actions/covr"
   needs = [
-    "Filter Not Act",
-    "Upload Cache"
+    "Filter Not Act"
   ]
   secrets = [
     "CODECOV_TOKEN"
