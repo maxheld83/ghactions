@@ -7,7 +7,7 @@ authors:
   Verena Held:
     href: http://www.verenaheld.in
 development:
-  mode: devel
+  mode: auto
   destination: "."
 reference:
   - title: "Setup"

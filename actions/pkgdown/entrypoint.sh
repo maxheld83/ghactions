@@ -19,7 +19,7 @@ fi
 
 if [ $# -eq 0 ]
   then
-    Rscript -e "pkgdown::build_site()"
+    Rscript -e "pkgdown::build_site(override = list(devel = F, external = F))"
   else
     echo "Running custom commands ..."
     sh -c "$*"
