@@ -15,7 +15,9 @@ RUN apt-get install -y --no-install-recommends libssl-dev
 
 # below installation is baked into this image, but should not persist across actions
 RUN Rscript -e "install.packages(c('covr'))"
+# TODO these are just hotpatches until https://github.com/r-lib/ghactions/issues/207
 RUN Rscript -e "install.packages(c('desc'))"
+RUN Rscript -e "install.packages(c('cli'))"
 
 # use persistent library
 ENV R_LIBS_USER="/github/home/lib/R/library"
