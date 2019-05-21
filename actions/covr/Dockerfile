@@ -20,7 +20,5 @@ RUN Rscript -e "install.packages(c('remotes'))"
 # use persistent library
 ENV R_LIBS_USER="/github/home/lib/R/library"
 
-RUN Rscript -e "remotes::install_github(repo = 'r-lib/usethis#629')"
-
 COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]

@@ -21,7 +21,9 @@ If you need more (or want less), you can always edit your \code{Dockerfile} by h
 Learn more about \href{https://www.rocker-project.org/use/extending/}{extending images in the context of R} at the Rocker Project.
 }
 \seealso{
-Other setup: \code{\link{use_ghactions_badge}},
+Other setup: \code{\link{browse_github_actions}},
+  \code{\link{edit_workflow}},
+  \code{\link{use_ghactions_badge}},
   \code{\link{use_ghactions}}
 }
 \concept{setup}

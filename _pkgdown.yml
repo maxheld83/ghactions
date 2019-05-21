@@ -47,7 +47,7 @@ articles:
       - pkg-dev/review
   - title: "Other Actions"
     contents:
-      - Rscript-byod
+      - rscript-byod
 navbar:
   title: "ghactions"
   left:

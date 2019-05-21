@@ -163,10 +163,128 @@ use_ghactions_badge <- function() {
   )
 }
 
-#' @importFrom usethis edit_workflow
-#' @export
-usethis::edit_workflow
 
-#' @importFrom usethis browse_github_actions
+#' @title Open configuration files
+#'
+#' @description Open `main.workflow` configuration file for GitHub actions.
+#' See [usethis::edit()] for details.
+#'
+#' @family setup
+#'
 #' @export
-usethis::browse_github_actions
+edit_workflow <- function() {
+  path <- usethis::proj_path(".github", "main.workflow")
+  usethis::ui_todo("Commit and push for the changes to take effect.")
+  invisible(usethis::edit_file(path))
+}
+
+
+#' @title Quickly browse to important package webpages
+#'
+#' @description Visits the GitHub actions page.
+#' See [usethis::browse_github()] for details.
+#'
+#' @inheritParams usethis::browse_github
+#'
+#' @family setup
+#'
+#' @export
+browse_github_actions <- function(package = NULL) {
+  view_url(github_home(package), "actions")
+}
+
+
+# all of the below is lifted off of usethis
+# usethis does not export this
+# TODO this should be avoided https://github.com/r-lib/ghactions/issues/205
+view_url <- function(..., open = interactive()) {
+  url <- paste(..., sep = "/")
+  if (open) {
+    usethis::ui_done("Opening URL {ui_value(url)}")
+    utils::browseURL(url)
+  } else {
+    usethis::ui_todo("Open URL {ui_value(url)}")
+  }
+  invisible(url)
+}
+## gets at most one GitHub link from the URL field of DESCRIPTION
+## strips any trailing slash
+## respects the URL given by maintainer, e.g.
+## "https://github.com/simsem/semTools/wiki" <-- note the "wiki" part
+## "https://github.com/r-lib/gh#readme" <-- note trailing "#readme"
+github_link <- function(package = NULL) {
+  if (is.null(package)) {
+    desc <- desc::desc(usethis::proj_get())
+  } else {
+    desc <- desc::desc(package = package)
+  }
+
+  urls <- desc$get_urls()
+  gh_links <- grep("^https?://github.com/", urls, value = TRUE)
+
+  if (length(gh_links) == 0) {
+    usethis::ui_warn("
+      Package does not provide a GitHub URL.
+      Falling back to GitHub CRAN mirror")
+    return(glue::glue("https://github.com/cran/{package}"))
+  }
+
+  gsub("/$", "", gh_links[[1]])
+}
+
+
+github_url_rx <- function() {
+  paste0(
+    "^",
+    "(?:https?://github.com/)",
+    "(?<owner>[^/]+)/",
+    "(?<repo>[^/#]+)",
+    "/?",
+    "(?<fragment>.*)",
+    "$"
+  )
+}
+
+## takes URL return by github_link() and strips it down to support
+## appending path parts for issues or pull requests
+##  input: "https://github.com/simsem/semTools/wiki"
+## output: "https://github.com/simsem/semTools"
+##  input: "https://github.com/r-lib/gh#readme"
+## output: "https://github.com/r-lib/gh"
+github_home <- function(package = NULL) {
+  gh_link <- github_link(package)
+  df <- re_match_inline(gh_link, github_url_rx())
+  glue::glue("https://github.com/{df$owner}/{df$repo}")
+}
+
+## inline a simplified version of rematch2::re_match()
+re_match_inline <- function(text, pattern) {
+  match <- regexpr(pattern, text, perl = TRUE)
+  start <- as.vector(match)
+  length <- attr(match, "match.length")
+  end <- start + length - 1L
+
+  matchstr <- substring(text, start, end)
+  matchstr[ start == -1 ] <- NA_character_
+
+  res <- data.frame(
+    stringsAsFactors = FALSE,
+    .text = text,
+    .match = matchstr
+  )
+
+  if (!is.null(attr(match, "capture.start"))) {
+    gstart <- attr(match, "capture.start")
+    glength <- attr(match, "capture.length")
+    gend <- gstart + glength - 1L
+
+    groupstr <- substring(text, gstart, gend)
+    groupstr[ gstart == -1 ] <- NA_character_
+    dim(groupstr) <- dim(gstart)
+
+    res <- cbind(groupstr, res, stringsAsFactors = FALSE)
+  }
+
+  names(res) <- c(attr(match, "capture.names"), ".text", ".match")
+  res
+}
