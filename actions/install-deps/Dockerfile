@@ -12,12 +12,21 @@ LABEL "com.github.actions.color"="blue"
 
 RUN apt-get install -y --no-install-recommends libssl-dev
 
-# below installation is baked into this image, but should not persist across actions
-RUN Rscript -e "install.packages(c('remotes', 'curl', 'git2r', 'pkgbuild'))"
-# curl and git2r speed up pkg installation as per docs https://remotes.r-lib.org/index.html
+# location for R libraries which should persist across the entire workflow (i.e. several actions)
+ARG R_LIBS_WORKFLOW="/github/home/lib/R/library"
+RUN mkdir -p "$R_LIBS_WORKFLOW"
+ENV R_LIBS_WORKFLOW="$R_LIBS_WORKFLOW"
+# location for R libraires which should persist only for this action
+ARG R_LIBS_ACTION="/usr/lib/R/action-library"
+RUN mkdir -p "$R_LIBS_ACTION"
+ENV R_LIBS_ACTION="$R_LIBS_ACTION"
 
-# now we set the user library to a persistent folder, so that any installations *inside* the container will persist across actions
-ENV R_LIBS_USER="/github/home/lib/R/library"
+ENV R_LIBS="$R_LIBS_ACTION"
+# curl and git2r speed up pkg installation as per docs https://remotes.r-lib.org/index.html
+RUN Rscript -e "install.packages(c('remotes', 'curl', 'git2r', 'pkgbuild'))"
+
+# now set R_LIBS to persistent folder
+ENV R_LIBS="$R_LIBS_WORKFLOW"
 
 COPY install.R /install.R
 COPY entrypoint.sh /entrypoint.sh

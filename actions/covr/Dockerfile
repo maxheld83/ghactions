@@ -15,7 +15,6 @@ RUN apt-get install -y --no-install-recommends libssl-dev
 
 # below installation is baked into this image, but should not persist across actions
 RUN Rscript -e "install.packages(c('covr'))"
-RUN Rscript -e "install.packages(c('desc'))"
 
 # use persistent library
 ENV R_LIBS_USER="/github/home/lib/R/library"
