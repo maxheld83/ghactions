@@ -21,7 +21,7 @@ By programmatically triggering CI/CD, output versions (say, a PDF report or comp
 
 For widespread adoption of this best practice in the R community, CI/CD needs to be simple, fast, and easy to reason about if things go wrong.
 
-[GitHub actions](https://github.com/features/actions), is a new workflow automation feature of the popular code repository host GitHub.
+[GitHub actions](https://github.com/features/actions) is a new workflow automation feature of the popular code repository host GitHub.
 It is a convenient service layer on top of the popular container standard docker, and is itself partly open source, thus limiting vendor lock-in.
 GitHub actions may offer better CI/CD for the R community, but most importantly, it is simple to reason about if things go wrong.
 
@@ -36,7 +36,7 @@ The `main.workflow` functions express these graphs using a subset of the [Hashic
 It's not important that you know what any of this means.
 
 The `main.workflow` is a simple text file, and it is reasonably human-readable.
-However, GitHub *also* provides a visual editor on their website that you can access by just opening your `.github/main.workflow` on github.com.
+However, GitHub *also* provides a visual editor on their website that you can access by just opening your `.github/main.workflow` on [github.com](https://www.github.com).
 
 The workflow functions in this package create such `main.workflow` files for you, with sensible defaults for several kinds of R projects.
 This is meant to get your started quickly, or to help you apply the same `main.workflow` to many similar projects that you might have.
@@ -52,9 +52,8 @@ GitHub actions workflows are made up of individual blocks called -- you guessed 
 In other CI/CD services, these are sometimes known as *steps*, though GitHub actions are more flexible.
 You can read more about actions in [the GitHub documentation](https://developer.github.com/actions/).
 
-This repository includes some custom R actions, such as running some arbitrary code via `Rscript -e`.
+The ghactions repository includes some custom R actions, listed in the [articles](https://r-lib.github.io/ghactions/articles) section.
 **You can use these custom R actions independently and without using this package**.
-Learn more about them under the "R Actions" heading.
 
 These custom R actions, as well as generic actions from other repositories are also wrapped in little R functions listed in the actions category.
 These functions let you generate the necessary action blocks in R.
@@ -74,14 +73,10 @@ This isn't a very convincing use of R, and you'd be better off typing the action
 These action wrappers, in short, are useful only in the *very* narrow case where you might want to programmatically build your own templates.
 
 Every GitHub *action* runs in its own little virtual machine, called a Docker container (it's not really a VM).
-This is different from most other CI/CD services such as TravisCI, where several *build steps* are executed consecutively in the *same* computing environment.
-In a GitHub actions workflow, every step (here called an *action*) starts afresh.
-The *only* things that persists between actions is whatever your actions write to a special directory called `/github/workspace`.
-All actions start from this directory, and it always includes a copy of your repository source.
+Actions, even in the same workflow, share *no state* with one another, unless otherwise specified.
+To learn more about what this isolation means for using R in GitHub actions, and how you can persist states throughout a workflow, read the [vignette](/ghactions/articles/isolation).
 
-This isolation can be a *very good thing*; it makes individual actions shareable and easier to reason about.
-
-However, leveraging this isolation requires some understanding of Docker, technology by which these separate computing environments are provisioned.
+Leveraging GitHub actions for more advanced uses requires some understanding of Docker, technology by which these separate computing environments are provisioned.
 If you already know what this is, skip ahead.
 If you're not familiar with Docker, it's easy to learn.
 

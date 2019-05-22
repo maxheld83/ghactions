@@ -1,11 +1,13 @@
 ## Install Package Dependencies
 
-This GitHub action installs R packages (and their R dependencies).
+This GitHub action installs R packages dependencies from a `DESCRIPTION` at your project root.
 
-By default, it installs packages into a subdirectory in your workflow's home directory (`/github/home`, a.k.a. [`$HOME`](https://developer.github.com/actions/creating-github-actions/accessing-the-runtime-environment/#filesystem)).
-By installing libraries into this persistent directory, later actions can use these dependencies, if passed the appropriate `R_LIBS_USER` environment variable (see below.)
+By default, it installs packages into `R_LIBS_WORKFLOW` (`[$HOME](https://developer.github.com/actions/creating-github-actions/accessing-the-runtime-environment/#filesystem)/lib/R/library`) where they can be used by later actions in the same workflow run who have `R_LIBS_WORKFLOW` in its `.libPaths()`.
+You can easily prepend `R_LIBS_WORKFLOW` to the `.libPaths()` trees of later actions by setting the environment variable `R_LIBS=`
 
 Notice that this action installs *R packages* with *R package dependencies*, not ~~system dependencies~~.
+
+In keeping with the design of GitHub actions, this action maximizes the default isolation between actions.
 
 
 ### Secrets
