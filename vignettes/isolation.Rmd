@@ -68,7 +68,9 @@ Even though project packages always persist on disc, they still need not be on t
 For example, *styler* does not need any of the project packages to improve the code style.
 
 Each R action in this package has set `R_LIBS` to `"$R_LIBS_ACTION"`, `"$R_LIBS_WORKFLOW"`, `"$R_LIBS_WORKFLOW:$R_LIBS_ACTION"`, or the inverse as appropriate.
-Some actions even use packages from `R_LIBS_WORKFLOW` *temporarily* by loading them with `requireNamespace(lib.loc = Sys.getenv("R_LIBS_ACTION"))` to minimize their impact of the search tree.
+Some actions even use packages from `R_LIBS_WORKFLOW` *temporarily* by setting and unsetting `.libPaths()` inside a script.
+(You can also use [*withr*](http://withr.r-lib.org) for that purpose.)
+You can even deliberately pick and mix packages from *different* paths by  loading them with `requireNamespace(lib.loc = Sys.getenv("R_LIBS_ACTION"))`.
 
 `R_LIBS` rather than `R_LIBS_USER` or `R_LIBS_SITE` is used because it allows several paths, does not interfere with most R Docker images and comes first in `.libPaths()`.
 You can still declare `R_LIBS_USER` or `R_LIBS_SITE` in your project's `.Renviron` though you should avoid using `R_LIBS`.
