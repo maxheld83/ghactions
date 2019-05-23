@@ -15,7 +15,7 @@ if (length(deps_missing) == 0) {
   message("All package dependencies were successfully installed.")
 } else {
   stop(
-    "One or more package depedencies could not be installed: ",
+    "One or more package dependencies could not be installed: ",
     paste(deps_missing, collapse = ", ")
   )
 }
