@@ -7,14 +7,6 @@ workflow "Build, Check and Deploy" {
   ]
 }
 
-action "Docker Authenticate" {
-  uses = "actions/docker/login@6a64262659d993eb42fe9cb78b0f08d1ccd7a6b8"
-  secrets = [
-    "DOCKER_USERNAME", 
-    "DOCKER_PASSWORD"
-  ]
-}
-
 action "GCP Authenticate" {
   uses = "actions/gcloud/auth@04d0abbbe1c98d2d4bc19dc76bcb7754492292b0"
   secrets = [
@@ -41,8 +33,7 @@ action "Decompress Cache" {
 action "Install Dependencies" {
   uses = "./actions/install-deps"
   needs = [
-    "Decompress Cache",
-    "Docker Authenticate"
+    "Decompress Cache"
   ]
 }
 
