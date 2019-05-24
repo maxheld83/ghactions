@@ -46,9 +46,9 @@ Imports:
   usethis (>= 1.5.0),
   whisker (>= 0.3-2)
 Suggests:
-  testthat (>= 2.0.1),
-  knitr,
-  rmarkdown
+    testthat (>= 2.1.0),
+    knitr,
+    rmarkdown
 VignetteBuilder:
   knitr
 Encoding: UTF-8

@@ -200,10 +200,10 @@ browse_github_actions <- function(package = NULL) {
 view_url <- function(..., open = interactive()) {
   url <- paste(..., sep = "/")
   if (open) {
-    usethis::ui_done("Opening URL {ui_value(url)}")
+    usethis::ui_done("Opening URL {usethis::ui_value(url)}")
     utils::browseURL(url)
   } else {
-    usethis::ui_todo("Open URL {ui_value(url)}")
+    usethis::ui_todo("Open URL {usethis::ui_value(url)}")
   }
   invisible(url)
 }
