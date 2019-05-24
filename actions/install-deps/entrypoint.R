@@ -1,3 +1,6 @@
+#!/usr/bin/env Rscript
+
+message("Starting dependency installation ...")
 message("Using 'remotes' from 'R_LIBS_ACTION'.")
 unloadNamespace(ns = "remotes")  # just to be safe
 requireNamespace(package = "remotes", lib.loc = Sys.getenv("R_LIBS_ACTION"))

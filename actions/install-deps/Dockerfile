@@ -15,6 +15,5 @@ RUN Rscript -e "install.packages(c('remotes', 'curl', 'git2r', 'pkgbuild'))"
 # now set R_LIBS to persistent folder
 ENV R_LIBS="$R_LIBS_WORKFLOW"
 
-COPY install.R /install.R
-COPY entrypoint.sh /entrypoint.sh
-ENTRYPOINT ["/entrypoint.sh"]
+COPY entrypoint.R /entrypoint.R
+ENTRYPOINT ["/entrypoint.R"]
