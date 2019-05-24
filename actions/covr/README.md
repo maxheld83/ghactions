@@ -1,6 +1,6 @@
 ## Measure Code Coverage
 
-This GitHub action to measure code coverage.
+This GitHub action measures test coverage and uploads results to [codecov](https://codecov.io/) using [*covr*](https://covr.r-lib.org).
 
 
 ### Secrets
@@ -10,17 +10,17 @@ This GitHub action to measure code coverage.
 
 ### Environment Variables
 
-- [**`R_LIBS_USER`**](https://stat.ethz.ch/R-manual/R-devel/library/base/html/libPaths.html), the path to the R user library of packages.
-
-    Defaults to `/github/home/lib/R/library`, where the [ghactions-install](https://github.com/maxheld83/ghactions-install-deps) action installs dependencies.
-    <!-- todo add link -->
-    See the `install-docs` action for more details.
+- [**`R_LIBS`**](https://stat.ethz.ch/R-manual/R-devel/library/base/html/libPaths.html), a vector of paths prepended to existing `.libPaths()`.
+    
+    Defaults to `R_LIBS_WORKFLOW` (`[$HOME](https://developer.github.com/actions/creating-github-actions/accessing-the-runtime-environment/#filesystem)/lib/R/library`) where they persist over the run of the workflow.
+    All earlier or later actions that have `R_LIBS_WORKFLOW` in their `.libPaths()` can install to or load from this path.
+    
+    For more details, read the vignette on action [isolation](/articles/isolation/).
 
 
 ### Arguments
 
-- ... arbitrary shell commands, defaults to `R CMD install .``
-    See below for an example.
+None.
 
 
 ### Example Usage
