@@ -1,0 +1,104 @@
+---
+title: "Isolation and Persistence"
+author: "Maximilian Held"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_document
+vignette: >
+   %\VignetteIndexEntry{isolation}
+   %\VignetteEngine{knitr::rmarkdown}
+   %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+In traditional CI/CD services such as TravisCI, the steps or stages of a build are executived consecutively in the *same* computing environment.
+This is also how you probably use R on your local machine; you run `rmarkdown::render_site()` in the same environment (loosely speaking) as some, say `remotes::install_github()`s you ran before.
+There are some R tools to isolate operations, such as [*withr*](http://withr.r-lib.org/) or [*packrat*](https://rstudio.github.io/packrat/), but the default behavior is always that a change in one step will affect all later steps.
+
+Because `main.workflow`s are just lists of arbitrary Docker images running "over" your repository, all GitHub actions start afresh and are completely isolated from earlier and later actions by default.
+Whatever you do to your compute environment in one action (say, install some packages), will *not* affect later actions.
+That means, you won't find those packages.
+
+This isolation takes some getting used to, but is a very good thing.
+Because actions are completely isolated by default, it is much easier to share them across projects (or even languages) and workflows are much easier to reason about.
+
+Of course, we sometimes need states to persist between actions, such as between an [action to install package dependencies from a `DESCRIPTION`](https://github.com/r-lib/ghactions/tree/master/actions/install-deps) and, say, a later [install action](https://github.com/r-lib/ghactions/tree/master/actions/install) on that package.
+You need the dependencies to install the package, so we must break the isolation between these actions.
+
+Happily, GitHub actions provide two special directories which [persists](https://developer.github.com/actions/creating-github-actions/accessing-the-runtime-environment/#filesystem) between actions for the duration of a workflow run:
+- `/github/workspace` (`GITHUB_WORKSPACE`) is the default working directory for every action and starts out with a copy of your repository.
+- `/github/home` (`HOME`) is meant for other user-related data.
+
+There is no way to persist data between different workflows, or between different runs of the same workflow (other than docker caches).
+You can, however, "roll your own cache", using an external storage provider to cache artefacts between workflows and runs.
+Read the [performance]() vignette for details.
+
+
+## Package Installation
+
+In keeping with the design of GitHub actions, the R actions in this package maximize the default isolation between R package search trees `.libPaths()` across actions.
+
+There are two kinds of packages we might want to install for an action:
+
+1. **"Worker" packages** which are necessary to do the work of an action, *independent* of the repository on which the action runs.
+    For example, an action to `covr::codecov()` an R package will need [*covr*](https://github.com/r-lib/covr), in addition to whatever dependencies the package has.
+    Because this "worker" package is only needed for this action, it should not persist.
+    
+    Actions in this package therefore install worker packages to **`R_LIBS_ACTION`** (`/usr/lib/R/action-library`), named "ACTION" because they **persist only for the current action**.
+    
+    Worker packages are generally baked into the Docker image used by the action, and are therefore cached natively on GitHub actions.
+    
+2. **"Project" packages** are those packages listed in the `DESCRIPTION` at your repository root necessary to run *your* code or package.
+    For example, your script or package may use `%>%` and will thus require [*magrittr*](https://magrittr.tidyverse.org) to run.
+    Because this "project" package may be necessary for several actions, it should persist.
+    
+    Actions in this package therefore install project packages to **`R_LIBS_WORKFLOW`** (`[$HOME](https://developer.github.com/actions/creating-github-actions/accessing-the-runtime-environment/#filesystem)/lib/R/library`), named "WORKFLOW" because **they persist for the duration of the current workflow run**.
+    
+    Project packages cannot be baked into the Docker images running the actions, because that would require bespoke images for every repository and cross-pollute the actions.
+    It would also be impossible to robustly invalidate a Docker cache (see [#118](https://github.com/r-lib/ghactions/issues/118) for details).
+    
+    (Packages are never installed to `GITHUB_WORKSPACE` so as not interfere with the repository content or build artefacts).
+
+Even though project packages always persist on disc, they still need not be on the search path `.libPaths()` for *all* later actions.
+For example, *styler* does not need any of the project packages to improve the code style.
+
+Each R action in this package has set `R_LIBS` to `"$R_LIBS_ACTION"`, `"$R_LIBS_WORKFLOW"`, `"$R_LIBS_WORKFLOW:$R_LIBS_ACTION"`, or the inverse as appropriate.
+Some actions even use packages from `R_LIBS_WORKFLOW` *temporarily* by setting and unsetting `.libPaths()` inside a script.
+(You can also use [*withr*](http://withr.r-lib.org) for that purpose.)
+You can even deliberately pick and mix packages from *different* paths by  loading them with `requireNamespace(lib.loc = Sys.getenv("R_LIBS_ACTION"))`.
+
+`R_LIBS` rather than `R_LIBS_USER` or `R_LIBS_SITE` is used because it allows several paths, does not interfere with most R Docker images and comes first in `.libPaths()`.
+You can still declare `R_LIBS_USER` or `R_LIBS_SITE` in your project's `.Renviron` though you should avoid using `R_LIBS`.
+
+Hopefully, most users will never have to deal with these intricacies, and the R actions in this package will "just work".
+
+But users may still ask why we make so much fuss about isolating `.libPaths()` between actions, when shared environment states have worked well so far.
+The value of isolation here, as elsewhere in GitHub actions, lies in making it easier to reason about workflows.
+There are at least a couple of edge cases that are easier to avoid using isolated `.libPaths()`:
+
+- The installation of a "worker package" may pollute the search tree of a project.
+    For example, some in-development *foo* package may require a development version of *knitr*, but the *pkgdown* package to create the *foo* documentation website may only work with the CRAN-version of *knitr*.
+    
+    If executed using the same `.libPaths()`, you may have to be careful when you install and call what version of *knitr* in your workflow.
+    
+    Using isolated `.libPaths()`, it's easy to avoid this problem.
+    The actions building and checking *foo* will all set `R_LIBS="$R_LIBS_WORKFLOW"`, so that any `knitr::` call will use the development version of *knitr* specified in the `DESCRIPTION`.
+    The *pkgdown* action, however, will set `R_LIBS="$R_LIBS_ACTION:$R_LIBS_WORKFLOW"` so that any `knitr::` call inside *pkgdown* finds the appropriate CRAN-version of *knitr*.
+    
+- Conversely, it is possible that a package developer may want to "dogfood" the in-development *foo* package or it's development dependencies for running some of the actions.
+    
+    To achieve this using the same `.libPaths()`, you again have to be careful when to install which packages.
+    
+    Using isolated `.libPaths()`, you can simply override the more cautious default for most actions and set `R_LIBS=$R_LIBS_WORKFLOW:$R_LIBS_ACTION`, where the versions from `DESCRIPTION` take precedence over whatever the actions ship with.
+- Development helper packages such as *covr* are often, somewhat misleadingly, listed in the `Suggests` field of the `DESCRIPTION`, even though they don't enhance or alter the package for package *users* in any way.
+    This is sometimes done for the sole purpose of having the development helper packages available in CI/CD.
+    Using isolated `.libPaths()` in the *ghactions* actions it may be possible to loose these "pseudo-"dependencies.
+
+These edge cases may be quite rare, though when they arise, they can be quite hard to "debug" without isolation.
+They are also more likely to affect users who develop "developer" packages used inside workflows.
+As workflows become more complex, aggregate dependencies will multiply interactions and these edge cases may also become more frequent.
