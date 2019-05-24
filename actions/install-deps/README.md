@@ -1,6 +1,6 @@
 ## Install Package Dependencies
 
-This GitHub action installs R package dependencies from a `DESCRIPTION` at your project root.
+This GitHub action installs R package dependencies from a `DESCRIPTION` at the repository root.
 
 Notice that this action installs *R packages* with *R package dependencies*, not ~~system dependencies~~.
 

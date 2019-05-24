@@ -1,6 +1,6 @@
 ## Build a Package
 
-This GitHub action builds an R Package expected at the root of your package.
+This GitHub action builds an R Package expected at the repository root.
 
 ### Secrets
 
