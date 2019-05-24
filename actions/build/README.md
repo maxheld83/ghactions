@@ -1,8 +1,6 @@
 ## Build a Package
 
-This GitHub action builds a R Package.
-
-By default, it builds the package into your workspace (`/github/workspace`, or `$GITHUB_WORKSPACE`, where the archive will persist for later actions in the same workflow.
+This GitHub action builds an R Package expected at the root of your package.
 
 ### Secrets
 
@@ -11,16 +9,17 @@ None.
 
 ### Environment Variables
 
-- [**`R_LIBS_USER`**](https://stat.ethz.ch/R-manual/R-devel/library/base/html/libPaths.html), the path to the R user library of packages.
+- [**`R_LIBS`**](https://stat.ethz.ch/R-manual/R-devel/library/base/html/libPaths.html), a vector of paths prepended to existing `.libPaths()`.
     
-    Defaults to `/github/home/lib/R/library`, a directory that persists across actions in the same run and workflow.
-    <!-- TODO add link to install-deps actions -->
-    See the `install_deps` actions for details.
+    Defaults to `R_LIBS_WORKFLOW` (`[$HOME](https://developer.github.com/actions/creating-github-actions/accessing-the-runtime-environment/#filesystem)/lib/R/library`) where they persist over the run of the workflow.
+    All earlier or later actions that have `R_LIBS_WORKFLOW` in their `.libPaths()` can install to or load from this path.
+    
+    For more details, read the vignette on action [isolation](/articles/isolation/).
 
 
 ### Arguments
 
-- ... arbitrary shell commands, defaults to `pkgbuild::build(path = '/.')`.
+None.
 
 
 ### Example Usage
