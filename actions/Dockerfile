@@ -11,7 +11,8 @@ LABEL "homepage"="http://github.com/r-lib/ghactions"
 RUN apt-get update && \
   apt-get install -y --no-install-recommends \ 
   libssl-dev \
-  libxml2-dev
+  libxml2-dev && \
+  apt-get clean -y
 
 # location for R libraries which should persist across the entire workflow (i.e. several actions)
 ARG R_LIBS_WORKFLOW="/github/home/lib/R/library"
