@@ -123,6 +123,7 @@ action "Docker Login" {
   needs = [
     "Build Action Images",
     "Filter Not Act"
+    "Filter Master"
   ]
 }
 
