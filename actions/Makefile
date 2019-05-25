@@ -1,7 +1,9 @@
 export ROOT_DIR=$(CURDIR)
 export DOCKER_REPO=maxheld83
 
-MODULES=$(dir $(wildcard */Makefile))
+## MODULES=$(dir $(wildcard */Makefile))
+## automatically running all modules would be nicer, but would disregard dependencies of "FROM"s
+MODULES=base install-deps
 
 .PHONY: clean
 clean: ## Call the 'clean' target on all sub-modules
