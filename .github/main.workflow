@@ -8,9 +8,10 @@ workflow "Build, Check and Deploy" {
   ]
 }
 
-action "Build Base Image" {
-  uses = "actions/docker/cli@8cdf801b322af5f369e00d85e9cf3a7122f49108"
-  args = "build -t maxheld83/ghactions actions/"
+action "Build Action Images" {
+  uses = "actions/action-builder/docker@abd46f08f3ae51e9386b1f9b6facd8bbd8a8c458"
+  runs = "make"
+  args = "build"
 }
 
 action "GCP Authenticate" {
@@ -120,14 +121,15 @@ action "Docker Login" {
     "DOCKER_PASSWORD"
   ]
   needs = [
-    "Build Base Image",
+    "Build Action Images",
     "Filter Not Act"
   ]
 }
 
 action "Push Base Image" {
-  uses = "actions/docker/cli@8cdf801b322af5f369e00d85e9cf3a7122f49108"
-  args = "push maxheld83/ghactions"
+  uses = "actions/action-builder/docker/@abd46f08f3ae51e9386b1f9b6facd8bbd8a8c458"
+  runs = "make"
+  args = "publish"
   needs = [
     "Docker Login"
   ]

@@ -18,3 +18,4 @@ pkgwf.gif
 # tokens to run ghactions locally with act
 .secrets/
 .envrc
+Makefile
