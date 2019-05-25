@@ -1,4 +1,4 @@
-FROM maxheld83/ghactions
+FROM maxheld83/base
 
 LABEL "com.github.actions.name"="Document R Packages"
 LABEL "com.github.actions.description"="Document Packages for rstats."

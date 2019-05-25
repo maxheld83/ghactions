@@ -1,4 +1,4 @@
-FROM maxheld83/ghactions
+FROM maxheld83/base
 
 LABEL "com.github.actions.name"="Run Checks"
 LABEL "com.github.actions.description"="Run R CMD check for rstats."

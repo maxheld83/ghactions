@@ -1,4 +1,4 @@
-FROM maxheld83/ghactions
+FROM maxheld83/base
 
 LABEL "com.github.actions.name"="Create Documentation Website"
 LABEL "com.github.actions.description"="Create website for rstats packages with pkgdown."

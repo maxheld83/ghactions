@@ -1,4 +1,4 @@
-FROM maxheld83/ghactions
+FROM maxheld83/base
 
 LABEL "com.github.actions.name"="Measure Test Coverage"
 LABEL "com.github.actions.description"="Measure test coverage using covr."
