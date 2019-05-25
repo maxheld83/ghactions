@@ -41,14 +41,21 @@ action "Compress Cache" {
   uses = "actions/bin/sh@5968b3a61ecdca99746eddfdc3b3aab7dc39ea31"
   runs = "tar -zcf lib.tar.gz --directory /github/home lib"
   needs = [
-    "Filter Not Act"
+    "Install Dependencies"
+  ]
+}
+
+action "Document Package" {
+  uses = "./actions/document"
+  needs = [
+    "Install Dependencies"
   ]
 }
 
 action "Build Package" {
   uses = "./actions/build"
   needs = [
-    "Install Dependencies"
+    "Document Package"
   ]
 }
 
