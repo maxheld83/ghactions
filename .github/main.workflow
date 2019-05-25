@@ -11,7 +11,10 @@ workflow "Build, Check and Deploy" {
 action "Build Action Images" {
   uses = "actions/action-builder/docker@abd46f08f3ae51e9386b1f9b6facd8bbd8a8c458"
   runs = "make"
-  args = "build"
+  args = [
+    "--directory=actions",
+    "build"
+  ]
 }
 
 action "GCP Authenticate" {
@@ -122,7 +125,7 @@ action "Docker Login" {
   ]
   needs = [
     "Build Action Images",
-    "Filter Not Act"
+    "Filter Not Act",
     "Filter Master"
   ]
 }
@@ -130,7 +133,10 @@ action "Docker Login" {
 action "Push Base Image" {
   uses = "actions/action-builder/docker/@abd46f08f3ae51e9386b1f9b6facd8bbd8a8c458"
   runs = "make"
-  args = "publish"
+  args = [
+    "--directory=actions",
+    "publish"
+  ]
   needs = [
     "Docker Login"
   ]
