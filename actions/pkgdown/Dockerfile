@@ -5,9 +5,6 @@ LABEL "com.github.actions.description"="Create website for rstats packages with 
 LABEL "com.github.actions.icon"="layout"
 LABEL "com.github.actions.color"="blue"
 
-RUN apt-get install -y --no-install-recommends libxml2-dev
-RUN apt-get install -y --no-install-recommends libssl-dev
-
 RUN Rscript -e "install.packages('pkgdown')"
 
 ENV R_LIBS="$R_LIBS_WORKFLOW"

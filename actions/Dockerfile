@@ -5,6 +5,14 @@ LABEL "maintainer"="Maximilian Held <info@maxheld.de>"
 LABEL "repository"="http://github.com/r-lib/ghactions"
 LABEL "homepage"="http://github.com/r-lib/ghactions"
 
+# system dependencies for frequently used R development helper Packages
+# required for devtools, covr and more
+# required for pkgdown, roxygen2
+RUN apt-get update && \
+  apt-get install -y --no-install-recommends \ 
+  libssl-dev \
+  libxml2-dev
+
 # location for R libraries which should persist across the entire workflow (i.e. several actions)
 ARG R_LIBS_WORKFLOW="/github/home/lib/R/library"
 RUN mkdir -p "$R_LIBS_WORKFLOW"
