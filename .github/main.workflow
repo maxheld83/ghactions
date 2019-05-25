@@ -3,8 +3,14 @@ workflow "Build, Check and Deploy" {
   resolves = [
     "Upload Cache",
     "Code Coverage",
-    "Deploy Website"
+    "Deploy Website",
+    "Push Base Image"
   ]
+}
+
+action "Build Base Image" {
+  uses = "actions/docker/cli@8cdf801b322af5f369e00d85e9cf3a7122f49108"
+  args = "build -t maxheld83/ghactions actions/"
 }
 
 action "GCP Authenticate" {
@@ -104,6 +110,26 @@ action "Upload Cache" {
   needs = [
     "Compress Cache",
     "Filter Not Act"
+  ]
+}
+
+action "Docker Login" {
+  uses = "actions/docker/login@8cdf801b322af5f369e00d85e9cf3a7122f49108"
+  secrets = [
+    "DOCKER_USERNAME",
+    "DOCKER_PASSWORD"
+  ]
+  needs = [
+    "Build Base Image",
+    "Filter Not Act"
+  ]
+}
+
+action "Push Base Image" {
+  uses = "actions/docker/cli@8cdf801b322af5f369e00d85e9cf3a7122f49108"
+  args = "push maxheld83/ghactions"
+  needs = [
+    "Docker Login"
   ]
 }
 
