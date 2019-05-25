@@ -102,7 +102,8 @@ action "Upload Cache" {
   uses = "actions/gcloud/cli@d124d4b82701480dc29e68bb73a87cfb2ce0b469"
   runs = "gsutil -m cp lib.tar.gz gs://ghactions-cache/"
   needs = [
-    "Compress Cache"
+    "Compress Cache",
+    "Filter Not Act"
   ]
 }
 
