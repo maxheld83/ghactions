@@ -43,7 +43,8 @@ action "Decompress Cache" {
 action "Install Dependencies" {
   uses = "./actions/install-deps"
   needs = [
-    "Decompress Cache"
+    "Decompress Cache",
+    "Build Action Images"
   ]
 }
 
