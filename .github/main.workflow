@@ -41,7 +41,7 @@ action "Decompress Cache" {
 }
 
 action "Install Dependencies" {
-  uses = "./actions/install-deps"
+  uses = "r-lib/ghactions/actions/install-deps@progcom"
   needs = [
     "Decompress Cache",
     "Build Action Images"
