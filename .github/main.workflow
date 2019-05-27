@@ -18,7 +18,7 @@ action "Build Action Images" {
 }
 
 action "GCP Authenticate" {
-  uses = "actions/gcloud/auth@04d0abbbe1c98d2d4bc19dc76bcb7754492292b0"
+  uses = "actions/gcloud/auth@ba93088eb19c4a04638102a838312bb32de0b052"
   secrets = [
     "GCLOUD_AUTH"
   ]

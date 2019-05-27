@@ -36,17 +36,18 @@ There are different levels of caching relevant to the performance of caching.
     The preferred solution should be for GitHub actions to support caching natively.
 2. **`FROM` image caching** concerns the *downloaded* images from Docker Hub or another registry that are listed in the `FROM` field of the `Dockerfile` driving some action in question.
     Though this isn't documented, GitHub actions appears to be caching those on-site, because even very large images such as `rocker/verse` or `rhub/debian-gcc-release` start running in a matter of seconds (~30).
-3. However additional **layers from `RUN`** and similar fields in the `Dockerfile` driving some action appear *not* to be currently cached.
-    GitHub's own [actions](https://github.com/actions) appear to all publish their respective images to Docker Hub from where they are apparently pulled and cached *without* running `RUN` and friends again on every action use.
-    These images, even with relatively expensive `RUN`s all start running in a matter of seconds (~20).
-    The `Dockerfile`s of actions in *ghactions*  are currently all unpublished (tracked in [#141](https://github.com/r-lib/ghactions/issues/141)), and can thus take several minutes (1-5) to spin up.
-    Arguably GitHub actions *could* (or did at some point already?) automatically and transparently cache these images (perhaps for published actions?).
+3. Additional **layers from `RUN`** and similar fields in the `Dockerfile` appear to be downloaded from Docker Hub and locally cached **only if published using the [action builder action](https://github.com/actions/action-builder).
+    The action builder action and associated `Makefiles` tag uploaded Docker images by *all* the git refs (SHA, branch, PR) which the `uses = ` field allows.
+    To get these tags exactly right, it's easiest to use the action builder action, though it may be possible to achieve the same result using other means.
+    
+    Thus published, these images, even with relatively expensive `RUN`s all start running in a matter of seconds (~20).
+    
+    Arguably GitHub actions *could* (or did at some point in the past already?) automatically and transparently do what the action builder action now does via `make`.
 
 To sum up, it appears that:
 
 - Large images are *not* very expensive (though slimming them down is always a good idea, tracked in [#166](https://github.com/r-lib/ghactions/issues/166)).
-- `RUN`s and friends *inside* an actions `Dockerfile` are *pretty* expensive.
-    Resulting images should be published to a registry for better performance.
+- `RUN`s and friends *inside* an actions `Dockerfile` are *pretty* expensive, unless published to Docker Hub.
 - Caching for build artefacts across workflows and runs brings the usual performance gains.
     `remotes::install_deps()` for a medium-sized package such as *ghactions* now completes in around 4 minutes (because of 3 in the above), whereas without caching it took around 15-20 minutes.
     The overhead of the caching actions (un/tarring, down/uploading) is negligible (<20 seconds each).
