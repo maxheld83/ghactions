@@ -1,4 +1,5 @@
 #!/usr/bin/env Rscript
 
-message("Document package ...")
+message("Documenting package ...")
+
 devtools::document()
