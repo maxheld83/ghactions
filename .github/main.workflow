@@ -44,7 +44,8 @@ action "Install Dependencies" {
   uses = "./actions/install-deps"
   needs = [
     "Decompress Cache",
-    "Build Action Images"
+    "Build Action Images",
+    "Push Base Image"
   ]
 }
 
@@ -126,7 +127,6 @@ action "Docker Login" {
   ]
   needs = [
     "Build Action Images",
-    "Filter Not Act"
   ]
 }
 
