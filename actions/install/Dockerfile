@@ -5,9 +5,5 @@ LABEL "com.github.actions.description"="Install R package."
 LABEL "com.github.actions.icon"="play-circle"
 LABEL "com.github.actions.color"="blue"
 
-RUN Rscript -e "install.packages(c('devtools'))"
-
-ENV R_LIBS="$R_LIBS_WORKFLOW"
-
 COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]

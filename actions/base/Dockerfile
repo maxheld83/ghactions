@@ -5,6 +5,15 @@ LABEL "maintainer"="Maximilian Held <info@maxheld.de>"
 LABEL "repository"="http://github.com/r-lib/ghactions"
 LABEL "homepage"="http://github.com/r-lib/ghactions"
 
+# location for R libraries which should persist across the entire workflow (i.e. several actions)
+ARG R_LIBS_WORKFLOW="/github/home/lib/R/library"
+RUN mkdir -p "$R_LIBS_WORKFLOW"
+ENV R_LIBS_WORKFLOW="$R_LIBS_WORKFLOW"
+# location for R libraires which should persist only for this action
+ARG R_LIBS_ACTION="/usr/lib/R/action-library"
+RUN mkdir -p "$R_LIBS_ACTION"
+ENV R_LIBS_ACTION="$R_LIBS_ACTION"
+
 # system dependencies for frequently used R development helper Packages
 # required for devtools, covr and more
 # required for pkgdown, roxygen2
@@ -14,11 +23,7 @@ RUN apt-get update && \
   libxml2-dev && \
   apt-get clean -y
 
-# location for R libraries which should persist across the entire workflow (i.e. several actions)
-ARG R_LIBS_WORKFLOW="/github/home/lib/R/library"
-RUN mkdir -p "$R_LIBS_WORKFLOW"
-ENV R_LIBS_WORKFLOW="$R_LIBS_WORKFLOW"
-# location for R libraires which should persist only for this action
-ARG R_LIBS_ACTION="/usr/lib/R/action-library"
-RUN mkdir -p "$R_LIBS_ACTION"
-ENV R_LIBS_ACTION="$R_LIBS_ACTION"
+ADD dev_helpers.R /dev_helpers.R
+RUN Rscript "dev_helpers.R"
+
+ENV R_LIBS="$R_LIBS_WORKFLOW"

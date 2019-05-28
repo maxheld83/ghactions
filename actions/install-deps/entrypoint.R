@@ -3,7 +3,7 @@
 message("Starting dependency installation ...")
 message("Using 'remotes' from 'R_LIBS_ACTION'.")
 unloadNamespace(ns = "remotes")  # just to be safe
-requireNamespace(package = "remotes", lib.loc = Sys.getenv("R_LIBS_ACTION"))
+requireNamespace(package = "remotes", lib.loc = Sys.getenv("R_LIBS_WORKFLOW"))
 message("Recording already installed dependencies ...")
 deps_exp <- remotes::dev_package_deps(dependencies = TRUE)$package
 message("Installing dependencies ...")
