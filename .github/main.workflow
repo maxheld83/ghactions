@@ -9,7 +9,7 @@ workflow "Build, Check and Deploy" {
 }
 
 action "Build Action Images" {
-  uses = "actions/action-builder/docker@abd46f08f3ae51e9386b1f9b6facd8bbd8a8c458"
+  uses = "actions/action-builder/docker@master"
   runs = "make"
   args = [
     "--directory=actions",
