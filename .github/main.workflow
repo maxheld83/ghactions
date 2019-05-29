@@ -112,7 +112,8 @@ action "Filter Master" {
   uses = "actions/bin/filter@c6471707d308175c57dfe91963406ef205837dbd"
   needs = [
     "Upload Cache",
-    "Code Coverage"
+    "Code Coverage",
+    "Push Action Images"
   ]
   args = "branch master"
 }
