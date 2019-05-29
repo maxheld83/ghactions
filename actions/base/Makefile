@@ -13,4 +13,3 @@ build: docker-build ## Build this Action.
 .PHONY: test
 
 .PHONY: publish
-publish: docker-publish ## Publish this Action.
