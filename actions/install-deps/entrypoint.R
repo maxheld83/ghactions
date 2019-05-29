@@ -3,7 +3,7 @@
 message("Starting dependency installation ...")
 message("Using 'remotes' from 'R_LIBS_ACTION'.")
 unloadNamespace(ns = "remotes")  # just to be safe
-requireNamespace(package = "remotes", lib.loc = Sys.getenv("R_LIBS_WORKFLOW"))
+requireNamespace(package = "remotes", lib.loc = Sys.getenv("R_LIBS_ACTION"))
 message("Recording already installed dependencies ...")
 deps_exp <- remotes::dev_package_deps(dependencies = TRUE)$package
 message("Installing dependencies ...")
@@ -11,7 +11,7 @@ remotes::install_deps(dependencies = TRUE, verbose = TRUE)
 message("Unload 'remotes' from 'R_LIBS_ACTION'...")
 unloadNamespace(ns = "remotes")  # just to be safe
 message("Checking installation success ...")
-deps_present <- installed.packages(lib.loc = Sys.getenv("R_LIBS_WORKFLOW"))[, "Package"]
+deps_present <- installed.packages()[, "Package"]
 # this only compares pkgs, not version numbers or SHAs
 deps_missing <- setdiff(deps_exp, deps_present)
 if (length(deps_missing) == 0) {

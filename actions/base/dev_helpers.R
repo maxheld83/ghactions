@@ -7,12 +7,10 @@ install.packages(
     "pkgbuild",
     "devtools",
     "pkgdown",
-    "remotes",
     "roxygen2",
     "testthat",
     "rcmdcheck"
   ),
-  lib = Sys.getenv("R_LIBS_WORKFLOW"),  # install to isolated dir
-  dependencies = TRUE,
+  lib = Sys.getenv("R_LIBS_ACTION"),  # install to isolated dir
   verbose = TRUE
 )
