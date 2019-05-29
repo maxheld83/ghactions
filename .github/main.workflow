@@ -3,12 +3,40 @@ workflow "Build, Check and Deploy" {
   resolves = [
     "Upload Cache",
     "Code Coverage",
-    "Deploy Website"
+    "Deploy Website",
+    "Push Action Images"
+  ]
+}
+
+action "Build Base Image" {
+  uses = "actions/docker/cli@master"
+  args = "build -t ghactions/base actions/"
+}
+
+action "Lint Action Dockerfiles" {
+  uses = "actions/action-builder/shell@master"
+  runs = "make"
+  args = [
+  "--directory=actions",
+    "lint"
+  ]
+}
+
+action "Build Action Images" {
+  uses = "actions/action-builder/docker@master"
+  runs = "make"
+  args = [
+    "--directory=actions",
+    "build"
+  ]
+  needs = [
+    "Build Base Image",
+    "Lint Action Dockerfiles"
   ]
 }
 
 action "GCP Authenticate" {
-  uses = "actions/gcloud/auth@04d0abbbe1c98d2d4bc19dc76bcb7754492292b0"
+  uses = "actions/gcloud/auth@ba93088eb19c4a04638102a838312bb32de0b052"
   secrets = [
     "GCLOUD_AUTH"
   ]
@@ -24,7 +52,7 @@ action "Download Cache" {
 
 action "Decompress Cache" {
   uses = "actions/bin/sh@5968b3a61ecdca99746eddfdc3b3aab7dc39ea31"
-  runs = "tar -zxf /github/home/lib.tar.gz --directory /github/home"
+  runs = "tar --extract --ungzip --file /github/home/lib.tar.gz --directory /github/home"
   needs = [
     "Download Cache"
   ]
@@ -33,22 +61,30 @@ action "Decompress Cache" {
 action "Install Dependencies" {
   uses = "./actions/install-deps"
   needs = [
-    "Decompress Cache"
+    "Decompress Cache",
+    "Build Base Image"
   ]
 }
 
 action "Compress Cache" {
   uses = "actions/bin/sh@5968b3a61ecdca99746eddfdc3b3aab7dc39ea31"
-  runs = "tar -zcf lib.tar.gz --directory /github/home lib"
+  runs = "tar --gzip --create --file lib.tar.gz --directory /github/home lib"
   needs = [
-    "Filter Not Act"
+    "Install Dependencies"
+  ]
+}
+
+action "Document Package" {
+  uses = "./actions/document"
+  needs = [
+    "Install Dependencies"
   ]
 }
 
 action "Build Package" {
   uses = "./actions/build"
   needs = [
-    "Install Dependencies"
+    "Document Package"
   ]
 }
 
@@ -86,7 +122,8 @@ action "Filter Master" {
   uses = "actions/bin/filter@c6471707d308175c57dfe91963406ef205837dbd"
   needs = [
     "Upload Cache",
-    "Code Coverage"
+    "Code Coverage",
+    "Push Action Images"
   ]
   args = "branch master"
 }
@@ -95,7 +132,32 @@ action "Upload Cache" {
   uses = "actions/gcloud/cli@d124d4b82701480dc29e68bb73a87cfb2ce0b469"
   runs = "gsutil -m cp lib.tar.gz gs://ghactions-cache/"
   needs = [
-    "Compress Cache"
+    "Compress Cache",
+    "Filter Not Act"
+  ]
+}
+
+action "Docker Login" {
+  uses = "actions/docker/login@8cdf801b322af5f369e00d85e9cf3a7122f49108"
+  secrets = [
+    "DOCKER_USERNAME",
+    "DOCKER_PASSWORD"
+  ]
+  needs = [
+    "Filter Not Act"
+  ]
+}
+
+action "Push Action Images" {
+  uses = "actions/action-builder/docker/@abd46f08f3ae51e9386b1f9b6facd8bbd8a8c458"
+  runs = "make"
+  args = [
+    "--directory=actions",
+    "publish"
+  ]
+  needs = [
+    "Build Action Images",
+    "Docker Login"
   ]
 }
 

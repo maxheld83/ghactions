@@ -1,16 +1,19 @@
-FROM maxheld83/ghactions
+FROM ghactions/base
+
+LABEL "name"="covr"
+LABEL "version"="0.1.1.9000"
+LABEL "maintainer"="Maximilian Held <info@maxheld.de>"
+LABEL "repository"="http://github.com/r-lib/ghactions"
+LABEL "homepage"="http://github.com/r-lib/ghactions"
 
 LABEL "com.github.actions.name"="Measure Test Coverage"
 LABEL "com.github.actions.description"="Measure test coverage using covr."
 LABEL "com.github.actions.icon"="pie-chart"
 LABEL "com.github.actions.color"="blue"
 
-# required for covr
-RUN apt-get install -y --no-install-recommends libssl-dev
-
-RUN Rscript -e "install.packages(c('covr'))"
-
-ENV R_LIBS="$R_LIBS_WORKFLOW"
+RUN Rscript -e "install.packages(pkgs = 'covr')"
 
 COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
+
+ENV R_LIBS="$R_LIBS_WORKFLOW"

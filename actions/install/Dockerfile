@@ -1,16 +1,19 @@
-FROM maxheld83/ghactions
+FROM ghactions/base
+
+LABEL "name"="install"
+LABEL "version"="0.1.1.9000"
+LABEL "maintainer"="Maximilian Held <info@maxheld.de>"
+LABEL "repository"="http://github.com/r-lib/ghactions"
+LABEL "homepage"="http://github.com/r-lib/ghactions"
 
 LABEL "com.github.actions.name"="Install R Package"
 LABEL "com.github.actions.description"="Install R package."
 LABEL "com.github.actions.icon"="play-circle"
 LABEL "com.github.actions.color"="blue"
 
-# required for devtools
-RUN apt-get install -y --no-install-recommends libssl-dev
-
-RUN Rscript -e "install.packages(c('devtools'))"
-
-ENV R_LIBS="$R_LIBS_WORKFLOW"
+RUN Rscript -e "install.packages('devtools')"
 
 COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
+
+ENV R_LIBS="$R_LIBS_WORKFLOW"

@@ -13,3 +13,12 @@ ENV R_LIBS_WORKFLOW="$R_LIBS_WORKFLOW"
 ARG R_LIBS_ACTION="/usr/lib/R/action-library"
 RUN mkdir -p "$R_LIBS_ACTION"
 ENV R_LIBS_ACTION="$R_LIBS_ACTION"
+
+# system dependencies for frequently used R development helper Packages
+# required for devtools, covr and more
+# required for pkgdown, roxygen2
+RUN apt-get update && \
+  apt-get install -y --no-install-recommends \ 
+  libssl-dev \
+  libxml2-dev && \
+  apt-get clean -y

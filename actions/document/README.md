@@ -1,0 +1,32 @@
+## Create Package Documentation With *roxygen* and *devtools*
+
+This GitHub action creates `man/` documentation from [*roxygen*](https://github.com/klutometis/roxygen/) comments in `R/` scripts at the repository root using [*devtools*](https://devtools.r-lib.org).
+
+
+### Secrets
+
+None.
+
+
+### Environment Variables
+
+- [**`R_LIBS`**](https://stat.ethz.ch/R-manual/R-devel/library/base/html/libPaths.html), a vector of paths prepended to existing `.libPaths()`.
+    
+    Defaults to `R_LIBS_WORKFLOW` (`[$HOME](https://developer.github.com/actions/creating-github-actions/accessing-the-runtime-environment/#filesystem)/lib/R/library`) where they persist over the run of the workflow.
+    All earlier or later actions that have `R_LIBS_WORKFLOW` in their `.libPaths()` can install to or load from this path.
+    
+    For more details, read the vignette on action [isolation](/articles/isolation/).
+
+
+### Arguments
+
+None.
+
+
+### Example Usage
+
+```
+action "Document Package" {
+  uses = "r-lib/ghactions/actions/document@master"
+}
+```
