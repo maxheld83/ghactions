@@ -1,9 +1,5 @@
 install.packages(
   pkgs = c(
-    "curl",
-    # speeds up pkg installation as per docs https://remotes.r-lib.org/index.html
-    "git2r",
-    # speeds up pkg installation as per docs https://remotes.r-lib.org/index.html
     "pkgbuild",
     "devtools",
     "pkgdown",

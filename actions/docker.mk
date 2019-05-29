@@ -6,11 +6,11 @@ docker-lint: ## Run Dockerfile Lint on all dockerfiles.
 
 .PHONY: docker-build
 docker-build: ## Build the top level Dockerfile using the directory or $IMAGE_NAME as the name.
-	docker build -t $(DOCKER_REPO)/$(IMAGE_NAME) .
+	docker build -t $(IMAGE_NAME) .
 
 .PHONY: docker-tag
 docker-tag: ## Tag the docker image using the tag script.
-	tag $(DOCKER_REPO)/$(IMAGE_NAME) $(DOCKER_REPO)/$(IMAGE_NAME) --no-latest
+	tag $(IMAGE_NAME) $(DOCKER_REPO)/$(IMAGE_NAME) --no-latest
 
 .PHONY: docker-publish
 docker-publish: docker-tag ## Publish the image and tags to a repository.

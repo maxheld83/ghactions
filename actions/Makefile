@@ -1,8 +1,7 @@
 export ROOT_DIR=$(CURDIR)
 export DOCKER_REPO=maxheld83
 
-MODULES=base $(dir $(wildcard */Makefile))
-## must install base first, because later ones depend
+MODULES=$(dir $(wildcard */Makefile))
 
 .PHONY: clean
 clean: ## Call the 'clean' target on all sub-modules

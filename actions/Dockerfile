@@ -22,8 +22,3 @@ RUN apt-get update && \
   libssl-dev \
   libxml2-dev && \
   apt-get clean -y
-
-ADD dev_helpers.R /dev_helpers.R
-RUN Rscript "dev_helpers.R"
-
-ENV R_LIBS="$R_LIBS_WORKFLOW"

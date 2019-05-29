@@ -4,8 +4,13 @@ workflow "Build, Check and Deploy" {
     "Upload Cache",
     "Code Coverage",
     "Deploy Website",
-    "Push Base Image"
+    "Push Action Images"
   ]
+}
+
+action "Build Base Image" {
+  uses = "actions/docker/cli@master"
+  args = "build -t ghactions/base actions/"
 }
 
 action "Build Action Images" {
@@ -14,6 +19,9 @@ action "Build Action Images" {
   args = [
     "--directory=actions",
     "build"
+  ]
+  needs = [
+    "Build Base Image"
   ]
 }
 
@@ -44,7 +52,7 @@ action "Install Dependencies" {
   uses = "./actions/install-deps"
   needs = [
     "Decompress Cache",
-    "Build Action Images"
+    "Build Base Image"
   ]
 }
 
@@ -125,12 +133,11 @@ action "Docker Login" {
     "DOCKER_PASSWORD"
   ]
   needs = [
-    "Build Action Images",
     "Filter Not Act"
   ]
 }
 
-action "Push Base Image" {
+action "Push Action Images" {
   uses = "actions/action-builder/docker/@abd46f08f3ae51e9386b1f9b6facd8bbd8a8c458"
   runs = "make"
   args = [
@@ -138,6 +145,7 @@ action "Push Base Image" {
     "publish"
   ]
   needs = [
+    "Build Action Images",
     "Docker Login"
   ]
 }
