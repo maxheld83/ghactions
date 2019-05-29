@@ -34,7 +34,7 @@ action "Download Cache" {
 
 action "Decompress Cache" {
   uses = "actions/bin/sh@5968b3a61ecdca99746eddfdc3b3aab7dc39ea31"
-  runs = "tar -zxf /github/home/lib.tar.gz --directory /github/home"
+  runs = "tar --extract --ungzip --file /github/home/lib.tar.gz --directory /github/home"
   needs = [
     "Download Cache"
   ]
@@ -50,7 +50,7 @@ action "Install Dependencies" {
 
 action "Compress Cache" {
   uses = "actions/bin/sh@5968b3a61ecdca99746eddfdc3b3aab7dc39ea31"
-  runs = "tar -zcf lib.tar.gz --directory /github/home lib"
+  runs = "tar --gzip --create --file lib.tar.gz --directory /github/home lib"
   needs = [
     "Install Dependencies"
   ]
