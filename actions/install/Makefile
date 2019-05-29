@@ -6,6 +6,7 @@ include ../shell.mk
 clean: ## Clean up after the build process.
 
 .PHONY: lint
+lint: docker-lint
 
 .PHONY: build
 build: docker-build ## Build this Action.

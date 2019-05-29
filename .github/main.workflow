@@ -13,6 +13,15 @@ action "Build Base Image" {
   args = "build -t ghactions/base actions/"
 }
 
+action "Lint Action Dockerfiles" {
+  uses = "actions/action-builder/shell@master"
+  runs = "make"
+  args = [
+  "--directory=actions",
+    "lint"
+  ]
+}
+
 action "Build Action Images" {
   uses = "actions/action-builder/docker@master"
   runs = "make"
@@ -21,7 +30,8 @@ action "Build Action Images" {
     "build"
   ]
   needs = [
-    "Build Base Image"
+    "Build Base Image",
+    "Lint Action Dockerfiles"
   ]
 }
 
