@@ -1,4 +1,4 @@
-FROM ghactions/base
+FROM maxheld83/base
 
 LABEL "name"="pkgdown"
 LABEL "version"="0.1.1.9000"

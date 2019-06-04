@@ -10,7 +10,7 @@ workflow "Build, Check and Deploy" {
 
 action "Build Base Image" {
   uses = "actions/docker/cli@master"
-  args = "build -t ghactions/base actions/"
+  args = "build -t maxheld83/base actions/"
 }
 
 action "Lint Action Dockerfiles" {
@@ -148,6 +148,15 @@ action "Docker Login" {
   ]
 }
 
+action "Push Base Image" {
+  uses = "actions/docker/cli@master"
+  args = "push maxheld83/base"
+  needs = [
+    "Build Base Image",
+    "Docker Login"
+  ]
+}
+
 action "Push Action Images" {
   uses = "actions/action-builder/docker/@abd46f08f3ae51e9386b1f9b6facd8bbd8a8c458"
   runs = "make"
@@ -157,7 +166,7 @@ action "Push Action Images" {
   ]
   needs = [
     "Build Action Images",
-    "Docker Login"
+    "Push Base Image"
   ]
 }
 
