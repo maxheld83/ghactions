@@ -11,7 +11,8 @@ LABEL "com.github.actions.description"="Document Packages for rstats."
 LABEL "com.github.actions.icon"="book-open"
 LABEL "com.github.actions.color"="blue"
 
-RUN Rscript -e "install.packages(pkgs = c('devtools', 'roxygen2'))"
+RUN Rscript -e "install.packages(pkgs = 'devtools')"
+RUN Rscript -e "install.packages(pkgs = 'roxygen2')"
 
 COPY entrypoint.R /entrypoint.R
 ENTRYPOINT ["/entrypoint.R"]
