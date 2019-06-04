@@ -17,17 +17,17 @@ ENV R_LIBS_ACTION="$R_LIBS_ACTION"
 # system dependencies for frequently used R development helper Packages
 # required for devtools, covr and more
 # required for pkgdown, roxygen2
-RUN apt-get update && \
-  apt-get install -y --no-install-recommends \ 
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends \ 
   libssl-dev \
-  libxml2-dev && \
-  apt-get clean -y
+  libxml2-dev \
+  && apt-get clean -y
 
 # these are for pensieve only for testing
 # TODO delete these once https://github.com/r-lib/ghactions/issues/164 and https://github.com/r-lib/ghactions/issues/75
-RUN apt-get update && \
-  apt-get install -y --no-install-recommends \ 
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends \ 
   pdf2svg \
   libudunits2-dev \
-  libpoppler-cpp-dev && \
-  apt-get clean -y
+  libpoppler-cpp-dev \
+  && apt-get clean -y
