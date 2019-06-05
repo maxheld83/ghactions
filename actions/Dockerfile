@@ -17,11 +17,12 @@ ENV R_LIBS_ACTION="$R_LIBS_ACTION"
 # system dependencies for frequently used R development helper Packages
 # required for devtools, covr and more
 # required for pkgdown, roxygen2
-# libgit is necessary to use gert in programmatic commits
+# git is necessary for doing and testing programmatic commits
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \ 
   libssl-dev \
   libxml2-dev \
+  git \
   && apt-get clean -y
 
 # these are for pensieve only for testing
