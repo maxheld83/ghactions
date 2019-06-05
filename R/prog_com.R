@@ -64,3 +64,23 @@ check_clean_tree <- function(code, dir = getwd()){
 #' @inheritParams checkmate::makeAssertion
 #' @export
 assert_clean_tree <- checkmate::makeAssertionFunction(check.fun = check_clean_tree)
+
+#' Roxygenize package and check for inconsistencies
+#'
+#' Runs [devtools::document()] and checks whether there are any differences to the working tree.
+#'
+#' @inheritParams check_clean_tree
+#'
+#' @export
+#'
+#' @keywords internal
+#' @family prog_com
+document <- function(dir = getwd()) {
+  assert_deps("devtools")
+  assert_clean_tree(
+    code = {
+      devtools::document()
+    },
+    dir = dir
+  )
+}

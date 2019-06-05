@@ -14,3 +14,12 @@ test_that(desc = "can be detected", code = {
     )
   )
 })
+
+test_that(desc = "from roxygen2 work", code = {
+  expect_error(
+    object = ghactions::document(dir = "test_pkgs/bad_docs/")
+  )
+  expect_null(
+    object = ghactions::document(dir = "test_pkgs/good_docs/")
+  )
+})

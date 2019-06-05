@@ -46,6 +46,7 @@ Imports:
   usethis (>= 1.5.0),
   whisker (>= 0.3-2)
 Suggests:
+    devtools (>= 2.0.2),
     gert (>= 0.1),
     knitr,
     rmarkdown,
