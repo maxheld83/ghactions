@@ -46,9 +46,11 @@ Imports:
   usethis (>= 1.5.0),
   whisker (>= 0.3-2)
 Suggests:
-    testthat (>= 2.1.0),
+    gert (>= 0.1),
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat (>= 2.1.0),
+    withr (>= 2.1.2)
 VignetteBuilder:
   knitr
 Encoding: UTF-8
@@ -56,3 +58,5 @@ Language: en-US
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
+Remotes:
+    r-lib/gert@b50b4d9b983c0080b3d8f2f099951ff0baaed012
