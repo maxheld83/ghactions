@@ -6,19 +6,20 @@
 #'
 #' @noRd
 assert_deps <- function(pkgs) {
+  # TODO there should be a better function out there for this already
   names(pkgs) <- pkgs
   avail <- purrr::imap_lgl(
     .x = pkgs,
     .f = requireNamespace,
     quietly = TRUE
   )
-  missing <- avail[!avail]
-  if (length(missing) == 0) {
+  miss <- avail[!avail]
+  if (length(miss) == 0) {
     return(invisible(pkgs))
   }
   stop(
     "One or more packages needed for this function to work are missing: ",
-    missing,
+    names(miss),
     call. = FALSE
   )
 }

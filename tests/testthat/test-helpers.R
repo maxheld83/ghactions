@@ -5,4 +5,8 @@ describe(description = "dependency assertion", code = {
     bad_pkgs <- "asdasdasdasdasd"
     expect_error(assert_deps(pkgs = bad_pkgs))
   })
+  it("succeeds on existing package", {
+    good_pkgs <- "testthat"
+    expect_equivalent(object = assert_deps(good_pkgs), expected = "testthat")
+  })
 })
