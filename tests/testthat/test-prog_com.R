@@ -1,9 +1,9 @@
 context("Programmatic changes")
 
 test_that(desc = "can be detected", code = {
-  no_change <- check_git_status(code = NULL)
+  no_change <- check_clean_tree(code = NULL)
   expect_true(object = no_change)
-  some_changes <- check_git_status(code = {
+  some_changes <- check_clean_tree(code = {
     file.create("foo.bar")
   })
   expect_equal(

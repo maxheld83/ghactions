@@ -1,6 +1,6 @@
-#' Check `git status`
+#' Check `git status` for a clean working tree
 #'
-#' Check whether some code will cause a `git status` in the working directory.
+#' Check whether some code will cause changes to `git status` in the working directory.
 #'
 #' @param code The code to execute.
 #'
@@ -20,7 +20,7 @@
 #'
 #' @keywords internal
 #' @family prog_com
-check_git_status <- function(code, dir = getwd()){
+check_clean_tree <- function(code, dir = getwd()){
   # input validation
   # TODO might want to check whether code works
   checkmate::assert_directory_exists(dir)
