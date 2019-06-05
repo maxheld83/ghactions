@@ -7,6 +7,10 @@ describe(description = "dependency assertion", code = {
   })
   it("succeeds on existing package", {
     good_pkgs <- "testthat"
-    expect_equivalent(object = assert_deps(good_pkgs), expected = "testthat")
+    expect_equivalent(object = assert_deps(good_pkgs), expected = good_pkgs)
+  })
+  it("succeeds for several", {
+    good_pkgs <- c("testthat", "ghactions", "withr")
+    expect_equivalent(object = assert_deps(good_pkgs), expected = good_pkgs)
   })
 })
