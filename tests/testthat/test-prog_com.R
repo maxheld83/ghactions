@@ -1,16 +1,40 @@
+# setwd(dir = "tests/testthat/")  # for local testing
+# find all test pkgs
+test_pkgs <- fs::dir_ls("test_pkgs", type = "directory")
+names(test_pkgs) <- fs::path_file(test_pkgs)  # easier names
+
+setup(code = {
+  # need to create .git repos in every test_pkgs
+  purrr::walk(
+    .x = test_pkgs,
+    .f = function(x) {
+      processx::run(
+        command = "git",
+        args = c("init", x)
+      )
+    }
+  )
+})
+
 context("Programmatic changes")
 
 test_that(desc = "can be detected", code = {
-  no_change <- check_clean_tree(code = NULL)
+  no_change <- check_clean_tree(
+    code = NULL,
+    dir = "test_pkgs/good_docs"
+  )
   expect_true(object = no_change)
-  some_changes <- check_clean_tree(code = {
-    file.create("foo.bar")
-  })
+  some_changes <- check_clean_tree(
+    code = {
+      file.create("foo.bar")
+    },
+    dir = "test_pkgs/good_docs"
+  )
   expect_equal(
     object = some_changes,
     expected = c(
       # TODO would be nicer to test directly for foo, not the message, but that's what the output is
-      "The following files were added or modified:\n- foo.bar"
+      "The following files were added or modified:\n?? foo.bar"
     )
   )
 })
@@ -21,5 +45,13 @@ test_that(desc = "from roxygen2 work", code = {
   )
   expect_null(
     object = ghactions::document(dir = "test_pkgs/good_docs/")
+  )
+})
+
+teardown(code = {
+  # delete .gits just to be sure
+  purrr::walk(
+    .x = fs::path(test_pkgs, ".git"),
+    .f = fs::file_delete
   )
 })

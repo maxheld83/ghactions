@@ -22,39 +22,64 @@
 #' @family prog_com
 check_clean_tree <- function(code, dir = getwd()){
   # input validation
-  # TODO might want to check whether code works
+  # TODO might want to check whether `code` argument works
   checkmate::assert_directory_exists(dir)
-  assert_deps(pkgs = c("gert", "withr"))
+  assert_deps(pkgs = c("withr", "processx"))
+  assert_sysdep(x = "git")
 
+  # hypothesis: there is always a git repo already
+  # actions runs `git clone` to get the repo to `github/workspace`
+  # local usage has a git repo anyway
+  # hopefully act also does this
+  # so let's check this
+  if (!fs::dir_exists(path = fs::path(dir, ".git"))) {
+    stop("There is no `.git` repository at `dir`.")
+  }
+
+  # move to temp_dr so as to never muck of the working directory
   temp_dir <- fs::dir_copy(path = dir, new_path = tempfile())
   withr::local_dir(new = temp_dir)
 
-  # when run locally, there will a git repo already
-  # when on github actions, probably not
-  # happily git_init only creates a repo when there is none
-  gert::git_init()
-  # add and commit everything there currently is
-  gert::git_add(files = ".")
-  gert::git_commit_all(message = "commit status quo")
-  # alter the head (or not)
+  # we might *already* have an unclean tree because of artefacts in `github/workspace` from other actions etc.
+  # so we must first add and commit everything there currently is
+  processx::run(
+    command = "git",
+    args = c(
+      "add",
+      "."
+    )
+  )
+  processx::run(
+    command = "git",
+    args = c(
+      "commit",
+      "--message='commit changes before code is run'"
+    )
+  )
+
+  # this will make the working tree unclean again (or not)
   code
 
   # TODO actual diffs would be nicer
   # happily this should respect any `.gitignore`
-  # TODO might be better to just system call git here, wrapper is limited
-  git_status <- gert::git_status()
+  git_status <- processx::run(
+    command = "git",
+    args = c(
+      "status",
+      "--porcelain" # avoid chatty boilerplate from status
+    )
+  )
+  git_status <- git_status$stdout
 
-  if (nrow(git_status) == 0) {
+  # TODO this test feels precarious, find sth better
+  if (git_status == "") {
     return(TRUE)
   }
 
   glue::glue_collapse(
     glue::glue(
       "The following files were added or modified:\n",
-      glue::glue_collapse(
-        glue::glue("- {git_status$file}"),
-        sep = "\n"
-      ),
+      glue::glue("{git_status}")
     ),
     sep = "\n"
   )
