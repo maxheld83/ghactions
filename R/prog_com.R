@@ -59,3 +59,8 @@ check_clean_tree <- function(code, dir = getwd()){
     sep = "\n"
   )
 }
+
+#' @rdname check_clean_tree
+#' @inheritParams checkmate::makeAssertion
+#' @export
+assert_clean_tree <- checkmate::makeAssertionFunction(check.fun = check_clean_tree)

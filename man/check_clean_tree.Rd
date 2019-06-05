@@ -2,9 +2,13 @@
 % Please edit documentation in R/prog_com.R
 \name{check_clean_tree}
 \alias{check_clean_tree}
+\alias{assert_clean_tree}
 \title{Check \code{git status} for a clean working tree}
 \usage{
 check_clean_tree(code, dir = getwd())
+
+assert_clean_tree(code, dir = getwd(),
+  .var.name = checkmate::vname(code), add = NULL)
 }
 \arguments{
 \item{code}{The code to execute.}
