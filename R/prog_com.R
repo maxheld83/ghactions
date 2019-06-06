@@ -53,6 +53,7 @@ check_clean_tree <- function(code, dir = getwd()){
     command = "git",
     args = c(
       "commit",
+      "--allow-empty",
       "--message='commit changes before code is run'"
     )
   )
