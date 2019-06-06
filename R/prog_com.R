@@ -49,6 +49,24 @@ check_clean_tree <- function(code, dir = getwd()){
       "."
     )
   )
+
+  # need preliminary user name for below commit
+  processx::run(
+    command = "git",
+    args = c(
+      "config",
+      "user.name",
+      "F Bar"
+    )
+  )
+  processx::run(
+    command = "git",
+    args = c(
+      "config",
+      "user.email",
+      "foo@bar.com"
+    )
+  )
   processx::run(
     command = "git",
     args = c(
