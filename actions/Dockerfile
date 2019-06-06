@@ -33,3 +33,8 @@ RUN apt-get update \
   libudunits2-dev \
   libpoppler-cpp-dev \
   && apt-get clean -y
+
+# this requires the pkg source to be in the build context!
+RUN Rscript -e "install.packages('devtools')"
+COPY . /ghactions
+RUN Rscript -e "devtools::install(pkg = '/ghactions', dependencies = TRUE)"

@@ -1,5 +1,5 @@
 #!/usr/bin/env Rscript
 
-message("Documenting package ...")
+message("Checking for consistency of roxygen2 with `man` ...")
 
-devtools::document()
+ghactions::document()

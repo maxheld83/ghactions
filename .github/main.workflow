@@ -10,7 +10,7 @@ workflow "Build, Check and Deploy" {
 
 action "Build Base Image" {
   uses = "actions/docker/cli@master"
-  args = "build -t maxheld83/base actions/"
+  args = "build --tag maxheld83/base --file actions/Dockerfile ."
 }
 
 action "Lint Action Dockerfiles" {

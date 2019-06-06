@@ -1,0 +1,10 @@
+# ignore everything
+**
+
+# except what is necessary to build R package
+!.Rbuildignore
+!DESCRIPTION
+!inst/
+!man/
+!NAMESPACE
+!R/
