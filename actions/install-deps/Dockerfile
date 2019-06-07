@@ -32,11 +32,11 @@ RUN apt-get update \
   && apt-get clean -y
 
 ENV R_LIBS="$R_LIBS_ACTION"
-RUN Rscript -e "install.packages('curl')"
-RUN Rscript -e "install.packages('pkgbuild')"
-RUN Rscript -e "install.packages('git2r')"
 RUN Rscript -e "install.packages('remotes')"
-RUN Rscript -e "install.packages('withr')"
+RUN Rscript -e "remotes::install_cran('curl')"
+RUN Rscript -e "remotes::install_cran('pkgbuild')"
+RUN Rscript -e "remotes::install_cran('git2r')"
+RUN Rscript -e "remotes::install_cran('withr')"
 
 ENV R_LIBS="$R_LIBS_WORKFLOW"
 COPY entrypoint.R /entrypoint.R
