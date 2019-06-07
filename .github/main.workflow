@@ -8,30 +8,12 @@ workflow "Build, Check and Deploy" {
   ]
 }
 
-action "Build Base Image" {
-  uses = "actions/docker/cli@master"
-  args = "build --tag maxheld83/base --file actions/Dockerfile ."
-}
-
 action "Lint Action Dockerfiles" {
   uses = "actions/action-builder/shell@master"
   runs = "make"
   args = [
   "--directory=actions",
     "lint"
-  ]
-}
-
-action "Build Action Images" {
-  uses = "actions/action-builder/docker@master"
-  runs = "make"
-  args = [
-    "--directory=actions",
-    "build"
-  ]
-  needs = [
-    "Build Base Image",
-    "Lint Action Dockerfiles"
   ]
 }
 
@@ -61,8 +43,7 @@ action "Decompress Cache" {
 action "Install Dependencies" {
   uses = "./actions/install-deps"
   needs = [
-    "Decompress Cache",
-    "Build Base Image"
+    "Decompress Cache"
   ]
 }
 
@@ -74,10 +55,32 @@ action "Compress Cache" {
   ]
 }
 
+action "Build Base Image" {
+  uses = "actions/docker/cli@master"
+  args = "build --tag maxheld83/base --file actions/Dockerfile ."
+  needs = [
+    "Install Dependencies"
+  ]
+}
+
+action "Build Action Images" {
+  uses = "actions/action-builder/docker@master"
+  runs = "make"
+  args = [
+    "--directory=actions",
+    "build"
+  ]
+  needs = [
+    "Build Base Image",
+    "Lint Action Dockerfiles"
+  ]
+}
+
 action "Document Package" {
   uses = "./actions/document"
   needs = [
-    "Install Dependencies"
+    "Install Dependencies",
+    "Build Base Image"
   ]
 }
 

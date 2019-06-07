@@ -20,8 +20,7 @@ deps_exp <- remotes::dev_package_deps(dependencies = TRUE)$package
 message("Installing dependencies ...")
 remotes::install_deps(
   dependencies = TRUE,
-  verbose = TRUE,
-  lib = Sys.getenv("R_LIBS_WORKFLOW")
+  verbose = TRUE
 )
 # TODO ideally, this would be checked by using r-lib/pak or similar inside of install_deps in the above
 # NOTE this is a very incomplete check of success
