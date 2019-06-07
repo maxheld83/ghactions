@@ -32,11 +32,17 @@ RUN apt-get update \
   && apt-get clean -y
 
 ENV R_LIBS="$R_LIBS_ACTION"
+# bootstrap versioned remotes
+RUN Rscript -e "source('https://raw.githubusercontent.com/r-lib/remotes/master/install-github.R')[['value']]('r-lib/remotes@v2.0.4')"
 RUN Rscript -e "install.packages('remotes')"
-RUN Rscript -e "remotes::install_cran('curl')"
-RUN Rscript -e "remotes::install_cran('pkgbuild')"
-RUN Rscript -e "remotes::install_cran('git2r')"
-RUN Rscript -e "remotes::install_cran('withr')"
+# versions are hard-coded so as to *explicitly* upgrade pkgs, which will also invalidate the github cache
+# without hard-coded versions, the below cache would *not* be invalidated and hard-to-reason about versions of the packages might still be lying around in the image
+RUN Rscript -e "remotes::install_version('curl', '3.3')"
+# necessary to let remotes install its helpers as per https://remotes.r-lib.org
+ENV R_REMOTES_STANDALONE=true
+RUN Rscript -e "remotes::install_version('pkgbuild', '1.0.3')"
+RUN Rscript -e "remotes::install_version('git2r', '0.25.2')"
+RUN Rscript -e "remotes::install_version('withr', '2.1.2')"
 
 ENV R_LIBS="$R_LIBS_WORKFLOW"
 COPY entrypoint.R /entrypoint.R
