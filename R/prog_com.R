@@ -56,6 +56,7 @@ check_clean_tree <- function(code, dir = getwd()){
     args = c(
       "config",
       "user.name",
+      "--replace-all",
       "F Bar"
     )
   )
@@ -64,6 +65,7 @@ check_clean_tree <- function(code, dir = getwd()){
     args = c(
       "config",
       "user.email",
+      "--replace-all",
       "foo@bar.com"
     )
   )
