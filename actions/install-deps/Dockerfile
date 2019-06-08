@@ -21,14 +21,11 @@ ARG R_LIBS_ACTION="/usr/lib/R/action-library"
 RUN mkdir -p "$R_LIBS_ACTION"
 ENV R_LIBS_ACTION="$R_LIBS_ACTION"
 
-# system dependencies for frequently used R development helper Packages
-# required for devtools, covr and more
-# required for pkgdown, roxygen2
-# git is necessary for doing and testing programmatic commits
+# remotes and curl need openssl
+# TODO would be cleaner to get these via sysreqsdb package
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \ 
   libssl-dev \
-  libxml2-dev \
   && apt-get clean -y
 
 ENV R_LIBS="$R_LIBS_ACTION"
@@ -37,12 +34,11 @@ RUN Rscript -e "source('https://raw.githubusercontent.com/r-lib/remotes/master/i
 RUN Rscript -e "install.packages('remotes')"
 # versions are hard-coded so as to *explicitly* upgrade pkgs, which will also invalidate the github cache
 # without hard-coded versions, the below cache would *not* be invalidated and hard-to-reason about versions of the packages might still be lying around in the image
-RUN Rscript -e "remotes::install_version('curl', '3.3')"
 # necessary to let remotes install its helpers as per https://remotes.r-lib.org
 ENV R_REMOTES_STANDALONE=true
+RUN Rscript -e "remotes::install_version('curl', '3.3')"
 RUN Rscript -e "remotes::install_version('pkgbuild', '1.0.3')"
 RUN Rscript -e "remotes::install_version('git2r', '0.25.2')"
-RUN Rscript -e "remotes::install_version('withr', '2.1.2')"
 
 ENV R_LIBS="$R_LIBS_WORKFLOW"
 COPY entrypoint.R /entrypoint.R

@@ -2,18 +2,10 @@
 
 message("Starting dependency installation ...")
 message("Loading development helper packages from 'R_LIBS_ACTION'.")
-loadNamespace(package = "withr", lib.loc = Sys.getenv("R_LIBS_ACTION"))
-withr::with_libpaths(
-  new = Sys.getenv("R_LIBS_ACTION"),
-  action = "prefix",
-  code = {
-    loadNamespace(package = "remotes")
-    loadNamespace(package = "curl")
-    loadNamespace(package = "git2r")
-    loadNamespace(package = "pkgbuild")
-  }
-)
-unloadNamespace(ns = "withr")  # no longer needed
+loadNamespace(package = "remotes", lib.loc = Sys.getenv("R_LIBS_ACTION"))
+loadNamespace(package = "curl", lib.loc = Sys.getenv("R_LIBS_ACTION"))
+loadNamespace(package = "git2r", lib.loc = Sys.getenv("R_LIBS_ACTION"))
+loadNamespace(package = "pkgbuild", lib.loc = Sys.getenv("R_LIBS_ACTION"))
 
 message("Recording already installed dependencies ...")
 deps_exp <- remotes::dev_package_deps(dependencies = TRUE)$package
