@@ -19,3 +19,4 @@ pkgwf.gif
 .secrets/
 .envrc
 Makefile
+.dockerignore
