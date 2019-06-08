@@ -13,15 +13,17 @@ remotes::install_deps(
   verbose = TRUE
 )
 
-message("Removing unneeded dependencies (might come from old cache) ...")
+message("Checking for unneeded dependencies (might come from old cache) ...")
 deps_exp <- remotes::dev_package_deps(dependencies = TRUE)$package
 deps_present <- installed.packages(lib.loc = Sys.getenv("R_LIBS_WORKFLOW"))[, "Package"]
 deps_uneeded <- setdiff(deps_present, deps_exp)
-remove.packages(deps_uneeded)
-message(
-  "Removed one or more package dependencies no longer needed:",
-  paste(deps_uneeded, collapse = ", ")
-)
+if (length(deps_uneeded > 0)) {
+  remove.packages(deps_uneeded)
+  message(
+    "Removed one or more package dependencies no longer needed:",
+    paste(deps_uneeded, collapse = ", ")
+  )
+}
 
 # TODO ideally, this would be checked by using r-lib/pak or similar inside of install_deps in the above
 # NOTE this is a very incomplete check of success
