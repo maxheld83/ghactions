@@ -17,8 +17,6 @@ RUN mkdir -p "$R_LIBS_WORKFLOW"
 ENV R_LIBS_WORKFLOW="$R_LIBS_WORKFLOW"
 # location for R libraires which should persist only for this action
 ENV R_LIBS_ACTION="$R_LIBS_DEV_HELPERS"
-RUN mkdir -p "$R_LIBS_ACTION"
-ENV R_LIBS_ACTION="$R_LIBS_ACTION"
 
 # remotes and curl need openssl
 # TODO would be cleaner to get these via sysreqsdb package
