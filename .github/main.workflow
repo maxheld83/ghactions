@@ -57,7 +57,7 @@ action "Compress Cache" {
 
 action "Build Base Image" {
   uses = "actions/docker/cli@master"
-  args = "build --tag maxheld83/base --file actions/Dockerfile ."
+  args = "build --tag maxheld83/ghactions --file actions/Dockerfile ."
   needs = [
     "Install Dependencies"
   ]
@@ -72,7 +72,8 @@ action "Build Action Images" {
   ]
   needs = [
     "Build Base Image",
-    "Lint Action Dockerfiles"
+    "Lint Action Dockerfiles",
+    "Document Package"
   ]
 }
 
@@ -153,7 +154,7 @@ action "Docker Login" {
 
 action "Push Base Image" {
   uses = "actions/docker/cli@master"
-  args = "push maxheld83/base"
+  args = "push maxheld83/ghactions"
   needs = [
     "Build Base Image",
     "Docker Login"

@@ -46,13 +46,13 @@ Imports:
   usethis (>= 1.5.0),
   whisker (>= 0.3-2)
 Suggests:
-    devtools (>= 2.0.2),
-    knitr,
-    processx (>= 3.3.1),
-    rmarkdown,
-    roxygen2 (>= 6.1.0),
-    testthat (>= 2.1.0),
-    withr (>= 2.1.2)
+  devtools (>= 2.0.2),
+  knitr (>= 1.23),
+  processx (>= 3.3.1),
+  rmarkdown (>= 1.13),
+  roxygen2 (>= 6.1.0),
+  testthat (>= 2.1.0),
+  withr (>= 2.1.2)
 VignetteBuilder:
   knitr
 Encoding: UTF-8

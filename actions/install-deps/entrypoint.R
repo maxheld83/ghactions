@@ -4,14 +4,18 @@ path_workflow <- Sys.getenv("R_LIBS_WORKFLOW")
 
 message("Starting dependency installation ...")
 message("Loading development helper packages from 'R_LIBS_ACTION'.")
+
+# ps needs be loaded "manually" for some reason; some of the below apparently depend on it
+loadNamespace(package = "ps", lib.loc = path_action)
 loadNamespace(package = "remotes", lib.loc = path_action)
 loadNamespace(package = "curl", lib.loc = path_action)
 loadNamespace(package = "git2r", lib.loc = path_action)
 loadNamespace(package = "pkgbuild", lib.loc = path_action)
+loadNamespace(package = "withr", lib.loc = path_action)
 
 message("Installing dependencies ...")
 # this needs to run with modified .libPaths() to recognize cache
-withr::with_libpaths(new = path_workflow, action = "replace", code = {
+withr::with_libpaths(new = path_workflow, action = "prefix", code = {
   remotes::install_deps(
     dependencies = TRUE,
     verbose = TRUE,

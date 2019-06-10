@@ -1,4 +1,4 @@
-FROM maxheld83/base
+FROM maxheld83/ghactions
 
 LABEL "name"="install"
 LABEL "version"="0.1.1.9000"

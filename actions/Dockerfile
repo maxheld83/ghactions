@@ -1,40 +1,48 @@
-FROM rhub/debian-gcc-release:latest
-# github actions recommends debian, and this is the one closest to cran https://developer.github.com/actions/creating-github-actions/creating-a-docker-container/
+FROM maxheld83/r-ci:88329f5
 
+LABEL "name"="GitHub actions base image"
+LABEL "version"="0.1.1.9000"
 LABEL "maintainer"="Maximilian Held <info@maxheld.de>"
 LABEL "repository"="http://github.com/r-lib/ghactions"
 LABEL "homepage"="http://github.com/r-lib/ghactions"
 
 # location for R libraries which should persist across the entire workflow (i.e. several actions)
-ARG R_LIBS_WORKFLOW="/github/home/lib/R/library"
+ENV R_LIBS_WORKFLOW="/github/home/lib/R/library"
 RUN mkdir -p "$R_LIBS_WORKFLOW"
-ENV R_LIBS_WORKFLOW="$R_LIBS_WORKFLOW"
-# location for R libraires which should persist only for this action
-ARG R_LIBS_ACTION="/usr/lib/R/action-library"
-RUN mkdir -p "$R_LIBS_ACTION"
-ENV R_LIBS_ACTION="$R_LIBS_ACTION"
+# location for R libraries which should persist only for this action
+ENV R_LIBS_ACTION="$R_LIBS_DEV_HELPERS"
 
-# system dependencies for frequently used R development helper Packages
-# required for devtools, covr and more
-# required for pkgdown, roxygen2
-# git is necessary for doing and testing programmatic commits
+# system dependency of ghaction
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \ 
-  libssl-dev \
-  libxml2-dev \
   git \
   && apt-get clean -y
 
-# these are for pensieve only for testing
-# TODO delete these once https://github.com/r-lib/ghactions/issues/164 and https://github.com/r-lib/ghactions/issues/75
-RUN apt-get update \
-  && apt-get install -y --no-install-recommends \ 
-  pdf2svg \
-  libudunits2-dev \
-  libpoppler-cpp-dev \
-  && apt-get clean -y
+# add the dependencies of github actions
+# these are hard-versioned here and *may differ* from the result you get from running `remotes::install_deps()` on `DESCRIPTION`.
+# this is *intentional*, because hard-versioning is a safer way to bake dependencies into downstream action images
+# it also lets us use the (apparently operational) GitHub actions docker layer cache
+ENV R_LIBS="$R_LIBS_ACTION"
+# everything from DESCRIPTION Imports: except what is already in r-ci
+RUN Rscript -e "remotes::install_version('checkmate', '1.9.3')"
+RUN Rscript -e "remotes::install_version('desc', '1.2.0')"
+RUN Rscript -e "remotes::install_version('fs', '1.3.1')"
+RUN Rscript -e "remotes::install_version('gh', '1.0.1')"
+RUN Rscript -e "remotes::install_version('glue', '1.3.1')"
+RUN Rscript -e "remotes::install_version('purrr', '0.3.2')"
+RUN Rscript -e "remotes::install_version('readr', '1.3.1')"
+RUN Rscript -e "remotes::install_version('rlang', '0.3.4')"
+RUN Rscript -e "remotes::install_version('usethis', '1.5.0')"
+RUN Rscript -e "remotes::install_version('whisker', '0.3-2')"
+# only some necessary pkgs from DESCRIPTION Suggests: except what is already in r-ci
+RUN Rscript -e "remotes::install_version('processx', '3.3.1')"
 
 # this requires the pkg source to be in the build context!
-RUN Rscript -e "install.packages('devtools')"
 COPY . /ghactions
+# TODO this needs to be purged from the img via rm or multi-stage build
 RUN Rscript -e "devtools::install(pkg = '/ghactions', dependencies = TRUE)"
+
+# let downstream img start with unchanged env vars
+# ... and without installed dev helpers on `.libPaths()`
+# unset does not work https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
+ENV R_LIBS=""
