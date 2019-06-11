@@ -72,8 +72,7 @@ action "Build Action Images" {
   ]
   needs = [
     "Build Base Image",
-    "Lint Action Dockerfiles",
-    "Document Package"
+    "Lint Action Dockerfiles"
   ]
 }
 
