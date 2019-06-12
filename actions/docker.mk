@@ -6,9 +6,15 @@ SHORT_SHA=`echo $(GITHUB_SHA) | cut -c1-7`
 docker-lint: ## Run Dockerfile Lint on all dockerfiles.
 	dockerfile_lint -r $(ROOT_DIR)/.dockerfile_lint/github_actions.yaml $(wildcard Dockerfile* */Dockerfile*)
 
+ifeq ($(GITHUB_SHA),)
+.PHONY: docker-build
+docker-build: ## Build the top level Dockerfile using the directory or $IMAGE_NAME as the name.
+	docker build --tag $(IMAGE_NAME) .
+else
 .PHONY: docker-build
 docker-build: ## Build the top level Dockerfile using the directory or $IMAGE_NAME as the name.
 	docker build --build-arg VERSION=$(SHORT_SHA) --tag $(IMAGE_NAME) .
+endif
 
 .PHONY: docker-tag
 docker-tag: ## Tag the docker image using the tag script.
