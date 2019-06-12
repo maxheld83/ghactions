@@ -1,4 +1,5 @@
-FROM maxheld83/ghactions
+ARG VERSION=latest
+FROM maxheld83/ghactions:$VERSION
 
 LABEL "name"="build"
 LABEL "version"="0.1.1.9000"

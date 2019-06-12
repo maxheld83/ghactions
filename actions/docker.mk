@@ -1,4 +1,6 @@
 IMAGE_NAME=$(shell basename $(CURDIR))
+# github tag action only uses chars 1-7, GITHUB_SHA is full sha
+SHORT_SHA=`echo $(GITHUB_SHA) | cut -c1-7`
 
 .PHONY: docker-lint
 docker-lint: ## Run Dockerfile Lint on all dockerfiles.
@@ -6,7 +8,7 @@ docker-lint: ## Run Dockerfile Lint on all dockerfiles.
 
 .PHONY: docker-build
 docker-build: ## Build the top level Dockerfile using the directory or $IMAGE_NAME as the name.
-	docker build -t $(IMAGE_NAME) .
+	docker build --build-arg VERSION=$(SHORT_SHA) --tag $(IMAGE_NAME) .
 
 .PHONY: docker-tag
 docker-tag: ## Tag the docker image using the tag script.

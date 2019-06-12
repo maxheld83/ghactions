@@ -8,15 +8,6 @@ workflow "Build, Check and Deploy" {
   ]
 }
 
-action "Lint Action Dockerfiles" {
-  uses = "actions/action-builder/shell@master"
-  runs = "make"
-  args = [
-  "--directory=actions",
-    "lint"
-  ]
-}
-
 action "GCP Authenticate" {
   uses = "actions/gcloud/auth@ba93088eb19c4a04638102a838312bb32de0b052"
   secrets = [
@@ -57,9 +48,17 @@ action "Compress Cache" {
 
 action "Build Base Image" {
   uses = "actions/docker/cli@master"
-  args = "build --tag maxheld83/ghactions --file actions/Dockerfile ."
+  args = "build --tag ghactions --file actions/Dockerfile ."
   needs = [
     "Install Dependencies"
+  ]
+}
+
+action "Tag Base Image" {
+  uses = "actions/docker/tag@master"
+  args = "ghactions maxheld83/ghactions"
+  needs = [
+    "Build Base Image"
   ]
 }
 
@@ -71,8 +70,7 @@ action "Build Action Images" {
     "build"
   ]
   needs = [
-    "Build Base Image",
-    "Lint Action Dockerfiles"
+    "Tag Base Image"
   ]
 }
 
@@ -80,7 +78,7 @@ action "Document Package" {
   uses = "./actions/document"
   needs = [
     "Install Dependencies",
-    "Build Base Image"
+    "Tag Base Image"
   ]
 }
 
@@ -121,16 +119,6 @@ action "Filter Not Act" {
   ]
 }
 
-action "Filter Master" {
-  uses = "actions/bin/filter@c6471707d308175c57dfe91963406ef205837dbd"
-  needs = [
-    "Upload Cache",
-    "Code Coverage",
-    "Push Action Images"
-  ]
-  args = "branch master"
-}
-
 action "Upload Cache" {
   uses = "actions/gcloud/cli@d124d4b82701480dc29e68bb73a87cfb2ce0b469"
   runs = "gsutil -m cp lib.tar.gz gs://ghactions-cache/"
@@ -155,7 +143,7 @@ action "Push Base Image" {
   uses = "actions/docker/cli@master"
   args = "push maxheld83/ghactions"
   needs = [
-    "Build Base Image",
+    "Tag Base Image",
     "Docker Login"
   ]
 }
@@ -181,6 +169,16 @@ action "Code Coverage" {
   secrets = [
     "CODECOV_TOKEN"
   ]
+}
+
+action "Filter Master" {
+  uses = "actions/bin/filter@c6471707d308175c57dfe91963406ef205837dbd"
+  needs = [
+    "Upload Cache",
+    "Code Coverage",
+    "Push Action Images"
+  ]
+  args = "branch master"
 }
 
 action "Deploy Website" {

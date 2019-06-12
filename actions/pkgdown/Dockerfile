@@ -1,4 +1,5 @@
-FROM maxheld83/ghactions
+ARG VERSION=latest
+FROM maxheld83/ghactions:$VERSION
 
 LABEL "name"="pkgdown"
 LABEL "version"="0.1.1.9000"
