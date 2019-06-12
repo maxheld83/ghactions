@@ -33,17 +33,3 @@ action "Check Package" {
   uses = "r-lib/ghactions/actions/check@master"
 }
 ```
-
-
-#### Advanced Usage (Not Recommended)
-
-Because this action ships with [*testthat*](https://testthat.r-lib.org), you can also use it to run arbitrary tests.
-
-```
-action "Custom Tests" {
-  uses = "r-lib/ghactions/actions/check@master"
-  args = [
-    "Rscript -e "testthat::test_that(desc = 'test', code = expect_equal(1, 1))"
-  ]
-}
-```

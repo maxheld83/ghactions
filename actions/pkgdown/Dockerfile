@@ -11,9 +11,8 @@ LABEL "com.github.actions.description"="Create website for rstats packages with 
 LABEL "com.github.actions.icon"="layout"
 LABEL "com.github.actions.color"="blue"
 
-RUN Rscript -e "install.packages(pkgs = 'pkgdown')"
+# TODO this is a hack-fix, because pkgdown cannot be loadNamespace()d, as per https://github.com/r-lib/ghactions/issues/247
+ENV R_LIBS="$R_LIBS_WORKFLOW:$R_LIBS_ACTION"
 
-COPY entrypoint.sh /entrypoint.sh
-ENTRYPOINT ["/entrypoint.sh"]
-
-ENV R_LIBS="$R_LIBS_WORKFLOW"
+COPY entrypoint.R /entrypoint.R
+ENTRYPOINT ["/entrypoint.R"]

@@ -1,4 +1,4 @@
-FROM maxheld83/r-ci:88329f5
+FROM maxheld83/r-ci:93f4a98
 
 LABEL "name"="GitHub actions base image"
 LABEL "version"="0.1.1.9000"
