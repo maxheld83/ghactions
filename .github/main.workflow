@@ -48,7 +48,7 @@ action "Compress Cache" {
 
 action "Build Base Image" {
   uses = "actions/docker/cli@master"
-  args = "build --tag ghactions --file actions/Dockerfile ."
+  args = "build --tag ghactions --file /github/workspace/actions/Dockerfile /github"
   needs = [
     "Install Dependencies"
   ]

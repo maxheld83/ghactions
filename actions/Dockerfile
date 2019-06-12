@@ -18,34 +18,16 @@ RUN apt-get update \
   git \
   && apt-get clean -y
 
-# add the dependencies of github actions
-# these are hard-versioned here and *may differ* from the result you get from running `remotes::install_deps()` on `DESCRIPTION`.
-# this is *intentional*, because hard-versioning is a safer way to bake dependencies into downstream action images
-# it also lets us use the (apparently operational) GitHub actions docker layer cache
 ENV R_LIBS="$R_LIBS_ACTION"
-SHELL ["usr/bin/Rscript", "-e"]
-# set shell to Rscript to make syntax shorter
-# everything from DESCRIPTION Imports: except what is already in r-ci
-RUN remotes::install_version("checkmate", "1.9.3")
-RUN remotes::install_version("desc", "1.2.0")
-RUN remotes::install_version("fs", "1.3.1")
-RUN remotes::install_version("gh", "1.0.1")
-RUN remotes::install_version("glue", "1.3.1")
-RUN remotes::install_version("purrr", "0.3.2")
-RUN remotes::install_version("readr", "1.3.1")
-RUN remotes::install_version("rlang", "0.3.4")
-RUN remotes::install_version("usethis", "1.5.0")
-RUN remotes::install_version("whisker", "0.3-2")
-# only some necessary pkgs from DESCRIPTION Suggests: except what is already in r-ci
-RUN remotes::install_version("processx", "3.3.1")
-
-# this requires the pkg source to be in the build context!
-COPY . /ghactions
+# copy dependencies from earlier run of install_deps, must have *entire* /github in build context
+# this will bake whatever the current dependencies in DESCRIPTION are into the image
+COPY ./home/lib/R/library "$R_LIBS_ACTION"
+# same here
+COPY ./workspace /ghactions-source
 # TODO this needs to be purged from the img via rm or multi-stage build
-RUN devtools::install(pkg = "/ghactions", dependencies = TRUE)
+RUN Rscript -e "devtools::install(pkg = '/ghactions-source', dependencies = TRUE)"
 
 # let downstream img start with unchanged env vars
 # ... and without installed dev helpers on `.libPaths()`
 # unset does not work https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
-ONBUILD SHELL ["/bin/sh", "-c"]
 ONBUILD ENV R_LIBS=""
