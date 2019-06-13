@@ -75,7 +75,7 @@ test_that(desc = "can be detected", code = {
   )
 })
 
-test_that(desc = "ex-ante unclean working tree errors out", code = {
+test_that(desc = "ex-ante unclean working are detected", code = {
   file.create("test_pkgs/ex_ante_unclean/dirt.txt")
   expect_error(
     object = ghactions::check_clean_tree(
@@ -108,4 +108,5 @@ teardown(code = {
     .x = fs::path(test_pkgs, ".git"),
     .f = fs::file_delete
   )
+  file.remove("test_pkgs/ex_ante_unclean/dirt.txt")
 })
