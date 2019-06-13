@@ -33,3 +33,4 @@ rsconnect/
 /docs
 # tokens to run ghactions locally with act
 /.secrets
+*.DS_Store

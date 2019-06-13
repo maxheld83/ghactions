@@ -69,7 +69,10 @@ check_clean_tree <- function(code, dir = getwd(), stash = FALSE){
     # TODO would be nice to pop the stash again using on.exit, but that causes more complexity if there is NO stash
   } else {
     if (changed) {
-      stop("There is already an unclean working tree ex-ante.")
+      stop(
+        "There is already an unclean working tree ex-ante.\n",
+        report_git_status(status_ex_ante)
+      )
     }
   }
 
@@ -84,13 +87,7 @@ check_clean_tree <- function(code, dir = getwd(), stash = FALSE){
     return(TRUE)
   }
 
-  glue::glue_collapse(
-    glue::glue(
-      "The following files were added or modified:\n",
-      glue::glue("{status_ex_post}")
-    ),
-    sep = "\n"
-  )
+  report_git_status(status_ex_post)
 }
 
 git_status <- function() {
@@ -103,6 +100,16 @@ git_status <- function() {
     )
   )
   res$stdout
+}
+
+report_git_status <- function(git_status) {
+  glue::glue_collapse(
+    glue::glue(
+      "The following files were added or modified:\n",
+      glue::glue("{git_status}")
+    ),
+    sep = "\n"
+  )
 }
 
 #' @rdname check_clean_tree
