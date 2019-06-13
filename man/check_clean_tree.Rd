@@ -5,9 +5,9 @@
 \alias{assert_clean_tree}
 \title{Check \code{git status} for a clean working tree}
 \usage{
-check_clean_tree(code, dir = getwd(), stash = FALSE)
+check_clean_tree(code, dir = getwd(), ex_ante_unclean = NULL)
 
-assert_clean_tree(code, dir = getwd(), stash = FALSE,
+assert_clean_tree(code, dir = getwd(), ex_ante_unclean = NULL,
   .var.name = checkmate::vname(code), add = NULL)
 }
 \arguments{
@@ -16,10 +16,15 @@ assert_clean_tree(code, dir = getwd(), stash = FALSE,
 \item{dir}{The directory \emph{in} which to execute the code.
 Defaults to \code{\link[=getwd]{getwd()}}.}
 
-\item{stash}{\code{[logical(1)]}
-Giving what happens when the working tree is \emph{already unclean} before \code{code} is evaluated.
-If \code{TRUE}, all stages are \code{git stash push}ed before, and \code{git stash apply}ed after the run; might fail in unexpected ways.
-If \code{FALSE} (recommended default), an error is thrown when the working tree is unclean ex-ante.}
+\item{ex_ante_unclean}{\code{[character(1)]} Giving what happens when the working tree is \emph{already unclean} before \code{code} is evaluated:
+\itemize{
+\item \code{"stop"} to throw an error,
+\item \code{"stash"} to \code{git stash push} all changes before, and \code{git stash apply} them after \code{code} is run (\emph{not recommended}).
+Might fail in unexpected ways, including merge conflicts or
+\item \code{"commit"} to \code{git add .; git commit -m "commit to cleanup"} all changes before \code{code}is run (\emph{not recommended}).
+Might fail in unexpected ways and alter the git history if not run in an isolated container or environment.
+\item \code{NULL} (\emph{recommended} default), in which case if \code{is.act()}, then \code{"commit"}, otherwise \code{"stop"}.
+}}
 }
 \value{
 \code{[character(1)]} The \code{git status} results or \code{TRUE} if no diffs.

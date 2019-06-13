@@ -36,3 +36,13 @@ check_suggested <- function(package, version = NULL, compare = NA) {
   }
   pkgload::check_suggested(package = package, version = version, compare = compare, path = path)
 }
+
+
+#' Test whether runtime is act
+#'
+#' Actions run inside of [act](https://github.com/nektos/act) sometimes need to run in slightly different ways.
+#'
+#' @noRd
+is_act <- function() {
+  Sys.getenv("GITHUB_ACTOR") == "nektos/act"
+}

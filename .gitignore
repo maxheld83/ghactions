@@ -1,3 +1,6 @@
+# macos system files
+*.DS_Store
+
 .deploy_dir
 # History files
 .Rhistory
@@ -33,4 +36,3 @@ rsconnect/
 /docs
 # tokens to run ghactions locally with act
 /.secrets
-*.DS_Store

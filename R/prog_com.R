@@ -7,10 +7,13 @@
 #' @param dir The directory *in* which to execute the code.
 #' Defaults to [getwd()].
 #'
-#' @param stash `[logical(1)]`
-#' Giving what happens when the working tree is *already unclean* before `code` is evaluated.
-#' If `TRUE`, all stages are `git stash push`ed before, and `git stash apply`ed after the run; might fail in unexpected ways.
-#' If `FALSE` (recommended default), an error is thrown when the working tree is unclean ex-ante.
+#' @param ex_ante_unclean `[character(1)]` Giving what happens when the working tree is *already unclean* before `code` is evaluated:
+#' - `"stop"` to throw an error,
+#' - `"stash"` to `git stash push` all changes before, and `git stash apply` them after `code` is run (*not recommended*).
+#'    Might fail in unexpected ways, including merge conflicts or
+#' - `"commit"` to `git add .; git commit -m "commit to cleanup"` all changes before `code`is run (*not recommended*).
+#'    Might fail in unexpected ways and alter the git history if not run in an isolated container or environment.
+#' - `NULL` (*recommended* default), in which case if `is.act()`, then `"commit"`, otherwise `"stop"`.
 #'
 #' @return `[character(1)]` The `git status` results or `TRUE` if no diffs.
 #'
@@ -25,13 +28,26 @@
 #'
 #' @keywords internal
 #' @family prog_com
-check_clean_tree <- function(code, dir = getwd(), stash = FALSE){
+check_clean_tree <- function(code, dir = getwd(), ex_ante_unclean = NULL){
   # input validation
   # TODO might want to check whether `code` argument works
   checkmate::assert_directory_exists(dir)
   check_suggested(package = "withr")
   check_suggested(package = "processx")
   assert_sysdep(x = "git")
+
+  checkmate::assert_choice(
+    x = ex_ante_unclean,
+    choices = c("stop", "stash", "commit"),
+    null.ok = TRUE
+  )
+  if (is.null(ex_ante_unclean)) {
+    if (is_act()) {
+      ex_ante_unclean <- "commit"
+    } else {
+      ex_ante_unclean <- "stop"
+    }
+  }
 
   # hypothesis: there is always a git repo already
   # actions runs `git clone` to get the repo to `github/workspace`
@@ -48,7 +64,6 @@ check_clean_tree <- function(code, dir = getwd(), stash = FALSE){
 
   # ex-ante =====
   # we might *already* have an unclean tree because of artefacts in `github/workspace` from other actions etc.
-
   # TODO this test feels precarious, find sth better
   status_ex_ante <- git_status()
   if (status_ex_ante == "") {
@@ -57,23 +72,43 @@ check_clean_tree <- function(code, dir = getwd(), stash = FALSE){
     changed <- TRUE
   }
 
-  if (stash & changed) {
-    processx::run(
-      command = "git",
-      args = c(
-        "stash",
-        "push",
-        "--include-untracked"
-      )
+  if (changed) {
+    switch(EXPR = ex_ante_unclean,
+      "stop" = {
+        stop(
+          "There is already an unclean working tree ex-ante.\n",
+          report_git_status(status_ex_ante)
+        )
+      },
+      "stash" = {
+        processx::run(
+          command = "git",
+          args = c(
+            "stash",
+            "push",
+            "--include-untracked"
+          )
+        )
+        # TODO would be nice to pop the stash again using on.exit, but that causes more complexity if there is NO stash
+      },
+      "commit" = {
+        # note to self: gitignoring this stuff does NOT work, because it is possible that one of the changed files would *again* be changed by `code`
+        processx::run(
+          command = "git",
+          args = c(
+            "add",
+            "."
+          )
+        )
+        processx::run(
+          command = "git",
+          args = c(
+            "commit",
+            "-m 'commit to cleanup'"
+          )
+        )
+      }
     )
-    # TODO would be nice to pop the stash again using on.exit, but that causes more complexity if there is NO stash
-  } else {
-    if (changed) {
-      stop(
-        "There is already an unclean working tree ex-ante.\n",
-        report_git_status(status_ex_ante)
-      )
-    }
   }
 
   # do work ====

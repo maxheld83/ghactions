@@ -80,14 +80,15 @@ test_that(desc = "ex-ante unclean working are detected", code = {
   expect_error(
     object = ghactions::check_clean_tree(
       code = NULL,
-      dir = "test_pkgs/ex_ante_unclean"
+      dir = "test_pkgs/ex_ante_unclean",
+      ex_ante_unclean = "stop"
     )
   )
   expect_true(
     object = ghactions::check_clean_tree(
       code = NULL,
       dir = "test_pkgs/ex_ante_unclean",
-      stash = TRUE
+      ex_ante_unclean = "stash"
     )
   )
 })
