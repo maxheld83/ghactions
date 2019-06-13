@@ -5,7 +5,8 @@ path_workflow <- Sys.getenv("R_LIBS_WORKFLOW")
 message("Starting dependency installation ...")
 message("Loading development helper packages from 'R_LIBS_ACTION'.")
 
-# ps needs be loaded "manually" for some reason; some of the below apparently depend on it
+# TODO ps needs be loaded "manually" for some reason; some of the below apparently depend on it
+# see https://github.com/r-lib/ghactions/issues/254
 loadNamespace(package = "ps", lib.loc = path_action)
 loadNamespace(package = "remotes", lib.loc = path_action)
 loadNamespace(package = "curl", lib.loc = path_action)
