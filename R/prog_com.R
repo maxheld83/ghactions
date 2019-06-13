@@ -41,43 +41,19 @@ check_clean_tree <- function(code, dir = getwd()){
   temp_dir <- fs::dir_copy(path = dir, new_path = tempfile())
   withr::local_dir(new = temp_dir)
 
+  # TODO maybe rather error out when there already *is* an unclean working tree?
   # we might *already* have an unclean tree because of artefacts in `github/workspace` from other actions etc.
-  # so we must first add and commit everything there currently is
-  processx::run(
-    command = "git",
-    args = c(
-      "add",
-      "."
-    )
-  )
+  # so stash them away
 
-  # need preliminary user name for below commit
   processx::run(
     command = "git",
     args = c(
-      "config",
-      "--replace-all",
-      "user.name",
-      "F Bar"
+      "stash",
+      "push",
+      "--include-untracked"
     )
   )
-  processx::run(
-    command = "git",
-    args = c(
-      "config",
-      "--replace-all",
-      "user.email",
-      "foo@bar.com"
-    )
-  )
-  processx::run(
-    command = "git",
-    args = c(
-      "commit",
-      "--allow-empty",
-      "--message='commit changes before code is run'"
-    )
-  )
+  # TODO would be nice to pop the stash again using on.exit, but that causes more complexity if there is NO stash
 
   # this will make the working tree unclean again (or not)
   code

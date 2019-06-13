@@ -8,9 +8,45 @@ setup(code = {
   purrr::walk(
     .x = test_pkgs,
     .f = function(x) {
+      withr::local_dir(new = x)
+
       processx::run(
         command = "git",
-        args = c("init", x)
+        args = "init"
+      )
+
+      # to commit, we need git user name etc
+      processx::run(
+        command = "git",
+        args = c(
+          "config",
+          "--replace-all",
+          "user.name",
+          "ghactions test"
+        )
+      )
+      processx::run(
+        command = "git",
+        args = c(
+          "config",
+          "--replace-all",
+          "user.email",
+          "test@8450984753847504asdasdasd.com"
+        )
+      )
+
+      # git init is causes an unrealistic scenario of a 0-commit repo
+      # in real life ,we will always already have commits
+      processx::run(
+        command = "git",
+        args = c("add", ".")
+      )
+      processx::run(
+        command = "git",
+        args = c(
+          "commit",
+          "-m 'initial commit'"
+        )
       )
     }
   )
