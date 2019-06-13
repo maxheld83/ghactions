@@ -1,30 +1,3 @@
-#' Assert function package dependencies
-#'
-#' Asserts that `Suggests` packages are available for function to run.
-#'
-#' @param pkgs `[character()]` giving the required packages.
-#'
-#' @noRd
-assert_deps <- function(pkgs) {
-  # TODO there should be a better function out there for this already
-  names(pkgs) <- pkgs
-  avail <- purrr::map_lgl(
-    .x = pkgs,
-    .f = requireNamespace,
-    quietly = TRUE
-  )
-  miss <- avail[!avail]
-  if (length(miss) == 0) {
-    return(invisible(pkgs))
-  }
-  stop(
-    "One or more packages needed for this function to work are missing: ",
-    names(miss),
-    call. = FALSE
-  )
-}
-
-
 #' Check whether system dependency is available
 #' @noRd
 # TODO use something like this from another package (this is duplicated from pensieve)
@@ -51,3 +24,15 @@ check_sysdep <- function(x) {
   }
 }
 assert_sysdep <- checkmate::makeAssertionFunction(check.fun = check_sysdep)
+
+#' @importFrom pkgload check_suggested
+# This is just check_suggested from pkgload with a different default path
+check_suggested <- function(package, version = NULL, compare = NA) {
+  path <- pkgload::inst("ghactions")
+  if (is.null(path)) {
+    # inside some actions, ghactions is called with loadNamespace and outside .libPaths(), so it cannot be found with inst.
+    # in these cases, we can just hard-code R_LIBS_ACTION, where ghactions and its dependencies can be found
+    path <- paste0(Sys.getenv("R_LIBS_ACTION"), "/ghactions")
+  }
+  pkgload::check_suggested(package = package, version = version, compare = compare, path = path)
+}

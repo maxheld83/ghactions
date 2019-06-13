@@ -24,7 +24,8 @@ check_clean_tree <- function(code, dir = getwd()){
   # input validation
   # TODO might want to check whether `code` argument works
   checkmate::assert_directory_exists(dir)
-  assert_deps(pkgs = c("withr", "processx"))
+  check_suggested(package = "withr")
+  check_suggested(package = "processx")
   assert_sysdep(x = "git")
 
   # hypothesis: there is always a git repo already
@@ -122,7 +123,7 @@ assert_clean_tree <- checkmate::makeAssertionFunction(check.fun = check_clean_tr
 #' @keywords internal
 #' @family prog_com
 document <- function(dir = getwd()) {
-  assert_deps("devtools")
+  check_suggested(package = "devtools")
   assert_clean_tree(
     code = {
       devtools::document()
