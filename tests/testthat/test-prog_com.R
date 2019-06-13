@@ -75,6 +75,24 @@ test_that(desc = "can be detected", code = {
   )
 })
 
+test_that(desc = "ex-ante unclean working tree errors out", code = {
+  file.create("test_pkgs/ex_ante_unclean/dirt.txt")
+  expect_error(
+    object = ghactions::check_clean_tree(
+      code = NULL,
+      dir = "test_pkgs/ex_ante_unclean"
+    )
+  )
+  expect_true(
+    object = ghactions::check_clean_tree(
+      code = NULL,
+      dir = "test_pkgs/ex_ante_unclean",
+      stash = TRUE
+    )
+  )
+})
+
+
 test_that(desc = "from roxygen2 work", code = {
   expect_error(
     object = ghactions::document(dir = "test_pkgs/bad_docs/")

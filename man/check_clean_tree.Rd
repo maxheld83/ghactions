@@ -5,9 +5,9 @@
 \alias{assert_clean_tree}
 \title{Check \code{git status} for a clean working tree}
 \usage{
-check_clean_tree(code, dir = getwd())
+check_clean_tree(code, dir = getwd(), stash = FALSE)
 
-assert_clean_tree(code, dir = getwd(),
+assert_clean_tree(code, dir = getwd(), stash = FALSE,
   .var.name = checkmate::vname(code), add = NULL)
 }
 \arguments{
@@ -15,6 +15,11 @@ assert_clean_tree(code, dir = getwd(),
 
 \item{dir}{The directory \emph{in} which to execute the code.
 Defaults to \code{\link[=getwd]{getwd()}}.}
+
+\item{stash}{\code{[logical(1)]}
+Giving what happens when the working tree is \emph{already unclean} before \code{code} is evaluated.
+If \code{TRUE}, all stages are \code{git stash push}ed before, and \code{git stash apply}ed after the run; might fail in unexpected ways.
+If \code{FALSE} (recommended default), an error is thrown when the working tree is unclean ex-ante.}
 }
 \value{
 \code{[character(1)]} The \code{git status} results or \code{TRUE} if no diffs.

@@ -7,6 +7,11 @@
 #' @param dir The directory *in* which to execute the code.
 #' Defaults to [getwd()].
 #'
+#' @param stash `[logical(1)]`
+#' Giving what happens when the working tree is *already unclean* before `code` is evaluated.
+#' If `TRUE`, all stages are `git stash push`ed before, and `git stash apply`ed after the run; might fail in unexpected ways.
+#' If `FALSE` (recommended default), an error is thrown when the working tree is unclean ex-ante.
+#'
 #' @return `[character(1)]` The `git status` results or `TRUE` if no diffs.
 #'
 #' @details
@@ -20,7 +25,7 @@
 #'
 #' @keywords internal
 #' @family prog_com
-check_clean_tree <- function(code, dir = getwd()){
+check_clean_tree <- function(code, dir = getwd(), stash = FALSE){
   # input validation
   # TODO might want to check whether `code` argument works
   checkmate::assert_directory_exists(dir)
@@ -41,46 +46,63 @@ check_clean_tree <- function(code, dir = getwd()){
   temp_dir <- fs::dir_copy(path = dir, new_path = tempfile())
   withr::local_dir(new = temp_dir)
 
-  # TODO maybe rather error out when there already *is* an unclean working tree?
+  # ex-ante =====
   # we might *already* have an unclean tree because of artefacts in `github/workspace` from other actions etc.
-  # so stash them away
 
-  processx::run(
-    command = "git",
-    args = c(
-      "stash",
-      "push",
-      "--include-untracked"
+  # TODO this test feels precarious, find sth better
+  status_ex_ante <- git_status()
+  if (status_ex_ante == "") {
+    changed <- FALSE
+  } else {
+    changed <- TRUE
+  }
+
+  if (stash & changed) {
+    processx::run(
+      command = "git",
+      args = c(
+        "stash",
+        "push",
+        "--include-untracked"
+      )
     )
-  )
-  # TODO would be nice to pop the stash again using on.exit, but that causes more complexity if there is NO stash
+    # TODO would be nice to pop the stash again using on.exit, but that causes more complexity if there is NO stash
+  } else {
+    if (changed) {
+      stop("There is already an unclean working tree ex-ante.")
+    }
+  }
 
+  # do work ====
   # this will make the working tree unclean again (or not)
   code
 
-  # TODO actual diffs would be nicer
-  # happily this should respect any `.gitignore`
-  git_status <- processx::run(
-    command = "git",
-    args = c(
-      "status",
-      "--porcelain" # avoid chatty boilerplate from status
-    )
-  )
-  git_status <- git_status$stdout
-
+  # ex-post ====
   # TODO this test feels precarious, find sth better
-  if (git_status == "") {
+  status_ex_post <- git_status()
+  if (status_ex_post == "") {
     return(TRUE)
   }
 
   glue::glue_collapse(
     glue::glue(
       "The following files were added or modified:\n",
-      glue::glue("{git_status}")
+      glue::glue("{status_ex_post}")
     ),
     sep = "\n"
   )
+}
+
+git_status <- function() {
+  # happily this should respect any `.gitignore`
+  res <- processx::run(
+    command = "git",
+    args = c(
+      "status",
+      "--porcelain" # avoid chatty boilerplate from status
+    )
+  )
+  res$stdout
 }
 
 #' @rdname check_clean_tree
