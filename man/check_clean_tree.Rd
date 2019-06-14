@@ -13,14 +13,14 @@ assert_clean_tree(code, dir = getwd(), before_code = NULL,
 \arguments{
 \item{code}{The code to execute.}
 
-\item{dir}{The directory \emph{in} which to execute the code.
+\item{dir}{The directory in which to execute the code.
 Defaults to \code{\link[=getwd]{getwd()}}.}
 
 \item{before_code}{\code{[character(1)]} Giving what happens when the working tree is \emph{already unclean} before \code{code} is evaluated:
 \itemize{
 \item \code{"stop"} to throw an error,
-\item \code{"stash"} to \code{git stash push} all changes before, and \code{git stash apply} them after \code{code} is run (\emph{not recommended}).
-Might fail in unexpected ways, including merge conflicts or
+\item \code{"stash"} to \code{git stash push} all changes before, and \code{git stash pop} them after \code{code} is run (\emph{not recommended}).
+Might fail in unexpected ways, including merge conflicts.
 \item \code{"commit"} to \code{git add .; git commit -m "commit to cleanup"} all changes before \code{code}is run (\emph{not recommended}).
 Might fail in unexpected ways and alter the git history if not run in an isolated container or environment.
 \item \code{NULL} (\emph{recommended} default), in which case if \code{is.act()}, then \code{"commit"}, otherwise \code{"stop"}.

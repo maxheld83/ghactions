@@ -4,13 +4,13 @@
 #'
 #' @param code The code to execute.
 #'
-#' @param dir The directory *in* which to execute the code.
+#' @param dir The directory in which to execute the code.
 #' Defaults to [getwd()].
 #'
 #' @param before_code `[character(1)]` Giving what happens when the working tree is *already unclean* before `code` is evaluated:
 #' - `"stop"` to throw an error,
-#' - `"stash"` to `git stash push` all changes before, and `git stash apply` them after `code` is run (*not recommended*).
-#'    Might fail in unexpected ways, including merge conflicts or
+#' - `"stash"` to `git stash push` all changes before, and `git stash pop` them after `code` is run (*not recommended*).
+#'    Might fail in unexpected ways, including merge conflicts.
 #' - `"commit"` to `git add .; git commit -m "commit to cleanup"` all changes before `code`is run (*not recommended*).
 #'    Might fail in unexpected ways and alter the git history if not run in an isolated container or environment.
 #' - `NULL` (*recommended* default), in which case if `is.act()`, then `"commit"`, otherwise `"stop"`.
@@ -32,15 +32,22 @@ check_clean_tree <- function(code, dir = getwd(), before_code = NULL){
   # input validation
   # TODO might want to check whether `code` argument works
   checkmate::assert_directory_exists(dir)
-  check_suggested(package = "withr")
-  check_suggested(package = "processx")
-  assert_sysdep(x = "git")
-
+  # cannot run without git repo; both act and github actions provision one
+  if (!fs::dir_exists(path = fs::path(dir, ".git"))) {
+    stop("There is no `.git` repository at `dir`.")
+  }
   checkmate::assert_choice(
     x = before_code,
     choices = c("stop", "stash", "commit"),
     null.ok = TRUE
   )
+
+  # check dependencies
+  check_suggested(package = "withr")
+  check_suggested(package = "processx")
+  assert_sysdep(x = "git")
+
+  # impute defaults
   if (is.null(before_code)) {
     if (is_act()) {
       before_code <- "commit"
@@ -49,34 +56,19 @@ check_clean_tree <- function(code, dir = getwd(), before_code = NULL){
     }
   }
 
-  # hypothesis: there is always a git repo already
-  # actions runs `git clone` to get the repo to `github/workspace`
-  # local usage has a git repo anyway
-  # hopefully act also does this
-  # so let's check this
-  if (!fs::dir_exists(path = fs::path(dir, ".git"))) {
-    stop("There is no `.git` repository at `dir`.")
-  }
-
   # move to temp_dr so as to never muck of the working directory
   temp_dir <- fs::dir_copy(path = dir, new_path = tempfile())
   withr::local_dir(new = temp_dir)
 
   # before-code =====
   # we might *already* have an unclean tree because of artefacts in `github/workspace` from other actions etc.
-  # TODO this test feels precarious, find sth better
-  status_before_code <- git_status()
-  if (status_before_code == "") {
-    changed <- FALSE
-  } else {
-    changed <- TRUE
-  }
-
+  status_before_code <- get_git_status()
+  changed <- !is_clean(status_before_code)
   if (changed) {
     switch(EXPR = before_code,
       "stop" = {
         stop(
-          "There was already an unclean working tree before running `code`.\n",
+          "The working tree was already unclean before running `code`.\n",
           report_git_status(status_before_code)
         )
       },
@@ -125,20 +117,17 @@ check_clean_tree <- function(code, dir = getwd(), before_code = NULL){
   }
 
   # do work ====
-  # this will make the working tree unclean again (or not)
   code
 
   # after code ====
-  # TODO this test feels precarious, find sth better
-  status_after_code <- git_status()
-  if (status_after_code == "") {
+  status_after_code <- get_git_status()
+  if (is_clean(status_after_code)) {
     return(TRUE)
   }
-
   report_git_status(status_after_code)
 }
 
-git_status <- function() {
+get_git_status <- function() {
   # happily this should respect any `.gitignore`
   res <- processx::run(
     command = "git",
@@ -148,6 +137,14 @@ git_status <- function() {
     )
   )
   res$stdout
+}
+
+is_clean <- function(git_status) {
+  # TODO this test feels precarious, find sth better
+  if (git_status == "") {
+    return(TRUE)
+  }
+  FALSE
 }
 
 report_git_status <- function(git_status) {

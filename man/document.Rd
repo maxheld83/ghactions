@@ -7,7 +7,7 @@
 document(dir = getwd())
 }
 \arguments{
-\item{dir}{The directory \emph{in} which to execute the code.
+\item{dir}{The directory in which to execute the code.
 Defaults to \code{\link[=getwd]{getwd()}}.}
 }
 \description{
