@@ -75,7 +75,7 @@ test_that(desc = "can be detected", code = {
   )
 })
 
-test_that(desc = "ex-ante unclean working are detected", code = {
+test_that(desc = "ex-ante unclean working tree is detected", code = {
   file.create("test_pkgs/ex_ante_unclean/dirt.txt")
   expect_error(
     object = ghactions::check_clean_tree(

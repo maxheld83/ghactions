@@ -89,7 +89,20 @@ check_clean_tree <- function(code, dir = getwd(), ex_ante_unclean = NULL){
             "--include-untracked"
           )
         )
-        # TODO would be nice to pop the stash again using on.exit, but that causes more complexity if there is NO stash
+        on.exit(
+          expr = {
+            processx::run(
+              command = "git",
+              args = c(
+                "stash",
+                "pop"
+              )
+            )
+          },
+          add = TRUE,
+          # needs to be run *before* above withr is reversed
+          after = FALSE
+        )
       },
       "commit" = {
         # note to self: gitignoring this stuff does NOT work, because it is possible that one of the changed files would *again* be changed by `code`
