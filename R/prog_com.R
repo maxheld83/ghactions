@@ -36,25 +36,11 @@ check_clean_tree <- function(code, dir = getwd(), before_code = NULL){
   if (!fs::dir_exists(path = fs::path(dir, ".git"))) {
     stop("There is no `.git` repository at `dir`.")
   }
-  checkmate::assert_choice(
-    x = before_code,
-    choices = c("stop", "stash", "commit"),
-    null.ok = TRUE
-  )
 
   # check dependencies
   check_suggested(package = "withr")
   check_suggested(package = "processx")
   assert_sysdep(x = "git")
-
-  # impute defaults
-  if (is.null(before_code)) {
-    if (is_act()) {
-      before_code <- "commit"
-    } else {
-      before_code <- "stop"
-    }
-  }
 
   # move to temp_dr so as to never muck of the working directory
   temp_dir <- fs::dir_copy(path = dir, new_path = tempfile())
@@ -62,59 +48,7 @@ check_clean_tree <- function(code, dir = getwd(), before_code = NULL){
 
   # before-code =====
   # we might *already* have an unclean tree because of artefacts in `github/workspace` from other actions etc.
-  status_before_code <- get_git_status()
-  changed <- !is_clean(status_before_code)
-  if (changed) {
-    switch(EXPR = before_code,
-      "stop" = {
-        stop(
-          "The working tree was already unclean before running `code`.\n",
-          report_git_status(status_before_code)
-        )
-      },
-      "stash" = {
-        processx::run(
-          command = "git",
-          args = c(
-            "stash",
-            "push",
-            "--include-untracked"
-          )
-        )
-        on.exit(
-          expr = {
-            processx::run(
-              command = "git",
-              args = c(
-                "stash",
-                "pop"
-              )
-            )
-          },
-          add = TRUE,
-          # needs to be run *before* above withr is reversed
-          after = FALSE
-        )
-      },
-      "commit" = {
-        # note to self: gitignoring this stuff does NOT work, because it is possible that one of the changed files would *again* be changed by `code`
-        processx::run(
-          command = "git",
-          args = c(
-            "add",
-            "."
-          )
-        )
-        processx::run(
-          command = "git",
-          args = c(
-            "commit",
-            "-m 'commit to cleanup'"
-          )
-        )
-      }
-    )
-  }
+  enforce_clean(before_code)
 
   # do work ====
   code
@@ -154,6 +88,85 @@ report_git_status <- function(git_status) {
       glue::glue("{git_status}")
     ),
     sep = "\n"
+  )
+}
+
+enforce_clean <- function(before_code) {
+  # input validation
+  checkmate::assert_choice(
+    x = before_code,
+    choices = c("stop", "stash", "commit"),
+    null.ok = TRUE
+  )
+
+  # impute default
+  if (is.null(before_code)) {
+    if (is_act()) {
+      before_code <- "commit"
+    } else {
+      before_code <- "stop"
+    }
+  }
+
+  status_before_code <- get_git_status()
+  if (is_clean(status_before_code)) {
+    return(NULL)
+  }
+  switch(
+    EXPR = before_code,
+    "stop" = {
+      stop(
+        "The working tree was already unclean before running `code`.\n",
+        report_git_status(status_before_code)
+      )
+    },
+    "stash" = {
+      processx::run(
+        command = "git",
+        args = c(
+          "stash",
+          "push",
+          "--include-untracked"
+        )
+      )
+      # on.exit needs to happen in parent, not here
+      # hack from https://yihui.name/en/2017/12/on-exit-parent/
+      do.call(
+        what = on.exit,
+        args = list(
+          substitute(expr = {
+            processx::run(
+              command = "git",
+              args = c(
+                "stash",
+                "pop"
+              )
+            )
+          }),
+          add = TRUE,
+          # needs to be run *before* above withr is reversed
+          after = FALSE
+        ),
+        envir = parent.frame()
+      )
+    },
+    "commit" = {
+      # gitignoring this stuff does NOT work, because it is possible that one of the changed files would *again* be changed by `code`
+      processx::run(
+        command = "git",
+        args = c(
+          "add",
+          "."
+        )
+      )
+      processx::run(
+        command = "git",
+        args = c(
+          "commit",
+          "-m 'commit to cleanup'"
+        )
+      )
+    }
   )
 }
 
