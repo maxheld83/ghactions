@@ -163,6 +163,8 @@ enforce_clean <- function(before_code) {
           "."
         )
       )
+      # there were some irreproducible/intermittend issues with this
+      # maybe try sleep(s)
       processx::run(
         command = "git",
         args = c(
