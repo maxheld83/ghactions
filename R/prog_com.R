@@ -4,7 +4,7 @@
 #'
 #' @param code The code to execute.
 #'
-#' @param dir The directory in which to execute the code.
+#' @param path The directory in which to execute the code.
 #' Defaults to [getwd()].
 #'
 #' @param before_code `[character(1)]` Giving what happens when the working tree is *already unclean* before `code` is evaluated:
@@ -18,9 +18,9 @@
 #' @return `[character(1)]` The `git status` results or `TRUE` if no diffs.
 #'
 #' @details
-#' The contents of `dir` will be copied to a temporary directory, where a git repository will be initiated and the `code` will be executed.
-#' There will never be any changes to `dir`.
-#' If `dir` or its subdirectories contain a `.gitignore`, it will be respected.
+#' The contents of `path` will be copied to a temporary directory, where a git repository will be initiated and the `code` will be executed.
+#' There will never be any changes to `path`.
+#' If `path` or its subdirectories contain a `.gitignore`, it will be respected.
 #'
 #' This function is modelled [checkmate](https://mllg.github.io/checkmate/articles/checkmate.html).
 #'
@@ -28,13 +28,13 @@
 #'
 #' @keywords internal
 #' @family prog_com
-check_clean_tree <- function(code, dir = getwd(), before_code = NULL){
+check_clean_tree <- function(code, path = getwd(), before_code = NULL){
   # input validation
   # TODO might want to check whether `code` argument works
-  checkmate::assert_directory_exists(dir)
+  checkmate::assert_directory_exists(path)
   # cannot run without git repo; both act and github actions provision one
-  if (!fs::dir_exists(path = fs::path(dir, ".git"))) {
-    stop("There is no `.git` repository at `dir`.")
+  if (!fs::dir_exists(path = fs::path(path, ".git"))) {
+    stop("There is no `.git` repository at `path`.")
   }
 
   # check dependencies
@@ -43,7 +43,7 @@ check_clean_tree <- function(code, dir = getwd(), before_code = NULL){
   assert_sysdep(x = "git")
 
   # move to temp_dr so as to never muck of the working directory
-  temp_dir <- fs::dir_copy(path = dir, new_path = tempfile())
+  temp_dir <- fs::dir_copy(path = path, new_path = tempfile())
   withr::local_dir(new = temp_dir)
 
   # before-code =====
@@ -185,12 +185,12 @@ assert_clean_tree <- checkmate::makeAssertionFunction(check.fun = check_clean_tr
 #'
 #' @keywords internal
 #' @family prog_com
-document <- function(dir = getwd()) {
+document <- function(path = getwd()) {
   check_suggested(package = "devtools")
   assert_clean_tree(
     code = {
       devtools::document()
     },
-    dir = dir
+    path = path
   )
 }

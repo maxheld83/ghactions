@@ -5,15 +5,15 @@
 \alias{assert_clean_tree}
 \title{Check \code{git status} for a clean working tree}
 \usage{
-check_clean_tree(code, dir = getwd(), before_code = NULL)
+check_clean_tree(code, path = getwd(), before_code = NULL)
 
-assert_clean_tree(code, dir = getwd(), before_code = NULL,
+assert_clean_tree(code, path = getwd(), before_code = NULL,
   .var.name = checkmate::vname(code), add = NULL)
 }
 \arguments{
 \item{code}{The code to execute.}
 
-\item{dir}{The directory in which to execute the code.
+\item{path}{The directory in which to execute the code.
 Defaults to \code{\link[=getwd]{getwd()}}.}
 
 \item{before_code}{\code{[character(1)]} Giving what happens when the working tree is \emph{already unclean} before \code{code} is evaluated:
@@ -33,9 +33,9 @@ Might fail in unexpected ways and alter the git history if not run in an isolate
 Check whether some code will cause changes to \code{git status} in the working directory.
 }
 \details{
-The contents of \code{dir} will be copied to a temporary directory, where a git repository will be initiated and the \code{code} will be executed.
-There will never be any changes to \code{dir}.
-If \code{dir} or its subdirectories contain a \code{.gitignore}, it will be respected.
+The contents of \code{path} will be copied to a temporary directory, where a git repository will be initiated and the \code{code} will be executed.
+There will never be any changes to \code{path}.
+If \code{path} or its subdirectories contain a \code{.gitignore}, it will be respected.
 
 This function is modelled \href{https://mllg.github.io/checkmate/articles/checkmate.html}{checkmate}.
 }

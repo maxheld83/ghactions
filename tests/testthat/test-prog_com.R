@@ -57,14 +57,14 @@ context("Programmatic changes")
 test_that(desc = "can be detected", code = {
   no_change <- check_clean_tree(
     code = NULL,
-    dir = "test_pkgs/good_docs"
+    path = "test_pkgs/good_docs"
   )
   expect_true(object = no_change)
   some_changes <- check_clean_tree(
     code = {
       file.create("foo.bar")
     },
-    dir = "test_pkgs/good_docs"
+    path = "test_pkgs/good_docs"
   )
   expect_equal(
     object = some_changes,
@@ -80,14 +80,14 @@ test_that(desc = "unclean working tree before `code` is detected", code = {
   expect_error(
     object = ghactions::check_clean_tree(
       code = NULL,
-      dir = "test_pkgs/before_code",
+      path = "test_pkgs/before_code",
       before_code = "stop"
     )
   )
   expect_true(
     object = ghactions::check_clean_tree(
       code = NULL,
-      dir = "test_pkgs/before_code",
+      path = "test_pkgs/before_code",
       before_code = "stash"
     )
   )
@@ -96,10 +96,10 @@ test_that(desc = "unclean working tree before `code` is detected", code = {
 
 test_that(desc = "from roxygen2 work", code = {
   expect_error(
-    object = ghactions::document(dir = "test_pkgs/bad_docs/")
+    object = ghactions::document(path = "test_pkgs/bad_docs/")
   )
   expect_null(
-    object = ghactions::document(dir = "test_pkgs/good_docs/")
+    object = ghactions::document(path = "test_pkgs/good_docs/")
   )
 })
 

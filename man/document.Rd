@@ -4,10 +4,10 @@
 \alias{document}
 \title{Roxygenize package and check for inconsistencies}
 \usage{
-document(dir = getwd())
+document(path = getwd())
 }
 \arguments{
-\item{dir}{The directory in which to execute the code.
+\item{path}{The directory in which to execute the code.
 Defaults to \code{\link[=getwd]{getwd()}}.}
 }
 \description{
