@@ -7,7 +7,7 @@
 #' @param dir The directory *in* which to execute the code.
 #' Defaults to [getwd()].
 #'
-#' @param ex_ante_unclean `[character(1)]` Giving what happens when the working tree is *already unclean* before `code` is evaluated:
+#' @param before_code `[character(1)]` Giving what happens when the working tree is *already unclean* before `code` is evaluated:
 #' - `"stop"` to throw an error,
 #' - `"stash"` to `git stash push` all changes before, and `git stash apply` them after `code` is run (*not recommended*).
 #'    Might fail in unexpected ways, including merge conflicts or
@@ -28,7 +28,7 @@
 #'
 #' @keywords internal
 #' @family prog_com
-check_clean_tree <- function(code, dir = getwd(), ex_ante_unclean = NULL){
+check_clean_tree <- function(code, dir = getwd(), before_code = NULL){
   # input validation
   # TODO might want to check whether `code` argument works
   checkmate::assert_directory_exists(dir)
@@ -37,15 +37,15 @@ check_clean_tree <- function(code, dir = getwd(), ex_ante_unclean = NULL){
   assert_sysdep(x = "git")
 
   checkmate::assert_choice(
-    x = ex_ante_unclean,
+    x = before_code,
     choices = c("stop", "stash", "commit"),
     null.ok = TRUE
   )
-  if (is.null(ex_ante_unclean)) {
+  if (is.null(before_code)) {
     if (is_act()) {
-      ex_ante_unclean <- "commit"
+      before_code <- "commit"
     } else {
-      ex_ante_unclean <- "stop"
+      before_code <- "stop"
     }
   }
 
@@ -62,22 +62,22 @@ check_clean_tree <- function(code, dir = getwd(), ex_ante_unclean = NULL){
   temp_dir <- fs::dir_copy(path = dir, new_path = tempfile())
   withr::local_dir(new = temp_dir)
 
-  # ex-ante =====
+  # before-code =====
   # we might *already* have an unclean tree because of artefacts in `github/workspace` from other actions etc.
   # TODO this test feels precarious, find sth better
-  status_ex_ante <- git_status()
-  if (status_ex_ante == "") {
+  status_before_code <- git_status()
+  if (status_before_code == "") {
     changed <- FALSE
   } else {
     changed <- TRUE
   }
 
   if (changed) {
-    switch(EXPR = ex_ante_unclean,
+    switch(EXPR = before_code,
       "stop" = {
         stop(
-          "There is already an unclean working tree ex-ante.\n",
-          report_git_status(status_ex_ante)
+          "There was already an unclean working tree before running `code`.\n",
+          report_git_status(status_before_code)
         )
       },
       "stash" = {
@@ -128,14 +128,14 @@ check_clean_tree <- function(code, dir = getwd(), ex_ante_unclean = NULL){
   # this will make the working tree unclean again (or not)
   code
 
-  # ex-post ====
+  # after code ====
   # TODO this test feels precarious, find sth better
-  status_ex_post <- git_status()
-  if (status_ex_post == "") {
+  status_after_code <- git_status()
+  if (status_after_code == "") {
     return(TRUE)
   }
 
-  report_git_status(status_ex_post)
+  report_git_status(status_after_code)
 }
 
 git_status <- function() {

@@ -5,9 +5,9 @@
 \alias{assert_clean_tree}
 \title{Check \code{git status} for a clean working tree}
 \usage{
-check_clean_tree(code, dir = getwd(), ex_ante_unclean = NULL)
+check_clean_tree(code, dir = getwd(), before_code = NULL)
 
-assert_clean_tree(code, dir = getwd(), ex_ante_unclean = NULL,
+assert_clean_tree(code, dir = getwd(), before_code = NULL,
   .var.name = checkmate::vname(code), add = NULL)
 }
 \arguments{
@@ -16,7 +16,7 @@ assert_clean_tree(code, dir = getwd(), ex_ante_unclean = NULL,
 \item{dir}{The directory \emph{in} which to execute the code.
 Defaults to \code{\link[=getwd]{getwd()}}.}
 
-\item{ex_ante_unclean}{\code{[character(1)]} Giving what happens when the working tree is \emph{already unclean} before \code{code} is evaluated:
+\item{before_code}{\code{[character(1)]} Giving what happens when the working tree is \emph{already unclean} before \code{code} is evaluated:
 \itemize{
 \item \code{"stop"} to throw an error,
 \item \code{"stash"} to \code{git stash push} all changes before, and \code{git stash apply} them after \code{code} is run (\emph{not recommended}).
