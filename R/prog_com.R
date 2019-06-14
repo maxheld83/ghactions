@@ -3,6 +3,7 @@
 #' Check whether some code will cause changes to `git status` in the working directory.
 #'
 #' @param code The code to execute.
+#' Defaults to `NULL`.
 #'
 #' @param path The directory in which to execute the code.
 #' Defaults to [getwd()].
@@ -28,7 +29,7 @@
 #'
 #' @keywords internal
 #' @family prog_com
-check_clean_tree <- function(code, path = getwd(), before_code = NULL){
+check_clean_tree <- function(code = NULL, path = getwd(), before_code = NULL){
   # input validation
   # TODO might want to check whether `code` argument works
   checkmate::assert_directory_exists(path)
@@ -42,9 +43,7 @@ check_clean_tree <- function(code, path = getwd(), before_code = NULL){
   check_suggested(package = "processx")
   assert_sysdep(x = "git")
 
-  # move to temp_dr so as to never muck of the working directory
-  temp_dir <- fs::dir_copy(path = path, new_path = tempfile())
-  withr::local_dir(new = temp_dir)
+  withr::local_dir(new = path)
 
   # before-code =====
   # we might *already* have an unclean tree because of artefacts in `github/workspace` from other actions etc.
@@ -60,6 +59,11 @@ check_clean_tree <- function(code, path = getwd(), before_code = NULL){
   }
   report_git_status(status_after_code)
 }
+
+#' @rdname check_clean_tree
+#' @inheritParams checkmate::makeAssertion
+#' @export
+assert_clean_tree <- checkmate::makeAssertionFunction(check.fun = check_clean_tree)
 
 get_git_status <- function() {
   # happily this should respect any `.gitignore`
@@ -169,11 +173,6 @@ enforce_clean <- function(before_code) {
     }
   )
 }
-
-#' @rdname check_clean_tree
-#' @inheritParams checkmate::makeAssertion
-#' @export
-assert_clean_tree <- checkmate::makeAssertionFunction(check.fun = check_clean_tree)
 
 #' Roxygenize package and check for inconsistencies
 #'

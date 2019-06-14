@@ -5,13 +5,14 @@
 \alias{assert_clean_tree}
 \title{Check \code{git status} for a clean working tree}
 \usage{
-check_clean_tree(code, path = getwd(), before_code = NULL)
+check_clean_tree(code = NULL, path = getwd(), before_code = NULL)
 
-assert_clean_tree(code, path = getwd(), before_code = NULL,
+assert_clean_tree(code = NULL, path = getwd(), before_code = NULL,
   .var.name = checkmate::vname(code), add = NULL)
 }
 \arguments{
-\item{code}{The code to execute.}
+\item{code}{The code to execute.
+Defaults to \code{NULL}.}
 
 \item{path}{The directory in which to execute the code.
 Defaults to \code{\link[=getwd]{getwd()}}.}

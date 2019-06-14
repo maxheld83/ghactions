@@ -1,0 +1,38 @@
+context("Programmatic commits")
+
+test_that(desc = "Clean tree after `code` passes", code = {
+  with_repo(code = {
+    expect_true(object = check_clean_tree())
+  })
+})
+test_that(desc = "Dirty tree after `code` errors", code = {
+  with_repo(code = {
+    expect_equal(
+      object = check_clean_tree(code = {fs::file_create("foo.bar")}),
+      # TODO would be nicer to test directly for foo, not the message, but that's what the output is
+      expected = "The following files were added or modified:\n?? foo.bar"
+    )
+  })
+})
+
+test_that(desc = "Dirty tree before `code` errors", code = {
+  with_repo(code = {
+    fs::file_create("dirt.txt")
+    expect_error(object = check_clean_tree(before_code = "stop"))
+  })
+})
+test_that(desc = "Dirty tree before `code` is stashed/poppped", code = {
+  with_repo(code = {
+    fs::file_create("dirt.txt")
+    expect_true(object = check_clean_tree(before_code = "stash"))
+    # file should be back after `git stash pop`
+    checkmate::expect_file_exists("dirt.txt")
+  })
+})
+test_that(desc = "Dirty tree before `code` is committed", code = {
+  with_repo(code = {
+    fs::file_create("dirt.txt")
+    expect_true(check_clean_tree(before_code = "commit"))
+    expect_true(object = check_clean_tree(before_code = "stop"))  # should now be clean
+  })
+})
