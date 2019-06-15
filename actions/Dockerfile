@@ -1,4 +1,4 @@
-FROM maxheld83/r-ci:93f4a98
+FROM maxheld83/r-ci:a5d9d08
 
 LABEL "name"="GitHub actions base image"
 LABEL "version"="0.1.1.9000"
@@ -26,7 +26,7 @@ COPY ./home/lib/R/library "$R_LIBS_ACTION"
 COPY ./workspace /ghactions-source
 # TODO this needs to be purged from the img via rm or multi-stage build
 RUN Rscript -e "devtools::install(pkg = '/ghactions-source', dependencies = TRUE)"
-COPY ./workspace/actions/loadNamespace2.R /loadNamespace2.R
+COPY ./workspace/actions/loadNamespace3.R /loadNamespace3.R
 
 # let downstream img start with unchanged env vars
 # ... and without installed dev helpers on `.libPaths()`

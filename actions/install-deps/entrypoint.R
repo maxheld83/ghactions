@@ -1,18 +1,11 @@
 #!/usr/bin/env Rscript
-path_action <- Sys.getenv("R_LIBS_ACTION")
 path_workflow <- Sys.getenv("R_LIBS_WORKFLOW")
 
 message("Starting dependency installation ...")
-message("Loading development helper packages from 'R_LIBS_ACTION'.")
 
-# TODO ps needs be loaded "manually" for some reason; some of the below apparently depend on it
-# see https://github.com/r-lib/ghactions/issues/254
-loadNamespace(package = "ps", lib.loc = path_action)
-loadNamespace(package = "remotes", lib.loc = path_action)
-loadNamespace(package = "curl", lib.loc = path_action)
-loadNamespace(package = "git2r", lib.loc = path_action)
-loadNamespace(package = "pkgbuild", lib.loc = path_action)
-loadNamespace(package = "withr", lib.loc = path_action)
+source("/loadNamespace2.R")
+loadNamespace2("withr")
+loadNamespace2("remotes")
 
 message("Installing dependencies ...")
 # this needs to run with modified .libPaths() to recognize cache
@@ -36,10 +29,10 @@ if (length(deps_uneeded > 0)) {
   )
 }
 
+message("Checking installation success...")
 # TODO ideally, this would be checked by using r-lib/pak or similar inside of install_deps in the above
-# NOTE this is a very incomplete check of success
 # this only compares pkgs, not version numbers or SHAs
-message("Checking installation success (a little bit)...")
+message("(This is an incomplete check of success).")
 deps_missing <- setdiff(deps_exp, deps_present)
 if (length(deps_missing) == 0) {
   message("All package dependencies were successfully installed.")

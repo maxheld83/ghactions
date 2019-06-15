@@ -1,4 +1,4 @@
-FROM maxheld83/r-ci:93f4a98
+FROM maxheld83/r-ci:a5d9d08
 
 LABEL "name"="install-deps"
 LABEL "version"="0.1.1.9000"
@@ -14,8 +14,6 @@ LABEL "com.github.actions.color"="blue"
 # location for R libraries which should persist across the entire workflow (i.e. several actions)
 ENV R_LIBS_WORKFLOW="/github/home/lib/R/library"
 RUN mkdir -p "$R_LIBS_WORKFLOW"
-# location for R libraries which should persist only for this action
-ENV R_LIBS_ACTION="$R_LIBS_DEV_HELPERS"
 
 COPY entrypoint.R /entrypoint.R
 ENTRYPOINT ["/entrypoint.R"]
