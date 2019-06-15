@@ -26,6 +26,7 @@ COPY ./home/lib/R/library "$R_LIBS_ACTION"
 COPY ./workspace /ghactions-source
 # TODO this needs to be purged from the img via rm or multi-stage build
 RUN Rscript -e "devtools::install(pkg = '/ghactions-source', dependencies = TRUE)"
+COPY ./workspace/actions/loadNamespace2.R /loadNamespace2.R
 
 # let downstream img start with unchanged env vars
 # ... and without installed dev helpers on `.libPaths()`

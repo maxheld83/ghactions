@@ -1,5 +1,6 @@
 #!/usr/bin/env Rscript
-message("Checking package ...")
 
-loadNamespace(package = "rcmdcheck", lib.loc = Sys.getenv("R_LIBS_ACTION"))
+source(file = "/loadNamespace2.R")
+loadNamespace2(package = "rcmdcheck")
+message("Checking package ...")
 rcmdcheck::rcmdcheck(error_on = "warning")

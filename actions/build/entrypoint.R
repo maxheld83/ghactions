@@ -1,5 +1,6 @@
 #!/usr/bin/env Rscript
 
+source(file = "/loadNamespace2.R")
+loadNamespace2(package = "pkgbuild")
 message("Building package ...")
-loadNamespace(package = "pkgbuild", lib.loc = Sys.getenv("R_LIBS_ACTION"))
 pkgbuild::build(dest_path = ".")
