@@ -87,3 +87,10 @@ init_repo <- function() {
     )
   )
 }
+
+hush <- function(code) {
+  withr::with_output_sink(
+    new = "/dev/null",
+    code = code
+  )
+}

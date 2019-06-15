@@ -8,7 +8,7 @@ test_that(desc = "Clean tree after `code` passes", code = {
 test_that(desc = "Dirty tree after `code` errors", code = {
   with_blank_repo(code = {
     expect_equal(
-      object = check_clean_tree(code = {fs::file_create("foo.bar")}),
+      object = check_clean_tree(code = fs::file_create("foo.bar")),
       # TODO would be nicer to test directly for foo, not the message, but that's what the output is
       expected = "The following files were added or modified:\n?? foo.bar"
     )
