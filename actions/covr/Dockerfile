@@ -12,8 +12,8 @@ LABEL "com.github.actions.description"="Measure test coverage using covr."
 LABEL "com.github.actions.icon"="pie-chart"
 LABEL "com.github.actions.color"="blue"
 
-# TODO this is a hack-fix, because covr cannot be loadNamespace()d, as per https://github.com/r-lib/ghactions/issues/247
-ENV R_LIBS="$R_LIBS_WORKFLOW:$R_LIBS_ACTION"
+# pkgdown uses a new rsession and therefore needs persistent R_LIBS, see https://github.com/r-lib/ghactions/issues/247
+ENV R_LIBS="$R_LIBS_ACTION:$R_LIBS_WORKFLOW"
 
 COPY entrypoint.R /entrypoint.R
 ENTRYPOINT ["/entrypoint.R"]
