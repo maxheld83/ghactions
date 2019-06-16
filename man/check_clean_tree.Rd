@@ -38,8 +38,5 @@ If \code{path} or its subdirectories contain a \code{.gitignore}, it will be res
 
 This function is modelled \href{https://mllg.github.io/checkmate/articles/checkmate.html}{checkmate}.
 }
-\seealso{
-Other prog_com: \code{\link{document}}
-}
 \concept{prog_com}
 \keyword{internal}
