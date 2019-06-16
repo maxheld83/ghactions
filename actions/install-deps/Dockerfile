@@ -1,4 +1,4 @@
-FROM maxheld83/r-ci:a5d9d08
+FROM maxheld83/r-ci:74c00e7
 
 LABEL "name"="install-deps"
 LABEL "version"="0.1.1.9000"
