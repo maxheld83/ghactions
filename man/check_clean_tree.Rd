@@ -21,9 +21,7 @@ Defaults to \code{\link[=getwd]{getwd()}}.}
 \itemize{
 \item \code{"stop"} to throw an error,
 \item \code{"stash"} to \code{git stash push} all changes before, and \code{git stash pop} them after \code{code} is run (\emph{not recommended}).
-Might fail in unexpected ways, including merge conflicts.
-\item \code{"commit"} to \code{git add .; git commit -m "commit to cleanup"} all changes before \code{code}is run (\emph{not recommended}).
-Might fail in unexpected ways and alter the git history if not run in an isolated container or environment.
+\item \code{"commit"} to \code{git add .; git commit -m "commit to cleanup"} all changes before \code{code}is run and \code{ git reset HEAD} them after \code{code} is run (\emph{not recommended}).
 \item \code{NULL} (\emph{recommended} default), in which case if \code{is.act()}, then \code{"commit"}, otherwise \code{"stop"}.
 }}
 }

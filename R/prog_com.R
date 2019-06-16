@@ -11,9 +11,7 @@
 #' @param before_code `[character(1)]` Giving what happens when the working tree is *already unclean* before `code` is evaluated:
 #' - `"stop"` to throw an error,
 #' - `"stash"` to `git stash push` all changes before, and `git stash pop` them after `code` is run (*not recommended*).
-#'    Might fail in unexpected ways, including merge conflicts.
-#' - `"commit"` to `git add .; git commit -m "commit to cleanup"` all changes before `code`is run (*not recommended*).
-#'    Might fail in unexpected ways and alter the git history if not run in an isolated container or environment.
+#' - `"commit"` to `git add .; git commit -m "commit to cleanup"` all changes before `code`is run and ` git reset HEAD` them after `code` is run (*not recommended*).
 #' - `NULL` (*recommended* default), in which case if `is.act()`, then `"commit"`, otherwise `"stop"`.
 #'
 #' @return `[character(1)]` The `git status` results or `TRUE` if no diffs.
@@ -63,7 +61,9 @@ check_clean_tree <- function(code = NULL, path = getwd(), before_code = NULL){
 #' @rdname check_clean_tree
 #' @inheritParams checkmate::makeAssertion
 #' @export
-assert_clean_tree <- checkmate::makeAssertionFunction(check.fun = check_clean_tree)
+assert_clean_tree <- checkmate::makeAssertionFunction(
+  check.fun = check_clean_tree
+)
 
 get_git_status <- function() {
   # happily this should respect any `.gitignore`
@@ -171,6 +171,26 @@ enforce_clean <- function(before_code) {
           "commit",
           "-m 'commit to cleanup'"
         )
+      )
+      # on.exit needs to happen in parent, not here
+      # hack from https://yihui.name/en/2017/12/on-exit-parent/
+      do.call(
+        what = on.exit,
+        args = list(
+          substitute(expr = {
+            processx::run(
+              command = "git",
+              args = c(
+                "reset",
+                "HEAD^1"
+              )
+            )
+          }),
+          add = TRUE,
+          # needs to be run *before* above withr is reversed
+          after = FALSE
+        ),
+        envir = parent.frame()
       )
     }
   )

@@ -33,6 +33,7 @@ test_that(desc = "Dirty tree before `code` is committed", code = {
   with_blank_repo(code = {
     fs::file_create("dirt.txt")
     expect_true(check_clean_tree(before_code = "commit"))
-    expect_true(object = check_clean_tree(before_code = "stop"))  # should now be clean
+    # file should be back after `git reset HEAD^1`
+    checkmate::expect_file_exists("dirt.txt")
   })
 })
