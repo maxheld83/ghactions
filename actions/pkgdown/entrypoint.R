@@ -7,4 +7,3 @@ withr::with_libpaths(
   code = pkgdown::build_site(override = list(devel = FALSE, external = FALSE)),
   action = "suffix"
 )
-
