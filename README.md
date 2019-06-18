@@ -23,7 +23,7 @@ The **ghactions** project offers three avenues to **bring GitHub actions to the 
 2. The accompanying [**ghactions R package**](#workflows) furnishes you with some out-of-the-box **workflows** for different kinds of projects.
   These functions are styled after the popular [usethis](http://usethis.r-lib.org) package.
   They don't do much: They just set you up with some configuration files for your project, using sensible defaults.
-3. Documenting experiences and evolving [**best practices**](https://r-lib.github.io/ghactions/articles/ghactions.html) for how to make the most of GitHub actions for R.
+3. Documenting experiences and evolving [**best practices**](https://r-lib.github.io/ghactions/articles/ghactions.html) for how to make the most of GitHub Actions for R.
 
 
 ## Installation
