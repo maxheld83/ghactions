@@ -1,4 +1,4 @@
-# GitHub actions for R <img src="https://github.com/r-lib/ghactions/blob/master/logo.png?raw=true" align="right" height=140/>
+# GitHub Actions for R <img src="https://github.com/r-lib/ghactions/blob/master/logo.png?raw=true" align="right" height=140/>
 
 [![Actions Status](https://wdp9fww0r9.execute-api.us-west-2.amazonaws.com/production/badge/r-lib/ghactions)](https://github.com/r-lib/ghactions/actions)
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
