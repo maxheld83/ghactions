@@ -39,6 +39,7 @@ ghactions currently relies on a dev version of [usethis](http://usethis.r-lib.or
 If you're using `devtools::install_github()` or otherwise currently have usethis loaded, you **may need to restart your the R session** before ghactions can find the dev usethis (RStudio > Session > Restart R).
 
 Because you're likely only to ever use it *once*, **you need not take on ghactions as a dependency in your projects.**
+(Some of the actions ship with ghactions in their images, but you don't have to worry about that).
 
 
 ## Quick Start
