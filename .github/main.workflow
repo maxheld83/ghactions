@@ -200,11 +200,3 @@ action "Deploy Website" {
     "Filter Master"
   ]
 }
-
-workflow "Build and Check" {
-  on = "pull_request"
-  resolves = [
-    "Build Website",
-    "Check Package",
-    "Build Action Images"
-}
