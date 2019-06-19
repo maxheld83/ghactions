@@ -6,10 +6,12 @@ R_LIBS_ACTION=/usr/lib/R/dev-helpers-library
 
 .PHONY: test-that
 test-that:
+	echo $(CURDIR)
+	ls -a $(CURDIR)
 	docker run \
 	--env="R_LIBS=$(R_LIBS_ACTION)" \
 	--entrypoint /usr/bin/Rscript \
-	--volume $(CURDIR):$(GITHUB_WORKSPACE) \
+	--mount type=bind,source=$(CURDIR),destination=$(GITHUB_WORKSPACE) \
 	--workdir $(GITHUB_WORKSPACE) \
 	--tty \
 	$(IMAGE_NAME) \
