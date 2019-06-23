@@ -16,6 +16,9 @@ knitr::opts_chunk$set(
 )
 ```
 
+```{r child='rmdhunks/disclaimer_docs.html'} 
+```
+
 For fast turnaround or debugging, you can also run GitHub actions locally on your computer.
 For some projects, GitHub actions may even serve as a replacement for `make`.
 

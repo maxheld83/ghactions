@@ -9,7 +9,7 @@ workflow "Build, Check and Deploy" {
 }
 
 action "GCP Authenticate" {
-  uses = "actions/gcloud/auth@ba93088eb19c4a04638102a838312bb32de0b052"
+  uses = "actions/gcloud/auth@d124d4b82701480dc29e68bb73a87cfb2ce0b469"
   secrets = [
     "GCLOUD_AUTH"
   ]

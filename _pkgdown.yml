@@ -38,8 +38,6 @@ articles:
     contents:
       - ghactions
       - isolation
-      - local
-      - performance
   - title: "Actions for Package Development"
     desc: >
       These actions are useful in package development.
@@ -49,6 +47,13 @@ articles:
   - title: "Other Actions"
     contents:
       - rscript-byod
+  - title: "Developing GitHub Actions"
+    desc: >
+      Not specific to R or this package.
+    contents:
+      - performance
+      - local
+      - testing
 navbar:
   title: "ghactions"
   left:

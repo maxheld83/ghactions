@@ -1,0 +1,26 @@
+---
+title: "Testing GitHub Actions"
+author: "Maximilian Held"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_document
+vignette: >
+   %\VignetteIndexEntry{local}
+   %\VignetteEngine{knitr::rmarkdown}
+   %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r child='rmdhunks/disclaimer_docs.html'} 
+```
+
+Testing is always a good idea for software development, but it's especially important for workflow automation and continuous integration and delivery.
+These scripts may be relatively simple, but any bugs they may have are doubly thorny: 
+If something goes wrong, you can't be sure whether the workflow script or your in-development software are at fault and it can be quite hard to find out what is going on.
+
+That is why the tools running continuous integration and delivery (CI/CD) especially, should be thoroughly tested.
