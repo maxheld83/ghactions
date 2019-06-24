@@ -12,7 +12,7 @@ logo.*
 .tar.gz
 ^pkgdown$
 ^man-roxygen$
-vignettes/Rscript-byod.Rmd
+vignettes/
 pkgwf.gif
 
 # tokens to run ghactions locally with act
