@@ -1,5 +1,5 @@
 ---
-title: "Programmatic Commits"
+title: "Automatic Commits"
 author: "Maximilian Held"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_document
@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-These GitHub actions are useful for programmatically committing changes.
+These GitHub actions are useful for automatically committing changes.
 
 
 ```{r readme, child="../../actions/document/README.rmd"}

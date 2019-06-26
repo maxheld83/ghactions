@@ -64,8 +64,6 @@ auto_commit <- function(after_code = "stop", ...) {
 #' @keywords internal
 #'
 #' @rdname auto_commit
-#'
-#' @family prog_com
 check_clean_tree <- function(code = NULL, path = getwd(), before_code = NULL){
   # input validation
   # TODO might want to check whether `code` argument works

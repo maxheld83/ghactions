@@ -1,4 +1,4 @@
-context("Programmatic commits")
+context("Automatic commits")
 
 test_that(desc = "Clean tree after `code` passes", code = {
   with_blank_repo(code = {

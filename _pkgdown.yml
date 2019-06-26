@@ -43,7 +43,7 @@ articles:
       These actions are useful in package development.
     contents:
       - pkg-dev/ci
-      - pkg-dev/progcom
+      - pkg-dev/auto-commit
       - pkg-dev/review
   - title: "Other Actions"
     contents:
