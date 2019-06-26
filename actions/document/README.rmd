@@ -20,7 +20,9 @@ None.
 
 ### Arguments
 
-None.
+```{bash echo=FALSE, results="markup"}
+./document.R --help
+```
 
 
 ### Example Usage

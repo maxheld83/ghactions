@@ -1,0 +1,7 @@
+Document R package.
+
+Usage:
+  document.R [--before_code=<"stop"|"stash"|"commit">]
+
+Options:
+  --before_code=<"stop"|"stash"|"commit"> passed to `ghactions::check_clean_tree()`
