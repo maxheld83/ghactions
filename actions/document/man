@@ -1,7 +1,8 @@
 Document R package.
 
 Usage:
-  document.R [--before_code=<"stop"|"stash"|"commit">]
+  document.R [--before_code=<"stop"|"stash"|"commit">] [--after_code=<"stop"|"commit">]
 
 Options:
-  --before_code=<"stop"|"stash"|"commit"> passed to `ghactions::check_clean_tree()`
+  --before_code=<"stop"|"stash"|"commit"> passed to `ghactions::check_clean_tree()`.
+  --after_code=<"stop"|"commit"> passed to `ghactions::auto_commit()`.

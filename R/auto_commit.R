@@ -5,7 +5,7 @@
 #' @param after_code `[character(1)]` Giving what happens when the working tree is *unclean after*  `code` is evaluated:
 #' - `"stop"` to throw an error or
 #' - `"commit"` to commit the changes.
-#' Defaults to `"stop"`.
+#' Defaults to `NULL`, in which case `"stop"` is set.
 #' `"stop"` is just a thin wrapper around [check_clean_tree()].
 #'
 #' @inheritDotParams check_clean_tree
@@ -17,9 +17,17 @@
 #' @details
 #' This function will commit all changes caused by `code` to the repository.
 #' Running this in CI/CD can save some time, but can also cause unexpected behavior and pollute the commit history with derivative changes.
-auto_commit <- function(after_code = "stop", ...) {
+auto_commit <- function(after_code = NULL, ...) {
   # input validation
-  checkmate::assert_choice(x = after_code, choices = c("stop", "commit"))
+
+  checkmate::assert_choice(
+    x = after_code,
+    choices = c("stop", "commit"),
+    null.ok = TRUE
+  )
+  if (is.null(after_code)) {
+    after_code <- "stop"
+  }
 
   status_after_code <- check_clean_tree(...)
   res <- NULL
@@ -64,6 +72,10 @@ assert_github_token <- function() {
   if (Sys.getenv("GITHUB_TOKEN") == "") {
     stop("Action needs `GITHUB_TOKEN` as a secret.")
   }
+}
+
+is_push_allowed <- function() {
+  !testthat::is_testing()
 }
 
 #' Check `git status` for a clean working tree

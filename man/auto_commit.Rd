@@ -5,7 +5,7 @@
 \alias{check_clean_tree}
 \title{Automatically commit changes}
 \usage{
-auto_commit(after_code = "stop", ...)
+auto_commit(after_code = NULL, ...)
 
 check_clean_tree(code = NULL, path = getwd(), before_code = NULL)
 }
@@ -14,7 +14,7 @@ check_clean_tree(code = NULL, path = getwd(), before_code = NULL)
 \itemize{
 \item \code{"stop"} to throw an error or
 \item \code{"commit"} to commit the changes.
-Defaults to \code{"stop"}.
+Defaults to \code{NULL}, in which case \code{"stop"} is set.
 \code{"stop"} is just a thin wrapper around \code{\link[=check_clean_tree]{check_clean_tree()}}.
 }}
 
