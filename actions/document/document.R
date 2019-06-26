@@ -24,7 +24,7 @@ arguments <- docopt::docopt(
 
 message("Checking for consistency of roxygen2 with `man` ...")
 
-ghactions::assert_clean_tree(
+ghactions::auto_commit(
   code = {
     devtools::document()
   },

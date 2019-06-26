@@ -1,3 +1,39 @@
+#' Automatically commit changes
+#'
+#' Automatically commit any changes made be development helper packages.
+#'
+#' @param after_code `[character(1)]` Giving what happens when the working tree is *unclean after*  `code` is evaluated:
+#' - `"stop"` to throw an error or
+#' - `"commit"` to commit the changes.
+#' Defaults to `"stop"`.
+#' `"stop"` is just a thin wrapper around [check_clean_tree()].
+#'
+#' @inheritDotParams check_clean_tree
+#'
+#' @export
+#'
+#' @return NULL
+#'
+#' @details
+#' This function will commit all changes caused by `code` to the repository.
+#' Running this in CI/CD can save some time, but can also cause unexpected behavior and pollute the commit history with derivative changes.
+auto_commit <- function(after_code = "stop", ...) {
+  # input validation
+  checkmate::assert_choice(x = after_code, choices = c("stop", "commit"))
+
+  status_after_code <- check_clean_tree(...)
+  if (status_after_code) {
+    return(NULL)
+  }
+
+  switch(
+    EXPR = after_code,
+    "stop" = {
+      stop(status_after_code)
+    }
+  )
+}
+
 #' Check `git status` for a clean working tree
 #'
 #' Check whether some code will cause changes to `git status` in the working directory.
@@ -26,6 +62,9 @@
 #' @export
 #'
 #' @keywords internal
+#'
+#' @rdname auto_commit
+#'
 #' @family prog_com
 check_clean_tree <- function(code = NULL, path = getwd(), before_code = NULL){
   # input validation
@@ -57,13 +96,6 @@ check_clean_tree <- function(code = NULL, path = getwd(), before_code = NULL){
   }
   report_git_status(status_after_code)
 }
-
-#' @rdname check_clean_tree
-#' @inheritParams checkmate::makeAssertion
-#' @export
-assert_clean_tree <- checkmate::makeAssertionFunction(
-  check.fun = check_clean_tree
-)
 
 get_git_status <- function() {
   # happily this should respect any `.gitignore`
