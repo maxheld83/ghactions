@@ -45,7 +45,7 @@ check_clean_tree <- function(code = NULL, path = getwd(), before_code = NULL){
 
   # before-code =====
   # we might *already* have an unclean tree because of artefacts in `github/workspace` from other actions etc.
-  enforce_clean(before_code)
+  enforce_clean_before(before_code)
 
   # do work ====
   code
@@ -95,7 +95,7 @@ report_git_status <- function(git_status) {
   )
 }
 
-enforce_clean <- function(before_code) {
+enforce_clean_before <- function(before_code) {
   # input validation
   checkmate::assert_choice(
     x = before_code,
