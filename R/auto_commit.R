@@ -22,16 +22,48 @@ auto_commit <- function(after_code = "stop", ...) {
   checkmate::assert_choice(x = after_code, choices = c("stop", "commit"))
 
   status_after_code <- check_clean_tree(...)
+  res <- NULL
   if (status_after_code) {
-    return(NULL)
+    return(res)
   }
 
   switch(
     EXPR = after_code,
     "stop" = {
       stop(status_after_code)
+    },
+    "commit" = {
+      assert_github_token()
+      res$add <- processx::run(
+        command = "git",
+        args = c(
+          "add",
+          "."
+        )
+      )
+      res$commit <- processx::run(
+        command = "git",
+        args = c(
+          "commit",
+          "--fixup=Sys.getenv('GITHUB_SHA')"
+        )
+      )
+      res$push <- processx::run(
+        command = "git",
+        args = c(
+          "push"
+        )
+      )
     }
   )
+
+  res
+}
+
+assert_github_token <- function() {
+  if (Sys.getenv("GITHUB_TOKEN") == "") {
+    stop("Action needs `GITHUB_TOKEN` as a secret.")
+  }
 }
 
 #' Check `git status` for a clean working tree
