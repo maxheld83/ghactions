@@ -3,10 +3,9 @@
 #' Automatically commit any changes made be development helper packages.
 #'
 #' @param after_code `[character(1)]` Giving what happens when the working tree is *unclean after*  `code` is evaluated:
-#' - `"stop"` to throw an error or
+#' - `NULL` to throw an error or
 #' - `"commit"` to commit the changes.
-#' Defaults to `NULL`, in which case `"stop"` is set.
-#' `"stop"` is just a thin wrapper around [check_clean_tree()].
+#' Defaults to `NULL`, which just thinly wraps [check_clean_tree()].
 #'
 #' @inheritDotParams check_clean_tree
 #'
@@ -22,7 +21,7 @@ auto_commit <- function(after_code = NULL, ...) {
 
   checkmate::assert_choice(
     x = after_code,
-    choices = c("stop", "commit"),
+    choices = c("commit"),
     null.ok = TRUE
   )
   if (is.null(after_code)) {
@@ -89,10 +88,9 @@ is_push_allowed <- function() {
 #' Defaults to [getwd()].
 #'
 #' @param before_code `[character(1)]` Giving what happens when the working tree is *already unclean* before `code` is evaluated:
-#' - `"stop"` to throw an error,
+#' - `NULL` (*recommended* default), in which case if `is.act()`, then `"commit"`, otherwise throw an error.
 #' - `"stash"` to `git stash push` all changes before, and `git stash pop` them after `code` is run (*not recommended*).
 #' - `"commit"` to `git add .; git commit -m "commit to cleanup"` all changes before `code`is run and ` git reset HEAD` them after `code` is run (*not recommended*).
-#' - `NULL` (*recommended* default), in which case if `is.act()`, then `"commit"`, otherwise `"stop"`.
 #'
 #' @return `[character(1)]` The `git status` results or `TRUE` if no diffs.
 #'
@@ -173,7 +171,7 @@ enforce_clean_before <- function(before_code) {
   # input validation
   checkmate::assert_choice(
     x = before_code,
-    choices = c("stop", "stash", "commit"),
+    choices = c("stash", "commit"),
     null.ok = TRUE
   )
 

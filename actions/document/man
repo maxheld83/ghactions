@@ -4,5 +4,5 @@ Usage:
   document.R [--before_code=<"stop"|"stash"|"commit">] [--after_code=<"stop"|"commit">]
 
 Options:
-  --before_code=<"stop"|"stash"|"commit"> passed to `ghactions::check_clean_tree()`.
-  --after_code=<"stop"|"commit"> passed to `ghactions::auto_commit()`.
+  --before_code=<"stash"|"commit"> passed to `ghactions::check_clean_tree()`. Otherwise throws an error.
+  --after_code=<"commit"> passed to `ghactions::auto_commit()`. Otherwise throws an error.
