@@ -45,6 +45,8 @@ Defaults to \code{\link[=getwd]{getwd()}}.}
 }}
 }
 \value{
+\code{[list()]} of lists of git command feedback or \code{[NULL]} when there were no changes (invisible).
+
 \code{[character(1)]} The \code{git status} results or \code{TRUE} if no diffs.
 }
 \description{

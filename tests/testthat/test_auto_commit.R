@@ -1,4 +1,5 @@
 context("Automatic commits")
+library(checkmate)
 
 test_that(desc = "Clean tree after `code` passes", code = {
   with_blank_repo(code = {
@@ -18,6 +19,27 @@ test_that(desc = "Dirty tree after `code` errors", code = {
   })
   with_blank_repo(code = {
     expect_error(auto_commit(code = fs::file_create("foo.bar")))
+  })
+})
+test_that(desc = "Dirty tree after `code` gets committed", code = {
+  with_blank_repo(code = {
+    # should return feedback from git commands
+    expect_list(
+      x = {
+        auto_commit(
+          code = fs::file_create("foo.bar"),
+          after_code = "commit"
+        )
+      }
+    )
+    # should be clean now
+    expect_true(
+      object = check_clean_tree()
+    )
+    # should still exist
+    expect_file_exists(
+      x = "foo.bar"
+    )
   })
 })
 

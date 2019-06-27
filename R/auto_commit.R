@@ -11,7 +11,7 @@
 #'
 #' @export
 #'
-#' @return NULL
+#' @return `[list()]` of lists of git command feedback or `[NULL]` when there were no changes (invisible).
 #'
 #' @details
 #' This function will commit all changes caused by `code` to the repository.
@@ -29,10 +29,23 @@ auto_commit <- function(after_code = NULL, ...) {
 
   status_after_code <- check_clean_tree(...)
   res <- NULL
-  if (status_after_code) {
-    return(res)
+  if (isTRUE(status_after_code)) {
+    return(invisible(res))
   }
 
+  if (is_push_allowed()) {
+    # this is nicer than the LAST sha in case there are several programmatic commits
+    # all the separate programmatic commits actually fix up the GITHUB_SHA, which is the last "human" commit
+    last_SHA <- Sys.getenv("GITHUB_SHA")
+  } else {
+    # cannot use GITHUB_SHA under these circumstances
+    last_SHA <- processx::run(
+      command = "git",
+      args = c("rev-parse", "HEAD")
+    )
+    # would be nicer to get this back without trailing newline
+    last_SHA <- gsub("[\r\n]", "", last_SHA$stdout)
+  }
   switch(
     EXPR = after_code,
     "stop" = {
@@ -51,7 +64,7 @@ auto_commit <- function(after_code = NULL, ...) {
         command = "git",
         args = c(
           "commit",
-          "--fixup=Sys.getenv('GITHUB_SHA')"
+          paste0("--fixup=", last_SHA)
         )
       )
       if (is_push_allowed()) {
@@ -65,7 +78,7 @@ auto_commit <- function(after_code = NULL, ...) {
     }
   )
 
-  res
+  invisible(res)
 }
 
 assert_github_token <- function() {
