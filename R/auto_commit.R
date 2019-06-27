@@ -18,7 +18,6 @@
 #' Running this in CI/CD can save some time, but can also cause unexpected behavior and pollute the commit history with derivative changes.
 auto_commit <- function(after_code = NULL, ...) {
   # input validation
-
   checkmate::assert_choice(
     x = after_code,
     choices = c("commit"),
@@ -55,12 +54,14 @@ auto_commit <- function(after_code = NULL, ...) {
           "--fixup=Sys.getenv('GITHUB_SHA')"
         )
       )
-      res$push <- processx::run(
-        command = "git",
-        args = c(
-          "push"
+      if (is_push_allowed()) {
+        res$push <- processx::run(
+          command = "git",
+          args = c(
+            "push"
+          )
         )
-      )
+      }
     }
   )
 
@@ -68,13 +69,17 @@ auto_commit <- function(after_code = NULL, ...) {
 }
 
 assert_github_token <- function() {
-  if (Sys.getenv("GITHUB_TOKEN") == "") {
+  if (has_github_token()) {
     stop("Action needs `GITHUB_TOKEN` as a secret.")
   }
 }
 
 is_push_allowed <- function() {
-  !testthat::is_testing()
+  !testthat::is_testing() & !is_act() & has_github_token()
+}
+
+has_github_token <- function() {
+  Sys.getenv("GITHUB_TOKEN") != ""
 }
 
 #' Check `git status` for a clean working tree
