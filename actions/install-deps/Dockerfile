@@ -12,8 +12,8 @@ LABEL "com.github.actions.icon"="arrow-down-circle"
 LABEL "com.github.actions.color"="blue"
 
 # location for R libraries which should persist across the entire workflow (i.e. several actions)
-ENV R_LIBS_WORKFLOW="/github/home/lib/R/library"
-RUN mkdir -p "$R_LIBS_WORKFLOW"
+ENV R_LIBS_WORKFLOW="/github/home/lib/R/library/"
+RUN mkdir --parents "$R_LIBS_WORKFLOW"
 
 COPY entrypoint.R /entrypoint.R
 ENTRYPOINT ["/entrypoint.R"]
