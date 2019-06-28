@@ -52,7 +52,6 @@ auto_commit <- function(after_code = NULL, ...) {
       stop(status_after_code)
     },
     "commit" = {
-      assert_github_token()
       res$add <- processx::run(
         command = "git",
         args = c(
@@ -81,6 +80,7 @@ auto_commit <- function(after_code = NULL, ...) {
   invisible(res)
 }
 
+# TODO currently unused, but might still be a good idea to test for this
 assert_github_token <- function() {
   if (!has_github_token()) {
     stop("Action needs `GITHUB_TOKEN` as a secret.")
