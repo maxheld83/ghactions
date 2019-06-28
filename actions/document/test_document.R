@@ -22,3 +22,18 @@ test_that(desc = "bad docs fail", code = {
     path = "bad"
   )
 })
+test_that(desc = "bad docs can be commited", code = {
+  with_blp_repo(
+    code = {
+      system2(
+        command = cmd_path,
+        args = "--after-code='commit'",
+        stderr = FALSE,
+        stdout = FALSE
+      )
+      expect_true(object = ghactions:::is_clean(ghactions:::get_git_status()))
+      expect_file_exists("man/foo.Rd", info = ghactions:::get_git_status())
+    },
+    path = "bad"
+  )
+})

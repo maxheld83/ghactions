@@ -25,10 +25,10 @@ arguments <- docopt::docopt(
 message("Checking for consistency of roxygen2 with `man` ...")
 
 ghactions::auto_commit(
-  after_code = arguments$after_code,
+  after_code = arguments$`--after-code`,
   code = {
     devtools::document()
   },
   path = ".",
-  before_code = arguments$before_code
+  before_code = arguments$`--before-code`
 )
