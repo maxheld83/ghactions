@@ -82,7 +82,7 @@ auto_commit <- function(after_code = NULL, ...) {
 }
 
 assert_github_token <- function() {
-  if (has_github_token()) {
+  if (!has_github_token()) {
     stop("Action needs `GITHUB_TOKEN` as a secret.")
   }
 }
