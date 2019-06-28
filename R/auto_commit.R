@@ -34,10 +34,12 @@ auto_commit <- function(after_code = NULL, ...) {
   }
 
   if (is_push_allowed()) {
+    message("Pushing is allowed.")
     # this is nicer than the LAST sha in case there are several programmatic commits
     # all the separate programmatic commits actually fix up the GITHUB_SHA, which is the last "human" commit
     last_SHA <- Sys.getenv("GITHUB_SHA")
   } else {
+    message("Pushing is not allowed.")
     # cannot use GITHUB_SHA under these circumstances
     last_SHA <- processx::run(
       command = "git",
@@ -46,6 +48,7 @@ auto_commit <- function(after_code = NULL, ...) {
     # would be nicer to get this back without trailing newline
     last_SHA <- gsub("[\r\n]", "", last_SHA$stdout)
   }
+  message("Fixing up commit", last_SHA)
   switch(
     EXPR = after_code,
     "stop" = {
@@ -64,7 +67,9 @@ auto_commit <- function(after_code = NULL, ...) {
         args = c(
           "commit",
           paste0("--fixup=", last_SHA)
-        )
+        ),
+        echo_cmd = TRUE,
+        echo = TRUE
       )
       if (is_push_allowed()) {
         res$push <- processx::run(
