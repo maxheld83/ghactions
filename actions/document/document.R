@@ -12,6 +12,7 @@ if (getwd() == "/Users/max/GitHub/ghactions/actions/document") {
   loadNamespace3(package = "roxygen2")
   loadNamespace3(package = "ghactions")
   loadNamespace3(package = "checkmate")
+  loadNamespace3(package = "withr")
 
   loadNamespace3(package = "docopt")
   loadNamespace3(package = "readr")
