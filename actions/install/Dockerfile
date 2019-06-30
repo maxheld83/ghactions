@@ -12,7 +12,5 @@ LABEL "com.github.actions.description"="Install R package."
 LABEL "com.github.actions.icon"="play-circle"
 LABEL "com.github.actions.color"="blue"
 
-ENV R_LIBS="$R_LIBS_WORKFLOW"
-
 COPY entrypoint.R /entrypoint.R
 ENTRYPOINT ["/entrypoint.R"]

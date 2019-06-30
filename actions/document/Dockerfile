@@ -12,6 +12,4 @@ LABEL "com.github.actions.description"="Document Packages for rstats."
 LABEL "com.github.actions.icon"="book-open"
 LABEL "com.github.actions.color"="blue"
 
-ENV R_LIBS="$R_LIBS_WORKFLOW"
-
 ENTRYPOINT ["/ghactions-source/actions/document/document.R"]

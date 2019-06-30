@@ -1,11 +1,11 @@
 #!/usr/bin/env Rscript
 path_workflow <- Sys.getenv("R_LIBS_WORKFLOW")
+path_devhelpers <- Sys.getenv("R_LIBS_DEV_HELPERS")
 
 message("Starting dependency installation ...")
 
-source("/loadNamespace2.R")
-loadNamespace2("withr")
-loadNamespace2("remotes")
+loadNamespace(package = "withr", lib.loc = path_devhelpers)
+loadNamespace(package = "remotes", lib.loc = path_devhelpers)
 
 message("Installing dependencies ...")
 # this needs to run with modified .libPaths() to recognize cache

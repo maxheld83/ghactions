@@ -12,7 +12,5 @@ LABEL "com.github.actions.description"="Measure test coverage using covr."
 LABEL "com.github.actions.icon"="pie-chart"
 LABEL "com.github.actions.color"="blue"
 
-ENV R_LIBS="$R_LIBS_WORKFLOW"
-
 COPY entrypoint.R /entrypoint.R
 ENTRYPOINT ["/entrypoint.R"]

@@ -29,11 +29,6 @@ assert_sysdep <- checkmate::makeAssertionFunction(check.fun = check_sysdep)
 # This is just check_suggested from pkgload with a different default path
 check_suggested <- function(package, version = NULL, compare = NA) {
   path <- pkgload::inst("ghactions")
-  if (is.null(path)) {
-    # inside some actions, ghactions is called with loadNamespace and outside .libPaths(), so it cannot be found with inst.
-    # in these cases, we can just hard-code R_LIBS_ACTION, where ghactions and its dependencies can be found
-    path <- paste0(Sys.getenv("R_LIBS_ACTION"), "/ghactions")
-  }
   pkgload::check_suggested(package = package, version = version, compare = compare, path = path)
 }
 

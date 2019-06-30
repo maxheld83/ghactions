@@ -6,18 +6,6 @@ if (getwd() == "/Users/max/GitHub/ghactions/actions/document") {
   source_root <- "../../"
 } else if (getwd() != "/Users/max/GitHub/ghactions") {
   source_root <- "/ghactions-source/"
-
-  source(file = "/loadNamespace3.R")
-  loadNamespace3(package = "brew")
-  loadNamespace3(package = "roxygen2")
-  loadNamespace3(package = "ghactions")
-  loadNamespace3(package = "checkmate")
-  loadNamespace3(package = "withr")
-  loadNamespace3(package = "fs")
-  loadNamespace3(package = "devtools")
-
-  loadNamespace3(package = "docopt")
-  loadNamespace3(package = "readr")
 }
 
 arguments <- docopt::docopt(
