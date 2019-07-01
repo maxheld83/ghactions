@@ -97,7 +97,9 @@ auto_commit <- function(after_code = NULL, ...) {
           command = "git",
           args = c(
             "push"
-          )
+          ),
+          echo_cmd = TRUE,
+          echo = TRUE
         )
       }
     }
