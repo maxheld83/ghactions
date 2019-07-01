@@ -1,5 +1,12 @@
 #!/usr/bin/env Rscript
 path_workflow <- Sys.getenv("R_LIBS_WORKFLOW")
+message(
+  "Creating R package library for this workflow at ",
+  path_workflow,
+  " ..."
+)
+# cannot be created in dockerfile, because github actions overwrites /github/ see #275
+dir.create(path = path_workflow, showWarnings = TRUE, recursive = TRUE)
 path_devhelpers <- Sys.getenv("R_LIBS_DEV_HELPERS")
 
 message("Starting dependency installation ...")
