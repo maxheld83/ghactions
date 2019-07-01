@@ -23,6 +23,7 @@ endif
 test-that:
 	docker run \
 	--env="R_LIBS=$(R_LIBS_ACTION)" \
+	--env="GITHUB_ACTOR=$(GITHUB_ACTOR)" \
 	--entrypoint /usr/bin/Rscript \
 	$(MOUNT_ARG) \
 	--workdir $(TEST_PATH) \
