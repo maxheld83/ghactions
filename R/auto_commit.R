@@ -96,7 +96,10 @@ auto_commit <- function(after_code = NULL, ...) {
         res$push <- processx::run(
           command = "git",
           args = c(
-            "push"
+            "push",
+            "--set-upstream",
+            "origin",
+            "HEAD"
           ),
           echo_cmd = TRUE,
           echo = TRUE
