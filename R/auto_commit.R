@@ -62,8 +62,7 @@ auto_commit <- function(after_code = NULL, ...) {
           "."
         )
       )
-      # bot author would be nice
-      user.name <- Sys.getenv("GITHUB_ACTOR")
+      user.name <- "r-lib/ghactions"
       user.email <- paste0(user.name, "@users.noreply.github.com")
       res$config <- NULL
       res$config$user.name <- processx::run(
