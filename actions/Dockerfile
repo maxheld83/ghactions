@@ -7,8 +7,8 @@ LABEL "repository"="http://github.com/r-lib/ghactions"
 LABEL "homepage"="http://github.com/r-lib/ghactions"
 
 # location for R libraries which should persist across the entire workflow (i.e. several actions)
+# this directory and its (potential) content must be created by running action install-deps first see #275
 ENV R_LIBS_WORKFLOW="/github/home/lib/R/library/"
-RUN mkdir -p $R_LIBS_WORKFLOW
 # location for R libraries which should persist only for this action
 ENV R_LIBS_ACTION="$R_LIBS_DEV_HELPERS"
 

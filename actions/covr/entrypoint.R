@@ -2,7 +2,7 @@
 
 message("Running test coverage ...")
 covr::codecov(
-  quiet = FALSE, 
-  commit = "$GITHUB_SHA", 
+  quiet = FALSE,
+  commit = "$GITHUB_SHA",
   branch = "$GITHUB_REF"
 )
