@@ -64,6 +64,7 @@ auto_commit <- function(after_code = NULL, ...) {
       )
       # bot author would be nicer
       author <- Sys.getenv("GITHUB_ACTOR")
+      author <- paste(author, paste0(author, "@users.noreply.github.com"))
       res$commit <- processx::run(
         command = "git",
         args = c(
