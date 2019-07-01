@@ -27,7 +27,7 @@ test_that(desc = "bad docs can be commited", code = {
     code = {
       system2(
         command = cmd_path,
-        args = "--after-code='commit'",
+        args = "--after-code=commit",
         stderr = FALSE,
         stdout = FALSE
       )
