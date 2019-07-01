@@ -82,15 +82,12 @@ auto_commit <- function(after_code = NULL, ...) {
           user.email
         )
       )
-
       res$commit <- processx::run(
         command = "git",
         args = c(
           "commit",
           paste0("--fixup=", last_SHA)
-        ),
-        echo_cmd = TRUE,
-        echo = TRUE
+        )
       )
       if (is_push_allowed()) {
         res$push <- processx::run(
@@ -100,9 +97,7 @@ auto_commit <- function(after_code = NULL, ...) {
             "--set-upstream",
             "origin",
             "HEAD"
-          ),
-          echo_cmd = TRUE,
-          echo = TRUE
+          )
         )
       }
     }

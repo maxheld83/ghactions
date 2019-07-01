@@ -14,7 +14,7 @@ arguments <- docopt::docopt(
   strip_names = TRUE
 )
 
-message("Checking for consistency of roxygen2 with `man` ...")
+message("Checking for consistency of roxygen2 with `man` and `NAMESPACE` ...")
 
 res <- ghactions::auto_commit(
   after_code = arguments$`--after-code`,
