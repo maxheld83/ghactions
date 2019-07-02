@@ -19,6 +19,8 @@ message("Checking for consistency of roxygen2 with `man` and `NAMESPACE` ...")
 res <- ghactions::auto_commit(
   after_code = arguments$`--after-code`,
   code = {
+    # fix for #277 waiting for upstream resolution (?) of https://github.com/klutometis/roxygen/issues/822
+    pkgbuild::compile_dll()
     devtools::document()
   },
   path = ".",

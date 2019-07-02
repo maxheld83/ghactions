@@ -23,8 +23,6 @@ ENV R_LIBS="$R_LIBS_ACTION"
 # this will bake whatever the current dependencies in DESCRIPTION are into the image
 COPY ./home/lib/R/library "$R_LIBS_ACTION"
 # same here
-# maybe fix dll issue #https://github.com/r-lib/ghactions/issues/277
-RUN Rscript -e "remotes::install_github('r-lib/pkgload', 'afdbb0d')"
 COPY ./workspace /ghactions-source
 # TODO this needs to be purged from the img via rm or multi-stage build
 RUN Rscript -e "devtools::install(pkg = '/ghactions-source', dependencies = TRUE)"
