@@ -1,5 +1,5 @@
 ARG VERSION=latest
-FROM maxheld83/ghactions:$VERSION
+FROM maxheld83/ghactions:${VERSION}
 
 LABEL "name"="document"
 LABEL "version"="0.1.1.9000"

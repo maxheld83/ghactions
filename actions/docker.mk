@@ -1,6 +1,6 @@
 IMAGE_NAME=$(shell basename $(CURDIR))
 # github tag action only uses chars 1-7, GITHUB_SHA is full sha
-SHORT_SHA=`echo $(GITHUB_SHA) | cut -c1-7`
+SHORT_SHA=$(echo $GITHUB_SHA | cut -c1-7)
 
 .PHONY: docker-lint
 docker-lint: ## Run Dockerfile Lint on all dockerfiles.
