@@ -65,7 +65,8 @@ Manually edit your \code{firebase.json} to provide the deploy path.
 
 \seealso{
 Other actions: \code{\link{docker_cli}},
-  \code{\link{filter}}, \code{\link{ghpages}},
+  \code{\link{document}}, \code{\link{filter}},
+  \code{\link{ghpages}}, \code{\link{install_deps}},
   \code{\link{netlify}}, \code{\link{rscript_byod}},
   \code{\link{rsync}}
 }

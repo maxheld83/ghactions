@@ -67,8 +67,9 @@ To render an action block completely from scratch, you can always use the templa
 
 \seealso{
 Other actions: \code{\link{docker_cli}},
-  \code{\link{filter}}, \code{\link{firebase}},
-  \code{\link{ghpages}}, \code{\link{rscript_byod}},
+  \code{\link{document}}, \code{\link{filter}},
+  \code{\link{firebase}}, \code{\link{ghpages}},
+  \code{\link{install_deps}}, \code{\link{rscript_byod}},
   \code{\link{rsync}}
 }
 \concept{actions}

@@ -62,7 +62,8 @@ To render an action block completely from scratch, you can always use the templa
 }
 \seealso{
 Other actions: \code{\link{docker_cli}},
-  \code{\link{filter}}, \code{\link{firebase}},
+  \code{\link{document}}, \code{\link{filter}},
+  \code{\link{firebase}}, \code{\link{install_deps}},
   \code{\link{netlify}}, \code{\link{rscript_byod}},
   \code{\link{rsync}}
 }

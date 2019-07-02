@@ -56,6 +56,8 @@ To learn more, consider the \href{https://www.maxheld.de/ghactions/articles/ghac
 }
 
 \seealso{
+Other workflows: \code{\link{fix_docs}}
+
 Other byod: \code{\link{rscript_byod}}
 }
 \concept{byod}

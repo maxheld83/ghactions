@@ -47,18 +47,22 @@ use_ghactions <- function(workflow = website()) {
     }
   )
 
-  if (!fs::file_exists("DOCKERFILE")) {
-    usethis::ui_warn(x = glue::glue(
-      'Could not find a {usethis::ui_code("DOCKERFILE")} at your repository root.'
-    ))
-    use_dockerfile()
-    usethis::ui_todo(x = glue::glue(
-      'Please edit the {usethis::ui_code("DOCKERFILE")} if you need additional dependencies.'
-    ))
-  } else {
-    usethis::ui_line(x = glue::glue(
-      'Using the {usethis::ui_code("DOCKERFILE")} found at your repository root.'
-    ))
+  # TODO bad hackfix for https://github.com/r-lib/ghactions/issues/288
+  needs_docker <- isTRUE(attr(workflow, 'byod'))
+  if (needs_docker) {
+    if (!fs::file_exists("DOCKERFILE")) {
+      usethis::ui_warn(x = glue::glue(
+        'Could not find a {usethis::ui_code("DOCKERFILE")} at your repository root.'
+      ))
+      use_dockerfile()
+      usethis::ui_todo(x = glue::glue(
+        'Please edit the {usethis::ui_code("DOCKERFILE")} if you need additional dependencies.'
+      ))
+    } else {
+      usethis::ui_line(x = glue::glue(
+        'Using the {usethis::ui_code("DOCKERFILE")} found at your repository root.'
+      ))
+    }
   }
 
   # body ====

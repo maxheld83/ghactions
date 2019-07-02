@@ -74,8 +74,9 @@ To learn more, consider the \href{https://www.maxheld.de/ghactions/articles/ghac
 
 \seealso{
 Other actions: \code{\link{docker_cli}},
-  \code{\link{filter}}, \code{\link{firebase}},
-  \code{\link{ghpages}}, \code{\link{netlify}},
+  \code{\link{document}}, \code{\link{filter}},
+  \code{\link{firebase}}, \code{\link{ghpages}},
+  \code{\link{install_deps}}, \code{\link{netlify}},
   \code{\link{rsync}}
 
 Other byod: \code{\link{website}}

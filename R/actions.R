@@ -326,3 +326,41 @@ firebase_deploy <- function(IDENTIFIER = "Deploy",
     PROJECT_ID = PROJECT_ID
   )
 }
+
+# TODO this duplicates material from the README.md and man of the action https://github.com/r-lib/ghactions/issues/180
+#' @title Install Dependencies
+#'
+#' @description
+#' This GitHub action installs R package dependencies from a `DESCRIPTION` at the repository root.
+#'
+#' @template actions
+#'
+#' @export
+install_deps <- function(IDENTIFIER = "Install Dependencies",
+                         needs = NULL) {
+  list(
+    IDENTIFIER = IDENTIFIER,
+    uses = "r-lib/ghactions/actions/install-deps@8347a162e105155a6ff7066f7c57461948551278",
+    needs = needs
+  )
+}
+
+#' @title Document Package
+#'
+#' @description
+#' This GitHub action installs R package dependencies from a `DESCRIPTION` at the repository root.
+#'
+#' @template actions
+#'
+#' @export
+document <- function(IDENTIFIER = "Document Package",
+                     needs = NULL,
+                     args = NULL) {
+  list(
+    IDENTIFIER = IDENTIFIER,
+    uses = "r-lib/ghactions/actions/document@8347a162e105155a6ff7066f7c57461948551278",
+    needs = needs,
+    args = args,
+    secrets = "GITHUB_TOKEN"
+  )
+}
