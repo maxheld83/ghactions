@@ -1,6 +1,6 @@
 Package: ghactions
 Title: GitHub actions for R
-Version: 0.4.0
+Version: 0.4.1
 Authors@R: 
   c(
     person(

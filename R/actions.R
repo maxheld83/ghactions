@@ -340,7 +340,7 @@ install_deps <- function(IDENTIFIER = "Install Dependencies",
                          needs = NULL) {
   list(
     IDENTIFIER = IDENTIFIER,
-    uses = "r-lib/ghactions/actions/install-deps@8347a162e105155a6ff7066f7c57461948551278",
+    uses = "r-lib/ghactions/actions/install-deps@v0.4.1",
     needs = needs
   )
 }
@@ -358,7 +358,7 @@ document <- function(IDENTIFIER = "Document Package",
                      args = NULL) {
   list(
     IDENTIFIER = IDENTIFIER,
-    uses = "r-lib/ghactions/actions/document@8347a162e105155a6ff7066f7c57461948551278",
+    uses = "r-lib/ghactions/actions/document@v0.4.1",
     needs = needs,
     args = args,
     secrets = "GITHUB_TOKEN"
