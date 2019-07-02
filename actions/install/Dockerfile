@@ -1,5 +1,5 @@
-ARG VERSION=latest
-FROM maxheld83/ghactions:$VERSION
+ARG BASE_VERSION=latest
+FROM maxheld83/ghactions:${BASE_VERSION}
 
 LABEL "name"="install"
 LABEL "version"="0.1.1.9000"

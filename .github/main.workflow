@@ -89,7 +89,6 @@ action "Test Actions" {
 action "Document Package" {
   uses = "./actions/document"
   needs = [
-    "Install Dependencies",
     "Tag Base Image"
   ]
 }
@@ -127,7 +126,8 @@ action "Filter Not Act" {
   args = "not actor nektos/act"
   needs = [
     "Check Package", 
-    "Build Website"
+    "Build Website",
+    "Test Actions"
   ]
 }
 
@@ -168,7 +168,6 @@ action "Push Action Images" {
     "publish"
   ]
   needs = [
-    "Test Actions",
     "Push Base Image"
   ]
 }

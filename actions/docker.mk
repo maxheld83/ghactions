@@ -1,6 +1,6 @@
 IMAGE_NAME=$(shell basename $(CURDIR))
 # github tag action only uses chars 1-7, GITHUB_SHA is full sha
-SHORT_SHA=$(echo $GITHUB_SHA | cut -c1-7)
+SHORT_SHA=$(shell echo $(GITHUB_SHA) | cut -c1-7)
 
 .PHONY: docker-lint
 docker-lint: ## Run Dockerfile Lint on all dockerfiles.
@@ -8,10 +8,12 @@ docker-lint: ## Run Dockerfile Lint on all dockerfiles.
 
 .PHONY: docker-build
 docker-build: ## Build the top level Dockerfile using the directory or $IMAGE_NAME as the name.
-ifeq ($(GITHUB_SHA),)
+ifeq ($(GITHUB_ACTOR),nektos/act)
+	@echo "This is running in act."
 	docker build --tag $(IMAGE_NAME) .
 else
-	docker build --build-arg VERSION=$(SHORT_SHA) --tag $(IMAGE_NAME) .
+	@echo "This is running in actions."
+	docker build --build-arg BASE_VERSION=$(SHORT_SHA) --tag $(IMAGE_NAME) .
 endif
 
 .PHONY: docker-tag
