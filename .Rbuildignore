@@ -20,3 +20,7 @@ pkgwf.gif
 .envrc
 Makefile
 .dockerignore
+
+pres_files/
+pres.html
+pres.Rmd

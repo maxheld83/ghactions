@@ -36,3 +36,6 @@ rsconnect/
 /docs
 # tokens to run ghactions locally with act
 /.secrets
+
+/pres_files
+/pres.html

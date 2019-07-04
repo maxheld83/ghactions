@@ -121,12 +121,24 @@ action "Build Website" {
   ]
 }
 
+action "Build Presentation" {
+  uses = "./actions/rmarkdown"
+  runs = [
+    "Rscript",
+    "-e",
+    "rmarkdown::render(input = 'pres.Rmd', output_file = 'index.html', output_dir = 'docs/pres')"
+  ]
+  needs = [
+    "Build Website"
+  ]
+}
+
 action "Filter Not Act" {
   uses = "actions/bin/filter@3c0b4f0e63ea54ea5df2914b4fabf383368cd0da"
   args = "not actor nektos/act"
   needs = [
     "Check Package", 
-    "Build Website",
+    "Build Presentation",
     "Test Actions"
   ]
 }

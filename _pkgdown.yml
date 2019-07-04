@@ -66,6 +66,8 @@ navbar:
       href: "reference/index.html"
     - text: "Articles"
       href: "articles/index.html"
+    - text: "Presentation"
+      href: "pres/index.html"
   right:
     - icon: fa-github
       href: https://github.com/maxheld83/ghactions
