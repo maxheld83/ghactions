@@ -1,7 +1,7 @@
 ---
 title: "GitHub Actions for R"
 author: "Max Held"
-date: "7/4/2019"
+date: "July 7th 2019"
 output:
   rmdshower::shower_presentation:
     self_contained: false
@@ -10,9 +10,9 @@ output:
     theme: material
 ---
 
-## Shower Presentations with R Markdown { .white }
+## GitHub Actions for R
 
-<img src="scifi.jpg" class="cover">
+<img src="logo.png" class="place right">
 
 <p class="white">
 Get it from GitHub: https://github.com/mangothecat/rmdshower.
