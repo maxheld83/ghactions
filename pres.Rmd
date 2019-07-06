@@ -5,21 +5,35 @@ date: "July 7th 2019"
 output:
   rmdshower::shower_presentation:
     self_contained: false
-    katex: true
     ratio: 16x10
     theme: material
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE, 
+  comment = "#>", 
+  echo = FALSE
+)
+```
+
+<div class="double">
+
+<div>
 ## GitHub Actions for R
 
-<img src="logo.png" class="place right">
+This is an R Markdown presentation. Markdown is a simple formatting syntax
+for authoring HTML, PDF, and MS Word documents. For more details on using R
 
-<p class="white">
-Get it from GitHub: https://github.com/mangothecat/rmdshower.
-</p>
+Max Held
+</div>
+
+<div>
+<img src="logo.png" class="one-col-image">
+</div>
 
 
-## R Markdown
+## R Markdown {.slide .grid}
 
 This is an R Markdown presentation. Markdown is a simple formatting syntax
 for authoring HTML, PDF, and MS Word documents. For more details on using R
@@ -72,6 +86,7 @@ How did I get into this mess? I really don't know how. We seem to be made
 to suffer. It's our lot in life. I've got to rest before I fall apart. My
 joints are almost frozen. What a desolate place this is. Where are you
 going?
+
 <img src="sw.jpg" class="one-col-image">
 </p>
 
@@ -115,8 +130,6 @@ It's our lot in life. I've got to rest before I fall apart.
 Formulas are rendered by KaTeX, https://github.com/Khan/KaTeX
 
 It supports both inline: \(y = x / 2\) and displayed formulas:
-
-\[ x_{1,2} = \frac{- b \pm \sqrt{b^2 - 4ac}}{2a} \]
 
 
 ## Slide with quote
@@ -195,3 +208,8 @@ pairs(iris[1:4], pch = 21,
 ### About shower: https://github.com/shower/shower
 
 ### Example shower presentation: http://shwr.me/
+
+
+</section>
+
+<div class="progress"></div>
