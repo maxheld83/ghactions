@@ -5,8 +5,6 @@ date: "July 7th 2019"
 output:
   rmdshower::shower_presentation:
     self_contained: false
-    ratio: 16x10
-    theme: material
 ---
 
 ## Shower Presentations with R Markdown
