@@ -18,7 +18,7 @@ ARG R_LIBS_WORKFLOW="/github/home/lib/R/library/"
 SHELL ["usr/local/bin/Rscript", "-e"]
 
 # needed for presentations
-RUN remotes::install_github(repo = 'mangothecat/rmdshower', ref = 'e1f3bc3')
+RUN remotes::install_github(repo = 'maxheld83/rmdshower', ref = '3ae169f')
 
 # location for R libraries which should persist across the entire workflow (i.e. several actions)
 ENV R_LIBS="R_LIBS_WORKFLOW"
