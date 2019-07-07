@@ -13,8 +13,8 @@ ENV R_LIBS_WORKFLOW="/github/home/lib/R/library/"
 ENV R_LIBS_ACTION="$R_LIBS_DEV_HELPERS"
 
 # system dependency of ghaction
-RUN apt-get update \
-  && apt-get install -y --no-install-recommends \ 
+RUN apt-get update --allow-releaseinfo-change \
+  && apt-get install -y --no-install-recommends \
   git \
   && apt-get clean -y
 
