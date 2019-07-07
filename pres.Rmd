@@ -5,6 +5,7 @@ date: "July 7th 2019"
 output:
   rmdshower::shower_presentation:
     self_contained: false
+    color_key: "#453AA4"
 ---
 
 ## Shower Presentations with R Markdown
