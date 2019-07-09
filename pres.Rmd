@@ -7,8 +7,8 @@ output:
     self_contained: false
     color_key: "#453AA4"
     includes:
-      in_header: img/header.html
-      before_body: img/before.html
+      in_header: assets/header.html
+      before_body: assets/before.html
 ---
 
 <div class="columns two">
@@ -34,7 +34,7 @@ Max Held
 
 <section class="slide black clear">
 <figure>
-<img class="cover" src="img/lebowski.png" height="100%">
+<img class="cover" src="assets/lebowski.png" height="100%">
 <figcaption class="copyright white"><em>The Big Lebowski</em> (1998) / <a href=https://me.me/i/but-it-works-on-my-machine-works-defect-software-meme-b5fc63057ac24e8dbdcfa4ef52e24d6f>http://www.picturesso.com</a> </figcaption>
 <figcaption class="copyright bottom">Copyright © 3000 <a href="">Yours Truly</a>, Famous Inc.</figcaption>
 </figure>
@@ -45,14 +45,14 @@ Max Held
 <h2>Without CI/CD</h2>
 
 ```{r echo=FALSE, out.height="25%", out.width="100%"}
-DiagrammeR::grViz(diagram = "img/cicd-wo.gv")
+DiagrammeR::grViz(diagram = "assets/cicd-wo.gv")
 ```
 
 
 <h2>With CI/CD</h2>
 
 ```{r echo=FALSE, out.height="25%", out.width="100%"}
-DiagrammeR::grViz(diagram = "img/cicd-with.gv")
+DiagrammeR::grViz(diagram = "assets/cicd-with.gv")
 ```
 </section>
 
@@ -73,7 +73,7 @@ DiagrammeR::grViz(diagram = "img/cicd-with.gv")
 <code>git push</code>
 </pre>
 
-<img class="cover place right" src="img/rmd.gif">
+<img class="cover place right" src="assets/rmd.gif">
 
 
 ##
@@ -94,25 +94,25 @@ DiagrammeR::grViz(diagram = "img/cicd-with.gv")
 }
 </style>
 
-<img class="place left top logo" src="img/travis.png">
+<img class="place left top logo" src="assets/travis.png">
 
-<img class="place left logo" src="img/gitlab.png">
+<img class="place left logo" src="assets/gitlab.png">
 
-<img class="place left bottom logo" src="img/azure.jpeg">
+<img class="place left bottom logo" src="assets/azure.jpeg">
 
-<img class="place right top logo" src="img/circleci.png">
+<img class="place right top logo" src="assets/circleci.png">
 
-<img class="place right logo" src="img/appveyor.png">
+<img class="place right logo" src="assets/appveyor.png">
 
-<img class="place right bottom logo" height="15%" style="width:auto" src="img/google-cloud-build.png">
+<img class="place right bottom logo" height="15%" style="width:auto" src="assets/google-cloud-build.png">
 
-<img class="place center" src="img/github-actions.jpeg">
+<img class="place center" src="assets/github-actions.jpeg">
 
 </section>
 
 <section class="slide black clear">
 <figure>
-<img class="cover" width="100%" src="img/travis-fail.jpg">
+<img class="cover" width="100%" src="assets/travis-fail.jpg">
 </figure>
 </section>
 

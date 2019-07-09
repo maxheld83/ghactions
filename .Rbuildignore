@@ -21,6 +21,7 @@ pkgwf.gif
 Makefile
 .dockerignore
 
+assets/
 pres_files/
 pres.html
 pres.Rmd

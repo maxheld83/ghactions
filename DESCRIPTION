@@ -48,6 +48,7 @@ Imports:
   whisker (>= 0.3-2)
 Suggests:
   devtools (>= 2.0.2),
+  DiagrammeR (>= 1.0.1),
   docopt (>= 0.6.1),
   knitr (>= 1.23),
   processx (>= 3.3.1),
