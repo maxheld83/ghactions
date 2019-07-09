@@ -9,6 +9,7 @@ output:
     includes:
       in_header: assets/header.html
       before_body: assets/before.html
+    ratio: 1.6
 ---
 
 <div class="columns two">
@@ -16,9 +17,9 @@ output:
 <h2>GitHub Actions for R</h2>
 Max Held
 <p class="note">
-<a href=http://www.maxheld.de>http://www.maxheld.de</a>
-@maxheld83
-@maxheld
+<i class="fas fa-link"></i> <a href=http://www.maxheld.de>http://www.maxheld.de</a> <br>
+<i class="fab fa-github"></i> @maxheld83 <br>
+<i class="fab fa-twitter"></i> @maxheld
 </p>
 </div>
 <div>
@@ -29,7 +30,7 @@ Max Held
 </section>
 
 <section class="slide clear">
-<h2 class="shout">What is <br>Continuous Integration and Delivery (CI/CD)?</h2>
+<h2 class="shout">What is <br>Continuous Integration and Delivery (<strong>CI/CD</strong>)?</h2>
 </section>
 
 <section class="slide black clear">
@@ -57,15 +58,14 @@ DiagrammeR::grViz(diagram = "assets/cicd-with.gv")
 </section>
 
 
-## GitHub Actions in Action
-
+<section class="slide">
+<h2>GitHub Actions in Action</h2>
 <pre class="R">
 <code>remotes::install_github("r-lib/ghactions")</code>
 <code>ghactions::use_ghactions(</code>
 <code>    workflow = ghactions::website()</code>
 <code>)</code>
 <pre>
-
 <br>
 <pre class="bash">
 <code>git add .</code>
@@ -74,7 +74,7 @@ DiagrammeR::grViz(diagram = "assets/cicd-with.gv")
 </pre>
 
 <img class="cover place right" src="assets/rmd.gif">
-
+</section>
 
 ##
 
@@ -86,7 +86,6 @@ DiagrammeR::grViz(diagram = "assets/cicd-with.gv")
 }
 .cover {
   padding-bottom: 1%;
-  height: 99%;
 }
 .clear .cover {
   padding-bottom: 0px;
@@ -117,8 +116,108 @@ DiagrammeR::grViz(diagram = "assets/cicd-with.gv")
 </section>
 
 <section class="slide clear">
-<h2 class="shout">Is it easy <br>to reason about?</h2>
+<h2 class="shout">Is it <strong>easy <br>to reason about</strong>?</h2>
 </section>
+
+<section class="slide clear">
+<h2 class="shout">Definition of the <strong>Computing Environment</strong></h2>
+</section>
+
+<section class="slide">
+<div class="columns two">
+<div>
+<h2><code>Dockerfile</code></h2>
+<pre class="Dockerfile">
+<code>FROM rhub/debian-gcc-release</code>
+...
+<code>ENTRYPOINT ["/entrypoint.R"]</code>
+</pre>
+
+<pre class="bash">
+<code>docker build \</code>
+<code>  --tag install-deps .</code>
+<code>docker run \</code>
+<code>  --entrypoint R install-deps</code>
+</pre>
+</div>
+<div>
+<h2><code>.travis.yml</code></h2>
+<pre class="yaml">
+<code>language:r</code>
+<code>cache: packages</code>
+...
+<code>deploy:</code>
+<code>  provider: script</code>
+<code>    script: Rscript -e \</code> <code>      'pkgdown::deploy_site_github(verbose = TRUE)'</code>
+</pre>
+</div>
+</div>
+</section>
+
+
+<section class="slide">
+What GitHub does ...
+<pre>
+<code>action "Deploy to shinyapps.io" {</code>
+<code>  uses = "maxheld83/shinyapps<mark class=important>@master</mark>"</code>
+<code>  secrets = [<mark>"SHINYAPPS_SECRET"</mark>, SHINYAPPS_TOKEN"]</code>
+<code>}</code>
+</pre>
+.. you can do too!
+<pre class="bash">
+<code>docker run <mark>--env "SHINYAPPS_SECRET=foo"</mark> \ </code>
+<code>  --volume ${PWD}:${HOME} maxheld83/shinyapps<mark class=important>:master</mark></code>
+</pre>
+</section>
+
+<!-- TODO gif of 1+1 or it did not happen -->
+
+<section class="slide clear">
+<h2 class="shout">Definition of the <strong>Workflow Graph</h2>
+</section>
+
+<section class="slide">
+<pre>
+<code>workflow "Deploy Shiny App" {</code>
+<code>  on = <mark>"push"</mark></code>
+<code>  resolves = [<mark class="important">"Deploy to shinyapps.io"</mark>]</code>
+<code>}</code>
+<code>action <mark>"Install Dependencies"</mark> {</code>
+<code>  uses = "r-lib/ghactions/install-deps"</code>
+<code>}</code>
+<code>action <mark class="important">"Deploy to shinyapps.io"</mark> {</code
+<code>  uses = "maxheld83/shinyapps@master"</code>
+<code>  needs = [<mark>"Install Dependencies"</mark>]</code>
+<code>}</code>
+
+<img class="cover place right" src="assets/package.gif">
+</section>
+
+
+## Isolation is a Good Thing
+
+</section>
+
+
+<section class="slide clear">
+<h2 class="shout">Definition of the <br> <strong>API Ecosystem</strong></h2>
+</section>
+
+
+## Thanks!
+
+Jim Hester
+<p class="note">RStudio Inc.</p>
+
+Gabor Csardi
+<p class="note">The R-Hub Project / R Consortium</p>
+
+Dirk Edelbuettel & Carl Boettiger
+<p class="note">The Rocker Project</p>
+
+
+## <code>maxheld.de/ghactions</code>
+
 
 
 ## Slide Header
