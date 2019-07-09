@@ -1,0 +1,51 @@
+digraph cicd {
+
+graph [
+  layout = dot
+  rankdir = LR
+]
+
+node  [
+  shape = rectangle
+  color = black
+  fixedsize = true
+  width = 2.0
+  style = solid
+]
+
+node  [
+  fontname = "Fira Code"
+  label = "project.rmd"
+]
+source
+
+node [
+  label = ".travis.yml \n Dockerfile"
+  fillcolor = "#453AA4"
+  style = filled
+  fontcolor = white
+]
+computer
+
+node [
+  fontname = "Fira Code"
+  label = "project.pdf"
+  fontcolor = black
+  fillcolor = white
+]
+binary
+
+edge [
+  arrowhead = "vee"
+  color = black,
+  fontname = "Fira Code"
+  minlen = 5
+]
+source -> {binary} [
+  label = "rmarkdown::render()"
+  width = 1
+]
+computer -> {binary} [
+  label = "docker run"
+]
+}

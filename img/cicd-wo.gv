@@ -1,0 +1,50 @@
+digraph cicd {
+
+graph [
+  layout = dot
+  rankdir = LR
+]
+
+node  [
+  shape = rectangle
+  color = black
+  fixedsize = true
+  width = 2.0
+  style = solid
+]
+
+node  [
+  fontname = "Fira Code"
+  label = "project.rmd"
+]
+source
+
+node [
+  fontname = "Fira Sans"
+  label = "My Computer"
+  style = dashed
+]
+computer
+
+node [
+  fontname = "Fira Code",
+  label = "project.pdf"
+  style = solid
+]
+binary
+
+edge [
+  arrowhead = "vee"
+  color = black,
+  fontname = "Fira Code"
+  minlen = 5
+]
+source -> {binary} [
+  label = "rmarkdown::render()"
+  width = 1
+]
+computer -> {binary} [
+  label = "%$@#!"
+  fontname = "Fira Sans"
+]
+}

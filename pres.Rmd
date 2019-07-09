@@ -6,14 +6,118 @@ output:
   rmdshower::shower_presentation:
     self_contained: false
     color_key: "#453AA4"
+    includes:
+      in_header: img/header.html
+      before_body: img/before.html
 ---
 
-## Shower Presentations with R Markdown
+<div class="columns two">
+<div>
+<h2>GitHub Actions for R</h2>
+Max Held
+<p class="note">
+<a href=http://www.maxheld.de>http://www.maxheld.de</a>
+@maxheld83
+@maxheld
+</p>
+</div>
+<div>
+<img src="logo.png" width="90%">
+</div>
+<figcaption class="copyright bottom">RStudio Inc. / Friedrich-Alexander Universität Erlangen Nürnberg</figcaption
+</div>
+</section>
+
+<section class="slide clear">
+<h2 class="shout">What is <br>Continuous Integration and Delivery (CI/CD)?</h2>
+</section>
+
+<section class="slide black clear">
+<figure>
+<img class="cover" src="img/lebowski.png" height="100%">
+<figcaption class="copyright white"><em>The Big Lebowski</em> (1998) / <a href=https://me.me/i/but-it-works-on-my-machine-works-defect-software-meme-b5fc63057ac24e8dbdcfa4ef52e24d6f>http://www.picturesso.com</a> </figcaption>
+<figcaption class="copyright bottom">Copyright © 3000 <a href="">Yours Truly</a>, Famous Inc.</figcaption>
+</figure>
+</section>
+
+
+<section class="slide">
+<h2>Without CI/CD</h2>
+
+```{r echo=FALSE, out.height="25%", out.width="100%"}
+DiagrammeR::grViz(diagram = "img/cicd-wo.gv")
+```
+
+
+<h2>With CI/CD</h2>
+
+```{r echo=FALSE, out.height="25%", out.width="100%"}
+DiagrammeR::grViz(diagram = "img/cicd-with.gv")
+```
+</section>
+
+
+## GitHub Actions in Action
+
+<pre class="R">
+<code>remotes::install_github("r-lib/ghactions")</code>
+<code>ghactions::use_ghactions(</code>
+<code>    workflow = ghactions::website()</code>
+<code>)</code>
+<pre>
+
+<br>
+<pre class="bash">
+<code>git add .</code>
+<code>git commit -m "update project"</code>
+<code>git push</code>
+</pre>
+
+<img class="cover place right" src="img/rmd.gif">
+
+
+##
+
+<style>
+.logo {
+  padding: 110px 90px 110px 90px;
+  width: 15%;
+  filter: grayscale(100%);
+}
+.cover {
+  padding-bottom: 1%;
+  height: 99%;
+}
+.clear .cover {
+  padding-bottom: 0px;
+  height: 100%;
+}
+</style>
+
+<img class="place left top logo" src="img/travis.png">
+
+<img class="place left logo" src="img/gitlab.png">
+
+<img class="place left bottom logo" src="img/azure.jpeg">
+
+<img class="place right top logo" src="img/circleci.png">
+
+<img class="place right logo" src="img/appveyor.png">
+
+<img class="place right bottom logo" height="15%" style="width:auto" src="img/google-cloud-build.png">
+
+<img class="place center" src="img/github-actions.jpeg">
 
 </section>
 
-<section class="slide">
-<h2 class="shout">Pandoc Features<br> (No RMarkdown)</h2>
+<section class="slide black clear">
+<figure>
+<img class="cover" width="100%" src="img/travis-fail.jpg">
+</figure>
+</section>
+
+<section class="slide clear">
+<h2 class="shout">Is it easy <br>to reason about?</h2>
 </section>
 
 
@@ -635,27 +739,10 @@ Linked
 <h2 class="shout">The End</h2>
 </section>
 
-<footer class="badge">
-<a href="https://github.com/shower/shower">
-<svg width="81" height="79" viewBox="0 0 81 79" aria-hidden="true">
-<path d="M40.5 0a40.5 40.5 0 0 0-12.8 78.93c2 .37 2.76-.88 2.76-2s0-3.51-.05-6.89c-11.27 2.45-13.64-5.43-13.64-5.43-1.84-4.68-4.5-5.92-4.5-5.92-3.68-2.51.28-2.46.28-2.46 4.06.29 6.2 4.17 6.2 4.17 3.61 6.19 9.48 4.4 11.79 3.37a8.65 8.65 0 0 1 2.57-5.41c-9-1-18.45-4.5-18.45-20a15.65 15.65 0 0 1 4.17-10.87 14.57 14.57 0 0 1 .4-10.72s3.4-1.09 11.14 4.15a38.39 38.39 0 0 1 20.28 0c7.73-5.24 11.13-4.15 11.13-4.15a14.55 14.55 0 0 1 .4 10.72 15.63 15.63 0 0 1 4.16 10.87c0 15.56-9.47 19-18.49 20 1.45 1.25 2.75 3.72 2.75 7.5v11.11c0 1.08.73 2.34 2.78 1.95A40.51 40.51 0 0 0 40.5 0z"/>
-</svg>
-Fork me<br>on GitHub
-</a>
-</footer>
 
 <section class="slide">
 <h2 class="shout">RMarkdown Features<br> (Courtesy of this Package)</h2>
 </section>
-
-
-## Formulas
-
-Formulas are rendered by KaTeX, https://github.com/Khan/KaTeX
-
-It supports both inline: \(y = x / 2\) and displayed formulas:
-
-\[ x_{1,2} = \frac{- b \pm \sqrt{b^2 - 4ac}}{2a} \]
 
 
 ## Slide with R Code and Output
@@ -702,3 +789,13 @@ pairs(iris[1:4], pch = 21,
 ### About shower: https://github.com/shower/shower
 
 ### Example shower presentation: http://shwr.me/
+
+
+<footer class="badge">
+<a href="https://github.com/r-lib/ghactions">
+<svg width="81" height="79" viewBox="0 0 81 79" aria-hidden="true">
+<path d="M40.5 0a40.5 40.5 0 0 0-12.8 78.93c2 .37 2.76-.88 2.76-2s0-3.51-.05-6.89c-11.27 2.45-13.64-5.43-13.64-5.43-1.84-4.68-4.5-5.92-4.5-5.92-3.68-2.51.28-2.46.28-2.46 4.06.29 6.2 4.17 6.2 4.17 3.61 6.19 9.48 4.4 11.79 3.37a8.65 8.65 0 0 1 2.57-5.41c-9-1-18.45-4.5-18.45-20a15.65 15.65 0 0 1 4.17-10.87 14.57 14.57 0 0 1 .4-10.72s3.4-1.09 11.14 4.15a38.39 38.39 0 0 1 20.28 0c7.73-5.24 11.13-4.15 11.13-4.15a14.55 14.55 0 0 1 .4 10.72 15.63 15.63 0 0 1 4.16 10.87c0 15.56-9.47 19-18.49 20 1.45 1.25 2.75 3.72 2.75 7.5v11.11c0 1.08.73 2.34 2.78 1.95A40.51 40.51 0 0 0 40.5 0z"/>
+</svg>
+Fork me<br>on GitHub
+</a>
+</footer>
