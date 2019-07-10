@@ -23,7 +23,7 @@ output:
   </p>
 </div>
 <div>
-  <img src="assets/logo.png" width="90%">
+<img src="https://raw.githubusercontent.com/r-lib/ghactions/master/logo.png" width="100%">
 </div>
 <figcaption class="copyright bottom">RStudio Inc. / Friedrich-Alexander Universität Erlangen Nürnberg</figcaption
 </div>
