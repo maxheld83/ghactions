@@ -41,7 +41,7 @@ output:
 <figure>
   <img class="cover" src="assets/lebowski.png" height="100%">
   <figcaption class="copyright white">
-  <em>The Big Lebowski</em> (1998) / <a href=https://me.me/i/but-it-works-on-my-machine-works-defect-software-meme-b5fc63057ac24e8dbdcfa4ef52e24d6f>http://www.picturesso.com</a> 
+  The Big Lebowski (1998) / <a href=https://me.me/i/but-it-works-on-my-machine-works-defect-software-meme-b5fc63057ac24e8dbdcfa4ef52e24d6f>http://www.picturesso.com</a> 
   </figcaption>
 <figcaption class="copyright bottom">
 Copyright © 3000 <a href="">Yours Truly</a>, Famous Inc.
@@ -161,7 +161,7 @@ DiagrammeR::grViz(diagram = "assets/cicd-with.gv")
 <h2>What GitHub does ...</h2>
 <pre>
   <code>action "Deploy to shinyapps.io" {</code>
-  <code>  uses = "maxheld83/shinyapps<mark class=important>@master</mark>"</code>
+  <code>  uses = "maxheld83/shinyapps<mark class="important">@master"</mark></code>
   <code>  secrets = [<mark>"SHINYAPPS_SECRET"</mark>, SHINYAPPS_TOKEN"]</code>
   <code>}</code>
 </pre>
@@ -176,7 +176,7 @@ DiagrammeR::grViz(diagram = "assets/cicd-with.gv")
 
 
 <section class="slide clear">
-<h2 class="shout">Definition of the <strong>Workflow Graph</h2>
+<h2 class="shout">Definition of the <strong>Workflow Graph</strong></h2>
 </section>
 
 
@@ -189,7 +189,7 @@ DiagrammeR::grViz(diagram = "assets/cicd-with.gv")
   <code>action <mark>"Install Dependencies"</mark> {</code>
   <code>  uses = "r-lib/ghactions/install-deps"</code>
   <code>}</code>
-  <code>action <mark class="important">"Deploy to shinyapps.io"</mark> {</code
+  <code>action <mark class="important">"Deploy to shinyapps.io"</mark>{</code>
   <code>  uses = "maxheld83/shinyapps@master"</code>
   <code>  needs = [<mark>"Install Dependencies"</mark>]</code>
   <code>}</code>
@@ -205,6 +205,34 @@ DiagrammeR::grViz(diagram = "assets/cicd-with.gv")
 
 <section class="slide clear" id="ecosystem">
 <h2 class="shout">Definition of the <br> <strong>API Ecosystem</strong></h2>
+</section>
+
+<section class="slide black clear">
+<figure>
+  <img class="cover" src="assets/docker-born.jpg" height="100%">
+  <figcaption class="copyright white">
+  Finding Neverland (2004)
+  </figcaption>
+<figcaption class="copyright bottom">
+Copyright © 3000 <a href="">Yours Truly</a>, Famous Inc.
+</figcaption>
+</figure>
+</section>
+
+
+<section class="slide clear">
+<h2 class="shout">
+  It's <strong>easier(ish)</strong> <br>
+  to reason about.
+</h2>
+</section>
+
+
+<section class="slide">
+<h2>Caveats </h2>
+
+😒 No native caching.
+
 </section>
 
 
