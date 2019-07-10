@@ -204,7 +204,7 @@ What GitHub does ...
 </section>
 
 
-## Thanks!
+## 🖖Thanks ❤️
 
 Jim Hester
 <p class="note">RStudio Inc.</p>
@@ -214,10 +214,26 @@ Gabor Csardi
 
 Dirk Edelbuettel & Carl Boettiger
 <p class="note">The Rocker Project</p>
+</section>
 
+<section class="slide clear">
+<h2>Get Started with Actions for R 👟️</h2>
 
-## <code>maxheld.de/ghactions</code>
+Sign up for the beta at <a href=http://www.github.com/actions>github.com/actions</a>.
 
+<pre class="R">
+<code>remotes::install_github(<mark>"r-lib/ghactions"</mark>)</code>
+</pre>
+
+<h2>Learn More 🥾</h2>
+<i class="fas fa-link"></i> <a href=http://www.maxheld.de/ghactions>maxheld.de/ghactions</a> <br>
+<i class="fab fa-github"></i> <a href=http://github.com/r-lib/ghactions>github.com/r-lib/ghactions</a>
+
+<figcaption class="copyright">
+<i class="fab fa-github"></i> @maxheld83
+<i class="fab fa-twitter"></i> @maxheld 
+</figcaption
+</section>
 
 
 ## Slide Header
