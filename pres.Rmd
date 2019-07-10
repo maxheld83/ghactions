@@ -105,6 +105,11 @@ DiagrammeR::grViz(diagram = "assets/cicd-with.gv")
 
 <img class="place center" src="assets/github-actions.jpeg">
 
+<figcaption class="copyright">
+<i class="fab fa-github"></i> @maxheld83
+<i class="fab fa-twitter"></i> @maxheld 
+</figcaption>
+
 </section>
 
 <section class="slide black clear">
@@ -230,6 +235,23 @@ DiagrammeR::grViz(diagram = "assets/cicd-with.gv")
 </figcaption>
 </section>
 
+
+<section class="slide">
+<div class="columns two">
+<div>
+<h2>Actions</h2>
+</div>
+<div>
+<h2>Workflows</h2>
+</div>
+</div>
+<figcaption class="copyright">
+<i class="fab fa-github"></i> @maxheld83
+<i class="fab fa-twitter"></i> @maxheld 
+</figcaption>
+</section>
+
+
 <section class="slide black clear">
 <figure>
   <img class="cover" src="assets/docker-born.jpg" height="100%">
@@ -287,6 +309,7 @@ Gabor Csardi
 <p class="note">The R-Hub Project / R Consortium</p>
 Dirk Edelbuettel & Carl Boettiger
 <p class="note">The Rocker Project</p>
+
 </section>
 
 
