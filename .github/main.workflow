@@ -126,6 +126,8 @@ action "Build Presentation" {
   runs = [
     "Rscript",
     "-e",
+    "fs::dir_copy('assets', 'docs/pres/assets')",
+    "-e",
     "rmarkdown::render(input = 'pres.Rmd', output_file = 'index.html', output_dir = 'docs/pres')"
   ]
   needs = [

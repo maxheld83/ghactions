@@ -43,8 +43,6 @@ output:
   <figcaption class="copyright white">
   The Big Lebowski (1998) / <a href=https://me.me/i/but-it-works-on-my-machine-works-defect-software-meme-b5fc63057ac24e8dbdcfa4ef52e24d6f>http://www.picturesso.com</a> 
   </figcaption>
-<figcaption class="copyright bottom">
-Copyright © 3000 <a href="">Yours Truly</a>, Famous Inc.
 </figcaption>
 </figure>
 </section>
@@ -238,9 +236,6 @@ DiagrammeR::grViz(diagram = "assets/cicd-with.gv")
   <figcaption class="copyright white">
   Finding Neverland (2004)
   </figcaption>
-<figcaption class="copyright bottom">
-Copyright © 3000 <a href="">Yours Truly</a>, Famous Inc.
-</figcaption>
 </figure>
 </section>
 
