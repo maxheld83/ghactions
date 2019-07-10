@@ -62,6 +62,11 @@ DiagrammeR::grViz(diagram = "assets/cicd-wo.gv")
 ```{r echo=FALSE, out.height="25%", out.width="100%"}
 DiagrammeR::grViz(diagram = "assets/cicd-with.gv")
 ```
+
+<figcaption class="copyright">
+<i class="fab fa-github"></i> @maxheld83
+<i class="fab fa-twitter"></i> @maxheld 
+</figcaption>
 </section>
 
 
@@ -154,6 +159,10 @@ DiagrammeR::grViz(diagram = "assets/cicd-with.gv")
   </pre>
   </div>
 </div>
+<figcaption class="copyright">
+<i class="fab fa-github"></i> @maxheld83
+<i class="fab fa-twitter"></i> @maxheld 
+</figcaption>
 </section>
 
 
@@ -170,6 +179,10 @@ DiagrammeR::grViz(diagram = "assets/cicd-with.gv")
   <code>docker run <mark>--env "SHINYAPPS_SECRET=foo"</mark> \ </code>
   <code>  --volume ${PWD}:${HOME} maxheld83/shinyapps<mark class=important>:master</mark></code>
 </pre>
+<figcaption class="copyright">
+<i class="fab fa-github"></i> @maxheld83
+<i class="fab fa-twitter"></i> @maxheld 
+</figcaption>
 </section>
 
 <!-- TODO gif of 1+1 or it did not happen -->
@@ -200,11 +213,23 @@ DiagrammeR::grViz(diagram = "assets/cicd-with.gv")
 
 <section class="slide">
 <h2>Isolation is a Good Thing</h2>
+<figcaption class="copyright">
+<i class="fab fa-github"></i> @maxheld83
+<i class="fab fa-twitter"></i> @maxheld 
+</figcaption>
 </section>
 
 
 <section class="slide clear" id="ecosystem">
 <h2 class="shout">Definition of the <br> <strong>API Ecosystem</strong></h2>
+</section>
+
+<section class="slide">
+<h2>Go Nuts! 🤯</h2>
+<figcaption class="copyright">
+<i class="fab fa-github"></i> @maxheld83
+<i class="fab fa-twitter"></i> @maxheld 
+</figcaption>
 </section>
 
 <section class="slide black clear">
@@ -229,9 +254,31 @@ Copyright © 3000 <a href="">Yours Truly</a>, Famous Inc.
 
 
 <section class="slide">
-<h2>Caveats </h2>
+<div class="columns two"
+<div>
+<ul>
+  <h2>Short Term</h2>
+  <li value="😞">Still in (limited) beta.</li>
+  <li value="😒">No native caching.</li>
+  <li value="😐">No real-time logs.</li>
+  <li value="🧐">Sparse documentation.</li>
+  <li value="😲">No support for pull requests.</li>
+  <li value="😌">One less service to authenticate against.</li>
+</ul>
+<ul>
+  <h2>Long Term?</h2>
+  <li value="😐">No cross-platform support or matrix builds.</li>
+  <li value="🧐">Sparse documentation.</li>
+  <li value="🤪">Easy access to much of the GitHub API</li>
+  <li value="😎">Potential for reuse accross ecosystems and marketplace (?).</li>
+  <li value="🤓">Partly open-source, limited vendor lock-in.</li>
+</ul>
+</div>
 
-😒 No native caching.
+<figcaption class="copyright">
+<i class="fab fa-github"></i> @maxheld83
+<i class="fab fa-twitter"></i> @maxheld 
+</figcaption>
 
 </section>
 
