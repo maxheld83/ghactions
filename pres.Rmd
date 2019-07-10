@@ -14,30 +14,38 @@ output:
 
 <div class="columns two">
 <div>
-<h2>GitHub Actions for R</h2>
-Max Held
-<p class="note">
-<i class="fas fa-link"></i> <a href=http://www.maxheld.de>http://www.maxheld.de</a> <br>
-<i class="fab fa-github"></i> @maxheld83 <br>
-<i class="fab fa-twitter"></i> @maxheld
-</p>
+  <h2>GitHub Actions for R</h2>
+  Max Held
+  <p class="note">
+  <i class="fas fa-link"></i> <a href=http://www.maxheld.de>http://www.maxheld.de</a> <br>
+  <i class="fab fa-github"></i> @maxheld83 <br>
+  <i class="fab fa-twitter"></i> @maxheld
+  </p>
 </div>
 <div>
-<img src="logo.png" width="90%">
+  <img src="logo.png" width="90%">
 </div>
 <figcaption class="copyright bottom">RStudio Inc. / Friedrich-Alexander Universität Erlangen Nürnberg</figcaption
 </div>
 </section>
 
+
 <section class="slide clear">
-<h2 class="shout">What is <br>Continuous Integration and Delivery (<strong>CI/CD</strong>)?</h2>
+<h2 class="shout">
+  What is <br>Continuous Integration and Delivery (<strong>CI/CD</strong>)?
+</h2>
 </section>
+
 
 <section class="slide black clear">
 <figure>
-<img class="cover" src="assets/lebowski.png" height="100%">
-<figcaption class="copyright white"><em>The Big Lebowski</em> (1998) / <a href=https://me.me/i/but-it-works-on-my-machine-works-defect-software-meme-b5fc63057ac24e8dbdcfa4ef52e24d6f>http://www.picturesso.com</a> </figcaption>
-<figcaption class="copyright bottom">Copyright © 3000 <a href="">Yours Truly</a>, Famous Inc.</figcaption>
+  <img class="cover" src="assets/lebowski.png" height="100%">
+  <figcaption class="copyright white">
+  <em>The Big Lebowski</em> (1998) / <a href=https://me.me/i/but-it-works-on-my-machine-works-defect-software-meme-b5fc63057ac24e8dbdcfa4ef52e24d6f>http://www.picturesso.com</a> 
+  </figcaption>
+<figcaption class="copyright bottom">
+Copyright © 3000 <a href="">Yours Truly</a>, Famous Inc.
+</figcaption>
 </figure>
 </section>
 
@@ -49,7 +57,6 @@ Max Held
 DiagrammeR::grViz(diagram = "assets/cicd-wo.gv")
 ```
 
-
 <h2>With CI/CD</h2>
 
 ```{r echo=FALSE, out.height="25%", out.width="100%"}
@@ -59,39 +66,27 @@ DiagrammeR::grViz(diagram = "assets/cicd-with.gv")
 
 
 <section class="slide">
+
 <h2>GitHub Actions in Action</h2>
+
 <pre class="R">
-<code>remotes::install_github("r-lib/ghactions")</code>
-<code>ghactions::use_ghactions(</code>
-<code>    workflow = ghactions::website()</code>
-<code>)</code>
+  <code>remotes::install_github("r-lib/ghactions")</code>
+  <code>ghactions::use_ghactions(</code>
+  <code>    workflow = ghactions::website()</code>
+  <code>)</code>
 <pre>
 <br>
 <pre class="bash">
-<code>git add .</code>
-<code>git commit -m "update project"</code>
-<code>git push</code>
+  <code>git add .</code>
+  <code>git commit -m "update project"</code>
+  <code>git push</code>
 </pre>
 
 <img class="cover place right" src="assets/rmd.gif">
 </section>
 
-##
 
-<style>
-.logo {
-  padding: 110px 90px 110px 90px;
-  width: 15%;
-  filter: grayscale(100%);
-}
-.cover {
-  padding-bottom: 1%;
-}
-.clear .cover {
-  padding-bottom: 0px;
-  height: 100%;
-}
-</style>
+<section class="slide clear">
 
 <img class="place left top logo" src="assets/travis.png">
 
@@ -111,112 +106,121 @@ DiagrammeR::grViz(diagram = "assets/cicd-with.gv")
 
 <section class="slide black clear">
 <figure>
-<img class="cover" width="100%" src="assets/travis-fail.jpg">
+  <img class="cover" width="100%" src="assets/travis-fail.jpg">
 </figure>
 </section>
 
-<section class="slide clear">
-<h2 class="shout">Is it <strong>easy <br>to reason about</strong>?</h2>
-</section>
 
 <section class="slide clear">
-<h2 class="shout">Definition of the <strong>Computing Environment</strong></h2>
+<h2 class="shout">
+  Is it <strong>easy <br>to reason about</strong>?
+</h2>
 </section>
+
+
+<section class="slide clear">
+<h2 class="shout">
+  Definition of the <strong>Computing Environment</strong>
+</h2>
+</section>
+
 
 <section class="slide">
 <div class="columns two">
 <div>
-<h2><code>Dockerfile</code></h2>
-<pre class="Dockerfile">
-<code>FROM rhub/debian-gcc-release</code>
-...
-<code>ENTRYPOINT ["/entrypoint.R"]</code>
-</pre>
+  <h2><code>Dockerfile</code></h2>
+  <pre class="Dockerfile">
+  <code>FROM rhub/debian-gcc-release</code>
+  ...
+  <code>ENTRYPOINT ["/entrypoint.R"]</code>
+  </pre>
 
-<pre class="bash">
-<code>docker build \</code>
-<code>  --tag install-deps .</code>
-<code>docker run \</code>
-<code>  --entrypoint R install-deps</code>
-</pre>
+  <pre class="bash">
+  <code>docker build \</code>
+  <code>  --tag install-deps .</code>
+  <code>docker run \</code>
+  <code>  --entrypoint R install-deps</code>
+  </pre>
 </div>
 <div>
-<h2><code>.travis.yml</code></h2>
-<pre class="yaml">
-<code>language:r</code>
-<code>cache: packages</code>
-...
-<code>deploy:</code>
-<code>  provider: script</code>
-<code>    script: Rscript -e \</code> <code>      'pkgdown::deploy_site_github(verbose = TRUE)'</code>
-</pre>
-</div>
+  <h2><code>.travis.yml</code></h2>
+  <pre class="yaml">
+  <code>language:r</code>
+  <code>cache: packages</code>
+  ...
+  <code>deploy:</code>
+  <code>  provider: script</code>
+  <code>    script: Rscript -e \</code> <code>      'pkgdown::deploy_site_github(verbose = TRUE)'</code>
+  </pre>
+  </div>
 </div>
 </section>
 
 
 <section class="slide">
-What GitHub does ...
+<h2>What GitHub does ...</h2>
 <pre>
-<code>action "Deploy to shinyapps.io" {</code>
-<code>  uses = "maxheld83/shinyapps<mark class=important>@master</mark>"</code>
-<code>  secrets = [<mark>"SHINYAPPS_SECRET"</mark>, SHINYAPPS_TOKEN"]</code>
-<code>}</code>
+  <code>action "Deploy to shinyapps.io" {</code>
+  <code>  uses = "maxheld83/shinyapps<mark class=important>@master</mark>"</code>
+  <code>  secrets = [<mark>"SHINYAPPS_SECRET"</mark>, SHINYAPPS_TOKEN"]</code>
+  <code>}</code>
 </pre>
-.. you can do too!
+<h2>.. you can do too!</h2>
 <pre class="bash">
-<code>docker run <mark>--env "SHINYAPPS_SECRET=foo"</mark> \ </code>
-<code>  --volume ${PWD}:${HOME} maxheld83/shinyapps<mark class=important>:master</mark></code>
+  <code>docker run <mark>--env "SHINYAPPS_SECRET=foo"</mark> \ </code>
+  <code>  --volume ${PWD}:${HOME} maxheld83/shinyapps<mark class=important>:master</mark></code>
 </pre>
 </section>
 
 <!-- TODO gif of 1+1 or it did not happen -->
 
+
 <section class="slide clear">
 <h2 class="shout">Definition of the <strong>Workflow Graph</h2>
 </section>
 
+
 <section class="slide">
 <pre>
-<code>workflow "Deploy Shiny App" {</code>
-<code>  on = <mark>"push"</mark></code>
-<code>  resolves = [<mark class="important">"Deploy to shinyapps.io"</mark>]</code>
-<code>}</code>
-<code>action <mark>"Install Dependencies"</mark> {</code>
-<code>  uses = "r-lib/ghactions/install-deps"</code>
-<code>}</code>
-<code>action <mark class="important">"Deploy to shinyapps.io"</mark> {</code
-<code>  uses = "maxheld83/shinyapps@master"</code>
-<code>  needs = [<mark>"Install Dependencies"</mark>]</code>
-<code>}</code>
-
+  <code>workflow "Deploy Shiny App" {</code>
+  <code>  on = <mark>"push"</mark></code>
+  <code>  resolves = [<mark class="important">"Deploy to shinyapps.io"</mark>]</code>
+  <code>}</code>
+  <code>action <mark>"Install Dependencies"</mark> {</code>
+  <code>  uses = "r-lib/ghactions/install-deps"</code>
+  <code>}</code>
+  <code>action <mark class="important">"Deploy to shinyapps.io"</mark> {</code
+  <code>  uses = "maxheld83/shinyapps@master"</code>
+  <code>  needs = [<mark>"Install Dependencies"</mark>]</code>
+  <code>}</code>
+</pre>
 <img class="cover place right" src="assets/package.gif">
 </section>
 
 
-## Isolation is a Good Thing
-
+<section class="slide">
+<h2>Isolation is a Good Thing</h2>
 </section>
 
 
-<section class="slide clear">
+<section class="slide clear" id="ecosystem">
 <h2 class="shout">Definition of the <br> <strong>API Ecosystem</strong></h2>
 </section>
 
 
-## 🖖Thanks ❤️
+<section class="slide">
+<h2>🖖Thanks❤️</h2>
 
 Jim Hester
 <p class="note">RStudio Inc.</p>
-
 Gabor Csardi
 <p class="note">The R-Hub Project / R Consortium</p>
-
 Dirk Edelbuettel & Carl Boettiger
 <p class="note">The Rocker Project</p>
 </section>
 
-<section class="slide clear">
+
+<section class="slide">
 <h2>Get Started with Actions for R 👟️</h2>
 
 Sign up for the beta at <a href=http://www.github.com/actions>github.com/actions</a>.
@@ -225,7 +229,7 @@ Sign up for the beta at <a href=http://www.github.com/actions>github.com/actions
 <code>remotes::install_github(<mark>"r-lib/ghactions"</mark>)</code>
 </pre>
 
-<h2>Learn More 🥾</h2>
+<h2>Learn More</h2>
 <i class="fas fa-link"></i> <a href=http://www.maxheld.de/ghactions>maxheld.de/ghactions</a> <br>
 <i class="fab fa-github"></i> <a href=http://github.com/r-lib/ghactions>github.com/r-lib/ghactions</a>
 
@@ -234,683 +238,3 @@ Sign up for the beta at <a href=http://www.github.com/actions>github.com/actions
 <i class="fab fa-twitter"></i> @maxheld 
 </figcaption
 </section>
-
-
-## Slide Header
-
-Echo Park 8-bit sustainable umami deep v Kickstarter. 
-DIY cliche typewriter brunch, Odd Future sriracha pickled aesthetic. 
-Farm-to-table bespoke fingerstache, kale chips umami brunch letterpress.
-
-Whatever authentic disrupt, you probably haven’t heard of them direct trade mlkshk Etsy. Gluten-free roof party plaid four loko quinoa.
-
-<p class="note">Echo Park 8-bit sustainable umami deep v Kickstarter.</p>
-
-
-</section>
-
-<section class="slide">
-<h2>First Header</h2>
-
-Echo Park 8-bit sustainable umami deep v Kickstarter. 
-DIY cliche typewriter brunch, Odd Future sriracha pickled aesthetic.
-
-
-<h2>Second Header</h2>
-
-Whatever authenticdisrupt, you probably haven’t heard of them direct trade mlkshk Etsy. Gluten-free roof party plaid four loko quinoa.
-</section>
-
-
-## [Linked Header](#)
-
-<Retro meh brunch aesthetic Cosby sweater Shoreditch. 
-Banksy Tumblr sriracha, flexitarian pug chia master cleanse vinyl wayfarers fanny pack bespoke Helvetica roof party. 
-Messenger bag retro cred Portland next level.
-Yr stumptown Schlitz Carles deep v small batch.
-Echo Park 8-bit sustainable umami deep v Kickstarter. 
-Hella sustainable messenger bag, leggings skateboard literally bicycle rights H₂0 mumblecore banh mi DIY VHS. 
-Semiotics four loko street art asymmetrical.
-
-
-## Multiline <br> Header
-
-Retro meh brunch aesthetic Cosby sweater Shoreditch. 
-Banksy Tumblr sriracha, flexitarian pug chia master cleanse vinyl wayfarers fanny pack bespoke Helvetica roof party. 
-Messenger bag retro cred Portland next level. 
-Yr stumptown Schlitz Carles deep v small batch. Hella sustainable messenger bag, leggings skateboard literally bicycle rights H₂0 mumblecore banh mi DIY VHS. 
-Semiotics four loko street art asymmetrical.
-
-
-## Inline Elements
-
-Retro meh brunch [aesthetic]() Cosby sweater Shoreditch. 
-Banksy Tumblr **sriracha**, flexitarian pug chia master cleanse vinyl *wayfarers* fanny pack bespoke Helvetica **roof** party. 
-Messenger bag retro cred *Portland* next level. 
-Yr stumptown Schlitz Carles deep v small batch. 
-Hella sustainable messenger bag, <mark>leggings</mark> skateboard literally<sup>1</sup> bicycle rights H<sub>2</sub>0 mumblecore banh mi DIY VHS. 
-Semiotics four loko street art asymmetrical. 
-Asymmetrical <code>&lt;paleo&gt;</code> you probably haven’t heard of.
-
-<footer class="footer">
-Flannel bicycle rights locavore selfies skateboard. 
-Authentic fanny pack paleo four loko bespoke. 
-Artisan tattooed chia XOXO ennui, lomo disrupt 8-bit art party Tumblr scenester. Post-ironic fashion axe flexitarian, Tonx narwhal messenger bag Tumblr. 
-Portland gentrify deep v kale chips literally.
-</footer>
-
-
-## Quotes
-
-> Flannel bicycle rights locavore selfies skateboard. Authentic fanny pack paleo four loko bespoke. 
-> Artisan tattooed chia XOXO ennui, lomo disrupt 8-bit art party Tumblr scenester.
-
-
-<figure>
-
-> blockquote
-> Post-ironic fashion axe flexitarian, Tonx narwhal messenger bag Tumblr. 
-> Portland gentrify deep v kale chips literally.
-
-<figcaption>Yours Truly</figcaption>
-</figure>
-
-
-## Ordered List
-
-1. Literally viral vegan, ugh drinking vinegar photo booth
-2. Wes Anderson chillwave Marfa pour-over Etsy banh mi
-3. Ethnic polaroid lo-fi iPhone ennui
-4. Yr wayfarers before they sold out Kickstarter asymmetrical
-5. Irony flexitarian readymade quinoa, kogi bespoke meggings narwhal
-6. Skateboard Etsy twee artisan Echo Park
-7. Tonx kitsch fingerstache readymade, retro single-origin coffee
-
-
-## Unordered List
-
-- Literally viral vegan, ugh drinking vinegar photo booth
-- Wes Anderson chillwave Marfa pour-over Etsy banh mi
-- Ethnic polaroid lo-fi iPhone ennui
-- Yr wayfarers before they sold out Kickstarter asymmetrical
-- Irony flexitarian readymade quinoa, kogi bespoke meggings narwhal
-- Skateboard Etsy twee artisan Echo Park
-- Tonx kitsch fingerstache readymade, retro single-origin coffee
-
-</section>
-
-
-## Multiline List Items
-
-- Retro meh brunch aesthetic Cosby sweater Shoreditch.
-  Banksy Tumblr sriracha, flexitarian pug chia master cleanse vinyl wayfarers fanny pack.
-- Messenger bag retro cred Portland next level. 
-  Yr stumptown Schlitz Carles deep v small batch. 
-  
-  Hella sustainable messenger bag.
-- Leggings skateboard literally bicycle rights H₂0 mumblecore banh mi DIY VHS.
-  Semiotics four loko street art asymmetrical. 
-  Asymmetrical paleo you probably haven’t heard of.
-
-
-## Nested Lists
-
-1. Literally viral vegan, ugh drinking vinegar photo booth
-2. Wes Anderson chillwave Marfa pour-over Etsy banh mi
-3. Ethnic polaroid lo-fi iPhone ennui
-    1. Yr wayfarers before they sold out Kickstarter asymmetrical
-    2. Irony flexitarian readymade quinoa, kogi bespoke meggings narwhal
-    3. Skateboard Etsy twee artisan Echo Park
-4. Tonx kitsch fingerstache readymade, retro single-origin coffee
-
-
-## Latin and Cyrillic List Bullets
-
-<ul lang="en">
-<li>Occupy locavore blog, mustache you probably haven’t heard of them</li>
-<li>Skateboard pork belly aesthetic hoodie selfies brunch</li>
-<li>Food truck gluten-free disrupt Portland</li>
-</ul>
-<ul lang="ru">
-<li>Helvetica narwhal drinking vinegar chillwave, post-ironic ennui</li>
-<li>Cray pug paleo retro, Echo Park narwhal Wes Anderson</li>
-<li>Disrupt Williamsburg fixie, shabby chic bicycle rights hashtag kogi</li>
-</ul>
-
-
-## Custom List Bullets
-
-<ul>
-<li value="+">Helvetica narwhal drinking vinegar chillwave, post-ironic ennui</li>
-<li value="−">Cray pug paleo retro, Echo Park narwhal Wes Anderson</li>
-<li value="+">Disrupt Williamsburg fixie, shabby chic bicycle rights hashtag kogi</li>
-</ul>
-<ol>
-<li value="100">Occupy locavore blog, mustache you probably haven’t heard of them</li>
-<li value="10">Skateboard pork belly aesthetic hoodie selfies brunch</li>
-<li value="1">Food truck gluten-free disrupt Portland</li>
-</ol>
-
-
-## Two Text Columns
-
-<div class="columns two">
-Echo Park 8-bit sustainable umami deep v Kickstarter. 
-DIY cliche typewriter brunch, Odd Future sriracha pickled aesthetic. 
-Farm-to-table bespoke fingerstache, kale chips umami brunch.
-
-American Apparel letterpress. 
-Whatever authentic disrupt, you probably haven’t heard of them direct trade mlkshk Etsy. Gluten-free roof party plaid American Apparel four loko quinoa.
-</div>
-
-
-## Two List Columns
-
-<div class="columns two">
-<ul>
-<li>Occupy locavore, mustache you probably haven’t heard of them</li>
-<li>Skateboard pork belly aesthetic hoodie selfies brunch</li>
-<li>Food truck gluten-free disrupt Portland</li>
-</ul>
-<ul>
-<li>Helvetica narwhal drinking vinegar chillwave, post-ironic ennui</li>
-<li>Cray pug paleo retro, Echo Park narwhal Wes Anderson</li>
-<li>Disrupt Williamsburg fixie, shabby chic bicycle rights hashtag kogi</li>
-</ul>
-</div>
-</section>
-
-
-## Three List Columns
-
-<div class="columns three">
-<ul>
-<li>Skateboard pork belly aesthetic hoodie selfies brunch.</li>
-<li>You probably haven’t heard of them.</li>
-</ul>
-<ul>
-<li>Food truck gluten-free Portland.</li>
-<li>Helvetica narwhal drinking vinegar chillwave, post-ironic ennui</li>
-</ul>
-<ul>
-<li>Cray pug paleo retro, Echo Park narwhal Wes Anderson</li>
-<li>Disrupt fixie, shabby chic bicycle rights hashtag kogi</li>
-</ul>
-</div>
-
-
-## Four List Columns
-
-<div class="columns four">
-<ul>
-<li>Gentrify</li>
-<li>Messenger</li>
-<li>Meggings</li>
-<li>Vegan</li>
-<li>Next level</li>
-<li>Umami</li>
-</ul>
-<ul>
-<li>Twee</li>
-<li>Mixtape</li>
-<li>Freegan</li>
-<li>Occupy</li>
-<li>Selfies</li>
-<li>Haven’t heard</li>
-</ul>
-<ul>
-<li>Artisan</li>
-<li>Small batch</li>
-<li>Biodiesel</li>
-<li>Normcore</li>
-<li>Sustainable</li>
-<li>Skateboard</li>
-</ul>
-<ul>
-<li>Banksy</li>
-<li>Bicycle rights</li>
-<li>Slow-carb</li>
-<li>Bird on it</li>
-<li>Organic</li>
-<li>Farm-to-table</li>
-</ul>
-</div>
-
-</section>
-
-<section class="slide">
-<div class="columns two">
-<div>
-<h2>Column Header 1</h2>
-Retro meh brunch aesthetic Cosby sweater Shoreditch. 
-Banksy Tumblr sriracha, flexitarian pug chia master cleanse vinyl wayfarers fanny pack bespoke Helvetica roof party. 
-Messenger bag retro cred Portland next level.
-</div>
-<div>
-<h2>Column Header 2</h2>
-Yr stumptown Schlitz Carles deep v small batch. 
-Echo Park 8-bit sustainable umami deep v Kickstarter. 
-Hella sustainable messenger bag, leggings skateboard literally bicycle rights H₂0 mumblecore banh.
-</div>
-</div>
-</section>
-
-
-## Simple Table
-
-<table>
-<tr>
-<th scope="col">Gentrify</th>
-<th>Twee</th>
-<th>Artisan</th>
-<th>Banksy</th>
-</tr>
-<tr>
-<th scope="row">Messenger</th>
-<td>Mixtape</td>
-<td>Small batch</td>
-<td>Bicycle rights</td>
-</tr>
-<tr>
-<th scope="row">Meggings</th>
-<td>Freegan</td>
-<td>Retro biodiesel</td>
-<td>Slow-carb</td>
-</tr>
-<tr>
-<th scope="row">Vegan</th>
-<td>Occupy</td>
-<td>Normcore</td>
-<td>Put a bird on it</td>
-</tr>
-<tr>
-<th scope="row">Next level</th>
-<td>Selfies</td>
-<td>Sustainable</td>
-<td>Organic</td>
-</tr>
-<tr>
-<th scope="row">Umami</th>
-<td>Asymmetrical</td>
-<td>Keytar</td>
-<td>Craft beer</td>
-</tr>
-<tr>
-<th scope="row">Biodiesel</th>
-<td>Haven’t heard</td>
-<td>Skateboard</td>
-<td>Farm-to-table</td>
-</tr>
-</table>
-</section>
-
-
-## Marked Simple Table
-
-<table>
-<tr>
-<th scope="col">Gentrify</th>
-<th>Twee</th>
-<th>Artisan</th>
-<th>Banksy</th>
-</tr>
-<tr>
-<th scope="row">Messenger</th>
-<td>Mixtape</td>
-<td>Small batch</td>
-<td>Bicycle rights</td>
-</tr>
-<tr class="mark">
-<th scope="row">Meggings</th>
-<td>Freegan</td>
-<td>Retro biodiesel</td>
-<td>Slow-carb</td>
-</tr>
-<tr class="mark next">
-<th scope="row">Vegan</th>
-<td>Occupy</td>
-<td>Normcore</td>
-<td>Put a bird on it</td>
-</tr>
-<tr class="mark next">
-<th scope="row">Next level</th>
-<td>Selfies</td>
-<td>Sustainable</td>
-<td>Organic</td>
-</tr>
-<tr>
-<th scope="row">Umami</th>
-<td>Asymmetrical</td>
-<td>Keytar</td>
-<td>Craft beer</td>
-</tr>
-<tr>
-<th scope="row">Biodiesel</th>
-<td>Haven’t heard</td>
-<td>Skateboard</td>
-<td>Farm-to-table</td>
-</tr>
-</table>
-
-
-## Striped Table
-
-<table class="striped">
-<tr>
-<th scope="col">Gentrify</th>
-<th>Twee</th>
-<th>Artisan</th>
-<th>Banksy</th>
-</tr>
-<tr>
-<th scope="row">Messenger</th>
-<td>Mixtape</td>
-<td>Small batch</td>
-<td>Bicycle rights</td>
-</tr>
-<tr>
-<th scope="row">Meggings</th>
-<td>Freegan</td>
-<td>Retro biodiesel</td>
-<td>Slow-carb</td>
-</tr>
-<tr>
-<th scope="row">Vegan</th>
-<td>Occupy</td>
-<td>Normcore</td>
-<td>Put a bird on it</td>
-</tr>
-<tr>
-<th scope="row">Next level</th>
-<td>Selfies</td>
-<td>Sustainable</td>
-<td>Organic</td>
-</tr>
-<tr>
-<th scope="row">Umami</th>
-<td>Asymmetrical</td>
-<td>Keytar</td>
-<td>Craft beer</td>
-</tr>
-<tr>
-<th scope="row">Biodiesel</th>
-<td>Haven’t heard</td>
-<td>Skateboard</td>
-<td>Farm-to-table</td>
-</tr>
-</table>
-
-
-## Marked Striped Table
-
-<table class="striped">
-<tr>
-<th scope="col">Gentrify</th>
-<th>Twee</th>
-<th>Artisan</th>
-<th>Banksy</th>
-</tr>
-<tr>
-<th scope="row">Messenger</th>
-<td>Mixtape</td>
-<td>Small batch</td>
-<td>Bicycle rights</td>
-</tr>
-<tr class="mark">
-<th scope="row">Meggings</th>
-<td>Freegan</td>
-<td>Retro biodiesel</td>
-<td>Slow-carb</td>
-</tr>
-<tr class="mark next">
-<th scope="row">Vegan</th>
-<td>Occupy</td>
-<td>Normcore</td>
-<td>Put a bird on it</td>
-</tr>
-<tr class="mark next">
-<th scope="row">Next level</th>
-<td>Selfies</td>
-<td>Sustainable</td>
-<td>Organic</td>
-</tr>
-<tr>
-<th scope="row">Umami</th>
-<td>Asymmetrical</td>
-<td>Keytar</td>
-<td>Craft beer</td>
-</tr>
-<tr>
-<th scope="row">Biodiesel</th>
-<td>Haven’t heard</td>
-<td>Skateboard</td>
-<td>Farm-to-table</td>
-</tr>
-</table>
-
-
-## Plain Code Block
-
-<pre><code>&lt;html lang="en"&gt;
-<mark>&lt;head&gt;</mark> <span class="comment">&lt;!--Comment--&gt;</span>
-&lt;title&gt;Shower&lt;/title&gt;
-&lt;meta charset="<mark class="important">UTF-8</mark>"&gt;
-&lt;link rel="stylesheet" href="screen.css"&gt;
-&lt;script src="script.js"&gt;&lt;/script&gt;
-<mark>&lt;/head&gt;</mark></code></pre>
-</section>
-
-<section class="slide">
-<h2>Numbered Code Lines</h2>
-<pre>
-<code>&lt;html lang="en"&gt;</code>
-<code><mark>&lt;head&gt;</mark> <span class="comment">&lt;!--Comment--&gt;</span></code>
-<code>    &lt;title&gt;Shower&lt;/title&gt;</code>
-<code>    &lt;meta charset="<mark class="important">UTF-8</mark>"&gt;</code>
-<code>    &lt;link rel="stylesheet" href="screen.css"&gt;</code>
-<code>    &lt;script src="script.js"&gt;&lt;/script&gt;</code>
-<code><mark>&lt;/head&gt;</mark></code>
-</pre>
-
-
-## Marked Code Lines
-
-<pre>
-<code>&lt;html lang="en"&gt;</code>
-<code class="mark">&lt;head&gt; <span class="comment">&lt;!--Comment--&gt;</span></code>
-<code>    &lt;title&gt;Shower&lt;/title&gt;</code>
-<code>    &lt;meta charset="<mark class="important">UTF-8</mark>"&gt;</code>
-<code>    &lt;link rel="stylesheet" href="screen.css"&gt;</code>
-<code>    &lt;script src="script.js"&gt;&lt;/script&gt;</code>
-<code class="mark">&lt;/head&gt;</code>
-</pre>
-</section>
-
-
-## Stepped Code Lines
-
-<pre>
-<code class="next">&lt;html lang="en"&gt;</code>
-<code class="next"><mark>&lt;head&gt;</mark> <span class="comment">&lt;!--Comment--&gt;</span></code>
-<code class="next">    &lt;title&gt;Shower&lt;/title&gt;</code>
-<code class="next">    &lt;meta charset="<mark class="important">UTF-8</mark>"&gt;</code>
-<code class="next">    &lt;link rel="stylesheet" href="screen.css"&gt;</code>
-<code class="next">    &lt;script src="script.js"&gt;&lt;/script&gt;</code>
-<code class="next"><mark>&lt;/head&gt;</mark></code>
-</pre>
-</section>
-
-
-## Stepped Marked Code Lines
-
-<pre>
-<code class="mark next">&lt;html lang="en"&gt;</code>
-<code>&lt;head&gt; <span class="comment">&lt;!--Comment--&gt;</span></code>
-<code class="mark next">    &lt;title&gt;Shower&lt;/title&gt;</code>
-<code>    &lt;meta charset="<mark class="important">UTF-8</mark>"&gt;</code>
-<code class="mark next">    &lt;link rel="stylesheet" href="screen.css"&gt;</code>
-<code>    &lt;script src="script.js"&gt;&lt;/script&gt;</code>
-<code class="mark next">&lt;/head&gt;</code>
-</pre>
-</section>
-
-<section class="slide gray">
-<h2>Gray Slide</h2>
-</section>
-
-<section class="slide black">
-<h2>Black Slide</h2>
-</section>
-
-<section class="slide clear">
-<h2>Clear Slide</h2>
-</section>
-
-<section class="slide">
-<h2 class="shout">Shout</h2>
-</section>
-
-<section class="slide">
-<h2 class="shout">
-Multiline<br>
-Shout
-</h2>
-</section>
-
-<section class="slide">
-<h2 class="shout">
-<a href="">Linked Shout</a>
-</h2>
-</section>
-
-<section class="slide">
-<h2 class="shout">
-<a href="">
-Multiline<br>
-Linked
-</a>
-</h2>
-</section>
-
-<section class="slide">
-<h2>Cover</h2>
-<figure>
-
-
-<img class="cover" src="exact.svg" alt="Picture placeholder.">
-<figcaption class="copyright top">Copyright © 3000 <a href="">Yours Truly</a>, Famous Inc.</figcaption>
-<figcaption class="copyright white">Copyright © 3000 <a href="">Yours Truly</a>, Famous Inc.</figcaption>
-<figcaption class="copyright bottom">Copyright © 3000 <a href="">Yours Truly</a>, Famous Inc.</figcaption>
-</figure>
-</section>
-
-<section class="slide">
-<h2>Tall Cover</h2>
-<img class="cover" src="tall.svg" alt="Tall picture placeholder.">
-</section>
-
-<section class="slide">
-<h2>Wide Cover</h2>
-<img class="cover" src="wide.svg" alt="Wide picture placeholder.">
-</section>
-
-<section class="slide clear">
-<h2>Placed Elements</h2>
-<img class="place top left" src="square.svg" alt="Square picture placeholder.">
-<img class="place top" src="square.svg" alt="Square picture placeholder.">
-<img class="place top right" src="square.svg" alt="Square picture placeholder.">
-<img class="place left" src="square.svg" alt="Square picture placeholder.">
-<img class="place" src="square.svg" alt="Square picture placeholder.">
-<img class="place right" src="square.svg" alt="Square picture placeholder.">
-<img class="place bottom left" src="square.svg" alt="Square picture placeholder.">
-<img class="place bottom" src="square.svg" alt="Square picture placeholder.">
-<img class="place bottom right" src="square.svg" alt="Square picture placeholder.">
-</section>
-
-<section class="slide">
-<h2>Stepped List</h2>
-<ol>
-<li>Ennui keffiyeh thundercats</li>
-<li class="next">Jean shorts biodiesel</li>
-<li class="next">Terry richardson, swag blog</li>
-<li class="next">Locavore umami vegan helvetica</li>
-<li class="next">Fingerstache kale chips</li>
-</ol>
-<p class="next">Before they sold out master</p>
-</section>
-
-<section class="slide clear">
-<h2>Stepped Placed</h2>
-<img class="place next left" height="100%" src="picture-1.svg" alt="Picture placeholder.">
-<img class="place next" height="100%" src="picture-2.svg" alt="Picture placeholder.">
-<img class="place next right" height="100%" src="picture-3.svg" alt="Picture placeholder.">
-</section>
-
-<section class="slide" data-timing="00:03">
-<h2 class="shout">Timed Slide</h2>
-</section>
-
-<section class="slide">
-<h2 class="shout">The End</h2>
-</section>
-
-
-<section class="slide">
-<h2 class="shout">RMarkdown Features<br> (Courtesy of this Package)</h2>
-</section>
-
-
-## Slide with R Code and Output
-
-```{r}
-summary(cars)
-```
-
-## Markdown Tables
-
-|                   |  mpg  |  cyl  |  disp  |  hp  |
-|:-----------------:|:-----:|:-----:|:------:|:----:|
-|     Mazda RX4     | 21    |   6   |  160   | 110  |
-|   Mazda RX4 Wag   | 21    |   6   |  160   | 110  |
-|    Datsun 710     | 22.8  |   4   |  108   |  93  |
-|   Hornet 4 Drive  | 21.4  |   6   |  258   | 110  |
-| Hornet Sportabout | 18.7  |   8   |  360.0 | 175  |
-|       Valiant     | 18.1  |   6   |  225.0 | 105  |
-|      Duster 360   | 14.3  |   8   |  360.0 | 245  |
-
-
-## Slide with Plot
-
-```{r, echo=FALSE, dev='svg'}
-par(mar = c(5, 4, 1, 2) + 0.1)
-pairs(iris[1:4], pch = 21,
-      bg = c("red", "green3", "blue")[unclass(iris$Species)])
-```
-
-## Full Screen Plot (Next Slide)
-
-##
-
-```{r, echo=FALSE, dev='svg', out.extra='class="cover"', out.width="100%"}
-par(mar = c(5, 4, 1, 2) + 0.1)
-pairs(iris[1:4], pch = 21,
-      bg = c("red", "green3", "blue")[unclass(iris$Species)])
-```
-
-## More information
-
-### About R markdown: http://rmarkdown.rstudio.com
-
-### About shower: https://github.com/shower/shower
-
-### Example shower presentation: http://shwr.me/
-
-
-<footer class="badge">
-<a href="https://github.com/r-lib/ghactions">
-<svg width="81" height="79" viewBox="0 0 81 79" aria-hidden="true">
-<path d="M40.5 0a40.5 40.5 0 0 0-12.8 78.93c2 .37 2.76-.88 2.76-2s0-3.51-.05-6.89c-11.27 2.45-13.64-5.43-13.64-5.43-1.84-4.68-4.5-5.92-4.5-5.92-3.68-2.51.28-2.46.28-2.46 4.06.29 6.2 4.17 6.2 4.17 3.61 6.19 9.48 4.4 11.79 3.37a8.65 8.65 0 0 1 2.57-5.41c-9-1-18.45-4.5-18.45-20a15.65 15.65 0 0 1 4.17-10.87 14.57 14.57 0 0 1 .4-10.72s3.4-1.09 11.14 4.15a38.39 38.39 0 0 1 20.28 0c7.73-5.24 11.13-4.15 11.13-4.15a14.55 14.55 0 0 1 .4 10.72 15.63 15.63 0 0 1 4.16 10.87c0 15.56-9.47 19-18.49 20 1.45 1.25 2.75 3.72 2.75 7.5v11.11c0 1.08.73 2.34 2.78 1.95A40.51 40.51 0 0 0 40.5 0z"/>
-</svg>
-Fork me<br>on GitHub
-</a>
-</footer>
