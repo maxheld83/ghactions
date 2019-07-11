@@ -1,0 +1,51 @@
+digraph api {
+
+graph [
+  layout = dot
+  rankdir = LR
+]
+
+node  [
+  shape = rectangle
+  color = black
+  fixedsize = true
+  width = 2.5
+  height = 0.7
+  style = solid
+  fontsize=20
+]
+
+node  [
+  fontname = "Courier"
+  label = "push"
+]
+push
+
+node [
+  label = "GitHub Actions"
+  fillcolor = "#453AA4"
+  style = filled
+  fontcolor = white
+]
+actions
+
+node [
+  label = "GitHub Pages"
+  fontcolor = black
+  fillcolor = white
+]
+pages
+
+edge [
+  arrowhead = "vee"
+  color = black,
+  fontname = "Courier"
+  minlen = 5
+  fontsize=20
+]
+push -> {actions} [
+  width = 1
+]
+actions -> {pages} [
+]
+}

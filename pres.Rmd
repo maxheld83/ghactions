@@ -228,6 +228,11 @@ DiagrammeR::grViz(diagram = "assets/cicd-with.gv")
 
 <section class="slide">
 <h2>Go Nuts! 🤯</h2>
+
+```{r echo=FALSE, out.height="50%", out.width="100%"}
+DiagrammeR::grViz(diagram = "assets/api.gv")
+```
+
 <figcaption class="copyright">
 <i class="fab fa-github"></i> @maxheld83
 <i class="fab fa-twitter"></i> @maxheld 
