@@ -368,7 +368,7 @@ Jim Hester
 <p class="note">RStudio Inc.</p>
 Gabor Csardi
 <p class="note">The R-Hub Project / R Consortium</p>
-Dirk Edelbuettel & Carl Boettiger
+Dirk Eddelbuettel & Carl Boettiger
 <p class="note">The Rocker Project</p>
 
 </section>
