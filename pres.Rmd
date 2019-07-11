@@ -239,6 +239,11 @@ DiagrammeR::grViz(diagram = "assets/api.gv")
 </figcaption>
 </section>
 
+<section class="slide clear">
+<figure>
+  <img class="cover" src="assets/fixup.png" height="100%">
+</figure>
+</section>
 
 <section class="slide">
 <div class="columns two"
