@@ -187,7 +187,11 @@ DiagrammeR::grViz(diagram = "assets/cicd-with.gv")
 </figcaption>
 </section>
 
-<!-- TODO gif of 1+1 or it did not happen -->
+<section class="slide black clear">
+<figure>
+  <img class="cover" src="assets/troubleshoot.gif" height="100%">
+</figure>
+</section>
 
 
 <section class="slide clear">
