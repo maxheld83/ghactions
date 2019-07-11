@@ -214,7 +214,43 @@ DiagrammeR::grViz(diagram = "assets/cicd-with.gv")
 
 
 <section class="slide">
-<h2>Isolation is a Good Thing</h2>
+<h2>Isolation Can be a Good Thing</h2>
+<div class="columns three">
+<div>
+<em>Your PC</em>
+<pre><code>R_LIBS=''</code></pre>
+<pre><code>git push</code></pre>
+
+<pre class="shell-session"><code>ls .</code></pre>
+
+<pre><code class="bash">index.Rmd
+app.R</code></pre>
+
+</div>
+<div>
+<code>actions/rmarkdown</code>
+<pre><code>R_LIBS=<mark>/lib/R/library</mark></code></pre>
+<pre><code>render_site()</code></pre>
+<pre class="shell-session"><code>ls /github/workspace/</code></pre>
+
+<pre class="shell-session"><code>index.Rmd
+app.R
+_site/ </code>
+</pre>
+</div>
+<div>
+<code>actions/shinyapps</code>
+<pre><code>R_LIBS=<mark class="important">/lib/R/library</mark></code></pre>
+<pre><code>deploy_app()</code></pre>
+<pre class="shell-session"><code>ls /github/workspace/</code></pre>
+
+<pre class="shell-session"><code>index.Rmd
+app.R
+_site/ </code>
+</pre>
+</div>
+</div>
+
 <figcaption class="copyright">
 <i class="fab fa-github"></i> @maxheld83
 <i class="fab fa-twitter"></i> @maxheld 
