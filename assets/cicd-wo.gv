@@ -9,8 +9,10 @@ node  [
   shape = rectangle
   color = black
   fixedsize = true
+  height = 0.7
   width = 2.0
   style = solid
+  fontsize=20
 ]
 
 node  [
@@ -38,6 +40,7 @@ edge [
   color = black,
   fontname = "Courier"
   minlen = 5
+  fontsize=20
 ]
 source -> {binary} [
   label = "rmarkdown::render()"
