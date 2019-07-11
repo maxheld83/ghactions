@@ -36,7 +36,6 @@ output:
 </h2>
 </section>
 
-
 <section class="slide black clear">
 <figure>
   <img class="cover" src="assets/lebowski.png" height="100%">
@@ -237,18 +236,34 @@ DiagrammeR::grViz(diagram = "assets/cicd-with.gv")
 
 
 <section class="slide">
-<div class="columns two">
+<div class="columns two"
 <div>
-<h2>Actions</h2>
-</div>
-<div>
-<h2>Workflows</h2>
-</div>
-</div>
+<ul class="fa-ul">
+  <h2>Actions</h2>
+  <li><i class="fa-li fas fa-box"></i><code>R CMD build</code></li>
+  <li><i class="fa-li fas fa-check-square"></i><code>R CMD check</code></li>
+  <li><i class="fa-li fas fa-umbrella"></i><code>covr::codecov()</code></li>
+  <li><i class="fa-li fas fa-book"></i><code>roxygen2::roxygenize()</code></li>
+  ...
+  <li><i class="fa-li fas fa-download"></i><code>remotes::install_deps()</code></li>
+  <li><i class="fa-li fas fa-link"></i><code>pkgdown::build_site()</code></li>
+  <li><i class="fa-li fas fa-upload"></i><code>rsconnect::deploy_app()</code></li>
+  <li><i class="fa-li fas fa-book-reader"></i><code>rmarkdown::render_*()</code></li>
+</ul>
+<ul>
+  <h2>Workflows</h2>
+  <li>R Markdown Projects</li>
+  <li>Shiny Apps</li>
+  <li>Packages</li>
+  <li><code>Rscript</code> bring-your-own-docker</li>
+  ...
+  <li>Deploy to Netlify, GitHub Pages, Firebase, Shinyapps.io, RSync, ... </li>
+</ul>
 <figcaption class="copyright">
 <i class="fab fa-github"></i> @maxheld83
 <i class="fab fa-twitter"></i> @maxheld 
 </figcaption>
+</div>
 </section>
 
 

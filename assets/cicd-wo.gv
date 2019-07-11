@@ -14,7 +14,7 @@ node  [
 ]
 
 node  [
-  fontname = "Fira Code"
+  fontname = "Courier"
   label = "project.rmd"
 ]
 source
@@ -27,7 +27,7 @@ node [
 computer
 
 node [
-  fontname = "Fira Code",
+  fontname = "Courier",
   label = "project.pdf"
   style = solid
 ]
@@ -36,7 +36,7 @@ binary
 edge [
   arrowhead = "vee"
   color = black,
-  fontname = "Fira Code"
+  fontname = "Courier"
   minlen = 5
 ]
 source -> {binary} [
