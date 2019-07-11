@@ -366,7 +366,7 @@ DiagrammeR::grViz(diagram = "assets/api.gv")
 
 Jim Hester
 <p class="note">RStudio Inc.</p>
-Gabor Csardi
+Gábor Csárdi
 <p class="note">The R-Hub Project / R Consortium</p>
 Dirk Eddelbuettel & Carl Boettiger
 <p class="note">The Rocker Project</p>
