@@ -350,7 +350,6 @@ DiagrammeR::grViz(diagram = "assets/api.gv")
 <ul>
   <h2>Long Term?</h2>
   <li value="😐">No cross-platform support or matrix builds.</li>
-  <li value="🧐">Sparse documentation.</li>
   <li value="🤪">Easy access to much of the GitHub API</li>
   <li value="😎">Potential for reuse accross ecosystems and marketplace (?).</li>
   <li value="🤓">Partly open-source, limited vendor lock-in.</li>
