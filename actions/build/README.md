@@ -24,6 +24,8 @@ None.
 
 ### Example Usage
 
+```
 action "Build Package" {
   uses = "r-lib/ghactions/actions/build@master"
 }
+```
