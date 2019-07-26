@@ -1,4 +1,4 @@
-FROM rocker/r-verse:latest
+FROM rocker/r-ver:latest
 
 
 # location for R libraries which should persist across the entire workflow (i.e. several actions)
@@ -6,7 +6,7 @@ FROM rocker/r-verse:latest
 ENV R_LIBS_WORKFLOW="/github/home/lib/R/library/"
 
 # install some R packages
-RUN Rscript -e "install.packages(pkgs = c('rsconnect')"
+RUN Rscript -e "install.packages(pkgs = 'rsconnect')"
 
 LABEL "name"="check"
 LABEL "version"="0.1.1.9000"
@@ -21,5 +21,5 @@ LABEL "com.github.actions.color"="blue"
 
 ENV R_LIBS="$R_LIBS_WORKFLOW"
 
-COPY entrypoint.sh /entrypoint.sh
-ENTRYPOINT ["/entrypoint.sh"]
+COPY entrypoint.R /entrypoint.R
+ENTRYPOINT ["/entrypoint.R"]
