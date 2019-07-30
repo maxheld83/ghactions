@@ -10,25 +10,6 @@ filter(IDENTIFIER, needs, args)
 filter_branch(needs, branch = "master")
 }
 \arguments{
-\item{IDENTIFIER}{\code{[character(1)]}
-giving the name of the action or workflow block.
-
-Used:
-\itemize{
-\item as an informative label on GitHub.com,
-\item in the \code{needs} fields of other \emph{action blocks} to model the workflow graph,
-\item in the \code{resolves} fields of other \emph{workflow blocks} to model the workflow graph.
-}}
-
-\item{needs}{\code{[character()]}
-giving the actions (by their \code{IDENTIFIER}s) that must complete successfully before this action will be invoked.
-Defaults to \code{NULL} for no upstream dependencies.}
-
-\item{args}{\code{[character()]}
-giving the arguments to pass to the action.
-Arguments get appended to the last command in \code{ENTRYPOINT}.
-Defaults to \code{NULL} for no arguments.}
-
 \item{branch}{\code{[character(1)]}
 giving the name of the branch to filter on.}
 

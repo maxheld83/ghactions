@@ -17,7 +17,8 @@ ghactions_events
 
 }
 \seealso{
-Other syntax: \code{\link{make_blocks}}
+Other syntax: \code{\link{action}},
+  \code{\link{make_blocks}}
 }
 \concept{syntax}
 \keyword{datasets}

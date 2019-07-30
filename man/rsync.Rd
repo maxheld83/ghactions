@@ -8,20 +8,6 @@ rsync(IDENTIFIER, needs, HOST_NAME, HOST_IP, HOST_FINGERPRINT, SRC, USER,
   DEST, env = NULL, args = NULL)
 }
 \arguments{
-\item{IDENTIFIER}{\code{[character(1)]}
-giving the name of the action or workflow block.
-
-Used:
-\itemize{
-\item as an informative label on GitHub.com,
-\item in the \code{needs} fields of other \emph{action blocks} to model the workflow graph,
-\item in the \code{resolves} fields of other \emph{workflow blocks} to model the workflow graph.
-}}
-
-\item{needs}{\code{[character()]}
-giving the actions (by their \code{IDENTIFIER}s) that must complete successfully before this action will be invoked.
-Defaults to \code{NULL} for no upstream dependencies.}
-
 \item{HOST_NAME}{\code{[character(1)]}
 giving the name of the server you wish to deploy to, such as \code{foo.example.com}.}
 
@@ -39,15 +25,6 @@ giving the user at the target \code{HOST_NAME}.}
 
 \item{DEST}{\code{[character(1)]}
 giving the directory from the root of the \code{HOST_NAME} target to write to.}
-
-\item{env}{\code{[list(character(1)]}
-giving the environment variables to set in the action's runtime environment.
-Defaults to \code{NULL} for no environment variables.}
-
-\item{args}{\code{[character()]}
-giving the arguments to pass to the action.
-Arguments get appended to the last command in \code{ENTRYPOINT}.
-Defaults to \code{NULL} for no arguments.}
 
 \item{...}{arguments passed on to other methods, not currently used.}
 }

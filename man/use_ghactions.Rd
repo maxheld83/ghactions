@@ -16,7 +16,7 @@ A named list of blocks nested as:
 \item \strong{The workflow block}: arguments to \code{\link[=make_workflow_block]{make_workflow_block()}} as a named list \emph{and}
 \item `$actions``, which in turn comprises of the
 \itemize{
-\item \strong{Several action blocks} with arguments to \code{\link[=make_action_block]{make_action_block()}} as a named list.
+\item \strong{Several action blocks} with arguments to \code{\link[=action]{action()}} as a named list.
 }
 }}
 }

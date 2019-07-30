@@ -3,13 +3,9 @@
 \name{make_blocks}
 \alias{make_blocks}
 \alias{make_workflow_block}
-\alias{make_action_block}
 \title{Create GitHub Actions syntax blocks}
 \usage{
 make_workflow_block(IDENTIFIER, on = "push", resolves)
-
-make_action_block(IDENTIFIER, needs = NULL, uses, runs = NULL,
-  args = NULL, env = NULL, secrets = NULL)
 }
 \arguments{
 \item{IDENTIFIER}{\code{[character(1)]}
@@ -29,34 +25,6 @@ Defaults to \code{"push"}, in which case the workflow is triggered on every push
 
 \item{resolves}{\code{[character()]}
 giving the action(s) to invoke.}
-
-\item{needs}{\code{[character()]}
-giving the actions (by their \code{IDENTIFIER}s) that must complete successfully before this action will be invoked.
-Defaults to \code{NULL} for no upstream dependencies.}
-
-\item{uses}{\code{[character(1)]}
-giving the Docker image that will run the action.}
-
-\item{runs}{\code{[character(1)]}
-giving the command to run in the docker image.
-Overrides the \code{Dockerfile} \code{ENTRYPOINT}.
-Defaults to \code{NULL} for no commands (recommended).}
-
-\item{args}{\code{[character()]}
-giving the arguments to pass to the action.
-Arguments get appended to the last command in \code{ENTRYPOINT}.
-Defaults to \code{NULL} for no arguments.}
-
-\item{env}{\code{[list(character(1)]}
-giving the environment variables to set in the action's runtime environment.
-Defaults to \code{NULL} for no environment variables.}
-
-\item{secrets}{\code{[character()]}
-giving the \emph{names} of the secret variables to set in the runtime enviornment, which the action can access as an environment variable.
-The \emph{values} of secrets must be set in your repository's "Settings" tab.
-\strong{Do not store secrets in your repository.}
-GitHub advises against using GitHub actions for production secrets during the public beta period.
-Defaults to \code{NULL} for no secrets.}
 }
 \value{
 \code{[character(1)]}
@@ -68,8 +36,6 @@ For details on the syntax and arguments, see \href{https://developer.github.com/
 \section{Functions}{
 \itemize{
 \item \code{make_workflow_block}: Write GitHub Actions syntax for \emph{one} workflow block.
-
-\item \code{make_action_block}: Create GitHub Actions syntax for \emph{one} action block.
 }}
 
 \examples{
@@ -79,29 +45,12 @@ make_workflow_block(
   resolves = "Simple Addition"
 )
 
-# many R projects will need this block to first build an image from a DOCKERFILE
-make_action_block(
-  IDENTIFIER = "Build Image",
-  uses = "actions/docker/cli@c08a5fc9e0286844156fefff2c141072048141f6",
-  # this is an external github action, referenced tightly by sha
-  args = "build --tag=repo:latest ."
-)
-
-make_action_block(
-  IDENTIFIER = "Simple Addition",
-  uses = "maxheld83/ghactions/Rscript-byod@master",
-  needs = "Build Image",
-  args = "-e '1+1'"
-)
-
-# pasted together, these three blocks make a simple, valid main.workflow file.
-
 }
 \seealso{
-Other syntax: \code{\link{ghactions_events}}
+Other syntax: \code{\link{action}},
+  \code{\link{ghactions_events}}
 
-Other syntax: \code{\link{ghactions_events}}
-
-Other syntax: \code{\link{ghactions_events}}
+Other syntax: \code{\link{action}},
+  \code{\link{ghactions_events}}
 }
 \concept{syntax}

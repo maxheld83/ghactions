@@ -8,26 +8,8 @@ ghpages(IDENTIFIER = "Deploy", needs = "Filter master",
   BUILD_DIR = "_site", env = NULL)
 }
 \arguments{
-\item{IDENTIFIER}{\code{[character(1)]}
-giving the name of the action or workflow block.
-
-Used:
-\itemize{
-\item as an informative label on GitHub.com,
-\item in the \code{needs} fields of other \emph{action blocks} to model the workflow graph,
-\item in the \code{resolves} fields of other \emph{workflow blocks} to model the workflow graph.
-}}
-
-\item{needs}{\code{[character()]}
-giving the actions (by their \code{IDENTIFIER}s) that must complete successfully before this action will be invoked.
-Defaults to \code{NULL} for no upstream dependencies.}
-
 \item{BUILD_DIR}{\code{[character(1)]}
 giving the path relative from your \code{/github/workspace} to the directory to be published.}
-
-\item{env}{\code{[list(character(1)]}
-giving the environment variables to set in the action's runtime environment.
-Defaults to \code{NULL} for no environment variables.}
 
 \item{...}{arguments passed on to other methods, not currently used.}
 }
