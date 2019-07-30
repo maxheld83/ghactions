@@ -252,6 +252,34 @@ make_template <- function(l, template) {
   glue::as_glue(res)
 }
 
+
+#' @title Construct `docker run`
+#'
+#' @description
+#' Construct corresponding `docker run` command for an action.
+#'
+#' @inheritParams make_template
+#'
+#' @inheritDotParams processx::run -command -args
+#'
+#' @inherit processx::run return
+#'
+#' @keywords internal
+#'
+#' @noRd
+action2docker <- function(l) {
+  processx::run(
+    command = "docker",
+    args = c(
+      "run",
+      # we're NOT naming the container because that just leads to thorny conflicts
+      l$uses,
+      l$runs,
+      l$args
+    )
+  )
+}
+
 #' @title Serialise objects into TOMLish
 #'
 #' @param x `[list()]` or `[character()]`
