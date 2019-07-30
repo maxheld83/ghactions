@@ -117,10 +117,10 @@ ghactions_events <- c(
 #' @param uses `[character(1)]`
 #' giving the Docker image that will run the action.
 #'
-#' @param runs `[character(1)]`
+#' @param runs `[character()]`
 #' giving the command to run in the docker image.
 #' Overrides the `Dockerfile` `ENTRYPOINT`.
-#' Defaults to `NULL` for no commands (recommended).
+#' Defaults to `NULL` for the default `ENTRYPOINT` (recommended).
 #'
 #' @param args `[character()]`
 #' giving the arguments to pass to the action.
@@ -183,8 +183,10 @@ make_action_block <- function(IDENTIFIER,
     null.ok = FALSE
     # we don't run extra checks here; that's a job for the ghaction parser
   )
-  checkmate::assert_string(
+  checkmate::assert_character(
     x = runs,
+    any.missing = FALSE,
+    unique = FALSE,
     null.ok = TRUE
   )
   checkmate::assert_character(
@@ -217,7 +219,7 @@ make_action_block <- function(IDENTIFIER,
       # but they are valid json
       needs = toTOML(needs),
       uses = uses,
-      runs = runs,
+      runs = toTOML(runs),
       args = toTOML(args),
       env = toTOML(env),
       secrets = toTOML(secrets)
@@ -225,6 +227,34 @@ make_action_block <- function(IDENTIFIER,
     template = "action"
   )
 }
+
+#' @title Construct `docker run`
+#'
+#' @description
+#' Construct corresponding `docker run` command for an action.
+#'
+#' @action action `[list()]` of action attributes as returned by [make_action_block()].
+#'
+#' @inheritDotParams processx::run -command -args
+#'
+#' @inherit processx::run return
+#'
+#' @keywords internal
+#'
+#' @noRd
+action2docker <- function(action) {
+  processx::run(
+    command = "docker",
+    args = c(
+      "run",
+      # we're NOT naming the container because that just leads to thorny conflicts
+      action$uses,
+      action$runs,
+      action$args
+    )
+  )
+}
+
 
 #' @title Fill in template
 #'
@@ -252,33 +282,6 @@ make_template <- function(l, template) {
   glue::as_glue(res)
 }
 
-
-#' @title Construct `docker run`
-#'
-#' @description
-#' Construct corresponding `docker run` command for an action.
-#'
-#' @inheritParams make_template
-#'
-#' @inheritDotParams processx::run -command -args
-#'
-#' @inherit processx::run return
-#'
-#' @keywords internal
-#'
-#' @noRd
-action2docker <- function(l) {
-  processx::run(
-    command = "docker",
-    args = c(
-      "run",
-      # we're NOT naming the container because that just leads to thorny conflicts
-      l$uses,
-      l$runs,
-      l$args
-    )
-  )
-}
 
 #' @title Serialise objects into TOMLish
 #'
