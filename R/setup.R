@@ -11,7 +11,7 @@
 #' A named list of blocks nested as:
 #' - **The workflow block**: arguments to [make_workflow_block()] as a named list *and*
 #' - `$actions``, which in turn comprises of the
-#'   - **Several action blocks** with arguments to [make_action_block()] as a named list.
+#'   - **Several action blocks** with arguments to [action()] as a named list.
 #'
 #' @inherit usethis::use_template return
 #'
@@ -115,7 +115,8 @@ list2ghact <- function(workflow) {
     purrr::map(
       .x = workflow$actions,
       .f = function(x) {
-        rlang::exec(.fn = make_action_block, !!!x)
+        l <- rlang::exec(.fn = action, !!!x)
+        action2hcl(l)
       }
     )
   )

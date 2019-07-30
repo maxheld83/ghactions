@@ -1,10 +1,10 @@
-context("action2docker")
+context("actions")
 
 test_that("can override entrypoint", {
   expect_equal(
     object = {
       action2docker(
-        action = list(
+        l = action(
           IDENTIFIER = "Test",
           uses = "alpine:3.10.1",
           runs = c("echo", "foo")

@@ -108,7 +108,9 @@ ghactions_events <- c(
 )
 
 
-#' @describeIn make_blocks Create GitHub Actions syntax for *one* action block.
+# Actions ====
+
+#' Create GitHub Actions syntax for *one action*
 #'
 #' @param needs `[character()]`
 #' giving the actions (by their `IDENTIFIER`s) that must complete successfully before this action will be invoked.
@@ -129,7 +131,7 @@ ghactions_events <- c(
 #'
 #' @param env `[list(character(1)]`
 #' giving the environment variables to set in the action's runtime environment.
-#' Defaults to `NULL` for no environment variables.
+#' Defaults to `NULL` for no environment variables (in addition to the defaults set by GitHub Actions).
 #'
 #' @param secrets `[character()]`
 #' giving the *names* of the secret variables to set in the runtime enviornment, which the action can access as an environment variable.
@@ -138,34 +140,30 @@ ghactions_events <- c(
 #' GitHub advises against using GitHub actions for production secrets during the public beta period.
 #' Defaults to `NULL` for no secrets.
 #'
+#' @details For details on the syntax and arguments, see [here](https://developer.github.com/actions/creating-workflows/workflow-configuration-options/)
+#'
 #' @examples
 #' # many R projects will need this block to first build an image from a DOCKERFILE
-#' make_action_block(
-#'   IDENTIFIER = "Build Image",
-#'   uses = "actions/docker/cli@c08a5fc9e0286844156fefff2c141072048141f6",
-#'   # this is an external github action, referenced tightly by sha
-#'   args = "build --tag=repo:latest ."
+#' l <- action(
+#'   IDENTIFIER = "Add two numbers",
+#'   uses = "rocker/r-ver:3.6.1",
+#'   args = "Rscript -e '1+1'"
 #' )
+#' action2hcl(l = l)
 #'
-#' make_action_block(
-#'   IDENTIFIER = "Simple Addition",
-#'   uses = "maxheld83/ghactions/Rscript-byod@master",
-#'   needs = "Build Image",
-#'   args = "-e '1+1'"
-#' )
-#'
-#' # pasted together, these three blocks make a simple, valid main.workflow file.
+#' @return `[list()]` list of action attributes.
 #'
 #' @family syntax
 #'
 #' @export
-make_action_block <- function(IDENTIFIER,
-                              needs = NULL,
-                              uses,
-                              runs = NULL,
-                              args = NULL,
-                              env = NULL,
-                              secrets = NULL) {
+action <- function(IDENTIFIER,
+                   needs = NULL,
+                   uses,
+                   runs = NULL,
+                   args = NULL,
+                   env = NULL,
+                   secrets = NULL) {
+  # this might become an S3 constructor helper at some point (hence the name), but OO seems unecessary for now.
   # input validation ====
   # all of this is as per the gh action spec https://developer.github.com/actions/creating-workflows/workflow-configuration-options/
   checkmate::assert_string(
@@ -209,8 +207,23 @@ make_action_block <- function(IDENTIFIER,
     unique = TRUE,
     null.ok = TRUE
   )
+  # match.call would be somewhat shorter, but might mess up order and requires eval call
+  list(
+    IDENTIFIER = IDENTIFIER,
+    needs = needs,
+    uses = uses,
+    runs = runs,
+    args = args,
+    env = env,
+    secrets = secrets
+  )
+}
 
-  # body ====
+
+#' @describeIn action Convert action to HCL
+#'
+#' @inherit make_template
+action2hcl <- function(l) {
   make_template(
     l = list(
       IDENTIFIER = IDENTIFIER,
@@ -228,35 +241,31 @@ make_action_block <- function(IDENTIFIER,
   )
 }
 
-#' @title Construct `docker run`
-#'
-#' @description
-#' Construct corresponding `docker run` command for an action.
-#'
-#' @action action `[list()]` of action attributes as returned by [make_action_block()].
-#'
+
+#' @describeIn action Construct corresponding `docker run` command for an action.
+#' @inherit make_template
+
 #' @inheritDotParams processx::run -command -args
 #'
 #' @inherit processx::run return
-#'
-#' @keywords internal
-#'
-#' @noRd
-action2docker <- function(action) {
+action2docker <- function(l) {
+  # we're NOT using IDENTIFIER as a container name because that just leads to thorny naming conflicts
+  message("Running action: ", l$IDENTIFIER, " ...")
   processx::run(
     command = "docker",
     args = c(
       "run",
-      # we're NOT naming the container because that just leads to thorny conflicts
-      action$uses,
-      action$runs,
-      action$args
+      l$uses,
+      l$runs,
+      l$args
     )
   )
 }
 
 
-#' @title Fill in template
+# Conversion workers ====
+
+#' Fill in template
 #'
 #' @param l `[list()]`
 #' giving the named list of HCL fields.
@@ -283,7 +292,7 @@ make_template <- function(l, template) {
 }
 
 
-#' @title Serialise objects into TOMLish
+#' Serialise objects into TOMLish
 #'
 #' @param x `[list()]` or `[character()]`
 #' giving the objects to be converted to TOML.
