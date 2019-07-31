@@ -1,7 +1,7 @@
 context("actions")
 
 test_that("can override entrypoint", {
-  skip_if(condition = is_github_actions())
+  # skip_if(condition = is_github_actions())
   expect_equal(
     object = {
       action2docker(

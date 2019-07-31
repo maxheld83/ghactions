@@ -276,7 +276,7 @@ action2docker <- function(l, ...) {
   # figure out current runtime
   assert_sysdep("docker")
   volumes <- NULL
-  if (is_docker()) {
+  if (is_docker() & !is_github_actions()) {
     # when we're in docker, we don't need it, we can just use the socket
     volumes <- c(volumes, "--volume", "/var/run/docker.sock:/var/run/docker.sock")
   }
