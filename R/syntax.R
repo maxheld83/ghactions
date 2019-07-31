@@ -273,12 +273,19 @@ action2hcl <- function(l) {
 #'
 #' @inherit processx::run return
 action2docker <- function(l, ...) {
-  # figure out current runtime
+  # prep runtime
   assert_sysdep("docker")
   volumes <- NULL
-  if (is_docker() & !is_github_actions()) {
-    # when we're in docker, we don't need it, we can just use the socket
-    volumes <- c(volumes, "--volume", "/var/run/docker.sock:/var/run/docker.sock")
+  if (is_docker() & !(is_github_actions())) {
+    # when we're in docker, we don't need a daemon, we can just use the socket of the parent
+    # except on github actions, which disallows passing on the socket
+    volumes <- c(
+      volumes,
+      "--volume",
+      "/var/run/docker.sock:/var/run/docker.sock"
+    )
+  } else {
+    checkmate::assert_true(is_dockerd())
   }
 
   # prepare environment variables

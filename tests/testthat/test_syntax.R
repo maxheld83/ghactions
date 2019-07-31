@@ -1,7 +1,6 @@
 context("actions")
 
 test_that("can override entrypoint", {
-  # skip_if(condition = is_github_actions())
   expect_equal(
     object = {
       action2docker(
@@ -18,7 +17,6 @@ test_that("can override entrypoint", {
 })
 
 test_that("fail on error", {
-  skip_if(condition = is_github_actions())
   expect_error(
     action2docker(
       l = action(
@@ -32,7 +30,6 @@ test_that("fail on error", {
 })
 
 test_that("pass on environment arguments", {
-  skip_if(condition = is_github_actions())
   expect_equal(
     object = {
       action2docker(

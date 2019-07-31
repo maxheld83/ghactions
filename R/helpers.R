@@ -24,6 +24,7 @@ check_sysdep <- function(x) {
   }
 }
 assert_sysdep <- checkmate::makeAssertionFunction(check.fun = check_sysdep)
+test_sysdep <- checkmate::makeTestFunction(check.fun = check_sysdep)
 
 #' @importFrom pkgload check_suggested
 # This is just check_suggested from pkgload with a different default path
@@ -64,9 +65,24 @@ is_docker <- function() {
   FALSE
 }
 
+#' Test whether docker daemon is available
+#'
+#' @noRd
+is_dockerd <- function() {
+  # needs to have docker cli available, obvs
+  assert_sysdep("pgrep")
+  # TODO alternative might be to poll the socket with curl directly
+  processx::run(
+    command = "pgrep",
+    args = c("-f", "docker", ">", "/dev/null"),
+    error_on_status = FALSE
+  )$status == 0
+}
+
 #' Test whether runtime is GitHub actions
 #'
 #' @noRd
 is_github_actions <- function() {
-  is_docker() & !is_act()
+  fs::file_exists("/github/workflow/event.json") &
+  !is_act()
 }
