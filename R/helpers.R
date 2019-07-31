@@ -63,3 +63,10 @@ is_docker <- function() {
   }
   FALSE
 }
+
+#' Test whether runtime is GitHub actions
+#'
+#' @noRd
+is_github_actions <- function() {
+  is_docker() & !is_act()
+}
