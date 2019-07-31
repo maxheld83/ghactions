@@ -11,9 +11,19 @@ action(IDENTIFIER, needs = NULL, uses, runs = NULL, args = NULL,
 
 action2hcl(l)
 
-action2docker(l)
+action2docker(l, ...)
 }
 \arguments{
+\item{IDENTIFIER}{\code{[character(1)]}
+giving the name of the action or workflow block.
+
+Used:
+\itemize{
+\item as an informative label on GitHub.com,
+\item in the \code{needs} fields of other \emph{action blocks} to model the workflow graph,
+\item in the \code{resolves} fields of other \emph{workflow blocks} to model the workflow graph.
+}}
+
 \item{needs}{\code{[character()]}
 giving the actions (by their \code{IDENTIFIER}s) that must complete successfully before this action will be invoked.
 Defaults to \code{NULL} for no upstream dependencies.}
@@ -41,6 +51,9 @@ The \emph{values} of secrets must be set in your repository's "Settings" tab.
 \strong{Do not store secrets in your repository.}
 GitHub advises against using GitHub actions for production secrets during the public beta period.
 Defaults to \code{NULL} for no secrets.}
+
+\item{l}{\code{[list()]}
+giving the named list of HCL fields.}
 
 \item{...}{Arguments passed on to \code{processx::run}
 \describe{

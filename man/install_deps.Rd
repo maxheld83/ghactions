@@ -7,6 +7,20 @@
 install_deps(IDENTIFIER = "Install Dependencies", needs = NULL)
 }
 \arguments{
+\item{IDENTIFIER}{\code{[character(1)]}
+giving the name of the action or workflow block.
+
+Used:
+\itemize{
+\item as an informative label on GitHub.com,
+\item in the \code{needs} fields of other \emph{action blocks} to model the workflow graph,
+\item in the \code{resolves} fields of other \emph{workflow blocks} to model the workflow graph.
+}}
+
+\item{needs}{\code{[character()]}
+giving the actions (by their \code{IDENTIFIER}s) that must complete successfully before this action will be invoked.
+Defaults to \code{NULL} for no upstream dependencies.}
+
 \item{...}{arguments passed on to other methods, not currently used.}
 }
 \description{
@@ -19,14 +33,14 @@ These functions are for \strong{advanced users} knowledgeable about GitHub actio
 Novice users may be better served by the complete templates in workflows.
 
 These functions provide very thin wrappers around existing GitHub actions, including actions from other repositories.
-Essentially, they just create lists ready to be ingested by \code{\link[=make_action_block]{make_action_block()}}, which then turns these R lists into valid GitHub actions syntax blocks.
+Essentially, they just create lists ready to be ingested by \code{\link[=action2hcl]{action2hcl()}}, which then turns these R lists into valid GitHub actions syntax blocks.
 
 For documentation on these actions, consult their respective \code{README.md}s linked in the below.
 Some variants of these action wrappers include sensible defaults for frequent uses in R.
 
 The \code{uses} field is \emph{always} hardcoded to a particular commit or tag of the underlying github action to ensure compatibility.
 
-To render an action block completely from scratch, you can always use the templating function \code{\link[=make_action_block]{make_action_block()}}.
+To render an action block completely from scratch, you can always use the templating function \code{\link[=action]{action()}}.
 }
 \seealso{
 Other actions: \code{\link{docker_cli}},

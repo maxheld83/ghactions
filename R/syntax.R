@@ -140,6 +140,8 @@ ghactions_events <- c(
 #' GitHub advises against using GitHub actions for production secrets during the public beta period.
 #' Defaults to `NULL` for no secrets.
 #'
+#' @inheritParams make_blocks
+#'
 #' @details For details on the syntax and arguments, see [here](https://developer.github.com/actions/creating-workflows/workflow-configuration-options/)
 #'
 #' @examples
@@ -223,19 +225,21 @@ action <- function(IDENTIFIER,
 #' @describeIn action Convert action to HCL
 #'
 #' @inherit make_template
+#'
+#' @export
 action2hcl <- function(l) {
   make_template(
     l = list(
-      IDENTIFIER = IDENTIFIER,
+      IDENTIFIER = l$IDENTIFIER,
       # some parts of above HCL are just JSON arrays, so we can just use that
       # below function, sadly, will *not* include linebreaks, so long vectors may not be easily readable
       # but they are valid json
-      needs = toTOML(needs),
-      uses = uses,
-      runs = toTOML(runs),
-      args = toTOML(args),
-      env = toTOML(env),
-      secrets = toTOML(secrets)
+      needs = toTOML(l$needs),
+      uses = l$uses,
+      runs = toTOML(l$runs),
+      args = toTOML(l$args),
+      env = toTOML(l$env),
+      secrets = toTOML(l$secrets)
     ),
     template = "action"
   )
@@ -248,17 +252,30 @@ action2hcl <- function(l) {
 #' @inheritDotParams processx::run -command -args
 #'
 #' @inherit processx::run return
-action2docker <- function(l) {
+action2docker <- function(l, ...) {
+  # prepare environment variables
+  envs <- NULL
+  if (!is.null(l$env)) {
+    envs <- c(envs, rbind("--env", paste0(names(l$env), "=", l$env)))
+  }
+  if (!is.null(l$secrets)) {
+    # secrets are propagated as per https://docs.docker.com/engine/reference/run/#env-environment-variables
+    envs <- c(envs, rbind("--env ", l$secrets))
+  }
+
   # we're NOT using IDENTIFIER as a container name because that just leads to thorny naming conflicts
   message("Running action: ", l$IDENTIFIER, " ...")
+
   processx::run(
     command = "docker",
     args = c(
       "run",
+      envs,
       l$uses,
       l$runs,
       l$args
-    )
+    ),
+    ...
   )
 }
 
@@ -277,8 +294,6 @@ action2docker <- function(l) {
 #' of class [glue::glue], giving the syntax for one workflow or action block.
 #'
 #' @keywords internal
-#'
-#' @noRd
 make_template <- function(l, template) {
   # find path to template, which changes depending on compilation vs source
   # TODO might use usethis::render_template() here, but that is not exported
