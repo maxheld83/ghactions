@@ -69,12 +69,11 @@ is_docker <- function() {
 #'
 #' @noRd
 is_dockerd <- function() {
-  # needs to have docker cli available, obvs
-  assert_sysdep("pgrep")
-  # TODO alternative might be to poll the socket with curl directly
+  # TODO find a better cross-platform way to test for docker daemon
+  assert_sysdep("docker")
   processx::run(
-    command = "pgrep",
-    args = c("-f", "docker", ">", "/dev/null"),
+    command = "docker",
+    args = "ps",
     error_on_status = FALSE
   )$status == 0
 }
