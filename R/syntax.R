@@ -304,6 +304,8 @@ action2docker <- function(l, ...) {
       l$runs,
       l$args
     ),
+    echo_cmd = TRUE,
+    echo = TRUE,
     ...
   )
 }
