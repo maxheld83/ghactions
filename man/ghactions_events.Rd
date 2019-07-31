@@ -16,9 +16,5 @@ List is taken from \href{https://developer.github.com/actions/creating-workflows
 ghactions_events
 
 }
-\seealso{
-Other syntax: \code{\link{action}},
-  \code{\link{make_blocks}}
-}
 \concept{syntax}
 \keyword{datasets}

@@ -11,7 +11,7 @@ firebase_deploy(IDENTIFIER = "Deploy", needs, PROJECT_ID = NULL)
 }
 \arguments{
 \item{IDENTIFIER}{\code{[character(1)]}
-giving the name of the action or workflow block.
+Giving the name of the action.
 
 Used:
 \itemize{
@@ -31,30 +31,16 @@ Defaults to \code{NULL} for no arguments.}
 
 \item{PROJECT_ID}{\code{[character(1)]}
 giving a specific project to use for all commands, not required if you specify a project in your `.firebaserc`` file.}
-
-\item{...}{arguments passed on to other methods, not currently used.}
+}
+\value{
+\code{[list()]} list of action attributes.
 }
 \description{
 \strong{Remember to provide \code{FIREBASE_TOKEN} as a secret to the GitHub UI.}
 
-Thin wrapper around GitHub actions.
-
 Configuration details other than \code{PROJECT_ID} are read from the \code{firebase.json} at the root of your repository.
 }
 \details{
-These functions are for \strong{advanced users} knowledgeable about GitHub actions.
-Novice users may be better served by the complete templates in workflows.
-
-These functions provide very thin wrappers around existing GitHub actions, including actions from other repositories.
-Essentially, they just create lists ready to be ingested by \code{\link[=action2hcl]{action2hcl()}}, which then turns these R lists into valid GitHub actions syntax blocks.
-
-For documentation on these actions, consult their respective \code{README.md}s linked in the below.
-Some variants of these action wrappers include sensible defaults for frequent uses in R.
-
-The \code{uses} field is \emph{always} hardcoded to a particular commit or tag of the underlying github action to ensure compatibility.
-
-To render an action block completely from scratch, you can always use the templating function \code{\link[=action]{action()}}.
-
 Because firebase gets the deploy directory from a \code{firebase.json} file, it cannot automatically find the appropriate path.
 Manually edit your \code{firebase.json} to provide the deploy path.
 }
@@ -63,11 +49,13 @@ Manually edit your \code{firebase.json} to provide the deploy path.
 \item \code{firebase_deploy}: Deploy static assets to Firebase Hosting
 }}
 
-\seealso{
-Other actions: \code{\link{docker_cli}},
-  \code{\link{document}}, \code{\link{filter}},
-  \code{\link{ghpages}}, \code{\link{install_deps}},
-  \code{\link{netlify}}, \code{\link{rscript_byod}},
-  \code{\link{rsync}}
+\examples{
+# many R projects will need this block to first build an image from a DOCKERFILE
+l <- action(
+  IDENTIFIER = "Add two numbers",
+  uses = "rocker/r-ver:3.6.1",
+  args = "Rscript -e '1+1'"
+)
+action2hcl(l = l)
+
 }
-\concept{actions}

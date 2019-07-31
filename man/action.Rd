@@ -15,7 +15,7 @@ action2docker(l, ...)
 }
 \arguments{
 \item{IDENTIFIER}{\code{[character(1)]}
-giving the name of the action or workflow block.
+Giving the name of the action.
 
 Used:
 \itemize{
@@ -53,7 +53,7 @@ GitHub advises against using GitHub actions for production secrets during the pu
 Defaults to \code{NULL} for no secrets.}
 
 \item{l}{\code{[list()]}
-giving the named list of HCL fields.}
+giving the named list of HCL fields as returned by \code{\link[=action]{action()}} and \code{\link[=workflow]{workflow()}}.}
 
 \item{...}{Arguments passed on to \code{processx::run}
 \describe{
@@ -110,10 +110,23 @@ the process has finished.}
 \code{[list()]} list of action attributes.
 }
 \description{
-Create GitHub Actions syntax for \emph{one action}
+Thin wrapper around GitHub actions.
 }
 \details{
 For details on the syntax and arguments, see \href{https://developer.github.com/actions/creating-workflows/workflow-configuration-options/}{here}
+
+These functions are for \strong{advanced users} knowledgeable about GitHub actions.
+Novice users may be better served by the complete templates in workflows.
+
+These functions provide very thin wrappers around existing GitHub actions, including actions from other repositories.
+Essentially, they just create lists ready to be ingested by \code{\link[=action2hcl]{action2hcl()}}, which then turns these R lists into valid GitHub actions syntax blocks.
+
+For documentation on these actions, consult their respective \code{README.md}s linked in the below.
+Some variants of these action wrappers include sensible defaults for frequent uses in R.
+
+The \code{uses} field is \emph{always} hardcoded to a particular commit or tag of the underlying github action to ensure compatibility.
+
+To render an action block completely from scratch, you can always use the templating function \code{\link[=action]{action()}}.
 }
 \section{Functions}{
 \itemize{
@@ -132,8 +145,4 @@ l <- action(
 action2hcl(l = l)
 
 }
-\seealso{
-Other syntax: \code{\link{ghactions_events}},
-  \code{\link{make_blocks}}
-}
-\concept{syntax}
+\concept{syntax actions}

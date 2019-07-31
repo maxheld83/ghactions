@@ -8,7 +8,7 @@ document(IDENTIFIER = "Document Package", needs = NULL, args = NULL)
 }
 \arguments{
 \item{IDENTIFIER}{\code{[character(1)]}
-giving the name of the action or workflow block.
+Giving the name of the action.
 
 Used:
 \itemize{
@@ -25,15 +25,16 @@ Defaults to \code{NULL} for no upstream dependencies.}
 giving the arguments to pass to the action.
 Arguments get appended to the last command in \code{ENTRYPOINT}.
 Defaults to \code{NULL} for no arguments.}
-
-\item{...}{arguments passed on to other methods, not currently used.}
+}
+\value{
+\code{[list()]} list of action attributes.
 }
 \description{
 This GitHub action installs R package dependencies from a \code{DESCRIPTION} at the repository root.
-
-Thin wrapper around GitHub actions.
 }
 \details{
+For details on the syntax and arguments, see \href{https://developer.github.com/actions/creating-workflows/workflow-configuration-options/}{here}
+
 These functions are for \strong{advanced users} knowledgeable about GitHub actions.
 Novice users may be better served by the complete templates in workflows.
 
@@ -47,11 +48,13 @@ The \code{uses} field is \emph{always} hardcoded to a particular commit or tag o
 
 To render an action block completely from scratch, you can always use the templating function \code{\link[=action]{action()}}.
 }
-\seealso{
-Other actions: \code{\link{docker_cli}},
-  \code{\link{filter}}, \code{\link{firebase}},
-  \code{\link{ghpages}}, \code{\link{install_deps}},
-  \code{\link{netlify}}, \code{\link{rscript_byod}},
-  \code{\link{rsync}}
+\examples{
+# many R projects will need this block to first build an image from a DOCKERFILE
+l <- action(
+  IDENTIFIER = "Add two numbers",
+  uses = "rocker/r-ver:3.6.1",
+  args = "Rscript -e '1+1'"
+)
+action2hcl(l = l)
+
 }
-\concept{actions}

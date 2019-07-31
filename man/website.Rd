@@ -9,19 +9,13 @@ website(IDENTIFIER = "Render and Deploy RMarkdown Website",
 }
 \arguments{
 \item{IDENTIFIER}{\code{[character(1)]}
-giving the name of the action or workflow block.
-
-Used:
-\itemize{
-\item as an informative label on GitHub.com,
-\item in the \code{needs} fields of other \emph{action blocks} to model the workflow graph,
-\item in the \code{resolves} fields of other \emph{workflow blocks} to model the workflow graph.
-}}
+giving the name of the workflow block.}
 
 \item{deploy}{\code{[list(1)]}
 giving the name of the branch to deploy \emph{from}, and the function to deploy \emph{with}.}
 }
 \value{
+\code{[list()]}
 A list as specified in the \code{workflow} argument to \code{\link[=use_ghactions]{use_ghactions()}}.
 }
 \description{
@@ -55,10 +49,15 @@ It's easy to set one up using \code{\link[=use_dockerfile]{use_dockerfile()}}.
 To learn more, consider the \href{https://www.maxheld.de/ghactions/articles/ghactions.html}{vignette}.
 }
 
-\seealso{
-Other workflows: \code{\link{fix_docs}}
+\examples{
+workflow(
+  IDENTIFIER = "Run calculation",
+  on = "push",
+  resolves = "Simple Addition"
+)
 
+}
+\seealso{
 Other byod: \code{\link{rscript_byod}}
 }
 \concept{byod}
-\concept{workflows}

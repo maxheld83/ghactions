@@ -9,7 +9,7 @@
 #'
 #' @param workflow `[list(list())]`
 #' A named list of blocks nested as:
-#' - **The workflow block**: arguments to [make_workflow_block()] as a named list *and*
+#' - **The workflow block**: arguments to [workflow()] as a named list *and*
 #' - `$actions``, which in turn comprises of the
 #'   - **Several action blocks** with arguments to [action()] as a named list.
 #'
@@ -105,11 +105,12 @@ use_ghactions <- function(workflow = website()) {
 #'
 #' @export
 list2ghact <- function(workflow) {
-  res <- make_workflow_block(
+  res <- workflow(
     IDENTIFIER = workflow$IDENTIFIER,
     on = workflow$on,
     resolves = workflow$resolves
   )
+  res <- workflow2hcl(res)
   res <- c(
     res,
     purrr::map(

@@ -8,7 +8,7 @@ make_template(l, template)
 }
 \arguments{
 \item{l}{\code{[list()]}
-giving the named list of HCL fields.}
+giving the named list of HCL fields as returned by \code{\link[=action]{action()}} and \code{\link[=workflow]{workflow()}}.}
 
 \item{template}{\code{[character(1)]}
 giving the name of the template file.}

@@ -8,14 +8,7 @@ fix_docs(IDENTIFIER = "Fix Documentation", after_code = NULL)
 }
 \arguments{
 \item{IDENTIFIER}{\code{[character(1)]}
-giving the name of the action or workflow block.
-
-Used:
-\itemize{
-\item as an informative label on GitHub.com,
-\item in the \code{needs} fields of other \emph{action blocks} to model the workflow graph,
-\item in the \code{resolves} fields of other \emph{workflow blocks} to model the workflow graph.
-}}
+giving the name of the workflow block.}
 
 \item{after_code}{\code{[character(1)]} Giving what happens when the working tree is \emph{unclean after}  \code{code} is evaluated:
 \itemize{
@@ -25,6 +18,7 @@ Defaults to \code{NULL}, which just thinly wraps \code{\link[=check_clean_tree]{
 }}
 }
 \value{
+\code{[list()]}
 A list as specified in the \code{workflow} argument to \code{\link[=use_ghactions]{use_ghactions()}}.
 }
 \description{
@@ -40,7 +34,11 @@ GitHub actions always runs against the repo to which the push was made, and does
 
 For more caveats, see \code{\link[=auto_commit]{auto_commit()}}.
 }
-\seealso{
-Other workflows: \code{\link{website}}
+\examples{
+workflow(
+  IDENTIFIER = "Run calculation",
+  on = "push",
+  resolves = "Simple Addition"
+)
+
 }
-\concept{workflows}

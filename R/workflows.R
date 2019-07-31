@@ -8,11 +8,10 @@
 #' - [Blogdown websites](https://bookdown.org/yihui/blogdown/) (**experimental**)
 #' - any other site generators that can be called via `rmarkdown::render_site()` and returns the path to the rendered assets (**experimental**).
 #'
-#' @inheritParams make_workflow_block
+#' @inherit workflow
 #'
 #' @inheritParams rscript_byod
 #'
-#' @template workflows
 #' @template byod
 #'
 #' @details
@@ -97,11 +96,9 @@ fau <- purrr::partial(
 #' @description
 #' This GitHub action creates `man/` documentation from [*roxygen*](https://github.com/klutometis/roxygen/) comments in `R/` scripts at the repository root using [*devtools*](https://devtools.r-lib.org).
 #'
-#' @inheritParams make_workflow_block
+#' @inherit workflow
 #'
 #' @inheritParams auto_commit
-#'
-#' @template workflows
 #'
 #' @details
 #' If you set `after_code = 'commit'` this action will automatically commit and push changes to your repository for you.

@@ -1,5 +1,6 @@
 #' @title Create [Docker CLI action](https://github.com/actions/docker/tree/aea64bb1b97c42fa69b90523667fef56b90d7cff) to run [Docker](http://docker.com)
-#' @template actions
+#' @param ... arguments passed on to other methods, not currently used.
+#' @inherit action
 #' @export
 docker_cli <- function(IDENTIFIER,
                        needs,
@@ -36,7 +37,7 @@ build_image <- purrr::partial(
 #'
 #' @inheritParams utils::Rscript
 #'
-#' @template actions
+#' @inherit action
 #' @template byod
 #'
 #' @export
@@ -93,7 +94,7 @@ rscript_byod <- function(IDENTIFIER,
 
 
 #' @title Create [filter action](https://github.com/actions/bin/tree/a9036ccda9df39c6ca7e1057bc4ef93709adca5f/filter)
-#' @template actions
+#' @inherit action
 #' @export
 filter <- function(IDENTIFIER,
                    needs,
@@ -144,7 +145,7 @@ filter_branch <- function(needs, branch = "master") {
 #' @description
 #' **Remember to provide `SSH_PRIVATE_KEY` and `SSH_PUBLIC_KEY` as secrets to the GitHub UI.**.
 #'
-#' @template actions
+#' @inherit action
 #'
 #' @export
 rsync <- function(IDENTIFIER,
@@ -204,7 +205,7 @@ rsync_fau <- purrr::partial(
 #' @param BUILD_DIR `[character(1)]`
 #' giving the path relative from your `/github/workspace` to the directory to be published.
 #'
-#' @template actions
+#' @inherit action
 #'
 #' @export
 ghpages <- function(IDENTIFIER = "Deploy",
@@ -235,7 +236,7 @@ ghpages <- function(IDENTIFIER = "Deploy",
 #' @description
 #' **Remember to provide `NETLIFY_AUTH_TOKEN` and `NETLIFY_SITE_ID` (optional) as secrets to the GitHub UI.**
 #'
-#' @template actions
+#' @inherit action
 #'
 #' @export
 netlify <- function(IDENTIFIER,
@@ -283,7 +284,7 @@ netlify_deploy <- function(IDENTIFIER = "Deploy",
 #' @description
 #' **Remember to provide `FIREBASE_TOKEN` as a secret to the GitHub UI.**
 #'
-#' @template actions
+#' @inherit action
 #'
 #' @param PROJECT_ID `[character(1)]`
 #' giving a specific project to use for all commands, not required if you specify a project in your `.firebaserc`` file.
@@ -333,7 +334,7 @@ firebase_deploy <- function(IDENTIFIER = "Deploy",
 #' @description
 #' This GitHub action installs R package dependencies from a `DESCRIPTION` at the repository root.
 #'
-#' @template actions
+#' @inherit action
 #'
 #' @export
 install_deps <- function(IDENTIFIER = "Install Dependencies",
@@ -350,7 +351,7 @@ install_deps <- function(IDENTIFIER = "Install Dependencies",
 #' @description
 #' This GitHub action installs R package dependencies from a `DESCRIPTION` at the repository root.
 #'
-#' @template actions
+#' @inherit action
 #'
 #' @export
 document <- function(IDENTIFIER = "Document Package",

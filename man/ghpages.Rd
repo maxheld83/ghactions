@@ -9,7 +9,7 @@ ghpages(IDENTIFIER = "Deploy", needs = "Filter master",
 }
 \arguments{
 \item{IDENTIFIER}{\code{[character(1)]}
-giving the name of the action or workflow block.
+Giving the name of the action.
 
 Used:
 \itemize{
@@ -28,8 +28,9 @@ giving the path relative from your \code{/github/workspace} to the directory to 
 \item{env}{\code{[list(character(1)]}
 giving the environment variables to set in the action's runtime environment.
 Defaults to \code{NULL} for no environment variables (in addition to the defaults set by GitHub Actions).}
-
-\item{...}{arguments passed on to other methods, not currently used.}
+}
+\value{
+\code{[list()]} list of action attributes.
 }
 \description{
 \strong{Remember to provide a GitHub personal access token secret named \code{GH_PAT} to the GitHub UI.}
@@ -43,10 +44,10 @@ The secret must be called \code{GH_PAT}.
 }
 
 For details, see docs of the \href{https://github.com/maxheld83/ghpages/tree/v0.2.0}{ghpages action}.
-
-Thin wrapper around GitHub actions.
 }
 \details{
+For details on the syntax and arguments, see \href{https://developer.github.com/actions/creating-workflows/workflow-configuration-options/}{here}
+
 These functions are for \strong{advanced users} knowledgeable about GitHub actions.
 Novice users may be better served by the complete templates in workflows.
 
@@ -60,11 +61,13 @@ The \code{uses} field is \emph{always} hardcoded to a particular commit or tag o
 
 To render an action block completely from scratch, you can always use the templating function \code{\link[=action]{action()}}.
 }
-\seealso{
-Other actions: \code{\link{docker_cli}},
-  \code{\link{document}}, \code{\link{filter}},
-  \code{\link{firebase}}, \code{\link{install_deps}},
-  \code{\link{netlify}}, \code{\link{rscript_byod}},
-  \code{\link{rsync}}
+\examples{
+# many R projects will need this block to first build an image from a DOCKERFILE
+l <- action(
+  IDENTIFIER = "Add two numbers",
+  uses = "rocker/r-ver:3.6.1",
+  args = "Rscript -e '1+1'"
+)
+action2hcl(l = l)
+
 }
-\concept{actions}
