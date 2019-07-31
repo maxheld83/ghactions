@@ -27,4 +27,9 @@ COPY ./workspace /ghactions-source
 # TODO this needs to be purged from the img via rm or multi-stage build
 RUN Rscript -e "devtools::install(pkg = '/ghactions-source', dependencies = TRUE)"
 
+# install docker
+# remove this and do it automatically via sysdeps
+RUN curl -fsSL https://get.docker.com -o get-docker.sh
+RUN sh get-docker.sh
+
 ENV R_LIBS="$R_LIBS_WORKFLOW:$R_LIBS_ACTION"

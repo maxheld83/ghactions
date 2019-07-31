@@ -253,6 +253,14 @@ action2hcl <- function(l) {
 #'
 #' @inherit processx::run return
 action2docker <- function(l, ...) {
+  # figure out current runtime
+  assert_sysdep("docker")
+  volumes <- NULL
+  if (is_docker()) {
+    # when we're in docker, we don't need it, we can just use the socket
+    volumes <- c(volumes, "--volume", "/var/run/docker.sock:/var/run/docker.sock")
+  }
+
   # prepare environment variables
   envs <- NULL
   if (!is.null(l$env)) {
@@ -270,6 +278,7 @@ action2docker <- function(l, ...) {
     command = "docker",
     args = c(
       "run",
+      volumes,
       envs,
       l$uses,
       l$runs,

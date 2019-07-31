@@ -66,7 +66,7 @@ x <- rscript_byod(  # this just creates a list with sensible defaults
   # the uses field is hard-coded in the function to keep everything compatible
   expr = "1+1"
 ) 
-do.call(what = make_action_block, args = x)
+do.call(what = action, args = x)
 ```
 
 This isn't a very convincing use of R, and you'd be better off typing the action block by hand, or even just using the visual editor on GitHub.com.

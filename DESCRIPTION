@@ -64,4 +64,5 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
 SystemRequirements:
+  docker (https://www.docker.com) or docker socket if run *inside* docker.
   git (https://git-scm.com)
