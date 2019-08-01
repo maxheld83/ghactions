@@ -12,7 +12,7 @@ test_that("can override entrypoint", {
         ),
       )$stdout
     },
-    expected = "foo\n"
+    expected = "foo \n"
   )
 })
 
