@@ -284,9 +284,16 @@ action2docker <- function(l, ...) {
       "--volume",
       "/var/run/docker.sock:/var/run/docker.sock"
     )
-  } else if (!is_dockerd()) {
-    stop("Docker daemon does not seem to be running.")
-    # TODO maybe try to remedy this by just service starting
+  } else {
+    if (checkmate::test_os("linux")) {
+      # try to remedy this by just service starting
+      processx::run(
+        command = "dockerd"
+      )
+    }
+    if (!is_dockerd()) {
+      stop("Docker daemon does not seem to be running.")
+    }
   }
 
   # prepare environment variables
