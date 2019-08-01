@@ -101,13 +101,7 @@ action "Build Package" {
 }
 
 action "Check Package" {
-  uses = "actions/docker-cli@master"
-  runs = [
-    "docker", 
-    "run",
-    "--volume /var/run/docker.sock:/var/run/docker.sock",
-    "docker:dind"
-  ]
+  uses = "./actions/check"
   needs = [
     "Build Package"
   ]
