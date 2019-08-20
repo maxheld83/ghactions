@@ -38,7 +38,9 @@ jobs:
             git \
             libxml2-dev \
             libssl-dev \
-            && apt-get clean -y
+            && apt-get clean -y \
+            && curl -fsSL https://get.docker.com -o get-docker.sh \
+            && sh get-docker.sh
       - name: Install package dependencies
         run: |
           Rscript -e "install.packages(c('remotes', 'rcmdcheck'))"
