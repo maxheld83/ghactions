@@ -14,6 +14,10 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@master
+      - name: Authenticate GCP
+        uses: actions/gcloud/auth@d124d4b82701480dc29e68bb73a87cfb2ce0b469
+        env:
+          GCLOUD_AUTH: ${{ secrets.GCLOUD_AUTH }}
       - name: Install System Dependencies
         run: |
             apt-get update --allow-releaseinfo-change \
