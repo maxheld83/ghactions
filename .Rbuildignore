@@ -25,3 +25,4 @@ assets/
 pres_files/
 pres.html
 pres.Rmd
+^azure-pipelines\.yml$
