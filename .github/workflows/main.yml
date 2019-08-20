@@ -18,6 +18,11 @@ jobs:
         uses: actions/gcloud/auth@d124d4b82701480dc29e68bb73a87cfb2ce0b469
         env:
           GCLOUD_AUTH: ${{ secrets.GCLOUD_AUTH }}
+      - name: Download Cache
+        uses: actions/gcloud/cli@d124d4b82701480dc29e68bb73a87cfb2ce0b469
+        run: gsutil -m cp -r gs://ghactions-cache/lib.tar.gz /github/home/
+      - name: Show Cache
+        run: ls -a /github/home
       - name: Install System Dependencies
         run: |
             apt-get update --allow-releaseinfo-change \
