@@ -16,8 +16,8 @@ jobs:
         uses: actions/checkout@master
       - name: Install System Dependencies
         run: |
-            sudo apt-get update --allow-releaseinfo-change \
-            && sudo apt-get install -y --no-install-recommends \
+            apt-get update --allow-releaseinfo-change \
+            && apt-get install -y --no-install-recommends \
             libxml2-dev \
             libssl-dev \
             git \
