@@ -22,9 +22,10 @@ jobs:
         run: |
             apt-get update --allow-releaseinfo-change \
             && apt-get install -y --no-install-recommends \
+            docker \
+            git \
             libxml2-dev \
             libssl-dev \
-            git \
             && apt-get clean -y
       - name: Install package dependencies
         run: |
