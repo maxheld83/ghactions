@@ -6,20 +6,22 @@ jobs:
   build:
     runs-on: ubuntu-18.04
     container:
-      image: rstudio/r-base:3.6-xenial
+      image: maxheld83/r-ci:d2a3a47
       env:
-        R_LIBS_USER: ~/R/library
-        CRAN: https://cloud.r-project.org
+        ENV R_LIBS_WORKFLOW: /github/home/lib/R/library/
+        # location for R libraries which should persist only for this action
+        ENV R_LIBS_ACTION: $R_LIBS_DEV_HELPERS
     steps:
       - name: Checkout Repository
         uses: actions/checkout@master
       - name: Install System Dependencies
         run: |
-            sudo apt-get update && sudo apt-get install -y libxml2-dev libssl-dev
-      - name: Setting up R library
-        run: |
-          echo 'options(repos = "'"${CRAN}"'", Ncpus = 2, crayon.enabled = TRUE)' > ~/.Rprofile
-          mkdir -p ${R_LIBS_USER}
+            sudo apt-get update --allow-releaseinfo-change \
+            && sudo apt-get install -y --no-install-recommends \
+            libxml2-dev \
+            libssl-dev \
+            git \
+            && apt-get clean -y
       - name: Install package dependencies
         run: |
           Rscript -e "install.packages(c('remotes', 'rcmdcheck'))"
