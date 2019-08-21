@@ -8,9 +8,9 @@ jobs:
     container:
       image: maxheld83/r-ci:d2a3a47
       env:
-        ENV R_LIBS_WORKFLOW: /github/home/lib/R/library/
+        R_LIBS_WORKFLOW: /github/home/lib/R/library/
         # location for R libraries which should persist only for this action
-        ENV R_LIBS_ACTION: $R_LIBS_DEV_HELPERS
+        R_LIBS_ACTION: $R_LIBS_DEV_HELPERS
     steps:
       - name: Checkout Repository
         uses: actions/checkout@master
@@ -22,12 +22,12 @@ jobs:
         uses: actions/gcloud/cli@master
         with:
           entrypoint: gsutil
-          args: -m cp -r gs://ghactions-cache/lib.tar.gz /github/home/
+          args: -m cp -r gs://ghactions-cache/lib.tar.gz $HOME
       - name: Decompress Cache
         uses: actions/bin/sh@5968b3a61ecdca99746eddfdc3b3aab7dc39ea31
         with:
           entrypoint: tar
-          args: --extract --ungzip --file /github/home/lib.tar.gz --directory /github/home
+          args: --extract --ungzip --file /github/home/lib.tar.gz --directory $HOME
       - name: Show Cache
         run: ls -a /github/home
       - name: Install System Dependencies
@@ -44,11 +44,11 @@ jobs:
       - name: Install package dependencies
         run: |
           Rscript -e "Sys.getenv('R_LIBS_WORKFLOW')"
+          Rscript -e ".libPaths()"
           Rscript -e "install.packages(c('remotes', 'rcmdcheck'))"
           Rscript -e "remotes::install_deps(dependencies = TRUE, lib = Sys.getenv('R_LIBS_WORKFLOW'))"
         env:
-          R_LIBS_WORKFLOW: /github/home/lib/R/library/
-          R_LIBS: $R_LIBS_WORKFLOW:$R_LIBS_ACTION
+          R_LIBS: $R_LIBS_WORKFLOW
       - name: Check package
         run: |
           Rscript -e "rcmdcheck::rcmdcheck(error_on = 'error', check_dir = 'check')"
