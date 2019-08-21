@@ -23,7 +23,7 @@ jobs:
         uses: actions/gcloud/cli@master
         with:
           entrypoint: gsutil
-          args: -m cp -r gs://ghactions-cache/lib.tar.gz $HOME/
+          args: -m cp -r gs://ghactions-cache/lib.tar.gz /github/home/
       - name: Decompress Cache
         uses: actions/bin/sh@5968b3a61ecdca99746eddfdc3b3aab7dc39ea31
         with:
