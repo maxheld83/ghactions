@@ -29,8 +29,6 @@ jobs:
         with:
           entrypoint: tar
           args: --extract --ungzip --file /github/home/lib.tar.gz --directory /github/home
-      - name: Show Cache
-        run: ls -a /github/home
       - name: Show Cache via action
         uses: ./actions/ls
       - name: Install System Dependencies

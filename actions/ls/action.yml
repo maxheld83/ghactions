@@ -1,9 +1,0 @@
-name: 'ls'
-description: 'show directory content (test action)'
-author: 'Max Held'
-runs:
-  using: 'bash'
-  main: 'main.sh'
-branding:
-  icon: 'book-open'  
-  color: 'green'
