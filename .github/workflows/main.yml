@@ -18,6 +18,7 @@ jobs:
         uses: actions/gcloud/auth@master
         env:
           GCLOUD_AUTH: ${{ secrets.GCLOUD_AUTH }}
+      - run: echo $HOME
       - name: Download Cache
         uses: actions/gcloud/cli@master
         with:
