@@ -41,13 +41,14 @@ jobs:
             && apt-get clean -y \
             && curl -fsSL https://get.docker.com -o get-docker.sh \
             && sh get-docker.sh
-        env:
-          R_LIB: $R_LIBS_WORKFLOW:$R_LIBS_ACTION
       - name: Install package dependencies
         run: |
           Rscript -e "Sys.getenv('R_LIBS_WORKFLOW')"
           Rscript -e "install.packages(c('remotes', 'rcmdcheck'))"
           Rscript -e "remotes::install_deps(dependencies = TRUE, lib = Sys.getenv('R_LIBS_WORKFLOW'))"
+        env:
+          R_LIBS_WORKFLOW: /github/home/lib/R/library/
+          R_LIBS: $R_LIBS_WORKFLOW:$R_LIBS_ACTION
       - name: Check package
         run: |
           Rscript -e "rcmdcheck::rcmdcheck(error_on = 'error', check_dir = 'check')"
