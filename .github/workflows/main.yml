@@ -50,6 +50,9 @@ jobs:
           R_LIBS: $R_LIBS_WORKFLOW
       - name: Check package
         run: |
+          ls $R_LIBS_WORKFLOW
+          Rscript -e "Sys.getenv('R_LIBS_WORKFLOW')"
+          Rscript -e ".libPaths()"
           Rscript -e "rcmdcheck::rcmdcheck(error_on = 'error', check_dir = 'check')"
         env:
           R_LIBS: $R_LIBS_WORKFLOW
