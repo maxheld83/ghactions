@@ -51,3 +51,5 @@ jobs:
       - name: Check package
         run: |
           Rscript -e "rcmdcheck::rcmdcheck(error_on = 'error', check_dir = 'check')"
+        env:
+          R_LIBS: $R_LIBS_WORKFLOW
