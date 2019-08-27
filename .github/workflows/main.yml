@@ -56,4 +56,4 @@ jobs:
           Rscript -e ".libPaths()"
           Rscript -e "rcmdcheck::rcmdcheck(error_on = 'error', check_dir = 'check')"
         env:
-          R_LIBS: $R_LIBS_WORKFLOW
+          R_LIBS: /github/home/lib/R/library/
