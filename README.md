@@ -1,7 +1,7 @@
 # GitHub actions for R <img src="https://github.com/r-lib/ghactions/blob/master/logo.png?raw=true" align="right" height=140/>
 
 <!-- badges: start -->
-[![Actions Status](https://wdp9fww0r9.execute-api.us-west-2.amazonaws.com/production/badge/r-lib/ghactions)](https://github.com/r-lib/ghactions/actions)
+[![Actions Status](https://github.com/r-lib/ghactions/workflows/main/badge.svg)](https://github.com/r-lib/ghactions/actions)
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![CRAN status](https://www.r-pkg.org/badges/version/ghactions)](https://cran.r-project.org/package=ghactions)
 [![License: MIT](https://img.shields.io/github/license/r-lib/ghactions.svg?style=flat)](https://opensource.org/licenses/MIT)

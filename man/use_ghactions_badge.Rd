@@ -4,7 +4,12 @@
 \alias{use_ghactions_badge}
 \title{README badges}
 \usage{
-use_ghactions_badge()
+use_ghactions_badge(workflow_name = "main")
+}
+\arguments{
+\item{workflow_name}{\code{[character(1)]}
+Giving the name of the workflow as given in the \href{https://help.github.com/en/articles/workflow-syntax-for-github-actions#name}{name:} field of your \code{*.yml}.
+Defaults to \code{"main"}.}
 }
 \description{
 Add markdown syntax for README badge, see \code{\link[usethis:use_badge]{usethis::use_badge()}}.

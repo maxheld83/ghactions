@@ -157,14 +157,19 @@ use_dockerfile <- function(FROM = "rocker/verse:3.5.2") {
 #'
 #' @inheritParams usethis::use_badge
 #'
+#' @param workflow_name `[character(1)]`
+#' Giving the name of the workflow as given in the [`name:`](https://help.github.com/en/articles/workflow-syntax-for-github-actions#name) field of your `*.yml`.
+#' Defaults to `"main"`.
+#'
 #' @family setup
 #'
 #' @export
-use_ghactions_badge <- function() {
+use_ghactions_badge <- function(workflow_name = "main") {
+  checkmate::assert_string(x = workflow_name, na.ok = FALSE)
   reposlug <- glue::glue('{gh::gh_tree_remote()$username}/{gh::gh_tree_remote()$repo}')
   usethis::use_badge(
     href = glue::glue('https://github.com/{reposlug}/actions'),
-    src = glue::glue('https://wdp9fww0r9.execute-api.us-west-2.amazonaws.com/production/badge/{reposlug}'),
+    src = glue::glue('https://github.com/{reposlug}/workflows/{workflow_name}/badge.svg'),
     badge_name = "Actions Status"
   )
 }
