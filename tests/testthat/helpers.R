@@ -69,6 +69,14 @@ init_repo <- function() {
       "test@8450984753847504asdasdasd.com"
     )
   )
+  processx::run(
+    command = "git",
+    args = c(
+      "config",
+      "commit.gpgsign",
+      "false"
+    )
+  )
   # git init causes an unrealistic scenario of a 0-commit repo
   # in real life, we will always already have commits
   if (length(fs::dir_ls()) == 0) {
@@ -84,7 +92,8 @@ init_repo <- function() {
     args = c(
       "commit",
       "-m 'initial commit'"
-    )
+    ),
+    echo = TRUE
   )
 }
 
