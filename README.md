@@ -1,13 +1,10 @@
 # GitHub actions for R <img src="https://github.com/r-lib/ghactions/blob/master/logo.png?raw=true" align="right" height=140/>
 
 <!-- badges: start -->
-[![Actions Status](https://github.com/r-lib/ghactions/workflows/main/badge.svg)](https://github.com/r-lib/ghactions/actions)
+[![Actions Status](https://github.com/r-lib/ghactions/workflows/.github/workflows/main.yml/badge.svg)](https://github.com/r-lib/ghactions/actions)
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![CRAN status](https://www.r-pkg.org/badges/version/ghactions)](https://cran.r-project.org/package=ghactions)
 [![License: MIT](https://img.shields.io/github/license/r-lib/ghactions.svg?style=flat)](https://opensource.org/licenses/MIT)
-[![Azure pipelines build status](https://img.shields.io/azure-devops/build/r-lib/ghactions/2)](https://dev.azure.com/r-lib/ghactions/_build/latest?definitionId=1&branchName=master)
-[![Azure pipelines test status](https://img.shields.io/azure-devops/tests/r-lib/ghactions/2?color=brightgreen&compact_message)](https://dev.azure.com/r-lib/ghactions/_build/latest?definitionId=1&branchName=master)
-[![Azure pipelines coverage status](https://img.shields.io/azure-devops/coverage/r-lib/ghactions/2)](https://dev.azure.com/r-lib/ghactions/_build/latest?definitionId=1&branchName=master)
 <!-- badges: end -->
 
 [GitHub actions](https://github.com/features/actions) are a new workflow automation feature of the popular code repository host GitHub.
