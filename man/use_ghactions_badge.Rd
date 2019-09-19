@@ -4,12 +4,16 @@
 \alias{use_ghactions_badge}
 \title{README badges}
 \usage{
-use_ghactions_badge(workflow_name = "main")
+use_ghactions_badge(workflow_name = NULL,
+  badge_name = "Actions Status")
 }
 \arguments{
 \item{workflow_name}{\code{[character(1)]}
 Giving the name of the workflow as given in the \href{https://help.github.com/en/articles/workflow-syntax-for-github-actions#name}{name:} field of your \code{*.yml}.
-Defaults to \code{"main"}.}
+If no \code{name: } is given, this is the file path of the \code{*.yml} from the repository root.
+Defaults to \code{NULL}, in which case the first workflow in the first \code{*.yml} at \code{.github/workflows/} is used.}
+
+\item{badge_name}{Badge name. Used in error message and alt text}
 }
 \description{
 Add markdown syntax for README badge, see \code{\link[usethis:use_badge]{usethis::use_badge()}}.

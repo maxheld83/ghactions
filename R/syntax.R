@@ -63,6 +63,49 @@ workflow2hcl <- function(l) {
   )
 }
 
+
+#' Read in GitHub Actions workflows
+#'
+#' @param path `[character()]` giving the directory from the repository root where to find GitHub Actions workflows.
+#' Defaults to `".github/workflows"`.
+#'
+#' @return `[list()]` of lists from yaml.
+#'
+#' @family workflows
+#'
+#' @export
+read_workflows <- function(path = ".github/workflows") {
+  usethis::local_project()  # make sure we are in the project dir
+  checkmate::assert_directory_exists(x = path)
+  # files are relative from root, but oddly, that is what github actions uses as default names
+  # so we'll also use the full rel path here at least until https://github.com/r-lib/ghactions/issues/346
+  files <- fs::dir_ls(
+    path = path,
+    recurse = FALSE,
+    regexp = ".*\\.(yml|yaml)$"  # can be both!
+  )
+  if (length(files) == 0) {
+    stop(
+      "There are no yaml files at ",
+      path,
+      ". Perhaps GitHub Actions has not been set up?"
+    )
+  }
+
+  purrr::map(.x = files, .f = read_workflow)
+}
+
+#' @describeIn read_workflows Read in an individual GitHub Actions workflow
+read_workflow <- function(path) {
+  x <- yaml::read_yaml(file = path)
+  if (is.null(x$name)) {
+    # this is what github does https://help.github.com/en/articles/workflow-syntax-for-github-actions#name
+    x$name <- path
+  }
+  x
+}
+
+
 #' @title Supported events to trigger GitHub actions
 #'
 #' @description
