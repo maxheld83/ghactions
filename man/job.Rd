@@ -5,7 +5,7 @@
 \title{Create nested list for \emph{one} \href{https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobs}{job}}
 \usage{
 job(id, name = NULL, needs = NULL, runs_on = "ubuntu-18.04",
-  steps = NULL, timeout_minutes = NULL)
+  steps = NULL, timeout_minutes = NULL, strategy = NULL)
 }
 \arguments{
 \item{id, name}{\code{[character(1)]}
@@ -27,13 +27,19 @@ giving an \emph{unnamed} list of steps, with each element as returned by \code{\
 \item{timeout_minutes}{\code{[integer(1)]}
 giving the maximum number of minutes to let a workflow run before GitHub automatically cancels it.
 Defaults to \code{NULL}.}
+
+\item{strategy}{\code{[list()]}
+giving a named list as returned by \code{\link[=strategy]{strategy()}}.
+Returns to \code{NULL}.}
 }
 \description{
 Create nested list for \emph{one} \href{https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobs}{job}
 }
 \seealso{
-Other syntax: \code{\link{ghactions_events}},
+Other syntax: \code{\link{gh_matrix}},
+  \code{\link{ghactions_events}},
   \code{\link{ghactions_vms}}, \code{\link{io}},
-  \code{\link{on}}, \code{\link{workflow}}
+  \code{\link{on}}, \code{\link{strategy}},
+  \code{\link{workflow}}
 }
 \concept{syntax}

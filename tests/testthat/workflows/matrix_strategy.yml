@@ -1,0 +1,7 @@
+matrix:
+  node:
+    - 6
+    - 8
+    - 10
+fail-fast: yes
+max-parallel: 3.0

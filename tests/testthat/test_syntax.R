@@ -2,7 +2,6 @@
 context("io")
 
 test_that("workflows are read in", {
-  getwd()
   workflows <- read_workflows(path = "workflows")
   expect_equal(
     object = workflows$`workflows/named.yml`$name,
@@ -84,6 +83,45 @@ test_that("can be written out", {
       )
     ),
     file = "workflows/job.yml"
+  )
+})
+
+test_that("support matrix strategies", {
+  expect_known_output(
+    object = write_workflow(
+      strategy(
+        matrix = list(
+          node = c(6L, 8L, 10L)
+        ),
+        `fail-fast` = TRUE,
+        `max-parallel` = 3
+      )
+    ),
+    file = "workflows/matrix_strategy.yml"
+  )
+})
+
+test_that("support matrix inclusions/exclusions", {
+  expect_known_output(
+    object = write_workflow(
+      gh_matrix(
+        os = c("macOS-10.14", "windows-2016", "ubuntu-18.04"),
+        node = c(4L, 6L, 8L, 10L),
+        include = list(
+          list(
+            os = "windows-2016",
+            node = 4L,
+            npm = 2L
+          ),
+          list(
+            os = "macOS-10.14",
+            node = 4L,
+            npm = 2L
+          )
+        )
+      )
+    ),
+    file = "workflows/matrix_in_exclude.yml"
   )
 })
 

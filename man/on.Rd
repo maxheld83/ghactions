@@ -28,8 +28,10 @@ on(
 )
 }
 \seealso{
-Other syntax: \code{\link{ghactions_events}},
+Other syntax: \code{\link{gh_matrix}},
+  \code{\link{ghactions_events}},
   \code{\link{ghactions_vms}}, \code{\link{io}},
-  \code{\link{job}}, \code{\link{workflow}}
+  \code{\link{job}}, \code{\link{strategy}},
+  \code{\link{workflow}}
 }
 \concept{syntax}

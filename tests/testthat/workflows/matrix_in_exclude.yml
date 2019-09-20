@@ -1,0 +1,16 @@
+os:
+  - macOS-10.14
+  - windows-2016
+  - ubuntu-18.04
+node:
+  - 4
+  - 6
+  - 8
+  - 10
+include:
+  - os: windows-2016
+    node: 4
+    npm: 2
+  - os: macOS-10.14
+    node: 4
+    npm: 2

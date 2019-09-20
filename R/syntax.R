@@ -250,6 +250,10 @@ ghactions_events <- c(
 #' giving the maximum number of minutes to let a workflow run before GitHub automatically cancels it.
 #' Defaults to `NULL`.
 #'
+#' @param strategy `[list()]`
+#' giving a named list as returned by [strategy()].
+#' Returns to `NULL`.
+#'
 #' @family syntax
 #'
 #' @export
@@ -258,7 +262,8 @@ job <- function(id,
                 needs = NULL,
                 runs_on = "ubuntu-18.04",
                 steps = NULL,
-                timeout_minutes = NULL) {
+                timeout_minutes = NULL,
+                strategy = NULL) {
   checkmate::assert_string(x = id, na.ok = FALSE)
   checkmate::assert_string(x = name, na.ok = FALSE, null.ok = TRUE)
   checkmate::assert_character(
@@ -282,11 +287,82 @@ job <- function(id,
     na.ok = FALSE,
     null.ok = TRUE
   )
+  checkmate::assert_list(
+    x = strategy,
+    any.missing = FALSE,
+    names = "unique",
+    null.ok = TRUE
+  )
 
   res <- as.list(environment())
   res$id <- NULL  # that's the name of the list, not *in* the list
   res <- purrr::compact(res)
   rlang::set_names(x = list(res), nm = id)
+}
+
+
+#' Create nested list for the [strategy](https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idstrategy) field in [job()]
+#'
+#' @param matrix `[list(list(c()))]`
+#' giving the values for each variable for the matrix build.
+#' See [gh_matrix()] for additional options.
+#' Defaults to `NULL`.
+#'
+#' @param `fail-fast` `[logical()]`
+#' giving whether GitHub should cancel all in-progress jobs if any matrix job fails.
+#' Defaults to `NULL`.
+#'
+#' @param `max-parallel` `[integer(1)]`
+#' giving the maximum number of jobs to run simultaneously when using a matrix job strategy.
+#'
+#' @family syntax
+#'
+#' @export
+strategy <- function(matrix = NULL, `fail-fast` = NULL, `max-parallel` = NULL) {
+  checkmate::assert_list(
+    x = matrix,
+    types = "atomicvector",
+    any.missing = FALSE,
+    names = "unique",
+    null.ok = TRUE
+  )
+  checkmate::assert_flag(
+    x = `fail-fast`,
+    na.ok = FALSE,
+    null.ok = TRUE
+  )
+  checkmate::assert_scalar(
+    x = `max-parallel`,
+    na.ok = FALSE,
+    null.ok = TRUE
+  )
+
+  purrr::compact(as.list(environment()))
+}
+
+
+#' Create nested list for the [matrix](https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idstrategy) field in [strategy()]
+#'
+#' @param ... `[character()]`
+#' giving values for variable for the matrix build.
+#'
+#' @param exclude,include `[list(list(character(1)))]`
+#' giving unnamed lists of combinations of variables to ex- or include.
+#' Defaults to `NULL`.
+#'
+#' @export
+#'
+#' @family syntax
+gh_matrix <- function(..., exclude = NULL, include = NULL) {
+  checkmate::assert_list(
+    x = exclude,
+    types = "character",
+    any.missing = FALSE,
+    names = "unnamed",
+    null.ok = TRUE
+  )
+
+  purrr::compact(c(list(...), as.list(environment())))
 }
 
 
