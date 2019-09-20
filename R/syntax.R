@@ -245,6 +245,7 @@ ghactions_events <- c(
 #'
 #' @param steps `[list()]`
 #' giving an *unnamed* list of steps, with each element as returned by [step()].
+#' Defaults to `NULL`.
 #'
 #' @param timeout_minutes `[integer(1)]`
 #' giving the maximum number of minutes to let a workflow run before GitHub automatically cancels it.
@@ -252,7 +253,12 @@ ghactions_events <- c(
 #'
 #' @param strategy `[list()]`
 #' giving a named list as returned by [strategy()].
-#' Returns to `NULL`.
+#' Defaults to `NULL`.
+#'
+#' @param container `[character(1)]`/`[list()]`
+#' giving a published container image.
+#' For advanced options, use [container()].
+#' Defaults to `NULL`.
 #'
 #' @family syntax
 #'
@@ -263,7 +269,8 @@ job <- function(id,
                 runs_on = "ubuntu-18.04",
                 steps = NULL,
                 timeout_minutes = NULL,
-                strategy = NULL) {
+                strategy = NULL,
+                container = NULL) {
   checkmate::assert_string(x = id, na.ok = FALSE)
   checkmate::assert_string(x = name, na.ok = FALSE, null.ok = TRUE)
   checkmate::assert_character(
@@ -293,6 +300,16 @@ job <- function(id,
     names = "unique",
     null.ok = TRUE
   )
+  if (is.character(container)) {
+    checkmate::assert_string(x = container, na.ok = FALSE, null.ok = TRUE)
+  } else {
+    checkmate::assert_list(
+      x = container,
+      any.missing = FALSE,
+      null.ok = TRUE,
+      names = "unique"
+    )
+  }
 
   res <- as.list(environment())
   res$id <- NULL  # that's the name of the list, not *in* the list

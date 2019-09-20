@@ -6,8 +6,8 @@
 \usage{
 step(name = NULL, id = NULL, `if` = NULL, uses = NULL,
   run = NULL, shell = NULL, with = NULL, env = NULL,
-  working_directory = NULL, continue_on_error = NULL,
-  timeout_minutes = NULL)
+  `working-directory` = NULL, `continue-on-error` = NULL,
+  `timeout-minutes` = NULL)
 }
 \arguments{
 \item{id, if, name, uses, run, shell}{\code{[character(1)]}
@@ -19,15 +19,15 @@ Defaults to \code{NULL}.}
 giving a named list of additional parameters.
 Defaults to \code{NULL}.}
 
-\item{working_directory}{\code{[character(1)]}
+\item{`working-directory`}{\code{[character(1)]}
 giving the default working directory.
 Defaults to \code{NULL}.}
 
-\item{continue_on_error}{\code{[logical(1)]}
+\item{`continue-on-error`}{\code{[logical(1)]}
 giving whether to allow a job to pass when this step fails.
 Defaults to \code{NULL}.}
 
-\item{timeout_minutes}{\code{[integer(1)]}
+\item{`timeout-minutes`}{\code{[integer(1)]}
 giving the maximum number of minutes to run the step before killing the process.
 Defaults to \code{NULL}.}
 }

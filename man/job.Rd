@@ -5,7 +5,8 @@
 \title{Create nested list for \emph{one} \href{https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobs}{job}}
 \usage{
 job(id, name = NULL, needs = NULL, runs_on = "ubuntu-18.04",
-  steps = NULL, timeout_minutes = NULL, strategy = NULL)
+  steps = NULL, timeout_minutes = NULL, strategy = NULL,
+  container = NULL)
 }
 \arguments{
 \item{id, name}{\code{[character(1)]}
@@ -22,7 +23,8 @@ Defaults to \code{"ubuntu-18.04"}.
 Must be one of \link{ghactions_events}.}
 
 \item{steps}{\code{[list()]}
-giving an \emph{unnamed} list of steps, with each element as returned by \code{\link[=step]{step()}}.}
+giving an \emph{unnamed} list of steps, with each element as returned by \code{\link[=step]{step()}}.
+Defaults to \code{NULL}.}
 
 \item{timeout_minutes}{\code{[integer(1)]}
 giving the maximum number of minutes to let a workflow run before GitHub automatically cancels it.
@@ -30,7 +32,12 @@ Defaults to \code{NULL}.}
 
 \item{strategy}{\code{[list()]}
 giving a named list as returned by \code{\link[=strategy]{strategy()}}.
-Returns to \code{NULL}.}
+Defaults to \code{NULL}.}
+
+\item{container}{\code{[character(1)]}/\code{[list()]}
+giving a published container image.
+For advanced options, use \code{\link[=container]{container()}}.
+Defaults to \code{NULL}.}
 }
 \description{
 Create nested list for \emph{one} \href{https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobs}{job}

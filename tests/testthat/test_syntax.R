@@ -125,6 +125,18 @@ test_that("support matrix inclusions/exclusions", {
   )
 })
 
+test_that("support containers", {
+  expect_known_output(
+    object = write_workflow(
+      job(
+        id = "ship",
+        container = "node:10.16-jessie"
+      )
+    ),
+    file = "workflows/container_simple.yml"
+  )
+})
+
 
 # steps ====
 context("steps")
