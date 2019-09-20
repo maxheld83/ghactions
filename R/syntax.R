@@ -399,15 +399,15 @@ ghactions_vms <- c(
 #' giving a named list of additional parameters.
 #' Defaults to `NULL`.
 #'
-#' @param working_directory `[character(1)]`
+#' @param `working-directory` `[character(1)]`
 #' giving the default working directory.
 #' Defaults to `NULL`.
 #'
-#' @param continue_on_error `[logical(1)]`
+#' @param `continue-on-error` `[logical(1)]`
 #' giving whether to allow a job to pass when this step fails.
 #' Defaults to `NULL`.
 #'
-#' @param timeout_minutes `[integer(1)]`
+#' @param `timeout-minutes` `[integer(1)]`
 #' giving the maximum number of minutes to run the step before killing the process.
 #' Defaults to `NULL`.
 #'
@@ -420,11 +420,11 @@ step <- function(name = NULL,
                  shell = NULL,
                  with = NULL,
                  env = NULL,
-                 working_directory = NULL,
-                 continue_on_error = NULL,
-                 timeout_minutes = NULL) {
+                 `working-directory` = NULL,
+                 `continue-on-error` = NULL,
+                 `timeout-minutes` = NULL) {
   purrr::walk(
-    .x = list(id, `if`, name, uses, run, shell, working_directory),
+    .x = list(id, `if`, name, uses, run, shell, `working-directory`),
     .f = checkmate::assert_string,
     na.ok = FALSE,
     null.ok = TRUE
@@ -436,8 +436,8 @@ step <- function(name = NULL,
     null.ok = TRUE,
     names = "unique"
   )
-  checkmate::assert_flag(x = continue_on_error, na.ok = FALSE, null.ok = TRUE)
-  checkmate::assert_scalar(x = timeout_minutes, na.ok = FALSE, null.ok = TRUE)
+  checkmate::assert_flag(x = `continue-on-error`, na.ok = FALSE, null.ok = TRUE)
+  checkmate::assert_scalar(x = `timeout-minutes`, na.ok = FALSE, null.ok = TRUE)
 
   purrr::compact(as.list(environment()))
 }
