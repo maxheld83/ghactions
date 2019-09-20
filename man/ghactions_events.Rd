@@ -17,7 +17,8 @@ ghactions_events
 
 }
 \seealso{
-Other syntax: \code{\link{io}}, \code{\link{on}},
+Other syntax: \code{\link{ghactions_vms}},
+  \code{\link{io}}, \code{\link{job}}, \code{\link{on}},
   \code{\link{workflow}}
 }
 \concept{syntax}

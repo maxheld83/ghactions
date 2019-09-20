@@ -71,6 +71,24 @@ test_that("can be written out", {
 })
 
 
+# jobs ====
+context("jobs")
+
+test_that("can be written out", {
+  # these examples are based on https://help.github.com/en/articles/workflow-syntax-for-github-actions, but do look slightly different
+  expect_known_output(
+    object = write_workflow(
+      job(
+        id = "some_job",
+        name = "bar",
+        needs = c("zap", "zong")
+      )
+    ),
+    file = "workflows/job.yml"
+  )
+})
+
+
 context("actions")
 
 test_that("can override entrypoint", {

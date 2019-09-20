@@ -88,7 +88,7 @@ read_workflow <- function(file, ...) {
 #' Can also be a named list as returned by [on()] for additional filters.
 #'
 #' @param jobs `[list()]`
-#' giving a list of jobs.
+#' giving a named list of jobs, with each list element as returned by [job()].
 #'
 #' @examples
 #' workflow(
@@ -118,7 +118,8 @@ workflow <- function(name = NULL, on = "push", jobs = NULL) {
   checkmate::assert_list(
     x = jobs,
     any.missing = FALSE,
-    null.ok = TRUE
+    null.ok = TRUE,
+    names = "unique"
   )
 
   purrr::compact(as.list(environment()))
@@ -224,6 +225,83 @@ ghactions_events <- c(
   "watch"
 )
 
+
+# Job ====
+
+
+#' Create nested list for *one* [job](https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobs)
+#'
+#' @param id `[character(1)]`
+#' giving an ID to associate with the job.
+#'
+#' @param name `[character(1)]`
+#' giving a name of the job displayed on GitHub.
+#' Defaults to `NULL` for no name.
+#'
+#' @param needs `[character()]`
+#' giving the jobs that must complete successfully before this job is run.
+#' Defaults to `NULL` for no dependencies.
+#'
+#' @param runs_on `[character(1)]`
+#' giving the type of virtual host machone to run the job on.
+#' Defaults to `"ubuntu-18.04"`.
+#' Must be one of [ghactions_events].
+#'
+#' @param steps `[list()]`
+#' giving a named list of steps.
+#'
+#' @family syntax
+#'
+#' @export
+job <- function(id,
+                name = NULL,
+                needs = NULL,
+                runs_on = "ubuntu-18.04",
+                steps = NULL) {
+  checkmate::assert_string(x = id, na.ok = FALSE)
+  checkmate::assert_string(x = name, na.ok = FALSE, null.ok = TRUE)
+  checkmate::assert_character(
+    x = needs,
+    any.missing = FALSE,
+    unique = TRUE,
+    null.ok = TRUE
+  )
+  checkmate::assert_choice(
+    x = runs_on,
+    choices = ghactions_vms,
+    null.ok = FALSE
+  )
+  checkmate::assert_list(
+    x = steps,
+    null.ok = TRUE
+  )
+
+  res <- as.list(environment())
+  res$id <- NULL  # that's the name of the list, not *in* the list
+  res <- purrr::compact(res)
+  rlang::set_names(x = list(res), nm = id)
+}
+
+
+#' @title Virtual machines [available](https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idruns-on) on GitHub Actions
+#'
+#'
+#' @family syntax
+#'
+#' @examples
+#' ghactions_vms
+#'
+#' @export
+ghactions_vms <- c(
+  "ubuntu-latest",
+  "ubuntu-18.04",
+  "ubuntu-16.04",
+  "windows-latest",
+  "windows-2019",
+  "windows-2016",
+  "macOS-latest",
+  "macOS-10.14"
+)
 
 # Actions ====
 

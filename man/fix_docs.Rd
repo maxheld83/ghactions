@@ -37,5 +37,6 @@ workflow(
 }
 \seealso{
 Other syntax: \code{\link{ghactions_events}},
-  \code{\link{io}}, \code{\link{on}}
+  \code{\link{ghactions_vms}}, \code{\link{io}},
+  \code{\link{job}}, \code{\link{on}}
 }

@@ -1,0 +1,6 @@
+some_job:
+  name: bar
+  needs:
+    - zap
+    - zong
+  runs_on: ubuntu-18.04

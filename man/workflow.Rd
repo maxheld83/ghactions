@@ -18,7 +18,7 @@ Defaults to \code{"push"}, in which case the workflow is triggered on every push
 Can also be a named list as returned by \code{\link[=on]{on()}} for additional filters.}
 
 \item{jobs}{\code{[list()]}
-giving a list of jobs.}
+giving a named list of jobs, with each list element as returned by \code{\link[=job]{job()}}.}
 }
 \description{
 Create nested list for a workflow block.
@@ -33,6 +33,7 @@ workflow(
 }
 \seealso{
 Other syntax: \code{\link{ghactions_events}},
-  \code{\link{io}}, \code{\link{on}}
+  \code{\link{ghactions_vms}}, \code{\link{io}},
+  \code{\link{job}}, \code{\link{on}}
 }
 \concept{syntax}

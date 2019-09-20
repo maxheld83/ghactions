@@ -47,6 +47,7 @@ If a workflow is \emph{not} \code{name:}d, the file name will be used as a \code
 
 \seealso{
 Other syntax: \code{\link{ghactions_events}},
+  \code{\link{ghactions_vms}}, \code{\link{job}},
   \code{\link{on}}, \code{\link{workflow}}
 }
 \concept{syntax}

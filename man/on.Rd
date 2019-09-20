@@ -29,6 +29,7 @@ on(
 }
 \seealso{
 Other syntax: \code{\link{ghactions_events}},
-  \code{\link{io}}, \code{\link{workflow}}
+  \code{\link{ghactions_vms}}, \code{\link{io}},
+  \code{\link{job}}, \code{\link{workflow}}
 }
 \concept{syntax}
