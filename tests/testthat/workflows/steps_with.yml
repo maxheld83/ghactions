@@ -1,0 +1,6 @@
+- name: My first step
+  uses: actions/hello_world@master
+  with:
+    first_name: Mona
+    middle_name: The
+    last_name: Octocat

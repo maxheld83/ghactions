@@ -8,12 +8,9 @@ job(id, name = NULL, needs = NULL, runs_on = "ubuntu-18.04",
   steps = NULL)
 }
 \arguments{
-\item{id}{\code{[character(1)]}
-giving an ID to associate with the job.}
-
-\item{name}{\code{[character(1)]}
-giving a name of the job displayed on GitHub.
-Defaults to \code{NULL} for no name.}
+\item{id, name}{\code{[character(1)]}
+giving additional options for the job.
+Defaults to \code{NULL}.}
 
 \item{needs}{\code{[character()]}
 giving the jobs that must complete successfully before this job is run.
@@ -25,7 +22,7 @@ Defaults to \code{"ubuntu-18.04"}.
 Must be one of \link{ghactions_events}.}
 
 \item{steps}{\code{[list()]}
-giving a named list of steps.}
+giving an \emph{unnamed} list of steps, with each element as returned by \code{\link[=step]{step()}}.}
 }
 \description{
 Create nested list for \emph{one} \href{https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobs}{job}

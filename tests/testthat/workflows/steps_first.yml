@@ -1,0 +1,5 @@
+- name: My first step
+  uses: ./.github/actions/my-action
+- name: My backup step
+  if: failure()
+  uses: actions/heroku@master

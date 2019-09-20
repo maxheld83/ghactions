@@ -75,7 +75,7 @@ read_workflow <- function(file, ...) {
 
 
 # Workflows ====
-#' Create nested list for a workflow block.
+#' Create nested list for a [workflow block](https://help.github.com/en/articles/workflow-syntax-for-github-actions).
 #'
 #' @param name `[character(1)]`
 #' giving the [name](https://help.github.com/en/articles/workflow-syntax-for-github-actions#name) of the workflow.
@@ -88,7 +88,7 @@ read_workflow <- function(file, ...) {
 #' Can also be a named list as returned by [on()] for additional filters.
 #'
 #' @param jobs `[list()]`
-#' giving a named list of jobs, with each list element as returned by [job()].
+#' giving a *named* list of jobs, with each list element as returned by [job()].
 #'
 #' @examples
 #' workflow(
@@ -226,17 +226,13 @@ ghactions_events <- c(
 )
 
 
-# Job ====
-
+# Jobs ====
 
 #' Create nested list for *one* [job](https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobs)
 #'
-#' @param id `[character(1)]`
-#' giving an ID to associate with the job.
-#'
-#' @param name `[character(1)]`
-#' giving a name of the job displayed on GitHub.
-#' Defaults to `NULL` for no name.
+#' @param id,name `[character(1)]`
+#' giving additional options for the job.
+#' Defaults to `NULL`.
 #'
 #' @param needs `[character()]`
 #' giving the jobs that must complete successfully before this job is run.
@@ -248,7 +244,7 @@ ghactions_events <- c(
 #' Must be one of [ghactions_events].
 #'
 #' @param steps `[list()]`
-#' giving a named list of steps.
+#' giving an *unnamed* list of steps, with each element as returned by [step()].
 #'
 #' @family syntax
 #'
@@ -273,7 +269,8 @@ job <- function(id,
   )
   checkmate::assert_list(
     x = steps,
-    null.ok = TRUE
+    null.ok = TRUE,
+    names = "unnamed"
   )
 
   res <- as.list(environment())
@@ -284,7 +281,6 @@ job <- function(id,
 
 
 #' @title Virtual machines [available](https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idruns-on) on GitHub Actions
-#'
 #'
 #' @family syntax
 #'
@@ -302,6 +298,64 @@ ghactions_vms <- c(
   "macOS-latest",
   "macOS-10.14"
 )
+
+
+# Steps ====
+
+#' Create nested list for *one* [job](https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobs)
+#'
+#' @param id,if,name,uses,run,shell `[character(1)]`
+#' giving additional options for the stop.
+#' Multiline strings are not supported.
+#' Defaults to `NULL`.
+#'
+#' @param with,env `[list()]`
+#' giving a named list of additional parameters.
+#' Defaults to `NULL`.
+#'
+#' @param working_directory `[character(1)]`
+#' giving the default working directory.
+#' Defaults to `NULL`.
+#'
+#' @param continue_on_error `[logical(1)]`
+#' giving whether to allow a job to pass when this step fails.
+#' Defaults to `NULL`.
+#'
+#' @param timeout_minutes `[integer(1)]`
+#' giving the maximum number of minutes to run the step before killing the process.
+#' Defaults to `NULL`.
+#'
+#' @export
+step <- function(name = NULL,
+                 id = NULL,
+                 `if` = NULL,
+                 uses = NULL,
+                 run = NULL,
+                 shell = NULL,
+                 with = NULL,
+                 env = NULL,
+                 working_directory = NULL,
+                 continue_on_error = NULL,
+                 timeout_minutes = NULL) {
+  purrr::walk(
+    .x = list(id, `if`, name, uses, run, shell, working_directory),
+    .f = checkmate::assert_string,
+    na.ok = FALSE,
+    null.ok = TRUE
+  )
+  purrr::walk(
+    .x = list(with, env),
+    .f = checkmate::assert_list,
+    any.missing = FALSE,
+    null.ok = TRUE,
+    names = "unique"
+  )
+  checkmate::assert_flag(x = continue_on_error, na.ok = FALSE, null.ok = TRUE)
+  checkmate::assert_scalar(x = timeout_minutes, na.ok = FALSE, null.ok = TRUE)
+
+  purrr::compact(as.list(environment()))
+}
+
 
 # Actions ====
 

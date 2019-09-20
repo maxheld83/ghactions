@@ -15,11 +15,11 @@ test_that("workflows are read in", {
 })
 
 
-# Workflows ====
+# workflows ====
+# these examples are based on https://help.github.com/en/articles/workflow-syntax-for-github-actions, but do look slightly different
 context("workflows")
 
 test_that("can be written out", {
-  # these examples are based on https://help.github.com/en/articles/workflow-syntax-for-github-actions, but do look slightly different
   # 'on' needs to be escaped in all of the below test cases for some reason; doesn't hurt ghactions
   expect_known_output(
     object = write_workflow(workflow(name = "foo")),
@@ -75,7 +75,6 @@ test_that("can be written out", {
 context("jobs")
 
 test_that("can be written out", {
-  # these examples are based on https://help.github.com/en/articles/workflow-syntax-for-github-actions, but do look slightly different
   expect_known_output(
     object = write_workflow(
       job(
@@ -85,6 +84,45 @@ test_that("can be written out", {
       )
     ),
     file = "workflows/job.yml"
+  )
+})
+
+
+# steps ====
+context("steps")
+
+test_that("can be written out", {
+  expect_known_output(
+    object = write_workflow(
+      list(
+        step(
+          name = "My first step",
+          uses = "./.github/actions/my-action",
+        ),
+        step(
+          name = "My backup step",
+          `if` = "failure()",
+          uses = "actions/heroku@master"
+        )
+      )
+    ),
+    file = "workflows/steps_first.yml"
+  )
+  expect_known_output(
+    object = write_workflow(
+      list(
+        step(
+          name = "My first step",
+          uses = "actions/hello_world@master",
+          with = list(
+            first_name = "Mona",
+            middle_name = "The",
+            last_name = "Octocat"
+          )
+        )
+      )
+    ),
+    file = "workflows/steps_with.yml"
   )
 })
 

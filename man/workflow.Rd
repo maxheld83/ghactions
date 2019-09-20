@@ -2,7 +2,7 @@
 % Please edit documentation in R/syntax.R
 \name{workflow}
 \alias{workflow}
-\title{Create nested list for a workflow block.}
+\title{Create nested list for a \href{https://help.github.com/en/articles/workflow-syntax-for-github-actions}{workflow block}.}
 \usage{
 workflow(name = NULL, on = "push", jobs = NULL)
 }
@@ -18,10 +18,10 @@ Defaults to \code{"push"}, in which case the workflow is triggered on every push
 Can also be a named list as returned by \code{\link[=on]{on()}} for additional filters.}
 
 \item{jobs}{\code{[list()]}
-giving a named list of jobs, with each list element as returned by \code{\link[=job]{job()}}.}
+giving a \emph{named} list of jobs, with each list element as returned by \code{\link[=job]{job()}}.}
 }
 \description{
-Create nested list for a workflow block.
+Create nested list for a \href{https://help.github.com/en/articles/workflow-syntax-for-github-actions}{workflow block}.
 }
 \examples{
 workflow(
