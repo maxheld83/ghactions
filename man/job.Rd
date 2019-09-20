@@ -5,7 +5,7 @@
 \title{Create nested list for \emph{one} \href{https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobs}{job}}
 \usage{
 job(id, name = NULL, needs = NULL, runs_on = "ubuntu-18.04",
-  steps = NULL)
+  steps = NULL, timeout_minutes = NULL)
 }
 \arguments{
 \item{id, name}{\code{[character(1)]}
@@ -23,6 +23,10 @@ Must be one of \link{ghactions_events}.}
 
 \item{steps}{\code{[list()]}
 giving an \emph{unnamed} list of steps, with each element as returned by \code{\link[=step]{step()}}.}
+
+\item{timeout_minutes}{\code{[integer(1)]}
+giving the maximum number of minutes to let a workflow run before GitHub automatically cancels it.
+Defaults to \code{NULL}.}
 }
 \description{
 Create nested list for \emph{one} \href{https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobs}{job}

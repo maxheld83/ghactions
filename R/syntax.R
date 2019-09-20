@@ -246,6 +246,10 @@ ghactions_events <- c(
 #' @param steps `[list()]`
 #' giving an *unnamed* list of steps, with each element as returned by [step()].
 #'
+#' @param timeout_minutes `[integer(1)]`
+#' giving the maximum number of minutes to let a workflow run before GitHub automatically cancels it.
+#' Defaults to `NULL`.
+#'
 #' @family syntax
 #'
 #' @export
@@ -253,7 +257,8 @@ job <- function(id,
                 name = NULL,
                 needs = NULL,
                 runs_on = "ubuntu-18.04",
-                steps = NULL) {
+                steps = NULL,
+                timeout_minutes = NULL) {
   checkmate::assert_string(x = id, na.ok = FALSE)
   checkmate::assert_string(x = name, na.ok = FALSE, null.ok = TRUE)
   checkmate::assert_character(
@@ -271,6 +276,11 @@ job <- function(id,
     x = steps,
     null.ok = TRUE,
     names = "unnamed"
+  )
+  checkmate::assert_scalar(
+    x = timeout_minutes,
+    na.ok = FALSE,
+    null.ok = TRUE
   )
 
   res <- as.list(environment())
