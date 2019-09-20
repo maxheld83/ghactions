@@ -1,77 +1,39 @@
-# Workflows ====
-#' Create GitHub Actions syntax for *one workflow*.
-#'
-#' @param IDENTIFIER `[character(1)]`
-#' giving the name of the workflow block.
-#'
-#' @param on `[character(1)]`
-#' giving the [GitHub Event](https://developer.github.com/webhooks/#events) on which to trigger the workflow.
-#' Must be one of [ghactions_events].
-#' Defaults to `"push"`, in which case the workflow is triggered on every push event.
-#'
-#' @param resolves `[character()]`
-#' giving the action(s) to resolve
-#'
-#' @examples
-#' workflow(
-#'   IDENTIFIER = "Run calculation",
-#'   on = "push",
-#'   resolves = "Simple Addition"
-#' )
-#'
-#' @return `[list()]`
-#' A list as specified in the `workflow` argument to [use_ghactions()].
-#'
-#' @family syntax workflows
-#'
-#' @export
-workflow <- function(IDENTIFIER, on = "push", resolves) {
-  checkmate::assert_string(
-    x = IDENTIFIER,
-    null.ok = FALSE
-  )
-  rlang::arg_match(arg = on, values = ghactions_events)
-  checkmate::assert_character(
-    x = resolves,
-    any.missing = FALSE,
-    unique = TRUE,  # cannot have two identical dependencies
-    null.ok = TRUE
-  )
+# I/O ====
 
-  list(
-    IDENTIFIER = IDENTIFIER,
-    on = on,
-    resolves = resolves,
-    template = "workflow"
-  )
-}
-
-
-#' @describeIn workflow Convert workflow block to HCL
+#' Reading and writing GitHub Actions workflow files
 #'
-#' @inherit make_template
+#' @param x `[list()]`
+#' as created by the workflow functions.
 #'
-#' @export
-workflow2hcl <- function(l) {
-  make_template(
-    list(
-      IDENTIFIER = l$IDENTIFIER,
-      on = l$on,
-      resolves = toTOML(l$resolves)
-    ),
-    template = "workflow"
-  )
-}
-
-
-#' Read in GitHub Actions workflows
-#'
-#' @param path `[character()]` giving the directory from the repository root where to find GitHub Actions workflows.
-#' Defaults to `".github/workflows"`.
+#' @family syntax
 #'
 #' @return `[list()]` of lists from yaml.
 #'
-#' @family workflows
+#' @details
+#' It is not necessary to escape characters with special meaning in yaml; the underlying [yaml::write_yaml()] does this automatically.
+#'
+#' @name io
+NULL
+
+
+#' @describeIn io Write *one* GitHub Actions workflow to file.
+#'
+#' @inheritParams yaml::write_yaml
+write_workflow <- function(x, file = stdout(), ...) {
+  yaml::write_yaml(
+    x = x,
+    file = file,
+    # cosmetic change, but github docs are intended
+    indent.mapping.sequence = TRUE,
+    ...
+  )
+}
+
+
+#' @describeIn io Read in *one or more* GitHub Actions workflows from file(s)
+#'
+#' @param path `[character()]` giving the directory from the repository root where to find GitHub Actions workflows.
+#' Defaults to `".github/workflows"`.
 #'
 #' @export
 read_workflows <- function(path = ".github/workflows") {
@@ -95,14 +57,127 @@ read_workflows <- function(path = ".github/workflows") {
   purrr::map(.x = files, .f = read_workflow)
 }
 
-#' @describeIn read_workflows Read in an individual GitHub Actions workflow
-read_workflow <- function(path) {
-  x <- yaml::read_yaml(file = path)
+#' @describeIn io Read in *one* GitHub Actions workflow from a file.
+#'
+#' @inheritParams yaml::read_yaml
+#'
+#' @details
+#' If a workflow is *not* `name:`d, the file name will be used as a `name: `, as per the [GitHub Actions documentation](https://help.github.com/en/articles/workflow-syntax-for-github-actions#name).
+#'
+#' @export
+read_workflow <- function(file, ...) {
+  x <- yaml::read_yaml(file = file, ...)
   if (is.null(x$name)) {
-    # this is what github does https://help.github.com/en/articles/workflow-syntax-for-github-actions#name
-    x$name <- path
+    x$name <- file
   }
   x
+}
+
+
+# Workflows ====
+#' Create nested list for a workflow block.
+#'
+#' @param name `[character(1)]`
+#' giving the [name](https://help.github.com/en/articles/workflow-syntax-for-github-actions#name) of the workflow.
+#' Defaults to `NULL`, for no name, in which case GitHub will use the file name.
+#'
+#' @param on `[character()]`
+#' giving the [GitHub Event](https://help.github.com/en/articles/events-that-trigger-workflows) on which to trigger the workflow.
+#' Must be a subset of [ghactions_events].
+#' Defaults to `"push"`, in which case the workflow is triggered on every push event.
+#' Can also be a named list as returned by [on()] for additional filters.
+#'
+#' @param jobs `[list()]`
+#' giving a list of jobs.
+#'
+#' @examples
+#' workflow(
+#'   name = "Render",
+#'   on = "push",
+#'   jobs = NULL
+#' )
+#'
+#' @family syntax
+#'
+#' @export
+workflow <- function(name = NULL, on = "push", jobs = NULL) {
+  checkmate::assert_string(x = name, null.ok = TRUE, na.ok = FALSE)
+  if (is.character(on)) {
+    checkmate::assert_subset(
+      x = on,
+      choices = ghactions_events,
+      empty.ok = FALSE
+    )
+  } else {
+    checkmate::assert_list(
+      x = on,
+      any.missing = FALSE,
+      names = "named"
+    )
+  }
+  checkmate::assert_list(
+    x = jobs,
+    any.missing = FALSE,
+    null.ok = TRUE
+  )
+
+  purrr::compact(as.list(environment()))
+}
+
+
+#' Create nested list for an `on:` field.
+#'
+#' @param event `[character(1)]`
+#' giving the event on which to filter.
+#' Must be *one* of `c("push", "pull_request", "schedule")`.
+#'
+#' @param ... `[character()]`
+#' giving the filters on which to run
+#' Must correspond to the filters allowed by `event`.
+#'
+#' @details
+#' See the [GitHub Actions workflow syntax](https://help.github.com/en/articles/workflow-syntax-for-github-actions) for details.
+#'
+#' @export
+#'
+#' @family syntax
+#'
+#' @examples
+#' on(
+#'   event = "push",
+#'   branches = c("master", "releases/*")
+#' )
+on <- function(event, ...) {
+  checkmate::assert_choice(
+    x = event,
+    choices = c("push", "pull_request", "schedule")
+  )
+  rlang::set_names(x = list(purrr::compact(list(...))), nm = event)
+}
+
+#' @describeIn filter on push event
+#'
+#' @param tags,branches,paths `[character()]`
+#' giving the [tags, branches](https://help.github.com/en/articles/workflow-syntax-for-github-actions#onpushpull_requesttagsbranches) or [modified paths](https://help.github.com/en/articles/workflow-syntax-for-github-actions#onpushpull_requestpaths) on which to run the workflow.
+#' Defaults to `NULL` for no additional filters.
+#'
+#' @export
+on_push <- function(tags = NULL, branches = NULL, paths = NULL) {
+  on(event = "push", tags = tags, branches = branches, paths = paths)
+}
+
+#' @describeIn filter on pull request
+#'
+#' @export
+on_pull_request <- function(tags = NULL, branches = NULL, paths = NULL) {
+  on(event = "pull_request", tags = tags, branches = branches, paths = paths)
+}
+
+#' @describeIn filter on schedule
+#'
+#' @export
+on_schedule <- function(cron = NULL) {
+  on(event = "schedule", cron = cron)
 }
 
 
@@ -144,6 +219,7 @@ ghactions_events <- c(
   "push",
   "repository_dispatch",
   "release",
+  "schedule",
   "status",
   "watch"
 )

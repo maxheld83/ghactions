@@ -7,19 +7,12 @@
 fix_docs(IDENTIFIER = "Fix Documentation", after_code = NULL)
 }
 \arguments{
-\item{IDENTIFIER}{\code{[character(1)]}
-giving the name of the workflow block.}
-
 \item{after_code}{\code{[character(1)]} Giving what happens when the working tree is \emph{unclean after}  \code{code} is evaluated:
 \itemize{
 \item \code{NULL} to throw an error or
 \item \code{"commit"} to commit the changes.
 Defaults to \code{NULL}, which just thinly wraps \code{\link[=check_clean_tree]{check_clean_tree()}}.
 }}
-}
-\value{
-\code{[list()]}
-A list as specified in the \code{workflow} argument to \code{\link[=use_ghactions]{use_ghactions()}}.
 }
 \description{
 This GitHub action creates \code{man/} documentation from \href{https://github.com/klutometis/roxygen/}{roxygen} comments in \code{R/} scripts at the repository root using \href{https://devtools.r-lib.org}{devtools}.
@@ -36,9 +29,13 @@ For more caveats, see \code{\link[=auto_commit]{auto_commit()}}.
 }
 \examples{
 workflow(
-  IDENTIFIER = "Run calculation",
+  name = "Render",
   on = "push",
-  resolves = "Simple Addition"
+  jobs = NULL
 )
 
+}
+\seealso{
+Other syntax: \code{\link{ghactions_events}},
+  \code{\link{io}}, \code{\link{on}}
 }

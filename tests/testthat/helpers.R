@@ -103,3 +103,13 @@ hush <- function(code) {
     code = code
   )
 }
+
+
+#' Return compact list of arguments and defaults
+#'
+#' @noRd
+# TODO this does not work, see https://github.com/r-lib/ghactions/issues/349
+args_n_defaults <- function(...) {
+  res <- as.list(rlang::env_parent(env = rlang::current_env(), n = 1))
+  purrr::compact(res)
+}

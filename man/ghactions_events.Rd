@@ -4,7 +4,7 @@
 \name{ghactions_events}
 \alias{ghactions_events}
 \title{Supported events to trigger GitHub actions}
-\format{An object of class \code{character} of length 27.}
+\format{An object of class \code{character} of length 28.}
 \usage{
 ghactions_events
 }
@@ -15,6 +15,10 @@ List is taken from \href{https://developer.github.com/actions/creating-workflows
 \examples{
 ghactions_events
 
+}
+\seealso{
+Other syntax: \code{\link{io}}, \code{\link{on}},
+  \code{\link{workflow}}
 }
 \concept{syntax}
 \keyword{datasets}

@@ -9,14 +9,17 @@ website(IDENTIFIER = "Render and Deploy RMarkdown Website",
 }
 \arguments{
 \item{IDENTIFIER}{\code{[character(1)]}
-giving the name of the workflow block.}
+Giving the name of the action.
+
+Used:
+\itemize{
+\item as an informative label on GitHub.com,
+\item in the \code{needs} fields of other \emph{action blocks} to model the workflow graph,
+\item in the \code{resolves} fields of other \emph{workflow blocks} to model the workflow graph.
+}}
 
 \item{deploy}{\code{[list(1)]}
 giving the name of the branch to deploy \emph{from}, and the function to deploy \emph{with}.}
-}
-\value{
-\code{[list()]}
-A list as specified in the \code{workflow} argument to \code{\link[=use_ghactions]{use_ghactions()}}.
 }
 \description{
 This workflow renders some Rmarkdown via its (custom) site generator and deploys the result.
@@ -51,9 +54,9 @@ To learn more, consider the \href{https://www.maxheld.de/ghactions/articles/ghac
 
 \examples{
 workflow(
-  IDENTIFIER = "Run calculation",
+  name = "Render",
   on = "push",
-  resolves = "Simple Addition"
+  jobs = NULL
 )
 
 }

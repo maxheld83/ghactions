@@ -1,0 +1,8 @@
+'on':
+  push:
+    branches:
+      - master
+      - releases/*
+    tags:
+      - v1
+      - v1.0
