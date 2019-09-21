@@ -6,7 +6,7 @@
 \usage{
 job(id, name = NULL, needs = NULL, runs_on = "ubuntu-18.04",
   steps = NULL, timeout_minutes = NULL, strategy = NULL,
-  container = NULL)
+  container = NULL, services = NULL)
 }
 \arguments{
 \item{id, name}{\code{[character(1)]}
@@ -37,6 +37,11 @@ Defaults to \code{NULL}.}
 \item{container}{\code{[character(1)]}/\code{[list()]}
 giving a published container image.
 For advanced options, use \code{\link[=container]{container()}}.
+Defaults to \code{NULL}.}
+
+\item{services}{\code{[list()]}
+giving additional containers to host services for a job in a workflow in a \emph{named} list.
+Use \code{\link[=container]{container()}}.to construct the list elements.
 Defaults to \code{NULL}.}
 }
 \description{

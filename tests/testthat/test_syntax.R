@@ -155,6 +155,28 @@ test_that("support advanced containers", {
   )
 })
 
+test_that("support additional services", {
+  expect_known_output(
+    object = write_workflow(
+      job(
+        id = "my_job",
+        services = list(
+          nginx = container(
+            image = "nginx",
+            ports = list("8080:80"),
+            env = list(NGINX_PORT = (80L)),
+          ),
+          redis = container(
+            image = "redis",
+            ports = list("6379/tcp")
+          )
+        )
+      )
+    ),
+    file = "workflows/services.yml"
+  )
+})
+
 
 # steps ====
 context("steps")

@@ -260,6 +260,11 @@ ghactions_events <- c(
 #' For advanced options, use [container()].
 #' Defaults to `NULL`.
 #'
+#' @param services `[list()]`
+#' giving additional containers to host services for a job in a workflow in a *named* list.
+#' Use [container()].to construct the list elements.
+#' Defaults to `NULL`.
+#'
 #' @family syntax
 #'
 #' @export
@@ -270,7 +275,8 @@ job <- function(id,
                 steps = NULL,
                 timeout_minutes = NULL,
                 strategy = NULL,
-                container = NULL) {
+                container = NULL,
+                services = NULL) {
   checkmate::assert_string(x = id, na.ok = FALSE)
   checkmate::assert_string(x = name, na.ok = FALSE, null.ok = TRUE)
   checkmate::assert_character(
@@ -310,6 +316,12 @@ job <- function(id,
       names = "unique"
     )
   }
+  checkmate::assert_list(
+    x = services,
+    any.missing = FALSE,
+    null.ok = TRUE,
+    names = "unique"
+  )
 
   res <- as.list(environment())
   res$id <- NULL  # that's the name of the list, not *in* the list
@@ -414,7 +426,8 @@ container <- function(image,
     x = env,
     types = "atomicvector",
     any.missing = FALSE,
-    names = "unique"
+    names = "unique",
+    null.ok = TRUE
   )
   purrr::walk(
     .x = list(ports, volumes),
