@@ -43,8 +43,8 @@ Defaults to \code{NULL}.}
 Create nested list for \emph{one} \href{https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobs}{job}
 }
 \seealso{
-Other syntax: \code{\link{gh_matrix}},
-  \code{\link{ghactions_events}},
+Other syntax: \code{\link{container}},
+  \code{\link{gh_matrix}}, \code{\link{ghactions_events}},
   \code{\link{ghactions_vms}}, \code{\link{io}},
   \code{\link{on}}, \code{\link{strategy}},
   \code{\link{workflow}}

@@ -383,6 +383,52 @@ gh_matrix <- function(..., exclude = NULL, include = NULL) {
 }
 
 
+#' Create nested list for the [container](https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idcontainer) field in [job()]
+#'
+#' @param image `[character(1)]`
+#' giving the published docker image to use as the container to run the action.
+#'
+
+#' @param env `[list()]`
+#' giving environment variables for the container as a *named* list.
+#' Defaults to `NULL`.
+#'
+#' @param ports,volumes `[list()]`
+#' giving ports to expose, and volumes for the container to use as an *unnamed* list.
+#' Defaults to `NULL`.
+#'
+#' @param options `[character()]`
+#' giving additional options.
+#' Defaults to `NULL`.
+#'
+#' @family syntax
+#'
+#' @export
+container <- function(image,
+                      env = NULL,
+                      ports = NULL,
+                      volumes = NULL,
+                      options = NULL) {
+  checkmate::assert_string(x = image, na.ok = FALSE)
+  checkmate::assert_list(
+    x = env,
+    types = "atomicvector",
+    any.missing = FALSE,
+    names = "unique"
+  )
+  purrr::walk(
+    .x = list(ports, volumes),
+    .f = checkmate::assert_list,
+    any.missing = FALSE,
+    null.ok = TRUE,
+    names = "unnamed"
+  )
+  checkmate::assert_character(x = options, null.ok = TRUE)
+
+  purrr::compact(as.list(environment()))
+}
+
+
 #' @title Virtual machines [available](https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idruns-on) on GitHub Actions
 #'
 #' @family syntax

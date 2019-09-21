@@ -18,7 +18,8 @@ Defaults to \code{NULL}.}
 Create nested list for the \href{https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idstrategy}{matrix} field in \code{\link[=strategy]{strategy()}}
 }
 \seealso{
-Other syntax: \code{\link{ghactions_events}},
+Other syntax: \code{\link{container}},
+  \code{\link{ghactions_events}},
   \code{\link{ghactions_vms}}, \code{\link{io}},
   \code{\link{job}}, \code{\link{on}},
   \code{\link{strategy}}, \code{\link{workflow}}

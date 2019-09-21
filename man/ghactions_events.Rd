@@ -17,9 +17,9 @@ ghactions_events
 
 }
 \seealso{
-Other syntax: \code{\link{gh_matrix}},
-  \code{\link{ghactions_vms}}, \code{\link{io}},
-  \code{\link{job}}, \code{\link{on}},
+Other syntax: \code{\link{container}},
+  \code{\link{gh_matrix}}, \code{\link{ghactions_vms}},
+  \code{\link{io}}, \code{\link{job}}, \code{\link{on}},
   \code{\link{strategy}}, \code{\link{workflow}}
 }
 \concept{syntax}

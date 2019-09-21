@@ -125,7 +125,7 @@ test_that("support matrix inclusions/exclusions", {
   )
 })
 
-test_that("support containers", {
+test_that("support simple containers", {
   expect_known_output(
     object = write_workflow(
       job(
@@ -134,6 +134,24 @@ test_that("support containers", {
       )
     ),
     file = "workflows/container_simple.yml"
+  )
+})
+
+test_that("support advanced containers", {
+  expect_known_output(
+    object = write_workflow(
+      job(
+        id = "my_job",
+        container = container(
+          image = "node:10.16-jessie",
+          env = list(NODE_ENV = "development"),
+          ports = list(80L),
+          volumes = list("my_docker_volume:/volume_mount"),
+          options = "--cpus 1"
+        )
+      )
+    ),
+    file = "workflows/container_adv.yml"
   )
 })
 

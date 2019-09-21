@@ -23,8 +23,8 @@ giving the maximum number of jobs to run simultaneously when using a matrix job 
 Create nested list for the \href{https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idstrategy}{strategy} field in \code{\link[=job]{job()}}
 }
 \seealso{
-Other syntax: \code{\link{gh_matrix}},
-  \code{\link{ghactions_events}},
+Other syntax: \code{\link{container}},
+  \code{\link{gh_matrix}}, \code{\link{ghactions_events}},
   \code{\link{ghactions_vms}}, \code{\link{io}},
   \code{\link{job}}, \code{\link{on}},
   \code{\link{workflow}}
