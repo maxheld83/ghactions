@@ -1,54 +1,19 @@
-#' @title Create [Docker CLI action](https://github.com/actions/docker/tree/aea64bb1b97c42fa69b90523667fef56b90d7cff) to run [Docker](http://docker.com)
-#' @param ... arguments passed on to other methods, not currently used.
-#' @inherit action
-#' @export
-docker_cli <- function(IDENTIFIER,
-                       needs,
-                       args) {
-  list(
-    IDENTIFIER = IDENTIFIER,
-    needs = needs,
-    uses = "actions/docker/cli@aea64bb1b97c42fa69b90523667fef56b90d7cff",
-    args = args
-  )
-}
-
-#' @describeIn docker_cli Build image called `repo:latest` from `Dockerfile` at repository root
-build_image <- purrr::partial(
-  .f = docker_cli,
-  IDENTIFIER = "Build image",
-  needs = NULL, # because it's always the first step
-  args = "build --tag=repo:latest ."
-)
-
-
-#' @title Create [Rscript-byod action](https://github.com/maxheld83/ghactions/tree/master/Rscript-byod) to run arbitrary R expressions
+#' Run [utils::Rscript] in a GitHub Actions step
 #'
-#' @details
-#' `expr` here accepts R expressions (say, `1+1`) for your convenience, *not* quoted expressions (say, `"1+1"`) as in the original [Rscript].
-#' `expr` is best used for very few lines; if you have more code, consider placing it in a separate R script for `file`.
+#' Writes the appropriate syntax for a step.
 #'
-#' `args` differs from the generic `args` in other GitHub actions:
-#' It only gets appended to the `Rscript` call when a `file` is provided.
+#' @inheritDotParams step -run
 #'
-#' You can only provide `expr` *or* `file`.
+#' @inherit utils::Rscript
 #'
-#' @param expr any syntactically valid R expression.
-#'
-#' @inheritParams utils::Rscript
-#'
-#' @inherit action
-#' @template byod
+#' @family steps
 #'
 #' @export
-rscript_byod <- function(IDENTIFIER,
-                         needs,
-                         options = c("--verbose", "--echo"),  # makes for better logs
-                         expr = NULL,
-                         file = NULL,
-                         args = NULL) {
-  # TODO the part in here that checks and makes an Rscript call probably has to be factored out at some point
-
+rscript <- function(options = "--help",
+                    expr = NULL,
+                    file = NULL,
+                    args = NULL,
+                    ...) {
   # input validation ====
   checkmate::assert_character(
     x = options,
@@ -56,19 +21,13 @@ rscript_byod <- function(IDENTIFIER,
     any.missing = FALSE,
     null.ok = TRUE
   )
-
   if (is.null(file)) {
-    expr <- rlang::enexpr(expr)
-    checkmate::assert_true(x = rlang::is_expression(expr))
-    checkmate::assert_null(x = args)
-
-    # deparse expr must only happen under this condition, otherwise below glue writes bad Rscript argument
-    expr <- deparse(expr)  # rlang::quo_text adds linebreaks, which break Rscript
+    checkmate::assert_character(x = expr, any.missing = FALSE, null.ok = TRUE)
   } else {
     checkmate::assert_null(x = expr)  # there can only be expr OR file
     checkmate::assert_file_exists(
       x = file,
-      extension = "R"
+      extension = c("r", "R")
     )
   }
   checkmate::assert_character(
@@ -77,47 +36,16 @@ rscript_byod <- function(IDENTIFIER,
     null.ok = TRUE
   )
 
-  # create list ====
-  list(
-    IDENTIFIER = IDENTIFIER,
-    uses = "maxheld83/ghactions/Rscript-byod@master",
-    # this actually does *not* need a harder dependency, because it is versioned in this repo
-    needs = needs,
-    args = c(
+  # create step ====
+  step(
+    run = paste(
+      "Rscript",
       options,
-      glue::glue('-e "{expr}"'),
+      glue::glue('-e "{expr}"'),  # becomes empty string when NULL
       file,
       args
-    )
-  )
-}
-
-
-#' @title Create [filter action](https://github.com/actions/bin/tree/a9036ccda9df39c6ca7e1057bc4ef93709adca5f/filter)
-#' @inherit action
-#' @export
-filter <- function(IDENTIFIER,
-                   needs,
-                   args) {
-  list(
-    IDENTIFIER = IDENTIFIER,
-    uses = "actions/bin/filter@a9036ccda9df39c6ca7e1057bc4ef93709adca5f",
-    needs = needs,
-    args = args
-  )
-}
-
-#' @describeIn filter Filter on branch
-#'
-#' @param branch `[character(1)]`
-#' giving the name of the branch to filter on.
-#'
-#' @export
-filter_branch <- function(needs, branch = "master") {
-  filter(
-    IDENTIFIER = glue::glue('Filter {branch}'),
-    needs = needs,
-    args = glue::glue('branch {branch}')
+    ),
+    ...
   )
 }
 

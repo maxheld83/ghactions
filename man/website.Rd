@@ -8,16 +8,6 @@ website(IDENTIFIER = "Render and Deploy RMarkdown Website",
   deploy = list(master = ghpages()))
 }
 \arguments{
-\item{IDENTIFIER}{\code{[character(1)]}
-Giving the name of the action.
-
-Used:
-\itemize{
-\item as an informative label on GitHub.com,
-\item in the \code{needs} fields of other \emph{action blocks} to model the workflow graph,
-\item in the \code{resolves} fields of other \emph{workflow blocks} to model the workflow graph.
-}}
-
 \item{deploy}{\code{[list(1)]}
 giving the name of the branch to deploy \emph{from}, and the function to deploy \emph{with}.}
 }
@@ -61,6 +51,10 @@ workflow(
 
 }
 \seealso{
-Other byod: \code{\link{rscript_byod}}
+Other syntax: \code{\link{container}},
+  \code{\link{gh_matrix}}, \code{\link{ghactions_events}},
+  \code{\link{ghactions_vms}}, \code{\link{io}},
+  \code{\link{job}}, \code{\link{on}},
+  \code{\link{strategy}}
 }
 \concept{byod}
