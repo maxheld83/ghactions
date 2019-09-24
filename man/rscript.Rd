@@ -2,7 +2,7 @@
 % Please edit documentation in R/steps.R
 \name{rscript}
 \alias{rscript}
-\title{Run \link[utils:Rscript]{utils::Rscript} in a GitHub Actions step}
+\title{Create a step to run \link[utils:Rscript]{utils::Rscript}}
 \usage{
 rscript(options = "--help", expr = NULL, file = NULL, args = NULL,
   ...)
@@ -50,7 +50,8 @@ Defaults to \code{NULL}.}
 }}
 }
 \description{
-Writes the appropriate syntax for a step.
+This is an alternative front end for use in \samp{#!} scripts and
+  other scripting applications.
 }
 \details{
 \command{Rscript --help} gives details of usage, and

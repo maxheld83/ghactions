@@ -1,6 +1,4 @@
-#' Run [utils::Rscript] in a GitHub Actions step
-#'
-#' Writes the appropriate syntax for a step.
+#' Create a step to run [utils::Rscript]
 #'
 #' @inheritDotParams step -run
 #'
@@ -50,7 +48,9 @@ rscript <- function(options = "--help",
 }
 
 
-#' @title Create [rsync action](https://github.com/maxheld83/rsync/tree/v0.1.1) to deploy via [Rsync](https://rsync.samba.org) over SSH
+#' Create an action step to deploy via [Rsync](https://rsync.samba.org) over SSH
+#'
+#' Wraps the external [rsync action](https://github.com/maxheld83/rsync/).
 #'
 #' @param HOST_NAME `[character(1)]`
 #' giving the name of the server you wish to deploy to, such as `foo.example.com`.
@@ -61,60 +61,83 @@ rscript <- function(options = "--help",
 #' @param HOST_FINGERPRINT `[character(1)]`
 #' giving the fingerprint of the server you wish to deploy to, can have different formats.
 #'
-#' @param SRC `[character(1)]`
+#' @param src `[character(1)]`
 #' giving the source directory, relative path *from* `/github/workspace` **without trailing slash**.
 #'
-#' @param USER `[character(1)]`
+#' @param user `[character(1)]`
 #' giving the user at the target `HOST_NAME`.
 #'
-#' @param DEST `[character(1)]`
+#' @param dest `[character(1)]`
 #' giving the directory from the root of the `HOST_NAME` target to write to.
 #'
 #' @description
 #' **Remember to provide `SSH_PRIVATE_KEY` and `SSH_PUBLIC_KEY` as secrets to the GitHub UI.**.
 #'
-#' @inherit action
+#' @inheritDotParams step -run -uses
+#'
+#' @family steps actions
 #'
 #' @export
-rsync <- function(IDENTIFIER,
-                  needs,
-                  HOST_NAME,
+rsync <- function(HOST_NAME,
                   HOST_IP,
                   HOST_FINGERPRINT,
-                  SRC,
-                  USER,
-                  DEST,
+                  src,
+                  user,
+                  dest,
+                  `if` = "github.ref == 'refs/heads/master'",
                   env = NULL,
-                  args = NULL) {
-  list(
-    IDENTIFIER = IDENTIFIER,
+                  with = NULL,
+                  ...) {
+  # input validation
+  purrr::map(
+    .x = list(HOST_NAME, HOST_IP, HOST_FINGERPRINT, src, user, dest),
+    .f = checkmate::assert_string,
+    na.ok = FALSE,
+    null.ok = FALSE
+  )
+
+  args <- glue::glue(
+    "$GITHUB_WORKSPACE/{src}/",  # source
+    "{user}@{HOST_NAME}:{dest}",  # target and destination
+    .sep = " "
+  )
+
+  step(
     uses = "maxheld83/rsync@v0.1.1",
-    needs = needs,
-    secrets = c("SSH_PRIVATE_KEY", "SSH_PUBLIC_KEY"),
+    `if` = `if`,
     env = c(
-      env, # more envs
+      env,
       list(
         HOST_NAME = HOST_NAME,
         HOST_IP = HOST_IP,
-        HOST_FINGERPRINT = HOST_FINGERPRINT
+        HOST_FINGERPRINT = HOST_FINGERPRINT,
+        SSH_PRIVATE_KEY = "${{ secrets.SSH_PRIVATE_KEY }}",
+        SSH_PUBLIC_KEY = "${{ secrets.SSH_PUBLIC_KEY }}"
       )
     ),
-    args = c(
-      paste0("$GITHUB_WORKSPACE", "/", SRC, "/"),  # source
-      glue::glue('{USER}@{HOST_NAME}:{DEST}'),  # target and destination
-      args # more args
-    )
+    with = c(
+      with,
+      list(args = args)
+    ),
+    ...
   )
 }
 
-rsync_fau <- purrr::partial(
-  IDENTIFIER = "Deploy",
-  .f = rsync,
-  HOST_NAME = "karli.rrze.uni-erlangen.de",
-  HOST_IP = "131.188.16.138",
-  HOST_FINGERPRINT = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFHJVSekYKuF5pMKyHe1jS9mUkXMWoqNQe0TTs2sY1OQj379e6eqVSqGZe+9dKWzL5MRFpIiySRKgvxuHhaPQU4=",
-  USER = "pfs400wm"
-)
+rsync_fau <- function(src = "_site",
+                      dest = "/proj/websource/docs/FAU/fakultaet/phil/www.datascience.phil.fau.de/websource/denkzeug",
+                      user = "pfs400wm",
+                      ...) {
+  rsync(
+    HOST_NAME = "karli.rrze.uni-erlangen.de",
+    HOST_IP = "131.188.16.138",
+    HOST_FINGERPRINT = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFHJVSekYKuF5pMKyHe1jS9mUkXMWoqNQe0TTs2sY1OQj379e6eqVSqGZe+9dKWzL5MRFpIiySRKgvxuHhaPQU4=",
+    user = user,
+    src = src,
+    dest = dest,
+    name = "Deploy Website",
+    ...
+  )
+}
 
 
 #' @title Create [ghpages action](https://github.com/maxheld83/ghpages/tree/v0.2.0) to deploy to [GitHub Pages](https://pages.github.com)

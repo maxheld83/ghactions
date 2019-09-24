@@ -2,26 +2,13 @@
 % Please edit documentation in R/steps.R
 \name{rsync}
 \alias{rsync}
-\title{Create \href{https://github.com/maxheld83/rsync/tree/v0.1.1}{rsync action} to deploy via \href{https://rsync.samba.org}{Rsync} over SSH}
+\title{Create an action step to deploy via \href{https://rsync.samba.org}{Rsync} over SSH}
 \usage{
-rsync(IDENTIFIER, needs, HOST_NAME, HOST_IP, HOST_FINGERPRINT, SRC, USER,
-  DEST, env = NULL, args = NULL)
+rsync(HOST_NAME, HOST_IP, HOST_FINGERPRINT, src, user, dest,
+  `if` = "github.ref == 'refs/heads/master'", env = NULL,
+  with = NULL, ...)
 }
 \arguments{
-\item{IDENTIFIER}{\code{[character(1)]}
-Giving the name of the action.
-
-Used:
-\itemize{
-\item as an informative label on GitHub.com,
-\item in the \code{needs} fields of other \emph{action blocks} to model the workflow graph,
-\item in the \code{resolves} fields of other \emph{workflow blocks} to model the workflow graph.
-}}
-
-\item{needs}{\code{[character()]}
-giving the actions (by their \code{IDENTIFIER}s) that must complete successfully before this action will be invoked.
-Defaults to \code{NULL} for no upstream dependencies.}
-
 \item{HOST_NAME}{\code{[character(1)]}
 giving the name of the server you wish to deploy to, such as \code{foo.example.com}.}
 
@@ -31,53 +18,45 @@ giving the IP of the server you wish to deploy to, such as \code{111.111.11.111}
 \item{HOST_FINGERPRINT}{\code{[character(1)]}
 giving the fingerprint of the server you wish to deploy to, can have different formats.}
 
-\item{SRC}{\code{[character(1)]}
+\item{src}{\code{[character(1)]}
 giving the source directory, relative path \emph{from} \code{/github/workspace} \strong{without trailing slash}.}
 
-\item{USER}{\code{[character(1)]}
+\item{user}{\code{[character(1)]}
 giving the user at the target \code{HOST_NAME}.}
 
-\item{DEST}{\code{[character(1)]}
+\item{dest}{\code{[character(1)]}
 giving the directory from the root of the \code{HOST_NAME} target to write to.}
 
-\item{env}{\code{[list(character(1)]}
-giving the environment variables to set in the action's runtime environment.
-Defaults to \code{NULL} for no environment variables (in addition to the defaults set by GitHub Actions).}
-
-\item{args}{\code{[character()]}
-giving the arguments to pass to the action.
-Arguments get appended to the last command in \code{ENTRYPOINT}.
-Defaults to \code{NULL} for no arguments.}
-}
-\value{
-\code{[list()]} list of action attributes.
+\item{...}{Arguments passed on to \code{step}
+\describe{
+  \item{id}{\code{[character(1)]}
+giving additional options for the stop.
+Multiline strings are not supported.
+Defaults to \code{NULL}.}
+  \item{if}{\code{[character(1)]}
+giving additional options for the stop.
+Multiline strings are not supported.
+Defaults to \code{NULL}.}
+  \item{name}{\code{[character(1)]}
+giving additional options for the stop.
+Multiline strings are not supported.
+Defaults to \code{NULL}.}
+  \item{shell}{\code{[character(1)]}
+giving additional options for the stop.
+Multiline strings are not supported.
+Defaults to \code{NULL}.}
+  \item{with}{\code{[list()]}
+giving a named list of additional parameters.
+Defaults to \code{NULL}.}
+  \item{env}{\code{[list()]}
+giving a named list of additional parameters.
+Defaults to \code{NULL}.}
+}}
 }
 \description{
 \strong{Remember to provide \code{SSH_PRIVATE_KEY} and \code{SSH_PUBLIC_KEY} as secrets to the GitHub UI.}.
 }
 \details{
-For details on the syntax and arguments, see \href{https://developer.github.com/actions/creating-workflows/workflow-configuration-options/}{here}
-
-These functions are for \strong{advanced users} knowledgeable about GitHub actions.
-Novice users may be better served by the complete templates in workflows.
-
-These functions provide very thin wrappers around existing GitHub actions, including actions from other repositories.
-Essentially, they just create lists ready to be ingested by \code{\link[=action2hcl]{action2hcl()}}, which then turns these R lists into valid GitHub actions syntax blocks.
-
-For documentation on these actions, consult their respective \code{README.md}s linked in the below.
-Some variants of these action wrappers include sensible defaults for frequent uses in R.
-
-The \code{uses} field is \emph{always} hardcoded to a particular commit or tag of the underlying github action to ensure compatibility.
-
-To render an action block completely from scratch, you can always use the templating function \code{\link[=action]{action()}}.
+Wraps the external \href{https://github.com/maxheld83/rsync/}{rsync action}.
 }
-\examples{
-# many R projects will need this block to first build an image from a DOCKERFILE
-l <- action(
-  IDENTIFIER = "Add two numbers",
-  uses = "rocker/r-ver:3.6.1",
-  args = "Rscript -e '1+1'"
-)
-action2hcl(l = l)
-
-}
+\concept{steps actions}
