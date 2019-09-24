@@ -1,6 +1,6 @@
 Package: ghactions
 Title: GitHub actions for R
-Version: 0.4.1
+Version: 0.5.0
 Authors@R: 
   c(
     person(
@@ -28,7 +28,7 @@ Authors@R:
       role = c("cph", "fnd")
     )
   )
-Description: Provides GitHub actions and some R functions to create workflows.
+Description: Provides templating functions with sensible defaults to use GitHub Actions for R projects.
 License: MIT + file LICENSE
 URL: https://github.com/r-lib/ghactions
 BugReports: https://github.com/r-lib/ghactions/issues
@@ -52,6 +52,7 @@ Suggests:
     DiagrammeR (>= 1.0.1),
     docopt (>= 0.6.1),
     knitr (>= 1.23),
+    pkgdown (>= 1.4.1),
     processx (>= 3.3.1),
     rmarkdown (>= 1.13),
     roxygen2 (>= 6.1.0),

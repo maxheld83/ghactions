@@ -6,29 +6,10 @@ jobs:
   build:
     runs-on: ubuntu-18.04
     container:
-      image: maxheld83/r-ci:d2a3a47
-      env:
-        R_LIBS_WORKFLOW: /github/home/lib/R/library/
-        # location for R libraries which should persist only for this action
-        R_LIBS_ACTION: $R_LIBS_DEV_HELPERS
+      image: rstudio/r-base:bionic
     steps:
       - name: Checkout Repository
         uses: actions/checkout@master
-      - name: Authenticate GCP
-        uses: actions/gcloud/auth@master
-        env:
-          GCLOUD_AUTH: ${{ secrets.GCLOUD_AUTH }}
-      - run: echo $HOME
-      - name: Download Cache
-        uses: actions/gcloud/cli@master
-        with:
-          entrypoint: gsutil
-          args: -m cp -r gs://ghactions-cache/lib.tar.gz /github/home/
-      - name: Decompress Cache
-        uses: actions/bin/sh@5968b3a61ecdca99746eddfdc3b3aab7dc39ea31
-        with:
-          entrypoint: tar
-          args: --extract --ungzip --file /github/home/lib.tar.gz --directory /github/home
       - name: Install System Dependencies
         run: |
             apt-get update --allow-releaseinfo-change \
@@ -42,21 +23,11 @@ jobs:
             && sh get-docker.sh
       - name: Install package dependencies
         run: |
-          Rscript -e "Sys.getenv('R_LIBS_WORKFLOW')"
-          Rscript -e ".libPaths()"
           Rscript -e "install.packages(c('remotes', 'rcmdcheck'), repos = 'https://demo.rstudiopm.com/all/__linux__/bionic/latest')"
-          Rscript -e "remotes::install_deps(dependencies = TRUE, lib = Sys.getenv('R_LIBS_WORKFLOW'), repos = 'https://demo.rstudiopm.com/all/__linux__/bionic/latest')"
-        env:
-          R_LIBS: $R_LIBS_WORKFLOW
+          Rscript -e "remotes::install_deps(dependencies = TRUE, repos = 'https://demo.rstudiopm.com/all/__linux__/bionic/latest')"
       - name: Check package
         run: |
-          ls $R_LIBS_WORKFLOW
-          echo $R_LIBS
-          Rscript -e "Sys.getenv('R_LIBS_WORKFLOW')"
-          Rscript -e ".libPaths()"
           Rscript -e "rcmdcheck::rcmdcheck(error_on = 'error', check_dir = 'check')"
-        env:
-          R_LIBS: /github/home/lib/R/library/
       - name: Document Package
         run: |
           Rscript -e "pkgdown::build_site(override = list(devel = FALSE, external = FALSE))"
