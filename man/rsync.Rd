@@ -59,4 +59,7 @@ Defaults to \code{NULL}.}
 \details{
 Wraps the external \href{https://github.com/maxheld83/rsync/}{rsync action}.
 }
+\seealso{
+Other steps actions: \code{\link{ghpages}}
+}
 \concept{steps actions}

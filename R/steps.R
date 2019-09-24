@@ -1,3 +1,5 @@
+# deployment ====
+
 #' Create a step to run [utils::Rscript]
 #'
 #' @inheritDotParams step -run
@@ -123,6 +125,7 @@ rsync <- function(HOST_NAME,
   )
 }
 
+
 rsync_fau <- function(src = "_site",
                       dest = "/proj/websource/docs/FAU/fakultaet/phil/www.datascience.phil.fau.de/websource/denkzeug",
                       user = "pfs400wm",
@@ -140,7 +143,9 @@ rsync_fau <- function(src = "_site",
 }
 
 
-#' @title Create [ghpages action](https://github.com/maxheld83/ghpages/tree/v0.2.0) to deploy to [GitHub Pages](https://pages.github.com)
+#' Create an action step to deploy via [GitHub Pages](https://pages.github.com)
+#'
+#' Wraps the external [ghpages action](https://github.com/maxheld83/ghpages/).
 #'
 #' @description
 #' **Remember to provide a GitHub personal access token secret named `GH_PAT` to the GitHub UI.**
@@ -151,36 +156,31 @@ rsync_fau <- function(src = "_site",
 #' 3. Go to the settings of your repository, and paste the PAT as a secret.
 #'    The secret must be called `GH_PAT`.
 #'
-#' For details, see docs of the [ghpages action](https://github.com/maxheld83/ghpages/tree/v0.2.0).
-#'
 #' @param BUILD_DIR `[character(1)]`
 #' giving the path relative from your `/github/workspace` to the directory to be published.
 #'
-#' @inherit action
+#' @inheritDotParams step -run -uses
+#'
+#' @family steps actions
 #'
 #' @export
-ghpages <- function(IDENTIFIER = "Deploy",
-                    needs = "Filter master",
+ghpages <- function(`if` = "github.ref == 'refs/heads/master'",
                     BUILD_DIR = "_site",
-                    env = NULL) {
-  usethis::ui_todo(c(
-    "Remember to provide `GH_PAT` as a secret to the GitHub UI.",
-    "For more information about Personal Access Token (PAT) for ghpages go to {usethis::ui_path('https://github.com/maxheld83/ghpages')}.",
-    "See {usethis::ui_code('usethis::browse_github_pat()')} for help setting this up."
-  ))
-  list(
-    IDENTIFIER = IDENTIFIER,
+                    name = "Deploy to GitHub Pages",
+                    ...) {
+  checkmate::assert_string(x = BUILD_DIR, na.ok = FALSE, null.ok = FALSE)
+  step(
+    name = name,
+    `if` = `if`,
     uses = "maxheld83/ghpages@v0.2.0",
-    needs = needs,
-    secrets = "GH_PAT",
-    env = c(
-      env,
-      list(
-        BUILD_DIR = BUILD_DIR
-      )
-    )
+    env = list(
+      BUILD_DIR = BUILD_DIR,
+      GH_PAT = "${{ secrets.GH_PAT }}"
+    ),
+    ...
   )
 }
+
 
 #' @title Create [netlify cli action](https://github.com/netlify/actions/tree/645ae7398cf5b912a3fa1eb0b88618301aaa85d0/cli/) to use the [Netlify CLI](https://www.netlify.com)
 #'

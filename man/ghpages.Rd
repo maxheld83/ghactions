@@ -2,35 +2,40 @@
 % Please edit documentation in R/steps.R
 \name{ghpages}
 \alias{ghpages}
-\title{Create \href{https://github.com/maxheld83/ghpages/tree/v0.2.0}{ghpages action} to deploy to \href{https://pages.github.com}{GitHub Pages}}
+\title{Create an action step to deploy via \href{https://pages.github.com}{GitHub Pages}}
 \usage{
-ghpages(IDENTIFIER = "Deploy", needs = "Filter master",
-  BUILD_DIR = "_site", env = NULL)
+ghpages(`if` = "github.ref == 'refs/heads/master'",
+  BUILD_DIR = "_site", name = "Deploy to GitHub Pages", ...)
 }
 \arguments{
-\item{IDENTIFIER}{\code{[character(1)]}
-Giving the name of the action.
-
-Used:
-\itemize{
-\item as an informative label on GitHub.com,
-\item in the \code{needs} fields of other \emph{action blocks} to model the workflow graph,
-\item in the \code{resolves} fields of other \emph{workflow blocks} to model the workflow graph.
-}}
-
-\item{needs}{\code{[character()]}
-giving the actions (by their \code{IDENTIFIER}s) that must complete successfully before this action will be invoked.
-Defaults to \code{NULL} for no upstream dependencies.}
-
 \item{BUILD_DIR}{\code{[character(1)]}
 giving the path relative from your \code{/github/workspace} to the directory to be published.}
 
-\item{env}{\code{[list(character(1)]}
-giving the environment variables to set in the action's runtime environment.
-Defaults to \code{NULL} for no environment variables (in addition to the defaults set by GitHub Actions).}
-}
-\value{
-\code{[list()]} list of action attributes.
+\item{...}{Arguments passed on to \code{step}
+\describe{
+  \item{id}{\code{[character(1)]}
+giving additional options for the stop.
+Multiline strings are not supported.
+Defaults to \code{NULL}.}
+  \item{if}{\code{[character(1)]}
+giving additional options for the stop.
+Multiline strings are not supported.
+Defaults to \code{NULL}.}
+  \item{name}{\code{[character(1)]}
+giving additional options for the stop.
+Multiline strings are not supported.
+Defaults to \code{NULL}.}
+  \item{shell}{\code{[character(1)]}
+giving additional options for the stop.
+Multiline strings are not supported.
+Defaults to \code{NULL}.}
+  \item{with}{\code{[list()]}
+giving a named list of additional parameters.
+Defaults to \code{NULL}.}
+  \item{env}{\code{[list()]}
+giving a named list of additional parameters.
+Defaults to \code{NULL}.}
+}}
 }
 \description{
 \strong{Remember to provide a GitHub personal access token secret named \code{GH_PAT} to the GitHub UI.}
@@ -42,32 +47,11 @@ Remember that this PAT is \emph{not} for your local machine, but for GitHub acti
 \item Go to the settings of your repository, and paste the PAT as a secret.
 The secret must be called \code{GH_PAT}.
 }
-
-For details, see docs of the \href{https://github.com/maxheld83/ghpages/tree/v0.2.0}{ghpages action}.
 }
 \details{
-For details on the syntax and arguments, see \href{https://developer.github.com/actions/creating-workflows/workflow-configuration-options/}{here}
-
-These functions are for \strong{advanced users} knowledgeable about GitHub actions.
-Novice users may be better served by the complete templates in workflows.
-
-These functions provide very thin wrappers around existing GitHub actions, including actions from other repositories.
-Essentially, they just create lists ready to be ingested by \code{\link[=action2hcl]{action2hcl()}}, which then turns these R lists into valid GitHub actions syntax blocks.
-
-For documentation on these actions, consult their respective \code{README.md}s linked in the below.
-Some variants of these action wrappers include sensible defaults for frequent uses in R.
-
-The \code{uses} field is \emph{always} hardcoded to a particular commit or tag of the underlying github action to ensure compatibility.
-
-To render an action block completely from scratch, you can always use the templating function \code{\link[=action]{action()}}.
+Wraps the external \href{https://github.com/maxheld83/ghpages/}{ghpages action}.
 }
-\examples{
-# many R projects will need this block to first build an image from a DOCKERFILE
-l <- action(
-  IDENTIFIER = "Add two numbers",
-  uses = "rocker/r-ver:3.6.1",
-  args = "Rscript -e '1+1'"
-)
-action2hcl(l = l)
-
+\seealso{
+Other steps actions: \code{\link{rsync}}
 }
+\concept{steps actions}
