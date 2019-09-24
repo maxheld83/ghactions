@@ -57,6 +57,9 @@ jobs:
           Rscript -e "rcmdcheck::rcmdcheck(error_on = 'error', check_dir = 'check')"
         env:
           R_LIBS: /github/home/lib/R/library/
+      - name: Document Package
+        run: |
+          Rscript -e "pkgdown::build_site(override = list(devel = FALSE, external = FALSE))"
       - name: Deploy to GitHub Pages
         if: github.ref == 'refs/heads/master'
         uses: maxheld83/ghpages@v0.2.0
