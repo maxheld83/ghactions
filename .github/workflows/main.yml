@@ -12,8 +12,7 @@ jobs:
         uses: actions/checkout@master
       - name: Install System Dependencies
         run: |
-            apt-get update --allow-releaseinfo-change \
-            && apt-get install -y --no-install-recommends \
+            sudo apt-get update && apt-get install -y --no-install-recommends \
             docker \
             git \
             libxml2-dev \
