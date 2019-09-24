@@ -57,3 +57,9 @@ jobs:
           Rscript -e "rcmdcheck::rcmdcheck(error_on = 'error', check_dir = 'check')"
         env:
           R_LIBS: /github/home/lib/R/library/
+      - name: Deploy to GitHub Pages
+        if: github.ref == 'refs/heads/master'
+        uses: maxheld83/ghpages@v0.2.0
+        env:
+          BUILD_DIR: _site
+          GH_PAT: ${{ secrets.GH_PAT }}
