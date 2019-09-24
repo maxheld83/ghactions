@@ -44,8 +44,8 @@ jobs:
         run: |
           Rscript -e "Sys.getenv('R_LIBS_WORKFLOW')"
           Rscript -e ".libPaths()"
-          Rscript -e "install.packages(c('remotes', 'rcmdcheck'))"
-          Rscript -e "remotes::install_deps(dependencies = TRUE, lib = Sys.getenv('R_LIBS_WORKFLOW'))"
+          Rscript -e "install.packages(c('remotes', 'rcmdcheck'), repos = 'https://demo.rstudiopm.com/all/latest')"
+          Rscript -e "remotes::install_deps(dependencies = TRUE, lib = Sys.getenv('R_LIBS_WORKFLOW'), repos = 'https://demo.rstudiopm.com/all/latest')"
         env:
           R_LIBS: $R_LIBS_WORKFLOW
       - name: Check package
