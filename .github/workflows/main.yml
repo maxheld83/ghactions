@@ -8,7 +8,7 @@ jobs:
   build:
     runs-on: ubuntu-18.04
     container:
-      image: rstudio/r-base:3.6-xenial
+      image: rstudio/r-base:3.6-bionic
     steps:
       - name: Checkout Repository
         uses: actions/checkout@master
