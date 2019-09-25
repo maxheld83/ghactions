@@ -2,6 +2,7 @@
 
 <!-- badges: start -->
 [![Actions Status](https://github.com/r-lib/ghactions/workflows/.github/workflows/main.yml/badge.svg)](https://github.com/r-lib/ghactions/actions)
+[![codecov](https://codecov.io/gh/r-lib/ghactions/branch/master/graph/badge.svg)](https://codecov.io/gh/r-lib/ghactions)
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![CRAN status](https://www.r-pkg.org/badges/version/ghactions)](https://cran.r-project.org/package=ghactions)
 [![License: MIT](https://img.shields.io/github/license/r-lib/ghactions.svg?style=flat)](https://opensource.org/licenses/MIT)
