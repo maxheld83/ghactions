@@ -5,7 +5,7 @@
 \title{Create an action step to deploy via \href{https://pages.github.com}{GitHub Pages}}
 \usage{
 ghpages(`if` = "github.ref == 'refs/heads/master'",
-  BUILD_DIR = "_site", name = "Deploy to GitHub Pages", ...)
+  name = "Deploy to GitHub Pages", BUILD_DIR = "_site", ...)
 }
 \arguments{
 \item{BUILD_DIR}{\code{[character(1)]}
@@ -52,6 +52,7 @@ The secret must be called \code{GH_PAT}.
 Wraps the external \href{https://github.com/maxheld83/ghpages/}{ghpages action}.
 }
 \seealso{
-Other steps actions: \code{\link{rsync}}
+Other steps actions: \code{\link{netlify}},
+  \code{\link{rsync}}
 }
 \concept{steps actions}

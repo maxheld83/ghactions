@@ -6,7 +6,7 @@
 \alias{ghactions-package}
 \title{ghactions: GitHub actions for R}
 \description{
-Provides GitHub actions and some R functions to create workflows.
+Provides templating functions with sensible defaults to use GitHub Actions for R projects.
 }
 \seealso{
 Useful links:

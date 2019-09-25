@@ -1,4 +1,4 @@
-# deployment ====
+# script ====
 
 #' Create a step to run [utils::Rscript]
 #'
@@ -49,6 +49,8 @@ rscript <- function(options = "--help",
   )
 }
 
+
+# deployment ====
 
 #' Create an action step to deploy via [Rsync](https://rsync.samba.org) over SSH
 #'
@@ -165,8 +167,8 @@ rsync_fau <- function(src = "_site",
 #'
 #' @export
 ghpages <- function(`if` = "github.ref == 'refs/heads/master'",
-                    BUILD_DIR = "_site",
                     name = "Deploy to GitHub Pages",
+                    BUILD_DIR = "_site",
                     ...) {
   checkmate::assert_string(x = BUILD_DIR, na.ok = FALSE, null.ok = FALSE)
   step(
@@ -182,27 +184,12 @@ ghpages <- function(`if` = "github.ref == 'refs/heads/master'",
 }
 
 
-#' @title Create [netlify cli action](https://github.com/netlify/actions/tree/645ae7398cf5b912a3fa1eb0b88618301aaa85d0/cli/) to use the [Netlify CLI](https://www.netlify.com)
+#' Create an action step to deploy to [Netlify](https://www.netlify.com)
+#'
+#' Wraps the external [netlify cli action](https://github.com/netlify/actions).
 #'
 #' @description
 #' **Remember to provide `NETLIFY_AUTH_TOKEN` and `NETLIFY_SITE_ID` (optional) as secrets to the GitHub UI.**
-#'
-#' @inherit action
-#'
-#' @export
-netlify <- function(IDENTIFIER,
-                    needs,
-                    args) {
-  list(
-    IDENTIFIER = IDENTIFIER,
-    uses = "netlify/actions/cli@645ae7398cf5b912a3fa1eb0b88618301aaa85d0",
-    needs = needs,
-    args = args,
-    secrets = c("NETLIFY_AUTH_TOKEN", "NETLIFY_SITE_ID")
-  )
-}
-
-#' @describeIn netlify Deploy to netlify
 #'
 #' @param dir `[character(1)]`
 #' giving the path relative from your `/github/workspace` to the directory to be published.
@@ -214,21 +201,50 @@ netlify <- function(IDENTIFIER,
 #' giving a site ID to deploy to.
 #'
 #' @export
-netlify_deploy <- function(IDENTIFIER = "Deploy",
-                           needs,
-                           dir,
-                           prod = TRUE,
-                           site = NULL) {
-  netlify(
-    IDENTIFIER = IDENTIFIER,
-    needs = needs,
-    args = c(
-      glue::glue('--dir {dir}'),
-      if (prod) "prod" else NULL,
-      glue::glue('--site {site}')
-    )
+#'
+#' @inheritDotParams step -run -uses
+#'
+#' @family steps actions
+#'
+#' @export
+netlify <- function(name = "Deploy to Netlify",
+                    `if` = "github.ref == 'refs/heads/master'",
+                    dir = "_site",
+                    prod = TRUE,
+                    with = NULL,
+                    env = NULL,
+                    site,
+                    ...) {
+  checkmate::assert_string(x = dir, na.ok = FALSE, null.ok = FALSE)
+  checkmate::assert_string(x = site, na.ok = FALSE, null.ok = FALSE)
+  checkmate::assert_flag(x = prod, na.ok = FALSE, null.ok = FALSE)
+
+  # prepare args
+  args <- c(
+    glue::glue('--dir {dir}'),
+    if (prod) "prod" else NULL,
+    glue::glue('--site {site}')
+  )
+
+  step(
+    name = name,
+    `if` = `if`,
+    uses = "netlify/actions/cli@645ae7398cf5b912a3fa1eb0b88618301aaa85d0",
+    env = c(
+      env,
+      list(
+        NETLIFY_AUTH_TOKEN = "${{ secrets.NETLIFY_AUTH_TOKEN }}",
+        NETLIFY_SITE_ID = "${{ secrets.NETLIFY_SITE_ID }}"
+      )
+    ),
+    with = c(
+      with,
+      list(args = args)
+    ),
+    ...
   )
 }
+
 
 #' @title Create [Google Firebase CLI action](https://github.com/w9jds/firebase-action) to use [Firebase](http://firebase.google.com)
 #'
