@@ -41,7 +41,13 @@ rscript <- function(options = NULL,
     run <- glue::glue_collapse(x = c("Rscript", options, file, args), sep = " ")
   } else {
     run <- purrr::map_chr(.x = expr, .f = function(x) {
-      glue::glue_collapse(x = c("Rscript", options, "-e", x), sep = " ")
+      glue::glue_collapse(
+        x = c(
+          "Rscript",
+          options,
+          glue::glue("-e \"{x}\"")
+        ),
+        sep = " ")
     })
   }
 
@@ -320,25 +326,5 @@ install_deps <- function(name = "Install Package Dependencies", ...) {
       "remotes::install_deps(dependencies = TRUE, repos = 'https://demo.rstudiopm.com/all/__linux__/bionic/latest')"
     ),
     ...
-  )
-}
-
-#' @title Document Package
-#'
-#' @description
-#' This GitHub action installs R package dependencies from a `DESCRIPTION` at the repository root.
-#'
-#' @inherit action
-#'
-#' @export
-document <- function(IDENTIFIER = "Document Package",
-                     needs = NULL,
-                     args = NULL) {
-  list(
-    IDENTIFIER = IDENTIFIER,
-    uses = "r-lib/ghactions/actions/document@v0.4.1",
-    needs = needs,
-    args = args,
-    secrets = "GITHUB_TOKEN"
   )
 }
