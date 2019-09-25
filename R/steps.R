@@ -347,7 +347,7 @@ NULL
 rcmd_check <- function(name = "Check Package") {
   rscript(
     name = name,
-    expr = "rcmdcheck::rcmdcheck(error_on = 'error')"
+    expr = "rcmdcheck::rcmdcheck(error_on = 'error', check_dir = 'check')"
   )
 }
 

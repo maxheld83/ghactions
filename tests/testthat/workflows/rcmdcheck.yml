@@ -1,2 +1,2 @@
 name: Check Package
-run: Rscript -e "rcmdcheck::rcmdcheck(error_on = 'error')"
+run: Rscript -e "rcmdcheck::rcmdcheck(error_on = 'error', check_dir = 'check')"
