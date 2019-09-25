@@ -19,9 +19,7 @@ jobs:
             git \
             libxml2-dev \
             libssl-dev \
-            curl \
-            make \
-            libcurl3-openssl-dev \
+            libcurl4-openssl-dev \
             && apt-get clean -y \
             && curl -fsSL https://get.docker.com -o get-docker.sh \
             && sh get-docker.sh
