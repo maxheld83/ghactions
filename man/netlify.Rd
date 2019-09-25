@@ -51,7 +51,7 @@ Defaults to \code{NULL}.}
 Wraps the external \href{https://github.com/netlify/actions}{netlify cli action}.
 }
 \seealso{
-Other steps actions: \code{\link{ghpages}},
-  \code{\link{rsync}}
+Other steps actions: \code{\link{firebase}},
+  \code{\link{ghpages}}, \code{\link{rsync}}
 }
 \concept{steps actions}

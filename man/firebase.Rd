@@ -2,60 +2,55 @@
 % Please edit documentation in R/steps.R
 \name{firebase}
 \alias{firebase}
-\alias{firebase_deploy}
-\title{Create \href{https://github.com/w9jds/firebase-action}{Google Firebase CLI action} to use \href{http://firebase.google.com}{Firebase}}
+\title{Create an action step to deploy to \href{http://firebase.google.com}{Google Firebase}}
 \usage{
-firebase(IDENTIFIER, needs, args, PROJECT_ID = NULL)
-
-firebase_deploy(IDENTIFIER = "Deploy", needs, PROJECT_ID = NULL)
+firebase(name = "Deploy to Firebase",
+  `if` = "github.ref == 'refs/heads/master'", PROJECT_ID = NULL,
+  with = NULL, env = NULL, site, ...)
 }
 \arguments{
-\item{IDENTIFIER}{\code{[character(1)]}
-Giving the name of the action.
-
-Used:
-\itemize{
-\item as an informative label on GitHub.com,
-\item in the \code{needs} fields of other \emph{action blocks} to model the workflow graph,
-\item in the \code{resolves} fields of other \emph{workflow blocks} to model the workflow graph.
-}}
-
-\item{needs}{\code{[character()]}
-giving the actions (by their \code{IDENTIFIER}s) that must complete successfully before this action will be invoked.
-Defaults to \code{NULL} for no upstream dependencies.}
-
-\item{args}{\code{[character()]}
-giving the arguments to pass to the action.
-Arguments get appended to the last command in \code{ENTRYPOINT}.
-Defaults to \code{NULL} for no arguments.}
-
 \item{PROJECT_ID}{\code{[character(1)]}
 giving a specific project to use for all commands, not required if you specify a project in your `.firebaserc`` file.}
-}
-\value{
-\code{[list()]} list of action attributes.
+
+\item{...}{Arguments passed on to \code{step}
+\describe{
+  \item{id}{\code{[character(1)]}
+giving additional options for the stop.
+Multiline strings are not supported.
+Defaults to \code{NULL}.}
+  \item{if}{\code{[character(1)]}
+giving additional options for the stop.
+Multiline strings are not supported.
+Defaults to \code{NULL}.}
+  \item{name}{\code{[character(1)]}
+giving additional options for the stop.
+Multiline strings are not supported.
+Defaults to \code{NULL}.}
+  \item{shell}{\code{[character(1)]}
+giving additional options for the stop.
+Multiline strings are not supported.
+Defaults to \code{NULL}.}
+  \item{with}{\code{[list()]}
+giving a named list of additional parameters.
+Defaults to \code{NULL}.}
+  \item{env}{\code{[list()]}
+giving a named list of additional parameters.
+Defaults to \code{NULL}.}
+}}
 }
 \description{
 \strong{Remember to provide \code{FIREBASE_TOKEN} as a secret to the GitHub UI.}
-
-Configuration details other than \code{PROJECT_ID} are read from the \code{firebase.json} at the root of your repository.
 }
 \details{
+Wraps the external \href{https://github.com/w9jds/firebase-action}{Google Firebase CLI action}.
+
+Configuration details other than \code{PROJECT_ID} are read from the \code{firebase.json} at the root of your repository.
+
 Because firebase gets the deploy directory from a \code{firebase.json} file, it cannot automatically find the appropriate path.
 Manually edit your \code{firebase.json} to provide the deploy path.
 }
-\section{Functions}{
-\itemize{
-\item \code{firebase_deploy}: Deploy static assets to Firebase Hosting
-}}
-
-\examples{
-# many R projects will need this block to first build an image from a DOCKERFILE
-l <- action(
-  IDENTIFIER = "Add two numbers",
-  uses = "rocker/r-ver:3.6.1",
-  args = "Rscript -e '1+1'"
-)
-action2hcl(l = l)
-
+\seealso{
+Other steps actions: \code{\link{ghpages}},
+  \code{\link{netlify}}, \code{\link{rsync}}
 }
+\concept{steps actions}

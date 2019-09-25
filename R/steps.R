@@ -245,57 +245,59 @@ netlify <- function(name = "Deploy to Netlify",
   )
 }
 
-
-#' @title Create [Google Firebase CLI action](https://github.com/w9jds/firebase-action) to use [Firebase](http://firebase.google.com)
+#' Create an action step to deploy to [Google Firebase](http://firebase.google.com)
+#'
+#' Wraps the external [Google Firebase CLI action](https://github.com/w9jds/firebase-action).
 #'
 #' @description
 #' **Remember to provide `FIREBASE_TOKEN` as a secret to the GitHub UI.**
 #'
-#' @inherit action
-#'
 #' @param PROJECT_ID `[character(1)]`
 #' giving a specific project to use for all commands, not required if you specify a project in your `.firebaserc`` file.
 #'
-#' @export
-firebase <- function(IDENTIFIER,
-                     needs,
-                     args,
-                     PROJECT_ID = NULL) {
-  list(
-    IDENTIFIER = IDENTIFIER,
-    uses = "w9jds/firebase-action@v1.0.1",
-    needs = needs,
-    args = args,
-    secrets = c("FIREBASE_TOKEN"),
-    env = list(
-      PROJECT_ID = PROJECT_ID
-    )
-  )
-}
-
-#' @describeIn firebase Deploy static assets to Firebase Hosting
-#'
-#' @description
-#' Configuration details other than `PROJECT_ID` are read from the `firebase.json` at the root of your repository.
+#' @inheritDotParams step -run -uses
 #'
 #' @details
+#' Configuration details other than `PROJECT_ID` are read from the `firebase.json` at the root of your repository.
+#'
 #' Because firebase gets the deploy directory from a `firebase.json` file, it cannot automatically find the appropriate path.
 #' Manually edit your `firebase.json` to provide the deploy path.
 # tracked in https://github.com/maxheld83/ghactions/issues/80
 #'
+#' @family steps actions
+#'
 #' @export
-firebase_deploy <- function(IDENTIFIER = "Deploy",
-                            needs,
-                            PROJECT_ID = NULL) {
-  firebase(
-    IDENTIFIER = IDENTIFIER,
-    needs = needs,
-    args = "deploy --only hosting",
-    PROJECT_ID = PROJECT_ID
+firebase <- function(name = "Deploy to Firebase",
+                     `if` = "github.ref == 'refs/heads/master'",
+                     PROJECT_ID = NULL,
+                     with = NULL,
+                     env = NULL,
+                     site,
+                     ...) {
+  checkmate::assert_string(x = PROJECT_ID, null.ok = TRUE)
+
+  step(
+    name = name,
+    `if` = `if`,
+    uses = "w9jds/firebase-action@v1.0.1",
+    env = c(
+      env,
+      list(
+        FIREBASE_TOKEN = "${{ secrets.FIREBASE_TOKEN }}",
+        PROJECT_ID = PROJECT_ID
+      )
+    ),
+    with = c(
+      with,
+      list(args = "deploy --only hosting")
+    ),
+    ...
   )
 }
 
-# TODO this duplicates material from the README.md and man of the action https://github.com/r-lib/ghactions/issues/180
+
+# installation ====
+
 #' @title Install Dependencies
 #'
 #' @description
