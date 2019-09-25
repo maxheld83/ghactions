@@ -21,7 +21,7 @@ jobs:
             libssl-dev \
             curl \
             make \
-            libcurl4-openssl-dev \
+            libcurl3-openssl-dev \
             && apt-get clean -y \
             && curl -fsSL https://get.docker.com -o get-docker.sh \
             && sh get-docker.sh
