@@ -15,8 +15,6 @@ Most importantly, **it is simple to reason about** if things go wrong.
 
 The **ghactions** project offers three avenues to **bring GitHub actions to the `#rstats` community**:
 
-<img src="https://github.com/r-lib/ghactions/blob/master/pkgwf.gif?raw=true" width=400/ align=right style="padding-left: 20px">
-
 1. Some **actions** to run R-specific jobs on GitHub, including [arbitrary R code](https://r-lib.github.io/ghactions//articles/rscript-byod.html) or deploying to [shinyapps.io](http://shinyapps.io).
   These actions are maintained in this repository, but are not technically part of the accompanying ghactions R package.
   You can use these actions independently from the package; they are freely available on GitHub marketplace.

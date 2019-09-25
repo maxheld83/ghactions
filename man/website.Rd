@@ -30,18 +30,6 @@ This isn't a terribly elegant way of doing this, but because each action runs it
 
 Users will probably never see the \code{.deploy_dir} file, and need not worry about it.
 }
-\section{Docker}{
-
-This action \strong{requires a Docker image called \emph{literally} \code{repo:latest} in \code{github/workspace}.}
-See \href{https://www.maxheld.de/ghactions/articles/ghactions.html}{vignette} for details.
-Use \code{\link[=build_image]{build_image()}} to create one in a prior action.
-
-This action or workflow requires that you \emph{bring-your-own-dockerfile} (byod).
-There has to be a \code{Dockerfile} at the root of your repository.
-It's easy to set one up using \code{\link[=use_dockerfile]{use_dockerfile()}}.
-To learn more, consider the \href{https://www.maxheld.de/ghactions/articles/ghactions.html}{vignette}.
-}
-
 \examples{
 workflow(
   name = "Render",
@@ -57,4 +45,3 @@ Other syntax: \code{\link{container}},
   \code{\link{job}}, \code{\link{on}},
   \code{\link{strategy}}
 }
-\concept{byod}
