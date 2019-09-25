@@ -1,3 +1,5 @@
+name: CICD
+
 'on':
   - push
   - pull_request
