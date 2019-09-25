@@ -315,7 +315,7 @@ firebase <- function(name = "Deploy to Firebase",
 #'
 #' @inheritDotParams step -run -uses
 #'
-#' @family steps actions installation
+#' @family steps installation
 #'
 #' @export
 install_deps <- function(name = "Install Package Dependencies", ...) {
@@ -326,5 +326,24 @@ install_deps <- function(name = "Install Package Dependencies", ...) {
       "remotes::install_deps(dependencies = TRUE, repos = 'https://demo.rstudiopm.com/all/__linux__/bionic/latest')"
     ),
     ...
+  )
+}
+
+
+# pkg dev ====
+
+# all of the below should closely follow https://github.com/r-lib/r-azure-pipelines
+
+#' Create a step to check an R package
+#'
+#' Runs [rcmdcheck::rcmdcheck()] on a package at the repository root.
+#'
+#' @inheritDotParams step -run -uses
+#'
+#' @family steps pkg_development
+rcmd_check <- function(name = "Check Package") {
+  rscript(
+    name = name,
+    expr = "rcmdcheck::rcmdcheck(error_on = 'error')"
   )
 }

@@ -36,4 +36,4 @@ Defaults to \code{NULL}.}
 \description{
 Installs R package dependencies from a \code{DESCRIPTION} at the repository root.
 }
-\concept{steps actions installation}
+\concept{steps installation}
