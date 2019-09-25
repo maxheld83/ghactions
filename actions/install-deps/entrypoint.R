@@ -26,10 +26,10 @@ withr::with_libpaths(new = path_workflow, action = "prefix", code = {
 
 message("Checking for unneeded dependencies (might come from old cache) ...")
 deps_exp <- remotes::dev_package_deps(dependencies = TRUE)$package
-deps_present <- installed.packages(lib.loc = path_workflow)[, "Package"]
+deps_present <- installed.packages()[, "Package"]
 deps_uneeded <- setdiff(deps_present, deps_exp)
 if (length(deps_uneeded > 0)) {
-  remove.packages(deps_uneeded, lib = path_workflow)
+  remove.packages(deps_uneeded)
   message(
     "Removed one or more package dependencies no longer needed:",
     paste(deps_uneeded, collapse = ", ")

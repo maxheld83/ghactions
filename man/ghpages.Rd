@@ -52,7 +52,7 @@ The secret must be called \code{GH_PAT}.
 Wraps the external \href{https://github.com/maxheld83/ghpages/}{ghpages action}.
 }
 \seealso{
-Other steps actions: \code{\link{firebase}},
+Other steps actions deployment: \code{\link{firebase}},
   \code{\link{netlify}}, \code{\link{rsync}}
 }
-\concept{steps actions}
+\concept{steps actions deployment}

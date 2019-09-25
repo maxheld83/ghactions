@@ -6,10 +6,10 @@
 #'
 #' @inherit utils::Rscript
 #'
-#' @family steps
+#' @family steps script
 #'
 #' @export
-rscript <- function(options = "--help",
+rscript <- function(options = NULL,
                     expr = NULL,
                     file = NULL,
                     args = NULL,
@@ -36,15 +36,18 @@ rscript <- function(options = "--help",
     null.ok = TRUE
   )
 
+  # create run
+  if (is.null(expr)) {
+    run <- glue::glue_collapse(x = c("Rscript", options, file, args), sep = " ")
+  } else {
+    run <- purrr::map_chr(.x = expr, .f = function(x) {
+      glue::glue_collapse(x = c("Rscript", options, "-e", x), sep = " ")
+    })
+  }
+
   # create step ====
   step(
-    run = paste(
-      "Rscript",
-      options,
-      glue::glue('-e "{expr}"'),  # becomes empty string when NULL
-      file,
-      args
-    ),
+    run = run,
     ...
   )
 }
@@ -79,7 +82,7 @@ rscript <- function(options = "--help",
 #'
 #' @inheritDotParams step -run -uses
 #'
-#' @family steps actions
+#' @family steps actions deployment
 #'
 #' @export
 rsync <- function(HOST_NAME,
@@ -163,7 +166,7 @@ rsync_fau <- function(src = "_site",
 #'
 #' @inheritDotParams step -run -uses
 #'
-#' @family steps actions
+#' @family steps actions deployment
 #'
 #' @export
 ghpages <- function(`if` = "github.ref == 'refs/heads/master'",
@@ -204,7 +207,7 @@ ghpages <- function(`if` = "github.ref == 'refs/heads/master'",
 #'
 #' @inheritDotParams step -run -uses
 #'
-#' @family steps actions
+#' @family steps actions deployment
 #'
 #' @export
 netlify <- function(name = "Deploy to Netlify",
@@ -264,7 +267,7 @@ netlify <- function(name = "Deploy to Netlify",
 #' Manually edit your `firebase.json` to provide the deploy path.
 # tracked in https://github.com/maxheld83/ghactions/issues/80
 #'
-#' @family steps actions
+#' @family steps actions deployment
 #'
 #' @export
 firebase <- function(name = "Deploy to Firebase",
@@ -298,20 +301,25 @@ firebase <- function(name = "Deploy to Firebase",
 
 # installation ====
 
-#' @title Install Dependencies
+# this should always closely follow https://github.com/r-lib/r-azure-pipelines/blob/master/templates/pkg-install_dependencies.yml
+
+#' Create a step to install R package dependencies
 #'
-#' @description
-#' This GitHub action installs R package dependencies from a `DESCRIPTION` at the repository root.
+#' Installs R package dependencies from a `DESCRIPTION` at the repository root.
 #'
-#' @inherit action
+#' @inheritDotParams step -run -uses
+#'
+#' @family steps actions installation
 #'
 #' @export
-install_deps <- function(IDENTIFIER = "Install Dependencies",
-                         needs = NULL) {
-  list(
-    IDENTIFIER = IDENTIFIER,
-    uses = "r-lib/ghactions/actions/install-deps@v0.4.1",
-    needs = needs
+install_deps <- function(name = "Install Package Dependencies", ...) {
+  rscript(
+    name = name,
+    expr = c(
+      "install.packages('remotes', repos = 'https://demo.rstudiopm.com/all/__linux__/bionic/latest')",
+      "remotes::install_deps(dependencies = TRUE, repos = 'https://demo.rstudiopm.com/all/__linux__/bionic/latest')"
+    ),
+    ...
   )
 }
 

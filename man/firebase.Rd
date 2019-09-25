@@ -50,7 +50,7 @@ Because firebase gets the deploy directory from a \code{firebase.json} file, it 
 Manually edit your \code{firebase.json} to provide the deploy path.
 }
 \seealso{
-Other steps actions: \code{\link{ghpages}},
+Other steps actions deployment: \code{\link{ghpages}},
   \code{\link{netlify}}, \code{\link{rsync}}
 }
-\concept{steps actions}
+\concept{steps actions deployment}

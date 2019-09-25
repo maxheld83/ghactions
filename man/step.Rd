@@ -10,9 +10,14 @@ step(name = NULL, id = NULL, `if` = NULL, uses = NULL,
   `timeout-minutes` = NULL)
 }
 \arguments{
-\item{id, if, name, uses, run, shell}{\code{[character(1)]}
+\item{id, if, name, uses, shell}{\code{[character(1)]}
 giving additional options for the stop.
 Multiline strings are not supported.
+Defaults to \code{NULL}.}
+
+\item{run}{\code{[character()]}
+giving commands to run.
+Will be turned into a multiline string.
 Defaults to \code{NULL}.}
 
 \item{with, env}{\code{[list()]}

@@ -216,6 +216,15 @@ test_that("can be written out", {
   )
 })
 
+test_that("support multiline runs", {
+  expect_known_output(
+    object = write_workflow(
+      list(step(run = c("foo", "bar")))
+    ),
+    file = "workflows/run_multiline.yml"
+  )
+})
+
 
 context("actions")
 

@@ -466,9 +466,14 @@ ghactions_vms <- c(
 
 #' Create nested list for *one* [job](https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobs)
 #'
-#' @param id,if,name,uses,run,shell `[character(1)]`
+#' @param id,if,name,uses,shell `[character(1)]`
 #' giving additional options for the stop.
 #' Multiline strings are not supported.
+#' Defaults to `NULL`.
+#'
+#' @param run `[character()]`
+#' giving commands to run.
+#' Will be turned into a multiline string.
 #' Defaults to `NULL`.
 #'
 #' @param with,env `[list()]`
@@ -500,11 +505,12 @@ step <- function(name = NULL,
                  `continue-on-error` = NULL,
                  `timeout-minutes` = NULL) {
   purrr::walk(
-    .x = list(id, `if`, name, uses, run, shell, `working-directory`),
+    .x = list(id, `if`, name, uses, shell, `working-directory`),
     .f = checkmate::assert_string,
     na.ok = FALSE,
     null.ok = TRUE
   )
+  checkmate::assert_character(x = run, any.missing = FALSE, null.ok = TRUE)
   purrr::walk(
     .x = list(with, env),
     .f = checkmate::assert_list,
@@ -514,6 +520,9 @@ step <- function(name = NULL,
   )
   checkmate::assert_flag(x = `continue-on-error`, na.ok = FALSE, null.ok = TRUE)
   checkmate::assert_scalar(x = `timeout-minutes`, na.ok = FALSE, null.ok = TRUE)
+
+  # linebreaks for run
+  run <- glue::glue_collapse(x = run, sep = "\n", last = "\n")
 
   purrr::compact(as.list(environment()))
 }

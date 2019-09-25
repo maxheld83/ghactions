@@ -1,3 +1,17 @@
+#' Return something for NULL elements in glue
+#' @param str `[character(1)]` giving the string to replace NULL with, defaults to `""`.
+#' @noRd
+null_transformer <- function(str = "") {
+  # from: https://github.com/tidyverse/glue/issues/100#issuecomment-427487649
+  function(text, envir) {
+    out <- glue::identity_transformer(text, envir)
+    if (is.null(out)) {
+      return(str)
+    }
+    out
+  }
+}
+
 #' Check whether system dependency is available
 #' @noRd
 # TODO use something like this from another package (this is duplicated from pensieve)

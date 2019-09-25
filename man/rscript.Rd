@@ -4,8 +4,7 @@
 \alias{rscript}
 \title{Create a step to run \link[utils:Rscript]{utils::Rscript}}
 \usage{
-rscript(options = "--help", expr = NULL, file = NULL, args = NULL,
-  ...)
+rscript(options = NULL, expr = NULL, file = NULL, args = NULL, ...)
 }
 \arguments{
 \item{options}{a list of options, all beginning with \samp{--}.  These
@@ -113,4 +112,4 @@ if(inherits(res, "try-error")) q(status=1) else q()
 
 }
 }
-\concept{steps}
+\concept{steps script}
