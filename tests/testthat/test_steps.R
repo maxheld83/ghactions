@@ -54,3 +54,12 @@ test_that("rcmd check step is correct", {
     file = "workflows/rcmdcheck.yml"
   )
 })
+
+test_that("covr step is correct", {
+  expect_known_output(
+    object = write_workflow(
+      x = covr()
+    ),
+    file = "workflows/covr.yml"
+  )
+})

@@ -334,16 +334,28 @@ install_deps <- function(name = "Install Package Dependencies", ...) {
 
 # all of the below should closely follow https://github.com/r-lib/r-azure-pipelines
 
-#' Create a step to check an R package
+#' CI/CD steps for a package at the repository root
 #'
-#' Runs [rcmdcheck::rcmdcheck()] on a package at the repository root.
+#' @name pkg_dev
 #'
 #' @inheritDotParams step -run -uses
 #'
 #' @family steps pkg_development
+NULL
+
+#' @describeIn pkg_dev [rcmdcheck::rcmdcheck()]
 rcmd_check <- function(name = "Check Package") {
   rscript(
     name = name,
     expr = "rcmdcheck::rcmdcheck(error_on = 'error')"
   )
 }
+
+#' @describeIn pkg_dev [covr::codecov()]
+covr <- function(name = "Run Code Coverage") {
+  rscript(
+    name = name,
+    expr = "covr::codecov(quiet = FALSE, commit = '$GITHUB_SHA', branch = '$GITHUB_REF')"
+  )
+}
+

@@ -1,0 +1,2 @@
+name: Run Code Coverage
+run: Rscript -e "covr::codecov(quiet = FALSE, commit = '$GITHUB_SHA', branch = '$GITHUB_REF')"
