@@ -12,11 +12,11 @@ giving the values for each variable for the matrix build.
 See \code{\link[=gh_matrix]{gh_matrix()}} for additional options.
 Defaults to \code{NULL}.}
 
-\item{`fail-fast`}{\code{[logical()]}
+\item{fail-fast}{\code{[logical()]}
 giving whether GitHub should cancel all in-progress jobs if any matrix job fails.
 Defaults to \code{NULL}.}
 
-\item{`max-parallel`}{\code{[integer(1)]}
+\item{max-parallel}{\code{[integer(1)]}
 giving the maximum number of jobs to run simultaneously when using a matrix job strategy.}
 }
 \description{

@@ -2,14 +2,24 @@
 % Please edit documentation in R/workflows.R
 \name{website}
 \alias{website}
-\title{Render and deploy a website}
+\title{Render and deploy an \href{https://rmarkdown.rstudio.com}{rmarkdown} project}
 \usage{
-website(IDENTIFIER = "Render and Deploy RMarkdown Website",
-  deploy = list(master = ghpages()))
+website(name = "Render and Deploy RMarkdown Website",
+  deploy = list(ghpages()), on = c("push", "pull_request"))
 }
 \arguments{
+\item{name}{\code{[character(1)]}
+giving the \href{https://help.github.com/en/articles/workflow-syntax-for-github-actions#name}{name} of the workflow.
+Defaults to \code{NULL}, for no name, in which case GitHub will use the file name.}
+
 \item{deploy}{\code{[list(1)]}
-giving the name of the branch to deploy \emph{from}, and the function to deploy \emph{with}.}
+giving a list of deploy functions.}
+
+\item{on}{\code{[character()]}
+giving the \href{https://help.github.com/en/articles/events-that-trigger-workflows}{GitHub Event} on which to trigger the workflow.
+Must be a subset of \link{ghactions_events}.
+Defaults to \code{"push"}, in which case the workflow is triggered on every push event.
+Can also be a named list as returned by \code{\link[=on]{on()}} for additional filters.}
 }
 \description{
 This workflow renders some Rmarkdown via its (custom) site generator and deploys the result.
@@ -18,30 +28,9 @@ Suitable for:
 \item \href{https://rmarkdown.rstudio.com/lesson-13.html}{RMarkdown websites}
 \item \href{https://bookdown.org}{Bookdown websites}
 \item \href{https://bookdown.org/yihui/blogdown/}{Blogdown websites} (\strong{experimental})
-\item any other site generators that can be called via \code{rmarkdown::render_site()} and returns the path to the rendered assets (\strong{experimental}).
 }
 }
 \details{
-Rmarkdown site generators can write to arbitary directories, and these output directory can be set in a number of places.
-Happily, \code{rmarkdown::render_site()} (invisibly) returns the path to the rendered assets.
-The \code{website()} workflow automatically retrieves this path, and writes it to a special \code{.deploy_dir} text file.
-Downstream deploy actions such as \code{ghpages()} default to deploying from the directory specified in such a \code{.deploy_dir}.
-This isn't a terribly elegant way of doing this, but because each action runs it's own container, and \emph{only} the \code{github/workspace} directory persists between them, it is currently the only way to pass the path to the deploy actions.
-
-Users will probably never see the \code{.deploy_dir} file, and need not worry about it.
-}
-\examples{
-workflow(
-  name = "Render",
-  on = "push",
-  jobs = NULL
-)
-
-}
-\seealso{
-Other syntax: \code{\link{container}},
-  \code{\link{gh_matrix}}, \code{\link{ghactions_events}},
-  \code{\link{ghactions_vms}}, \code{\link{io}},
-  \code{\link{job}}, \code{\link{on}},
-  \code{\link{strategy}}
+\code{\link[rmarkdown:render_site]{rmarkdown::render_site()}} returns the directory to which outputs have been rendered.
+This workflow saves that directory in the environment variable \code{DEPLOY_PATH}, which is the default expected by \code{\link[=ghpages]{ghpages()}} and other deployment methods.
 }

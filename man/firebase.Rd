@@ -6,11 +6,29 @@
 \usage{
 firebase(name = "Deploy to Firebase",
   `if` = "github.ref == 'refs/heads/master'", PROJECT_ID = NULL,
-  with = NULL, env = NULL, site, ...)
+  with = NULL, env = NULL, ...)
 }
 \arguments{
+\item{name}{\code{[character(1)]}
+giving additional options for the stop.
+Multiline strings are not supported.
+Defaults to \code{NULL}.}
+
+\item{if}{\code{[character(1)]}
+giving additional options for the stop.
+Multiline strings are not supported.
+Defaults to \code{NULL}.}
+
 \item{PROJECT_ID}{\code{[character(1)]}
 giving a specific project to use for all commands, not required if you specify a project in your `.firebaserc`` file.}
+
+\item{with}{\code{[list()]}
+giving a named list of additional parameters.
+Defaults to \code{NULL}.}
+
+\item{env}{\code{[list()]}
+giving a named list of additional parameters.
+Defaults to \code{NULL}.}
 
 \item{...}{Arguments passed on to \code{step}
 \describe{
@@ -36,6 +54,15 @@ Defaults to \code{NULL}.}
   \item{env}{\code{[list()]}
 giving a named list of additional parameters.
 Defaults to \code{NULL}.}
+  \item{working-directory}{\code{[character(1)]}
+giving the default working directory.
+Defaults to \code{NULL}.}
+  \item{continue-on-error}{\code{[logical(1)]}
+giving whether to allow a job to pass when this step fails.
+Defaults to \code{NULL}.}
+  \item{timeout-minutes}{\code{[integer(1)]}
+giving the maximum number of minutes to run the step before killing the process.
+Defaults to \code{NULL}.}
 }}
 }
 \description{
@@ -46,7 +73,7 @@ Wraps the external \href{https://github.com/w9jds/firebase-action}{Google Fireba
 
 Configuration details other than \code{PROJECT_ID} are read from the \code{firebase.json} at the root of your repository.
 
-Because firebase gets the deploy directory from a \code{firebase.json} file, it cannot automatically find the appropriate path.
+Because firebase gets the deploy directory from a \code{firebase.json} file, it cannot use \code{DEPLOY_DIR}.
 Manually edit your \code{firebase.json} to provide the deploy path.
 }
 \seealso{

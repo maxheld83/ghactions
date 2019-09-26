@@ -46,70 +46,18 @@ Defaults to \code{NULL}.}
   \item{env}{\code{[list()]}
 giving a named list of additional parameters.
 Defaults to \code{NULL}.}
+  \item{working-directory}{\code{[character(1)]}
+giving the default working directory.
+Defaults to \code{NULL}.}
+  \item{continue-on-error}{\code{[logical(1)]}
+giving whether to allow a job to pass when this step fails.
+Defaults to \code{NULL}.}
+  \item{timeout-minutes}{\code{[integer(1)]}
+giving the maximum number of minutes to run the step before killing the process.
+Defaults to \code{NULL}.}
 }}
 }
 \description{
-This is an alternative front end for use in \samp{#!} scripts and
-  other scripting applications.
-}
-\details{
-\command{Rscript --help} gives details of usage, and
-  \command{Rscript --version} gives the version of \command{Rscript}.
-
-  Other invocations invoke the \R front-end with selected options.  This
-  front-end is convenient for writing \samp{#!} scripts since it is an
-  executable and takes \code{file} directly as an argument.  Options
-  \option{--slave --no-restore} are always supplied: these imply
-  \option{--no-save}. Arguments that contain spaces cannot be specified
-  directly on the \samp{#!} line, because spaces and tabs are interpreted as
-  delimiters and there is no way to protect them from this interpretation on
-  the \samp{#!} line. (The standard Windows command line has no concept
-  of \samp{#!} scripts, but Cygwin shells do.)
-
-  \emph{Either} one or more \option{-e} options or \code{file} should
-  be supplied.  When using \option{-e} options be aware of the quoting
-  rules in the shell used: see the examples.
-
-  Additional options accepted (before \code{file} or \code{args}) are
-  \describe{
-    \item{\option{--verbose}}{gives details of what \command{Rscript} is
-      doing.  Also passed on to \R.}
-    \item{\option{--default-packages=list}}{where \code{list} is a
-      comma-separated list of package names or \code{NULL}.  Sets the
-      environment variable \env{R_DEFAULT_PACKAGES} which determines the
-      packages loaded on startup.
-    }
-  }
-
-  Spaces are allowed in \code{expression} and \code{file} (but will need
-  to be protected from the shell in use, if any, for example by
-  enclosing the argument in quotes).
-
-  If \option{--default-packages} is not used, then \command{Rscript}
-  checks the environment variable \env{R_SCRIPT_DEFAULT_PACKAGES}. If
-  this is set, then it takes precedence over \env{R_DEFAULT_PACKAGES}.
-
-  Normally the version of \R is determined at installation, but this can
-  be overridden by setting the environment variable \env{RHOME}.
-#ifdef windows not active
-  \code{\link{stdin}()} refers to the input file, and
-  \code{\link{file}("stdin")} to the \code{stdin} file stream of the
-  process.
-}
-\examples{
-\dontrun{
-Rscript -e 'date()' -e 'format(Sys.time(), "\%a \%b \%d \%X \%Y")'
-#ifdef windows not active
-# Get the same initial packages in the same order as default R:
-Rscript --default-packages=methods,datasets,utils,grDevices,graphics,stats -e 'sessionInfo()'
-
-## example #! script for a Unix-alike
-
-#! /path/to/Rscript --vanilla --default-packages=utils
-args <- commandArgs(TRUE)
-res <- try(install.packages(args))
-if(inherits(res, "try-error")) q(status=1) else q()
-
-}
+Create a step to run \link[utils:Rscript]{utils::Rscript}
 }
 \concept{steps script}

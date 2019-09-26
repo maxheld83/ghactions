@@ -19,8 +19,8 @@ Defaults to \code{NULL}, in which case the first workflow in the first \code{*.y
 Add markdown syntax for README badge, see \code{\link[usethis:use_badge]{usethis::use_badge()}}.
 }
 \seealso{
-Other setup: \code{\link{browse_github_actions}},
-  \code{\link{edit_workflow}},
-  \code{\link{use_dockerfile}}, \code{\link{use_ghactions}}
+Other setup: \code{\link{edit_workflow}},
+  \code{\link{is_github_actions}},
+  \code{\link{use_ghactions}}
 }
 \concept{setup}

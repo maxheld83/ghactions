@@ -2,23 +2,13 @@
 % Please edit documentation in R/setup.R
 \name{use_ghactions}
 \alias{use_ghactions}
-\alias{list2ghact}
 \title{Workflow automation with GitHub Actions}
 \usage{
 use_ghactions(workflow = website())
-
-list2ghact(workflow)
 }
 \arguments{
 \item{workflow}{\code{[list(list())]}
-A named list of blocks nested as:
-\itemize{
-\item \strong{The workflow block}: arguments to \code{\link[=workflow]{workflow()}} as a named list \emph{and}
-\item `$actions``, which in turn comprises of the
-\itemize{
-\item \strong{Several action blocks} with arguments to \code{\link[=action]{action()}} as a named list.
-}
-}}
+A named list of as created by one of the \code{\link[=workflow]{workflow()}} functions.}
 }
 \value{
 A logical vector indicating if file was modified.
@@ -27,36 +17,19 @@ A logical vector indicating if file was modified.
 Sets up workflow automation, including continuous integration and deployment (CI/CD) for different kinds of R projects on GitHub actions.
 This function
 \itemize{
-\item Picks a set of sensible defaults for your project.
-\item Transforms a list of workflow and action blocks into the GitHub actions syntax.
-\item Adds a \code{.github/main.workflow} file to your repository.
+\item Picks a set of sensible defaults for your project,
+\item transforms a list into the GitHub actions syntax.
+\item writes it out to \code{.github/workflows/} in your repository.
 }
 }
-\section{Functions}{
-\itemize{
-\item \code{list2ghact}: Helper to turn block lists into strings.
-Useful when you want the result printed to console, not written to file.
-}}
-
 \examples{
 \dontrun{
 use_ghactions(workflow = website())
 }
-# this will print the result to the console for inspection
-\dontrun{
-list2ghact(workflow = website())
-}
-
 }
 \seealso{
-Other setup: \code{\link{browse_github_actions}},
-  \code{\link{edit_workflow}},
-  \code{\link{use_dockerfile}},
-  \code{\link{use_ghactions_badge}}
-
-Other setup: \code{\link{browse_github_actions}},
-  \code{\link{edit_workflow}},
-  \code{\link{use_dockerfile}},
+Other setup: \code{\link{edit_workflow}},
+  \code{\link{is_github_actions}},
   \code{\link{use_ghactions_badge}}
 }
 \concept{setup}

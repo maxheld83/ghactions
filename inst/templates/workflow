@@ -1,6 +1,0 @@
-workflow "{{IDENTIFIER}}" {
-  on = "{{on}}"
-  resolves = [
-    {{{resolves}}}
-  ]
-}

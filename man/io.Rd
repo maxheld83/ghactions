@@ -3,11 +3,14 @@
 \name{io}
 \alias{io}
 \alias{write_workflow}
+\alias{r2yaml}
 \alias{read_workflows}
 \alias{read_workflow}
 \title{Reading and writing GitHub Actions workflow files}
 \usage{
 write_workflow(x, file = stdout(), ...)
+
+r2yaml(x)
 
 read_workflows(path = ".github/workflows")
 
@@ -39,6 +42,8 @@ If a workflow is \emph{not} \code{name:}d, the file name will be used as a \code
 \section{Functions}{
 \itemize{
 \item \code{write_workflow}: Write \emph{one} GitHub Actions workflow to file.
+
+\item \code{r2yaml}: Convert R list to YAML string.
 
 \item \code{read_workflows}: Read in \emph{one or more} GitHub Actions workflows from file(s)
 

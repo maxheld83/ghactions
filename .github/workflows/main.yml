@@ -15,14 +15,9 @@ jobs:
       - name: Install System Dependencies
         run: |
             sudo apt-get update && apt-get install -y --no-install-recommends \
-            docker \
-            git \
             libxml2-dev \
             libssl-dev \
-            libcurl4-openssl-dev \
-            && apt-get clean -y \
-            && curl -fsSL https://get.docker.com -o get-docker.sh \
-            && sh get-docker.sh
+            libcurl4-openssl-dev
       - name: Install Package Dependencies
         run: |-
           Rscript -e "install.packages('remotes', repos = 'https://demo.rstudiopm.com/all/__linux__/bionic/latest')"

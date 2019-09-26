@@ -24,15 +24,15 @@ Defaults to \code{NULL}.}
 giving a named list of additional parameters.
 Defaults to \code{NULL}.}
 
-\item{`working-directory`}{\code{[character(1)]}
+\item{working-directory}{\code{[character(1)]}
 giving the default working directory.
 Defaults to \code{NULL}.}
 
-\item{`continue-on-error`}{\code{[logical(1)]}
+\item{continue-on-error}{\code{[logical(1)]}
 giving whether to allow a job to pass when this step fails.
 Defaults to \code{NULL}.}
 
-\item{`timeout-minutes`}{\code{[integer(1)]}
+\item{timeout-minutes}{\code{[integer(1)]}
 giving the maximum number of minutes to run the step before killing the process.
 Defaults to \code{NULL}.}
 }

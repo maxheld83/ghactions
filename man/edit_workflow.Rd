@@ -7,12 +7,11 @@
 edit_workflow()
 }
 \description{
-Open \code{main.workflow} configuration file for GitHub actions.
+Open \code{.github/workflows/main} configuration file for GitHub actions.
 See \code{\link[usethis:edit]{usethis::edit()}} for details.
 }
 \seealso{
-Other setup: \code{\link{browse_github_actions}},
-  \code{\link{use_dockerfile}},
+Other setup: \code{\link{is_github_actions}},
   \code{\link{use_ghactions_badge}},
   \code{\link{use_ghactions}}
 }

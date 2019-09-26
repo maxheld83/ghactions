@@ -2,7 +2,7 @@ name: Deploy Website
 if: github.ref == 'refs/heads/master'
 uses: maxheld83/rsync@v0.1.1
 with:
-  args: $GITHUB_WORKSPACE/_site/ pfs400wm@karli.rrze.uni-erlangen.de:/proj/websource/docs/FAU/fakultaet/phil/www.datascience.phil.fau.de/websource/denkzeug
+  args: $GITHUB_WORKSPACE/$DEPLOY_PATH/ pfs400wm@karli.rrze.uni-erlangen.de:/proj/websource/docs/FAU/fakultaet/phil/www.datascience.phil.fau.de/websource/denkzeug
 env:
   HOST_NAME: karli.rrze.uni-erlangen.de
   HOST_IP: 131.188.16.138

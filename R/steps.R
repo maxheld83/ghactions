@@ -2,9 +2,11 @@
 
 #' Create a step to run [utils::Rscript]
 #'
-#' @inheritDotParams step -run
+#' @inheritParams step
 #'
-#' @inherit utils::Rscript
+#' @inheritParams utils::Rscript
+#'
+#' @inheritDotParams step -run
 #'
 #' @family steps script
 #'
@@ -86,6 +88,8 @@ rscript <- function(options = NULL,
 #' @description
 #' **Remember to provide `SSH_PRIVATE_KEY` and `SSH_PUBLIC_KEY` as secrets to the GitHub UI.**.
 #'
+#' @inheritParams step
+#'
 #' @inheritDotParams step -run -uses
 #'
 #' @family steps actions deployment
@@ -137,8 +141,8 @@ rsync <- function(HOST_NAME,
 }
 
 
-rsync_fau <- function(src = "_site",
-                      dest = "/proj/websource/docs/FAU/fakultaet/phil/www.datascience.phil.fau.de/websource/denkzeug",
+rsync_fau <- function(src = "$DEPLOY_PATH",
+                      dest = fs::path("/proj/websource/docs/FAU/fakultaet/phil/www.datascience.phil.fau.de/websource", gh::gh_tree_remote()$repo),
                       user = "pfs400wm",
                       ...) {
   rsync(
@@ -170,6 +174,8 @@ rsync_fau <- function(src = "_site",
 #' @param BUILD_DIR `[character(1)]`
 #' giving the path relative from your `/github/workspace` to the directory to be published.
 #'
+#' @inheritParams step
+#'
 #' @inheritDotParams step -run -uses
 #'
 #' @family steps actions deployment
@@ -177,7 +183,7 @@ rsync_fau <- function(src = "_site",
 #' @export
 ghpages <- function(`if` = "github.ref == 'refs/heads/master'",
                     name = "Deploy to GitHub Pages",
-                    BUILD_DIR = "_site",
+                    BUILD_DIR = "$DEPLOY_PATH",
                     ...) {
   checkmate::assert_string(x = BUILD_DIR, na.ok = FALSE, null.ok = FALSE)
   step(
@@ -209,7 +215,7 @@ ghpages <- function(`if` = "github.ref == 'refs/heads/master'",
 #' @param site `[character(1)]`
 #' giving a site ID to deploy to.
 #'
-#' @export
+#' @inheritParams step
 #'
 #' @inheritDotParams step -run -uses
 #'
@@ -218,7 +224,7 @@ ghpages <- function(`if` = "github.ref == 'refs/heads/master'",
 #' @export
 netlify <- function(name = "Deploy to Netlify",
                     `if` = "github.ref == 'refs/heads/master'",
-                    dir = "_site",
+                    dir = "$DEPLOY_PATH",
                     prod = TRUE,
                     with = NULL,
                     env = NULL,
@@ -264,12 +270,14 @@ netlify <- function(name = "Deploy to Netlify",
 #' @param PROJECT_ID `[character(1)]`
 #' giving a specific project to use for all commands, not required if you specify a project in your `.firebaserc`` file.
 #'
+#' @inheritParams step
+#'
 #' @inheritDotParams step -run -uses
 #'
 #' @details
 #' Configuration details other than `PROJECT_ID` are read from the `firebase.json` at the root of your repository.
 #'
-#' Because firebase gets the deploy directory from a `firebase.json` file, it cannot automatically find the appropriate path.
+#' Because firebase gets the deploy directory from a `firebase.json` file, it cannot use `DEPLOY_DIR`.
 #' Manually edit your `firebase.json` to provide the deploy path.
 # tracked in https://github.com/maxheld83/ghactions/issues/80
 #'
@@ -281,7 +289,6 @@ firebase <- function(name = "Deploy to Firebase",
                      PROJECT_ID = NULL,
                      with = NULL,
                      env = NULL,
-                     site,
                      ...) {
   checkmate::assert_string(x = PROJECT_ID, null.ok = TRUE)
 
@@ -307,11 +314,25 @@ firebase <- function(name = "Deploy to Firebase",
 
 # installation ====
 
+#' Create a step to checkout a repository
+#'
+#' @family steps installation
+#'
+#' @export
+checkout <- function() {
+  step(
+    name = "Checkout Repository",
+    uses = "actions/checkout@master"
+  )
+}
+
 # this should always closely follow https://github.com/r-lib/r-azure-pipelines/blob/master/templates/pkg-install_dependencies.yml
 
 #' Create a step to install R package dependencies
 #'
 #' Installs R package dependencies from a `DESCRIPTION` at the repository root.
+#'
+#' @inheritParams step
 #'
 #' @inheritDotParams step -run -uses
 #'
@@ -337,6 +358,8 @@ install_deps <- function(name = "Install Package Dependencies", ...) {
 #' CI/CD steps for a package at the repository root
 #'
 #' @name pkg_dev
+#'
+#' @inheritParams step
 #'
 #' @inheritDotParams step -run -uses
 #'

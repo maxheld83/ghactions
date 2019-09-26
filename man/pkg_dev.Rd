@@ -11,6 +11,11 @@ rcmd_check(name = "Check Package")
 covr(name = "Run Code Coverage")
 }
 \arguments{
+\item{name}{\code{[character(1)]}
+giving additional options for the stop.
+Multiline strings are not supported.
+Defaults to \code{NULL}.}
+
 \item{...}{Arguments passed on to \code{step}
 \describe{
   \item{id}{\code{[character(1)]}
@@ -34,6 +39,15 @@ giving a named list of additional parameters.
 Defaults to \code{NULL}.}
   \item{env}{\code{[list()]}
 giving a named list of additional parameters.
+Defaults to \code{NULL}.}
+  \item{working-directory}{\code{[character(1)]}
+giving the default working directory.
+Defaults to \code{NULL}.}
+  \item{continue-on-error}{\code{[logical(1)]}
+giving whether to allow a job to pass when this step fails.
+Defaults to \code{NULL}.}
+  \item{timeout-minutes}{\code{[integer(1)]}
+giving the maximum number of minutes to run the step before killing the process.
 Defaults to \code{NULL}.}
 }}
 }
