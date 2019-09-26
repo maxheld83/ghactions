@@ -23,163 +23,33 @@ By programmatically triggering CI/CD, output versions (say, a PDF report or comp
 For widespread adoption of this best practice in the R community, CI/CD needs to be simple, fast, and easy to reason about if things go wrong.
 
 [GitHub actions](https://github.com/features/actions) is a new workflow automation feature of the popular code repository host GitHub.
-It is a convenient service layer on top of the popular container standard docker, and is itself partly open source, thus limiting vendor lock-in.
-GitHub actions may offer better CI/CD for the R community, but most importantly, it is simple to reason about if things go wrong.
 
 
-## Workflows
+## Workflow Automation as Code
 
-GitHub actions are automated workflows defined in a file called `main.workflow` sitting in a special `.github/` folder at the root of your repository.
-Whenever some event gets triggered on GitHub (typically, a `git push`), GitHub will run through all the instructions in your `main.workflow` in the appropriate order.
+One of the great innovations in the CI/CD space in the past couple of years has been to express such development workflows *as code*.
+As such, it can be shared, versioned and tested.
 
-GitHub actions models workflows as [directed acyclic graphs (DAG)](https://en.wikipedia.org/wiki/Directed_acyclic_graph).
-The `main.workflow` functions express these graphs using a subset of the [Hashicorp Configuration Language (HCL)](https://github.com/hashicorp/hcl).
-It's not important that you know what any of this means.
+This is most powerful, when common parts of such code can be factored out.
 
-The `main.workflow` is a simple text file, and it is reasonably human-readable.
-However, GitHub *also* provides a visual editor on their website that you can access by just opening your `.github/main.workflow` on [github.com](https://www.github.com).
+GitHub Actions offers only one way in which you can do that:
+You can use container or JavaScript actions to abstract away the complexity of the `runs: ` field for a *particular step* in your workflow.
+That can be quite helpful, especially when you are interacting with external services or complicated architectures.
+Container actions, in addition, allow you to provide arbitrary computing environments (docker images) for a step, while a JavaScript action will use the underlying virtual machine.
 
-The workflow functions in this package create such `main.workflow` files for you, with sensible defaults for several kinds of R projects.
-This is meant to get your started quickly, or to help you apply the same `main.workflow` to many similar projects that you might have.
+What GitHub Actions does (currently) *not* let you do is factor out common patterns *across* steps, or even jobs.
+This is frequently the case for projects from the same language (here: R) or communities (here: tidyverse), who might all be relying on very similar, if not identical workflows.
 
-However, you might soon find the wrappers in this package quite limiting, because *they are*.
-For more advanced uses, you may want to edit your own `main.workflow`s.
-You can always still use the custom R *actions* provided in this repo.
+Microsoft's Azure Pipelines has an elegant way to share such yaml-templates, even while passing down parameters, but GitHub Actions does not offer this (yet).
 
+Instead, you get *this* package, which will provide you with hopefully sensible workflows.
 
-## Actions
-
-GitHub actions workflows are made up of individual blocks called -- you guessed it -- *actions*. 
-In other CI/CD services, these are sometimes known as *steps*, though GitHub actions are more flexible.
-You can read more about actions in [the GitHub documentation](https://developer.github.com/actions/).
-
-The ghactions repository includes some custom R actions, listed in the [articles](https://r-lib.github.io/ghactions/articles) section.
-**You can use these custom R actions independently and without using this package**.
-
-These custom R actions, as well as generic actions from other repositories are also wrapped in little R functions listed in the actions category.
-These functions let you generate the necessary action blocks in R.
-
-```{r}
-library(ghactions)
-x <- rscript_byod(  # this just creates a list with sensible defaults
-  IDENTIFIER = "Summation",
-  needs = "Build image", # this is the necessary prior step
-  # the uses field is hard-coded in the function to keep everything compatible
-  expr = "1+1"
-) 
-do.call(what = action, args = x)
-```
-
-This isn't a very convincing use of R, and you'd be better off typing the action block by hand, or even just using the visual editor on GitHub.com.
-These action wrappers, in short, are useful only in the *very* narrow case where you might want to programmatically build your own templates.
-
-Every GitHub *action* runs in its own little virtual machine, called a Docker container (it's not really a VM).
-Actions, even in the same workflow, share *no state* with one another, unless otherwise specified.
-To learn more about what this isolation means for using R in GitHub actions, and how you can persist states throughout a workflow, read the [vignette](/ghactions/articles/isolation).
-
-Leveraging GitHub actions for more advanced uses requires some understanding of Docker, technology by which these separate computing environments are provisioned.
-If you already know what this is, skip ahead.
-If you're not familiar with Docker, it's easy to learn.
+However, because these aren't linked dynamically from your repos, there will be no easy way to update or maintain them.
 
 
-## Docker
+## Limitations
 
-[Docker](https://www.docker.com/) is an open-source industry standard to define and provision computing environments, known as *containers*.
-Containers are similar to virtual machines (a computer inside a computer), but slimmer and generally neater.
-
-For some R projects, you will be targeting a computing environment that's already well-defined.
-For example, a shiny app that's supposed to run on [shinyapps.io](https://www.shinyapps.io) will need to work within the shinyapps computing environment (their respective `Dockerfile` is [here](https://github.com/rstudio/shinyapps-package-dependencies)).
-Similarly, for CRAN-bound packages, you might want to use one of the [r-hub-linux](https://github.com/r-hub/rhub-linux-builders) images, approximating the environment which CRAN itself will use for submissions.
-In those cases, respective GitHub actions will set you up with the necessary computing environments out of the box, and you don't have to worry about Docker.
-
-For many other R projects however, there is *no* such standard computing environment, and you actually *want* to have the flexibility to provision one for yourself.
-For example, you might need a specific version of a system dependency such as the GSL.
-In these situations, you have to **bring-your-own-`Dockerfile`**.
-Even if you might think you don't have special requirements, already a simple RMarkdown report might depend on a particular version of R and Pandoc, which in turn may depend on a particular operating system version.
-In short, it's almost always better to lock these dependencies down and *byod*.
-
-Let's backtrack a little to understand how Docker works.
-A Docker container exists in several forms.
-It starts from a simple text file called `Dockerfile` (no extension), listing some instructions to build a virtual machine.
-Think of this as the *recipe* to provision your computing environment.
-Using the `docker build` shell command, you can *build* a container *image*, which gets stored somewhere on your computer and which you can share with others.
-Think of this as the prepared *meal*, which you've then put in the freezer for later.
-Finally, you can `docker start` an image to boot said virtual machine.
-Figuratively, you've now microwaved your pre-cooked meal and can *finally* enjoy it.
-
-Docker images can also be *layered*.
-For example, you can base a `Dockerfile` on an already existing docker *image*, and just add your *additional* instructions.
-In the now tired cooking analogy, you can use frozen pizza dough from the store as an *ingredient* to your own home-cooked meal.
-
-Happily, there are some great docker images for R projects maintained by the [Rocker Project](http://rocker-project.org) to get you started.
-Because containers can be layered, you can just base your *own* `Dockerfile` on one of those popular images. 
-For example, `rocker/verse` already includes R, RStudio, the tidyverse, LaTeX and many other packages and system dependencies.
-
-You can lock use this image simply by placing a text file called `Dockerfile` at the root of your repository.
-At a minimum, it should include a `FROM` statement as in the below.
-
-```
-FROM rocker/verse:3.5.2
-```
-
-The `:3.5.2` part of the `FROM` statement binds you to a particular *version* of that image.
-You are highly recommended to always use versioned images.
-
-You can also generate such a simple file by running [ghactions::use_dockerfile()].
-
-If you want to add more instructions, consult the [docker documentation](https://docs.docker.com/engine/reference/builder/).
-Learn how to add additional R packages at the [Rocker Project](https://www.rocker-project.org/use/extending/).
-
-You can also use the [containerit](https://github.com/o2r-project/containerit) package to automatically write a `Dockerfile`: 
-it uses impressive (and dark?) magic to figure out what `Dockerfile` instructions you need.
-Beginners might be better off writing their own `Dockerfile`s.
-
-There is one last step before we can use the `Dockerfile` in a GitHub action.
-Because a `Dockerfile` is just a *recipe* for a build environment, **you first have to build your `repo/Dockerfile`** into an image.
-Happily, GitHub actions already provides an [action for that](https://github.com/actions/docker).
-Most workflow function in this package start with a block such as the below.
-
-```
-action "Build image" {
-  uses = "actions/docker/cli@c08a5fc9e0286844156fefff2c141072048141f6"
-  args = "build --tag=repo:latest ."
-}
-```
-
-This just runs `docker build --tag=repo:latest .`, where `.` is the root of your repository.
-Docker will then pick whichever `Dockerfile` it finds there and *build* it.
-Your dockerfile recipe has now been prepared into a meal, and this meal (the docker *image*) exists in your `/github/workspace`.
-This is a special directory that you won't ever see anywhere.
-GitHub actions provisions this directory and lets it *persist as long as your `main.workflow` runs*.
-
-The `--tag=repo:latest` part of the above call simply names your image, literally "repo:latest".
-This is just my convention, not a magic name.
-The good news is that any downstream actions can now use the prepared image.
-
-The awkward part is that these actions have to **call the image by its exact name: `repo:latest`**.
-
-This step to build an image is wrapped in `build_image()`.
-
-The workflow functions in this package take care of this automatically.
-This isn't terribly elegant, but currently appears to be the only way on GitHub actions to identify images from past actions (see [this issue](https://github.com/maxheld83/ghactions/issues/1)).
-
-
-## Why You Should Care
-
-It's still very early days, but it seems as if GitHub actions might have some potential for R projects:
-
-- It's built on an open-source, cross-platform foundation, that you can easily reason about and reproduce on your machine (Docker!).
-- It seems pretty fast compared to TravisCI: 
-  an `R CMD check` for a small project with all bells and whistles is at <4 minutes. 
-  (This is *before* image or build artefact caching.)
-  (This is anecdotal evidence, if you'd like a real benchmarking, chip in [here](https://github.com/maxheld83/ghactions/issues/35)).
-- There's one less service to deal with and one less authentication to go through, especially for smaller projects.
-- The GUI makes it easier to build and reason about complex CI/CD chains.
-- The sharing model seems promising.
-- GitHub actions can be tied into almost *anything* in the GitHub API.
-  Let's go nuts!
-- The vendor lock-in is quite limited, because the proprietary layer on top of Docker is quite thin.
-  GitHub has also (already) [open-sourced parts of GitHub actions](https://githubengineering.com/an-open-source-parser-for-github-actions/) and seems encourage alternative implementations of it.
+GitHub Actions does not currently offer caching; if your package has many dependencies, your build times might be quite long.
 
 
 ## What This Package *Doesn't* Do
@@ -187,23 +57,18 @@ It's still very early days, but it seems as if GitHub actions might have some po
 The ghactions package is quite limited, and deliberately so:
 GitHub actions already provides most of the things we might want, and in a cross-platform way:
 
-- a succinct and human-readable text file representation (a subset of the [Hashicorp Configuration Language (HCL)](https://github.com/hashicorp/hcl)) of the [directed acyclic graphs (DAG)](https://en.wikipedia.org/wiki/Directed_acyclic_graph) used to model code automation workflows,
-- a neat graphical user interface that makes to edit your `main.workflow` files in their native graph form,
-- a convenient model and marketplace to share actions.
+- a succinct and human-readable text file representation (YAML) used to model code automation workflows,
+- a convenient model and marketplace to share actions,
+- and even some templates for frequently used projects.
 
-This package does not intend to solve these problems *again*, nor to completely wrap GitHub actions in R.
+This package does not intend to solve these problems *again*, nor to completely wrap GitHub Actions in R.
 It's really just a glorified collection of templates to get you started quickly.
 
-If you need something more advanced, chances are you're going to want to edit your workflows yourself, using GitHub's native interface.
+If you need something more advanced, chances are you're going to want to edit your workflows yourself.
 It's quite easy to use, and we'll try to gather and share best practices in this repository.
 
 
 ## Thanks
-
-ghactions leaves much of the hard work to other open source software and their generous authors.
-
-First and foremost, GitHub Actions is build on top of Docker, and so, by extension, is this package.
-It would not be possible without the tremendous work of [Carl Boettiger](https://www.carlboettiger.info) and [Dirk Edelbuettel](http://dirk.eddelbuettel.com), who carefully maintain versioned Docker images for R through their [Rocker Project](http://rocker-project.org).
 
 This package is also heavily modeled on, and indebted to the [usethis](https://usethis.r-lib.org) package by [Jenny Bryan](https://jennybryan.org) and [Hadley Wickham](http://hadley.nz).
 
@@ -216,7 +81,3 @@ The [travis](https://ropenscilabs.github.io/travis/) and [tic](https://ropenscil
 You can use [AppVeyor](http://appveyor.com)'s Windows-based system via the [r-appveyor](https://github.com/krlmlr/r-appveyor) package.
 
 For serious, cross-platform testing of packages, there's the [r-hub](http://r-hub.io) project.
-
-There are also other ways to use R and Docker together.
-We are here primarily concerned with running R *inside Docker* (inside GitHub actions), but there are also some packages that allow you to control Docker from *inside R*, including [stevedore](https://richfitz.github.io/stevedore/), [harbor](https://github.com/wch/harbor) and [docker](https://bhaskarvk.github.io/docker/).
-The broader topic of reproducibility in R with the help of Docker is also adressed by the [rrtools](https://github.com/benmarwick/rrtools) and [liftr](https://liftr.me) packages, as well as the [o2r](https://o2r.info) and [ropensci](https://ropensci.org) projects.
