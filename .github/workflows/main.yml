@@ -36,7 +36,7 @@ jobs:
           Rscript -e "pkgdown::build_site(override = list(devel = FALSE, external = FALSE))"
       - name: Deploy to GitHub Pages
         if: github.ref == 'refs/heads/master'
-        uses: maxheld83/ghpages@v0.2.0
+        uses: gr2m/ghpages-1@master
         env:
           BUILD_DIR: docs
-          GH_PAT: ${{ secrets.GH_PAT }}
+          GH_PAT: ${{ secrets.GITHUB_TOKEN }}

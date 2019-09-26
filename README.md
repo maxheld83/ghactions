@@ -1,4 +1,4 @@
-# GitHub actions for R <img src="https://github.com/r-lib/ghactions/blob/master/logo.png?raw=true" align="right" height=140/>
+# GitHub Actions for R <img src="https://github.com/r-lib/ghactions/blob/master/logo.png?raw=true" align="right" height=140/>
 
 <!-- badges: start -->
 [![Actions Status](https://github.com/r-lib/ghactions/workflows/.github/workflows/main.yml/badge.svg)](https://github.com/r-lib/ghactions/actions)
