@@ -39,4 +39,4 @@ jobs:
         uses: gr2m/ghpages-1@master
         env:
           BUILD_DIR: docs
-          GH_PAT: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
