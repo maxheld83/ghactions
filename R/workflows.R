@@ -10,8 +10,6 @@
 #'
 #' @inherit workflow
 #'
-#' @inheritParams rscript_byod
-#'
 #' @details
 #' Rmarkdown site generators can write to arbitary directories, and these output directory can be set in a number of places.
 #' Happily, `rmarkdown::render_site()` (invisibly) returns the path to the rendered assets.

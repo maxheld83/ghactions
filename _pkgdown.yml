@@ -21,12 +21,12 @@ reference:
       Functions with GitHub actions workflows for common R projects with sensible defaults.
     contents:
       - has_concept("workflows")
-  - title: "Actions"
+  - title: "Steps"
     desc: >
-      Functions to (thinly) wrap relevant GitHub actions.
-      This includes GitHub actions from outside sources.
+      Functions to write steps.
+      This includes wrappers for external GitHub actions.
     contents:
-      - has_concept("actions")
+      - has_concept("steps")
   - title: "Syntax"
     desc: >
       Functions to generate *blocks* of GitHub actions syntax.
@@ -37,24 +37,6 @@ articles:
   - title: "Overview"
     contents:
       - ghactions
-      - isolation
-  - title: "Actions for Package Development"
-    desc: >
-      These actions are useful in package development.
-    contents:
-      - pkg-dev/ci
-      - pkg-dev/auto-commit
-      - pkg-dev/review
-  - title: "Other Actions"
-    contents:
-      - rscript-byod
-  - title: "Developing GitHub Actions"
-    desc: >
-      Not specific to R or this package.
-    contents:
-      - performance
-      - local
-      - testing
 navbar:
   title: "ghactions"
   left:
@@ -66,11 +48,9 @@ navbar:
       href: "reference/index.html"
     - text: "Articles"
       href: "articles/index.html"
-    - text: "Presentation"
-      href: "pres/index.html"
   right:
     - icon: fa-github
-      href: https://github.com/maxheld83/ghactions
+      href: https://github.com/r-lib/ghactions
 theme: cosmo
 template:
   params:
