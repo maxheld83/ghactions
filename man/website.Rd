@@ -34,3 +34,4 @@ Suitable for:
 \code{\link[rmarkdown:render_site]{rmarkdown::render_site()}} returns the directory to which outputs have been rendered.
 This workflow saves that directory in the environment variable \code{DEPLOY_PATH}, which is the default expected by \code{\link[=ghpages]{ghpages()}} and other deployment methods.
 }
+\concept{workflows}

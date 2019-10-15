@@ -77,7 +77,17 @@ Because firebase gets the deploy directory from a \code{firebase.json} file, it 
 Manually edit your \code{firebase.json} to provide the deploy path.
 }
 \seealso{
-Other steps actions deployment: \code{\link{ghpages}},
+Other steps: \code{\link{checkout}}, \code{\link{ghpages}},
+  \code{\link{install_deps}}, \code{\link{netlify}},
+  \code{\link{pkg_dev}}, \code{\link{rscript}},
+  \code{\link{rsync}}
+
+Other actions: \code{\link{ghpages}},
+  \code{\link{netlify}}, \code{\link{rsync}}
+
+Other deployment: \code{\link{ghpages}},
   \code{\link{netlify}}, \code{\link{rsync}}
 }
-\concept{steps actions deployment}
+\concept{actions}
+\concept{deployment}
+\concept{steps}

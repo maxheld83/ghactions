@@ -51,6 +51,12 @@ Defaults to \code{NULL}.}
 Installs R package dependencies from a \code{DESCRIPTION} at the repository root.
 }
 \seealso{
-Other steps installation: \code{\link{checkout}}
+Other steps: \code{\link{checkout}},
+  \code{\link{firebase}}, \code{\link{ghpages}},
+  \code{\link{netlify}}, \code{\link{pkg_dev}},
+  \code{\link{rscript}}, \code{\link{rsync}}
+
+Other installation: \code{\link{checkout}}
 }
-\concept{steps installation}
+\concept{installation}
+\concept{steps}

@@ -8,7 +8,8 @@
 #'
 #' @inheritDotParams step -run
 #'
-#' @family steps script
+#' @family steps
+#' @family script
 #'
 #' @export
 rscript <- function(options = NULL,
@@ -92,7 +93,9 @@ rscript <- function(options = NULL,
 #'
 #' @inheritDotParams step -run -uses
 #'
-#' @family steps actions deployment
+#' @family steps
+#' @family actions
+#' @family deployment
 #'
 #' @export
 rsync <- function(HOST_NAME,
@@ -178,7 +181,9 @@ rsync_fau <- function(src = "$DEPLOY_PATH",
 #'
 #' @inheritDotParams step -run -uses
 #'
-#' @family steps actions deployment
+#' @family steps
+#' @family actions
+#' @family deployment
 #'
 #' @export
 ghpages <- function(`if` = "github.ref == 'refs/heads/master'",
@@ -219,7 +224,9 @@ ghpages <- function(`if` = "github.ref == 'refs/heads/master'",
 #'
 #' @inheritDotParams step -run -uses
 #'
-#' @family steps actions deployment
+#' @family steps
+#' @family actions
+#' @family deployment
 #'
 #' @export
 netlify <- function(name = "Deploy to Netlify",
@@ -281,7 +288,9 @@ netlify <- function(name = "Deploy to Netlify",
 #' Manually edit your `firebase.json` to provide the deploy path.
 # tracked in https://github.com/maxheld83/ghactions/issues/80
 #'
-#' @family steps actions deployment
+#' @family steps
+#' @family actions
+#' @family deployment
 #'
 #' @export
 firebase <- function(name = "Deploy to Firebase",
@@ -316,7 +325,8 @@ firebase <- function(name = "Deploy to Firebase",
 
 #' Create a step to checkout a repository
 #'
-#' @family steps installation
+#' @family steps
+#' @family installation
 #'
 #' @export
 checkout <- function() {
@@ -336,7 +346,8 @@ checkout <- function() {
 #'
 #' @inheritDotParams step -run -uses
 #'
-#' @family steps installation
+#' @family steps
+#' @family installation
 #'
 #' @export
 install_deps <- function(name = "Install Package Dependencies", ...) {
@@ -363,7 +374,8 @@ install_deps <- function(name = "Install Package Dependencies", ...) {
 #'
 #' @inheritDotParams step -run -uses
 #'
-#' @family steps pkg_development
+#' @family steps
+#' @family pkg_development
 NULL
 
 #' @describeIn pkg_dev [rcmdcheck::rcmdcheck()]

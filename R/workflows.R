@@ -15,6 +15,8 @@
 #'
 #' @inheritParams workflow
 #'
+#' @family workflows
+#'
 #' @export
 website <- function(name = "Render and Deploy RMarkdown Website",
                     deploy = list(ghpages()),

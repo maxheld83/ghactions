@@ -61,4 +61,11 @@ CI/CD steps for a package at the repository root
 \item \code{covr}: \code{\link[covr:codecov]{covr::codecov()}}
 }}
 
-\concept{steps pkg_development}
+\seealso{
+Other steps: \code{\link{checkout}},
+  \code{\link{firebase}}, \code{\link{ghpages}},
+  \code{\link{install_deps}}, \code{\link{netlify}},
+  \code{\link{rscript}}, \code{\link{rsync}}
+}
+\concept{pkg_development}
+\concept{steps}

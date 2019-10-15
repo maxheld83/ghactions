@@ -12,13 +12,13 @@ development:
 reference:
   - title: "Setup"
     desc: >
-      Functions to help you get started with GitHub actions.
+      Functions to help you get started with GitHub Actions.
     contents:
       - has_concept("setup")
       - edit_workflow
   - title: "Workflows"
     desc: >
-      Functions with GitHub actions workflows for common R projects with sensible defaults.
+      Functions with GitHub Actions workflows for common R projects with sensible defaults.
     contents:
       - has_concept("workflows")
   - title: "Steps"
@@ -46,8 +46,6 @@ navbar:
       href: "articles/ghactions.html"
     - text: "Reference"
       href: "reference/index.html"
-    - text: "Articles"
-      href: "articles/index.html"
   right:
     - icon: fa-github
       href: https://github.com/r-lib/ghactions

@@ -78,7 +78,17 @@ Defaults to \code{NULL}.}
 Wraps the external \href{https://github.com/netlify/actions}{netlify cli action}.
 }
 \seealso{
-Other steps actions deployment: \code{\link{firebase}},
+Other steps: \code{\link{checkout}},
+  \code{\link{firebase}}, \code{\link{ghpages}},
+  \code{\link{install_deps}}, \code{\link{pkg_dev}},
+  \code{\link{rscript}}, \code{\link{rsync}}
+
+Other actions: \code{\link{firebase}},
+  \code{\link{ghpages}}, \code{\link{rsync}}
+
+Other deployment: \code{\link{firebase}},
   \code{\link{ghpages}}, \code{\link{rsync}}
 }
-\concept{steps actions deployment}
+\concept{actions}
+\concept{deployment}
+\concept{steps}
