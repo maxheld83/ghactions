@@ -2,7 +2,7 @@
 % Please edit documentation in R/syntax.R
 \name{workflow}
 \alias{workflow}
-\title{Create nested list for a \href{https://help.github.com/en/articles/workflow-syntax-for-github-actions}{workflow block}.}
+\title{Create nested list for a \href{https://help.github.com/en/articles/workflow-syntax-for-github-actions}{workflow block}}
 \usage{
 workflow(name = NULL, on = "push", jobs = NULL)
 }
@@ -21,7 +21,7 @@ Can also be a named list as returned by \code{\link[=on]{on()}} for additional f
 giving a \emph{named} list of jobs, with each list element as returned by \code{\link[=job]{job()}}.}
 }
 \description{
-Create nested list for a \href{https://help.github.com/en/articles/workflow-syntax-for-github-actions}{workflow block}.
+Create nested list for a \href{https://help.github.com/en/articles/workflow-syntax-for-github-actions}{workflow block}
 }
 \examples{
 workflow(
@@ -34,8 +34,7 @@ workflow(
 \seealso{
 Other syntax: \code{\link{container}},
   \code{\link{gh_matrix}}, \code{\link{ghactions_events}},
-  \code{\link{ghactions_vms}}, \code{\link{io}},
-  \code{\link{job}}, \code{\link{on}},
-  \code{\link{strategy}}
+  \code{\link{ghactions_vms}}, \code{\link{job}},
+  \code{\link{on}}, \code{\link{strategy}}
 }
 \concept{syntax}

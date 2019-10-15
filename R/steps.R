@@ -64,7 +64,7 @@ rscript <- function(options = NULL,
 
 # static deployment ====
 
-#' Create an (action) step to deploy static assets.
+#' Create an (action) step to deploy static assets
 #'
 #' Wraps the external [ghpages action](https://github.com/maxheld83/ghpages/) to deploy to [GitHub Pages](https://pages.github.com)
 #'

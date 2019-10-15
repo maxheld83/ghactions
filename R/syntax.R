@@ -1,89 +1,5 @@
-# I/O ====
-
-#' Reading and writing GitHub Actions workflow files
-#'
-#' @param x `[list()]`
-#' as created by the workflow functions.
-#'
-#' @family syntax
-#'
-#' @return `[list()]` of lists from yaml.
-#'
-#' @details
-#' It is not necessary to escape characters with special meaning in yaml; the underlying [yaml::write_yaml()] does this automatically.
-#'
-#' @name io
-NULL
-
-
-#' @describeIn io Write *one* GitHub Actions workflow to file.
-#'
-#' @inheritParams yaml::write_yaml
-write_workflow <- function(x, file = stdout(), ...) {
-  yaml::write_yaml(
-    x = x,
-    file = file,
-    # cosmetic change, but github docs are intended
-    indent.mapping.sequence = TRUE,
-    ...
-  )
-}
-
-#' @describeIn io Convert R list to YAML string.
-#'
-#' @inheritParams write_workflow
-r2yaml <- function(x) {
-  # writing out and recapturing is a bit weird, but this way yaml is written exactly as in yaml pkg
-  utils::capture.output(write_workflow(x))
-}
-
-
-#' @describeIn io Read in *one or more* GitHub Actions workflows from file(s)
-#'
-#' @param path `[character()]` giving the directory from the repository root where to find GitHub Actions workflows.
-#' Defaults to `".github/workflows"`.
-#'
-#' @export
-read_workflows <- function(path = ".github/workflows") {
-  usethis::local_project()  # make sure we are in the project dir
-  checkmate::assert_directory_exists(x = path)
-  # files are relative from root, but oddly, that is what github actions uses as default names
-  # so we'll also use the full rel path here at least until https://github.com/r-lib/ghactions/issues/346
-  files <- fs::dir_ls(
-    path = path,
-    recurse = FALSE,
-    regexp = ".*\\.(yml|yaml)$"  # can be both!
-  )
-  if (length(files) == 0) {
-    stop(
-      "There are no yaml files at ",
-      path,
-      ". Perhaps GitHub Actions has not been set up?"
-    )
-  }
-
-  purrr::map(.x = files, .f = read_workflow)
-}
-
-#' @describeIn io Read in *one* GitHub Actions workflow from a file.
-#'
-#' @inheritParams yaml::read_yaml
-#'
-#' @details
-#' If a workflow is *not* `name:`d, the file name will be used as a `name: `, as per the [GitHub Actions documentation](https://help.github.com/en/articles/workflow-syntax-for-github-actions#name).
-#'
-#' @export
-read_workflow <- function(file, ...) {
-  x <- yaml::read_yaml(file = file, ...)
-  if (is.null(x$name)) {
-    x$name <- file
-  }
-  x
-}
-
-
 # Workflows ====
-#' Create nested list for a [workflow block](https://help.github.com/en/articles/workflow-syntax-for-github-actions).
+#' Create nested list for a [workflow block](https://help.github.com/en/articles/workflow-syntax-for-github-actions)
 #'
 #' @param name `[character(1)]`
 #' giving the [name](https://help.github.com/en/articles/workflow-syntax-for-github-actions#name) of the workflow.
@@ -134,14 +50,14 @@ workflow <- function(name = NULL, on = "push", jobs = NULL) {
 }
 
 
-#' Create nested list for an `on:` field.
+#' Create nested list for an `on:` field
 #'
 #' @param event `[character(1)]`
 #' giving the event on which to filter.
 #' Must be *one* of `c("push", "pull_request", "schedule")`.
 #'
 #' @param ... `[character()]`
-#' giving the filters on which to run
+#' giving the filters on which to run.
 #' Must correspond to the filters allowed by `event`.
 #'
 #' @details
@@ -249,9 +165,9 @@ ghactions_events <- c(
 #' Defaults to `NULL` for no dependencies.
 #'
 #' @param runs_on `[character(1)]`
-#' giving the type of virtual host machone to run the job on.
+#' giving the type of virtual host machine to run the job on.
 #' Defaults to `"ubuntu-18.04"`.
-#' Must be one of [ghactions_events].
+#' Must be one of [ghactions_vms].
 #'
 #' @param steps `[list()]`
 #' giving an *unnamed* list of steps, with each element as returned by [step()].
@@ -272,7 +188,7 @@ ghactions_events <- c(
 #'
 #' @param services `[list()]`
 #' giving additional containers to host services for a job in a workflow in a *named* list.
-#' Use [container()].to construct the list elements.
+#' Use [container()] to construct the list elements.
 #' Defaults to `NULL`.
 #'
 #' @family syntax

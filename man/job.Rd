@@ -18,9 +18,9 @@ giving the jobs that must complete successfully before this job is run.
 Defaults to \code{NULL} for no dependencies.}
 
 \item{runs_on}{\code{[character(1)]}
-giving the type of virtual host machone to run the job on.
+giving the type of virtual host machine to run the job on.
 Defaults to \code{"ubuntu-18.04"}.
-Must be one of \link{ghactions_events}.}
+Must be one of \link{ghactions_vms}.}
 
 \item{steps}{\code{[list()]}
 giving an \emph{unnamed} list of steps, with each element as returned by \code{\link[=step]{step()}}.
@@ -41,7 +41,7 @@ Defaults to \code{NULL}.}
 
 \item{services}{\code{[list()]}
 giving additional containers to host services for a job in a workflow in a \emph{named} list.
-Use \code{\link[=container]{container()}}.to construct the list elements.
+Use \code{\link[=container]{container()}} to construct the list elements.
 Defaults to \code{NULL}.}
 }
 \description{
@@ -50,8 +50,7 @@ Create nested list for \emph{one} \href{https://help.github.com/en/articles/work
 \seealso{
 Other syntax: \code{\link{container}},
   \code{\link{gh_matrix}}, \code{\link{ghactions_events}},
-  \code{\link{ghactions_vms}}, \code{\link{io}},
-  \code{\link{on}}, \code{\link{strategy}},
-  \code{\link{workflow}}
+  \code{\link{ghactions_vms}}, \code{\link{on}},
+  \code{\link{strategy}}, \code{\link{workflow}}
 }
 \concept{syntax}

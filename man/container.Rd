@@ -29,8 +29,8 @@ Create nested list for the \href{https://help.github.com/en/articles/workflow-sy
 \seealso{
 Other syntax: \code{\link{gh_matrix}},
   \code{\link{ghactions_events}},
-  \code{\link{ghactions_vms}}, \code{\link{io}},
-  \code{\link{job}}, \code{\link{on}},
-  \code{\link{strategy}}, \code{\link{workflow}}
+  \code{\link{ghactions_vms}}, \code{\link{job}},
+  \code{\link{on}}, \code{\link{strategy}},
+  \code{\link{workflow}}
 }
 \concept{syntax}

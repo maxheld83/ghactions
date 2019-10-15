@@ -5,7 +5,7 @@
 \alias{on_push}
 \alias{on_pull_request}
 \alias{on_schedule}
-\title{Create nested list for an \code{on:} field.}
+\title{Create nested list for an \code{on:} field}
 \usage{
 on(event, ...)
 
@@ -21,7 +21,7 @@ giving the event on which to filter.
 Must be \emph{one} of \code{c("push", "pull_request", "schedule")}.}
 
 \item{...}{\code{[character()]}
-giving the filters on which to run
+giving the filters on which to run.
 Must correspond to the filters allowed by \code{event}.}
 
 \item{tags, branches, paths}{\code{[character()]}
@@ -32,7 +32,7 @@ Defaults to \code{NULL} for no additional filters.}
 giving UTC times using \href{https://pubs.opengroup.org/onlinepubs/9699919799/utilities/crontab.html#tag_20_25_07}{POSIX cron syntax}.}
 }
 \description{
-Create nested list for an \code{on:} field.
+Create nested list for an \code{on:} field
 }
 \details{
 See the \href{https://help.github.com/en/articles/workflow-syntax-for-github-actions}{GitHub Actions workflow syntax} for details.
@@ -55,8 +55,7 @@ on(
 \seealso{
 Other syntax: \code{\link{container}},
   \code{\link{gh_matrix}}, \code{\link{ghactions_events}},
-  \code{\link{ghactions_vms}}, \code{\link{io}},
-  \code{\link{job}}, \code{\link{strategy}},
-  \code{\link{workflow}}
+  \code{\link{ghactions_vms}}, \code{\link{job}},
+  \code{\link{strategy}}, \code{\link{workflow}}
 }
 \concept{syntax}

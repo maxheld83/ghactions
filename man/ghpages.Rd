@@ -5,7 +5,7 @@
 \alias{rsync}
 \alias{netlify}
 \alias{firebase}
-\title{Create an (action) step to deploy static assets.}
+\title{Create an (action) step to deploy static assets}
 \usage{
 ghpages(`if` = "github.ref == 'refs/heads/master'",
   name = "Deploy to GitHub Pages", src = "$DEPLOY_PATH", ...)

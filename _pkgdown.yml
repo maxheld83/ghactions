@@ -16,6 +16,11 @@ reference:
     contents:
       - has_concept("setup")
       - edit_workflow
+  - title: "I/O"
+    desc: >
+      Reading and writing GitHub Actions from/to `*.yml`s.
+    contents:
+      - has_concept("io")
   - title: "Workflows"
     desc: >
       Functions with GitHub Actions workflows for common R projects with sensible defaults.
