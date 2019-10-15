@@ -10,7 +10,7 @@ checkout()
 Create a step to checkout a repository
 }
 \seealso{
-Other steps: \code{\link{ghpages}},
+Other steps: \code{\link{deploy_static}},
   \code{\link{install_deps}}, \code{\link{pkg_dev}},
   \code{\link{rscript}}
 

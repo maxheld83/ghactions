@@ -35,6 +35,7 @@ workflow(
 Other syntax: \code{\link{container}},
   \code{\link{gh_matrix}}, \code{\link{ghactions_events}},
   \code{\link{ghactions_vms}}, \code{\link{job}},
-  \code{\link{on}}, \code{\link{strategy}}
+  \code{\link{on}}, \code{\link{step}},
+  \code{\link{strategy}}
 }
 \concept{syntax}

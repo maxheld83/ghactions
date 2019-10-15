@@ -21,7 +21,7 @@ Create nested list for the \href{https://help.github.com/en/articles/workflow-sy
 Other syntax: \code{\link{container}},
   \code{\link{ghactions_events}},
   \code{\link{ghactions_vms}}, \code{\link{job}},
-  \code{\link{on}}, \code{\link{strategy}},
-  \code{\link{workflow}}
+  \code{\link{on}}, \code{\link{step}},
+  \code{\link{strategy}}, \code{\link{workflow}}
 }
 \concept{syntax}

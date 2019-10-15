@@ -1,4 +1,3 @@
-name: Deploy Website
 if: github.ref == 'refs/heads/master'
 uses: maxheld83/rsync@v0.1.1
 with:

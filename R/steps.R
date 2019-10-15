@@ -66,7 +66,32 @@ rscript <- function(options = NULL,
 
 #' Create an (action) step to deploy static assets
 #'
-#' Wraps the external [ghpages action](https://github.com/maxheld83/ghpages/) to deploy to [GitHub Pages](https://pages.github.com)
+#' @param src `[character(1)]`
+#' giving the path relative from your `/github/workspace` to the directory to be published **without trailing slash**.
+#' Defaults to `"$DEPLOY_PATH"`, an environment variable containing the path set by [website()].
+#'
+#' @param name `[character(1)]`
+#' giving addtional options for the step.
+#' Multiline strings are not supported.
+#' Defaults to a name for the deploy step.
+#'
+#' @param if `[character(1)]`
+#' giving additional options for the step.
+#' Multiline strings are not supported.
+#' Defaults to `"github.ref == 'refs/heads/master'"` to only deploy from branch `master`.
+#'
+#' @inheritParams step
+#'
+#' @inheritDotParams step -run -uses -name -env -with -shell
+#'
+#' @family steps
+#' @family actions
+#' @family static deployment
+#'
+#' @name deploy_static
+NULL
+
+#' @describeIn deploy_static Wraps the external [ghpages action](https://github.com/maxheld83/ghpages/) to deploy to [GitHub Pages](https://pages.github.com).
 #'
 #' @section GitHub Pages:
 #' **Remember to provide a GitHub personal access token secret named `GH_PAT` to the GitHub UI.**
@@ -77,24 +102,13 @@ rscript <- function(options = NULL,
 #' 3. Go to the settings of your repository, and paste the PAT as a secret.
 #'    The secret must be called `GH_PAT`.
 #'
-#' @param src `[character(1)]`
-#' giving the path relative from your `/github/workspace` to the directory to be published **without trailing slash**.
-#' Defaults to `"$DEPLOY_PATH"`, an environment variable containing the path set by [website()].
-#'
-#' @inheritParams step
-#'
-#' @inheritDotParams step -run -uses
-#'
-#' @family steps
-#' @family actions
-#' @family static deployment
-#'
 #' @export
-ghpages <- function(`if` = "github.ref == 'refs/heads/master'",
+ghpages <- function(src = "$DEPLOY_PATH",
                     name = "Deploy to GitHub Pages",
-                    src = "$DEPLOY_PATH",
+                    `if` = "github.ref == 'refs/heads/master'",
                     ...) {
   checkmate::assert_string(x = src, na.ok = FALSE, null.ok = FALSE)
+
   step(
     name = name,
     `if` = `if`,
@@ -107,9 +121,7 @@ ghpages <- function(`if` = "github.ref == 'refs/heads/master'",
   )
 }
 
-#' Create an (action) step to deploy static assets
-#'
-#' @describeIn ghpages Wraps the external [rsync action](https://github.com/maxheld83/rsync/) to deploy via [Rsync](https://rsync.samba.org) over SSH.
+#' @describeIn deploy_static Wraps the external [rsync action](https://github.com/maxheld83/rsync/) to deploy via [Rsync](https://rsync.samba.org) over SSH.
 #'
 #' @param HOST_NAME `[character(1)]`
 #' giving the name of the server you wish to deploy to, such as `foo.example.com`.
@@ -130,13 +142,14 @@ ghpages <- function(`if` = "github.ref == 'refs/heads/master'",
 #' **Remember to provide `SSH_PRIVATE_KEY` and `SSH_PUBLIC_KEY` as secrets to the GitHub UI.**.
 #'
 #' @export
-rsync <- function(HOST_NAME,
+rsync <- function(src = "$DEPLOY_PATH",
+                  name = "Deploy via RSync",
+                  `if` = "github.ref == 'refs/heads/master'",
+                  HOST_NAME,
                   HOST_IP,
                   HOST_FINGERPRINT,
-                  src,
                   user,
                   dest,
-                  `if` = "github.ref == 'refs/heads/master'",
                   env = NULL,
                   with = NULL,
                   ...) {
@@ -193,7 +206,7 @@ rsync_fau <- function(src = "$DEPLOY_PATH",
 }
 
 
-#' @describeIn ghpages Wraps the external [netlify cli action](https://github.com/netlify/actions) to deploy to [Netlify](https://www.netlify.com).
+#' @describeIn deploy_static Wraps the external [netlify cli action](https://github.com/netlify/actions) to deploy to [Netlify](https://www.netlify.com).
 #'
 #' @section Netlify:
 #' **Remember to provide `NETLIFY_AUTH_TOKEN` and `NETLIFY_SITE_ID` (optional) as secrets to the GitHub UI.**
@@ -205,9 +218,9 @@ rsync_fau <- function(src = "$DEPLOY_PATH",
 #' giving a site ID to deploy to.
 #'
 #' @export
-netlify <- function(name = "Deploy to Netlify",
+netlify <- function(src = "$DEPLOY_PATH",
+                    name = "Deploy to Netlify",
                     `if` = "github.ref == 'refs/heads/master'",
-                    src = "$DEPLOY_PATH",
                     prod = TRUE,
                     with = NULL,
                     env = NULL,
@@ -243,7 +256,7 @@ netlify <- function(name = "Deploy to Netlify",
   )
 }
 
-#' @describeIn ghpages Wraps the external [Google Firebase CLI action](https://github.com/w9jds/firebase-action) to deploy to [Google Firebase](http://firebase.google.com).
+#' @describeIn deploy_static Wraps the external [Google Firebase CLI action](https://github.com/w9jds/firebase-action) to deploy to [Google Firebase](http://firebase.google.com).
 #'
 #' @param PROJECT_ID `[character(1)]`
 #' giving a specific project to use for all commands, not required if you specify a project in your `.firebaserc`` file.

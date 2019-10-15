@@ -12,26 +12,26 @@ covr(name = "Run Code Coverage")
 }
 \arguments{
 \item{name}{\code{[character(1)]}
-giving additional options for the stop.
+giving additional options for the step.
 Multiline strings are not supported.
 Defaults to \code{NULL}.}
 
 \item{...}{Arguments passed on to \code{step}
 \describe{
   \item{id}{\code{[character(1)]}
-giving additional options for the stop.
+giving additional options for the step.
 Multiline strings are not supported.
 Defaults to \code{NULL}.}
   \item{if}{\code{[character(1)]}
-giving additional options for the stop.
+giving additional options for the step.
 Multiline strings are not supported.
 Defaults to \code{NULL}.}
   \item{name}{\code{[character(1)]}
-giving additional options for the stop.
+giving additional options for the step.
 Multiline strings are not supported.
 Defaults to \code{NULL}.}
   \item{shell}{\code{[character(1)]}
-giving additional options for the stop.
+giving additional options for the step.
 Multiline strings are not supported.
 Defaults to \code{NULL}.}
   \item{with}{\code{[list()]}
@@ -62,8 +62,9 @@ CI/CD steps for a package at the repository root
 }}
 
 \seealso{
-Other steps: \code{\link{checkout}}, \code{\link{ghpages}},
-  \code{\link{install_deps}}, \code{\link{rscript}}
+Other steps: \code{\link{checkout}},
+  \code{\link{deploy_static}}, \code{\link{install_deps}},
+  \code{\link{rscript}}
 }
 \concept{pkg_development}
 \concept{steps}

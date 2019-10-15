@@ -8,26 +8,26 @@ install_deps(name = "Install Package Dependencies", ...)
 }
 \arguments{
 \item{name}{\code{[character(1)]}
-giving additional options for the stop.
+giving additional options for the step.
 Multiline strings are not supported.
 Defaults to \code{NULL}.}
 
 \item{...}{Arguments passed on to \code{step}
 \describe{
   \item{id}{\code{[character(1)]}
-giving additional options for the stop.
+giving additional options for the step.
 Multiline strings are not supported.
 Defaults to \code{NULL}.}
   \item{if}{\code{[character(1)]}
-giving additional options for the stop.
+giving additional options for the step.
 Multiline strings are not supported.
 Defaults to \code{NULL}.}
   \item{name}{\code{[character(1)]}
-giving additional options for the stop.
+giving additional options for the step.
 Multiline strings are not supported.
 Defaults to \code{NULL}.}
   \item{shell}{\code{[character(1)]}
-giving additional options for the stop.
+giving additional options for the step.
 Multiline strings are not supported.
 Defaults to \code{NULL}.}
   \item{with}{\code{[list()]}
@@ -51,8 +51,9 @@ Defaults to \code{NULL}.}
 Installs R package dependencies from a \code{DESCRIPTION} at the repository root.
 }
 \seealso{
-Other steps: \code{\link{checkout}}, \code{\link{ghpages}},
-  \code{\link{pkg_dev}}, \code{\link{rscript}}
+Other steps: \code{\link{checkout}},
+  \code{\link{deploy_static}}, \code{\link{pkg_dev}},
+  \code{\link{rscript}}
 
 Other installation: \code{\link{checkout}}
 }

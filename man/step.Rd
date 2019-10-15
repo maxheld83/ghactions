@@ -11,7 +11,7 @@ step(name = NULL, id = NULL, `if` = NULL, uses = NULL,
 }
 \arguments{
 \item{id, if, name, uses, shell}{\code{[character(1)]}
-giving additional options for the stop.
+giving additional options for the step.
 Multiline strings are not supported.
 Defaults to \code{NULL}.}
 
@@ -39,3 +39,11 @@ Defaults to \code{NULL}.}
 \description{
 Create nested list for \emph{one} \href{https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobs}{job}
 }
+\seealso{
+Other syntax: \code{\link{container}},
+  \code{\link{gh_matrix}}, \code{\link{ghactions_events}},
+  \code{\link{ghactions_vms}}, \code{\link{job}},
+  \code{\link{on}}, \code{\link{strategy}},
+  \code{\link{workflow}}
+}
+\concept{syntax}

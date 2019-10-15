@@ -21,23 +21,23 @@ rscript(options = NULL, expr = NULL, file = NULL, args = NULL, ...)
 \item{...}{Arguments passed on to \code{step}
 \describe{
   \item{id}{\code{[character(1)]}
-giving additional options for the stop.
+giving additional options for the step.
 Multiline strings are not supported.
 Defaults to \code{NULL}.}
   \item{if}{\code{[character(1)]}
-giving additional options for the stop.
+giving additional options for the step.
 Multiline strings are not supported.
 Defaults to \code{NULL}.}
   \item{name}{\code{[character(1)]}
-giving additional options for the stop.
+giving additional options for the step.
 Multiline strings are not supported.
 Defaults to \code{NULL}.}
   \item{uses}{\code{[character(1)]}
-giving additional options for the stop.
+giving additional options for the step.
 Multiline strings are not supported.
 Defaults to \code{NULL}.}
   \item{shell}{\code{[character(1)]}
-giving additional options for the stop.
+giving additional options for the step.
 Multiline strings are not supported.
 Defaults to \code{NULL}.}
   \item{with}{\code{[list()]}
@@ -61,8 +61,9 @@ Defaults to \code{NULL}.}
 Create a step to run \link[utils:Rscript]{utils::Rscript}
 }
 \seealso{
-Other steps: \code{\link{checkout}}, \code{\link{ghpages}},
-  \code{\link{install_deps}}, \code{\link{pkg_dev}}
+Other steps: \code{\link{checkout}},
+  \code{\link{deploy_static}}, \code{\link{install_deps}},
+  \code{\link{pkg_dev}}
 }
 \concept{script}
 \concept{steps}

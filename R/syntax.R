@@ -393,7 +393,7 @@ ghactions_vms <- c(
 #' Create nested list for *one* [job](https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobs)
 #'
 #' @param id,if,name,uses,shell `[character(1)]`
-#' giving additional options for the stop.
+#' giving additional options for the step.
 #' Multiline strings are not supported.
 #' Defaults to `NULL`.
 #'
@@ -417,6 +417,8 @@ ghactions_vms <- c(
 #' @param timeout-minutes `[integer(1)]`
 #' giving the maximum number of minutes to run the step before killing the process.
 #' Defaults to `NULL`.
+#'
+#' @family syntax
 #'
 #' @export
 step <- function(name = NULL,

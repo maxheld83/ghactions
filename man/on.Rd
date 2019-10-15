@@ -56,6 +56,7 @@ on(
 Other syntax: \code{\link{container}},
   \code{\link{gh_matrix}}, \code{\link{ghactions_events}},
   \code{\link{ghactions_vms}}, \code{\link{job}},
-  \code{\link{strategy}}, \code{\link{workflow}}
+  \code{\link{step}}, \code{\link{strategy}},
+  \code{\link{workflow}}
 }
 \concept{syntax}

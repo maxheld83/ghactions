@@ -51,6 +51,7 @@ Create nested list for \emph{one} \href{https://help.github.com/en/articles/work
 Other syntax: \code{\link{container}},
   \code{\link{gh_matrix}}, \code{\link{ghactions_events}},
   \code{\link{ghactions_vms}}, \code{\link{on}},
-  \code{\link{strategy}}, \code{\link{workflow}}
+  \code{\link{step}}, \code{\link{strategy}},
+  \code{\link{workflow}}
 }
 \concept{syntax}
