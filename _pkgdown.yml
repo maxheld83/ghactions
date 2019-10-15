@@ -33,6 +33,11 @@ reference:
       For internal purposes, not recommended for package users.
     contents:
       - has_concept("syntax")
+  - title: "Helpers"
+    desc: >
+      Helper functions.
+    contents:
+      - has_concept("helpers")
 articles:
   - title: "Overview"
     contents:

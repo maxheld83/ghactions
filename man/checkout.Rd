@@ -10,10 +10,9 @@ checkout()
 Create a step to checkout a repository
 }
 \seealso{
-Other steps: \code{\link{firebase}}, \code{\link{ghpages}},
-  \code{\link{install_deps}}, \code{\link{netlify}},
-  \code{\link{pkg_dev}}, \code{\link{rscript}},
-  \code{\link{rsync}}
+Other steps: \code{\link{ghpages}},
+  \code{\link{install_deps}}, \code{\link{pkg_dev}},
+  \code{\link{rscript}}
 
 Other installation: \code{\link{install_deps}}
 }

@@ -8,7 +8,8 @@ use_ghactions(workflow = website())
 }
 \arguments{
 \item{workflow}{\code{[list(list())]}
-A named list of as created by one of the \code{\link[=workflow]{workflow()}} functions.}
+A named list as created by one of the \code{\link[=workflow]{workflow()}} functions.
+Defaults to \code{\link[=website]{website()}}.}
 }
 \value{
 A logical vector indicating if file was modified.
@@ -17,8 +18,7 @@ A logical vector indicating if file was modified.
 Sets up workflow automation, including continuous integration and deployment (CI/CD) for different kinds of R projects on GitHub actions.
 This function
 \itemize{
-\item Picks a set of sensible defaults for your project,
-\item transforms a list into the GitHub actions syntax.
+\item transforms a list into the GitHub actions syntax,
 \item writes it out to \code{.github/workflows/} in your repository.
 }
 }
@@ -29,7 +29,6 @@ use_ghactions(workflow = website())
 }
 \seealso{
 Other setup: \code{\link{edit_workflow}},
-  \code{\link{is_github_actions}},
   \code{\link{use_ghactions_badge}}
 }
 \concept{setup}

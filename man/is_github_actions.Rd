@@ -9,9 +9,4 @@ is_github_actions()
 \description{
 Test whether runtime is GitHub actions
 }
-\seealso{
-Other setup: \code{\link{edit_workflow}},
-  \code{\link{use_ghactions_badge}},
-  \code{\link{use_ghactions}}
-}
-\concept{setup}
+\concept{helpers}

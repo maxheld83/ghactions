@@ -61,10 +61,8 @@ Defaults to \code{NULL}.}
 Create a step to run \link[utils:Rscript]{utils::Rscript}
 }
 \seealso{
-Other steps: \code{\link{checkout}},
-  \code{\link{firebase}}, \code{\link{ghpages}},
-  \code{\link{install_deps}}, \code{\link{netlify}},
-  \code{\link{pkg_dev}}, \code{\link{rsync}}
+Other steps: \code{\link{checkout}}, \code{\link{ghpages}},
+  \code{\link{install_deps}}, \code{\link{pkg_dev}}
 }
 \concept{script}
 \concept{steps}

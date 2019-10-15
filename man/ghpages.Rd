@@ -2,10 +2,25 @@
 % Please edit documentation in R/steps.R
 \name{ghpages}
 \alias{ghpages}
-\title{Create an action step to deploy via \href{https://pages.github.com}{GitHub Pages}}
+\alias{rsync}
+\alias{netlify}
+\alias{firebase}
+\title{Create an (action) step to deploy static assets.}
 \usage{
 ghpages(`if` = "github.ref == 'refs/heads/master'",
-  name = "Deploy to GitHub Pages", BUILD_DIR = "$DEPLOY_PATH", ...)
+  name = "Deploy to GitHub Pages", src = "$DEPLOY_PATH", ...)
+
+rsync(HOST_NAME, HOST_IP, HOST_FINGERPRINT, src, user, dest,
+  `if` = "github.ref == 'refs/heads/master'", env = NULL,
+  with = NULL, ...)
+
+netlify(name = "Deploy to Netlify",
+  `if` = "github.ref == 'refs/heads/master'", src = "$DEPLOY_PATH",
+  prod = TRUE, with = NULL, env = NULL, site, ...)
+
+firebase(name = "Deploy to Firebase",
+  `if` = "github.ref == 'refs/heads/master'", PROJECT_ID = NULL,
+  with = NULL, env = NULL, ...)
 }
 \arguments{
 \item{if}{\code{[character(1)]}
@@ -18,8 +33,9 @@ giving additional options for the stop.
 Multiline strings are not supported.
 Defaults to \code{NULL}.}
 
-\item{BUILD_DIR}{\code{[character(1)]}
-giving the path relative from your \code{/github/workspace} to the directory to be published.}
+\item{src}{\code{[character(1)]}
+giving the path relative from your \code{/github/workspace} to the directory to be published \strong{without trailing slash}.
+Defaults to \code{"$DEPLOY_PATH"}, an environment variable containing the path set by \code{\link[=website]{website()}}.}
 
 \item{...}{Arguments passed on to \code{step}
 \describe{
@@ -55,8 +71,53 @@ Defaults to \code{NULL}.}
 giving the maximum number of minutes to run the step before killing the process.
 Defaults to \code{NULL}.}
 }}
+
+\item{HOST_NAME}{\code{[character(1)]}
+giving the name of the server you wish to deploy to, such as \code{foo.example.com}.}
+
+\item{HOST_IP}{\code{[character(1)]}
+giving the IP of the server you wish to deploy to, such as \code{111.111.11.111}.}
+
+\item{HOST_FINGERPRINT}{\code{[character(1)]}
+giving the fingerprint of the server you wish to deploy to, can have different formats.}
+
+\item{user}{\code{[character(1)]}
+giving the user at the target \code{HOST_NAME}.}
+
+\item{dest}{\code{[character(1)]}
+giving the directory from the root of the \code{HOST_NAME} target to write to.}
+
+\item{env}{\code{[list()]}
+giving a named list of additional parameters.
+Defaults to \code{NULL}.}
+
+\item{with}{\code{[list()]}
+giving a named list of additional parameters.
+Defaults to \code{NULL}.}
+
+\item{prod}{\code{[logical(1)]}
+giving whether the deploy should be to production.}
+
+\item{site}{\code{[character(1)]}
+giving a site ID to deploy to.}
+
+\item{PROJECT_ID}{\code{[character(1)]}
+giving a specific project to use for all commands, not required if you specify a project in your `.firebaserc`` file.}
 }
 \description{
+Wraps the external \href{https://github.com/maxheld83/ghpages/}{ghpages action} to deploy to \href{https://pages.github.com}{GitHub Pages}
+}
+\section{Functions}{
+\itemize{
+\item \code{rsync}: Wraps the external \href{https://github.com/maxheld83/rsync/}{rsync action} to deploy via \href{https://rsync.samba.org}{Rsync} over SSH.
+
+\item \code{netlify}: Wraps the external \href{https://github.com/netlify/actions}{netlify cli action} to deploy to \href{https://www.netlify.com}{Netlify}.
+
+\item \code{firebase}: Wraps the external \href{https://github.com/w9jds/firebase-action}{Google Firebase CLI action} to deploy to \href{http://firebase.google.com}{Google Firebase}.
+}}
+
+\section{GitHub Pages}{
+
 \strong{Remember to provide a GitHub personal access token secret named \code{GH_PAT} to the GitHub UI.}
 \enumerate{
 \item Set up a new PAT.
@@ -67,21 +128,32 @@ Remember that this PAT is \emph{not} for your local machine, but for GitHub acti
 The secret must be called \code{GH_PAT}.
 }
 }
-\details{
-Wraps the external \href{https://github.com/maxheld83/ghpages/}{ghpages action}.
+
+\section{RSync}{
+
+\strong{Remember to provide \code{SSH_PRIVATE_KEY} and \code{SSH_PUBLIC_KEY} as secrets to the GitHub UI.}.
 }
+
+\section{Netlify}{
+
+\strong{Remember to provide \code{NETLIFY_AUTH_TOKEN} and \code{NETLIFY_SITE_ID} (optional) as secrets to the GitHub UI.}
+}
+
+\section{Google Firebase}{
+
+\strong{Remember to provide \code{FIREBASE_TOKEN} as a secret to the GitHub UI.}
+
+Configuration details other than \code{PROJECT_ID} are read from the \code{firebase.json} at the root of your repository.
+
+Because firebase gets the deploy directory from a \code{firebase.json} file, it cannot use \code{$DEPLOY_DIR}.
+Manually edit your \code{firebase.json} to provide the deploy path.
+}
+
 \seealso{
 Other steps: \code{\link{checkout}},
-  \code{\link{firebase}}, \code{\link{install_deps}},
-  \code{\link{netlify}}, \code{\link{pkg_dev}},
-  \code{\link{rscript}}, \code{\link{rsync}}
-
-Other actions: \code{\link{firebase}},
-  \code{\link{netlify}}, \code{\link{rsync}}
-
-Other deployment: \code{\link{firebase}},
-  \code{\link{netlify}}, \code{\link{rsync}}
+  \code{\link{install_deps}}, \code{\link{pkg_dev}},
+  \code{\link{rscript}}
 }
 \concept{actions}
-\concept{deployment}
+\concept{static deployment}
 \concept{steps}

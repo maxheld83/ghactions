@@ -2,7 +2,7 @@
 #'
 #' @export
 #'
-#' @family setup
+#' @family helpers
 is_github_actions <- function() {
   fs::file_exists("/github/workflow/event.json")
 }

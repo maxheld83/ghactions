@@ -9,18 +9,22 @@ use_ghactions_badge(workflow_name = NULL,
 }
 \arguments{
 \item{workflow_name}{\code{[character(1)]}
-Giving the name of the workflow as given in the \href{https://help.github.com/en/articles/workflow-syntax-for-github-actions#name}{name:} field of your \code{*.yml}.
+Giving the name of the workflow as specified in the \href{https://help.github.com/en/articles/workflow-syntax-for-github-actions#name}{name:} field of your \code{*.yml}.
 If no \code{name: } is given, this is the file path of the \code{*.yml} from the repository root.
 Defaults to \code{NULL}, in which case the first workflow in the first \code{*.yml} at \code{.github/workflows/} is used.}
 
 \item{badge_name}{Badge name. Used in error message and alt text}
 }
 \description{
-Add markdown syntax for README badge, see \code{\link[usethis:use_badge]{usethis::use_badge()}}.
+These helpers produce the markdown text you need in your README to include
+badges that report information, such as the CRAN version or test coverage,
+and link out to relevant external resources. To add badges automatically
+ensure your badge block starts with a line containing only
+\code{<!-- badges: start -->} and ends with a line containing only
+\code{<!-- badges: end -->}.
 }
 \seealso{
 Other setup: \code{\link{edit_workflow}},
-  \code{\link{is_github_actions}},
   \code{\link{use_ghactions}}
 }
 \concept{setup}

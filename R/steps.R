@@ -62,11 +62,54 @@ rscript <- function(options = NULL,
 }
 
 
-# deployment ====
+# static deployment ====
 
-#' Create an action step to deploy via [Rsync](https://rsync.samba.org) over SSH
+#' Create an (action) step to deploy static assets.
 #'
-#' Wraps the external [rsync action](https://github.com/maxheld83/rsync/).
+#' Wraps the external [ghpages action](https://github.com/maxheld83/ghpages/) to deploy to [GitHub Pages](https://pages.github.com)
+#'
+#' @section GitHub Pages:
+#' **Remember to provide a GitHub personal access token secret named `GH_PAT` to the GitHub UI.**
+#' 1. Set up a new PAT.
+#'    You can use [usethis::browse_github_pat()] to get to the right page.
+#'    Remember that this PAT is *not* for your local machine, but for GitHub actions.
+#' 2. Copy the PAT to your clipboard.
+#' 3. Go to the settings of your repository, and paste the PAT as a secret.
+#'    The secret must be called `GH_PAT`.
+#'
+#' @param src `[character(1)]`
+#' giving the path relative from your `/github/workspace` to the directory to be published **without trailing slash**.
+#' Defaults to `"$DEPLOY_PATH"`, an environment variable containing the path set by [website()].
+#'
+#' @inheritParams step
+#'
+#' @inheritDotParams step -run -uses
+#'
+#' @family steps
+#' @family actions
+#' @family static deployment
+#'
+#' @export
+ghpages <- function(`if` = "github.ref == 'refs/heads/master'",
+                    name = "Deploy to GitHub Pages",
+                    src = "$DEPLOY_PATH",
+                    ...) {
+  checkmate::assert_string(x = src, na.ok = FALSE, null.ok = FALSE)
+  step(
+    name = name,
+    `if` = `if`,
+    uses = "maxheld83/ghpages@v0.2.0",
+    env = list(
+      BUILD_DIR = src,
+      GH_PAT = "${{ secrets.GH_PAT }}"
+    ),
+    ...
+  )
+}
+
+#' Create an (action) step to deploy static assets
+#'
+#' @describeIn ghpages Wraps the external [rsync action](https://github.com/maxheld83/rsync/) to deploy via [Rsync](https://rsync.samba.org) over SSH.
 #'
 #' @param HOST_NAME `[character(1)]`
 #' giving the name of the server you wish to deploy to, such as `foo.example.com`.
@@ -77,25 +120,14 @@ rscript <- function(options = NULL,
 #' @param HOST_FINGERPRINT `[character(1)]`
 #' giving the fingerprint of the server you wish to deploy to, can have different formats.
 #'
-#' @param src `[character(1)]`
-#' giving the source directory, relative path *from* `/github/workspace` **without trailing slash**.
-#'
 #' @param user `[character(1)]`
 #' giving the user at the target `HOST_NAME`.
 #'
 #' @param dest `[character(1)]`
 #' giving the directory from the root of the `HOST_NAME` target to write to.
 #'
-#' @description
+#' @section RSync:
 #' **Remember to provide `SSH_PRIVATE_KEY` and `SSH_PUBLIC_KEY` as secrets to the GitHub UI.**.
-#'
-#' @inheritParams step
-#'
-#' @inheritDotParams step -run -uses
-#'
-#' @family steps
-#' @family actions
-#' @family deployment
 #'
 #' @export
 rsync <- function(HOST_NAME,
@@ -161,58 +193,10 @@ rsync_fau <- function(src = "$DEPLOY_PATH",
 }
 
 
-#' Create an action step to deploy via [GitHub Pages](https://pages.github.com)
+#' @describeIn ghpages Wraps the external [netlify cli action](https://github.com/netlify/actions) to deploy to [Netlify](https://www.netlify.com).
 #'
-#' Wraps the external [ghpages action](https://github.com/maxheld83/ghpages/).
-#'
-#' @description
-#' **Remember to provide a GitHub personal access token secret named `GH_PAT` to the GitHub UI.**
-#' 1. Set up a new PAT.
-#'    You can use [usethis::browse_github_pat()] to get to the right page.
-#'    Remember that this PAT is *not* for your local machine, but for GitHub actions.
-#' 2. Copy the PAT to your clipboard.
-#' 3. Go to the settings of your repository, and paste the PAT as a secret.
-#'    The secret must be called `GH_PAT`.
-#'
-#' @param BUILD_DIR `[character(1)]`
-#' giving the path relative from your `/github/workspace` to the directory to be published.
-#'
-#' @inheritParams step
-#'
-#' @inheritDotParams step -run -uses
-#'
-#' @family steps
-#' @family actions
-#' @family deployment
-#'
-#' @export
-ghpages <- function(`if` = "github.ref == 'refs/heads/master'",
-                    name = "Deploy to GitHub Pages",
-                    BUILD_DIR = "$DEPLOY_PATH",
-                    ...) {
-  checkmate::assert_string(x = BUILD_DIR, na.ok = FALSE, null.ok = FALSE)
-  step(
-    name = name,
-    `if` = `if`,
-    uses = "maxheld83/ghpages@v0.2.0",
-    env = list(
-      BUILD_DIR = BUILD_DIR,
-      GH_PAT = "${{ secrets.GH_PAT }}"
-    ),
-    ...
-  )
-}
-
-
-#' Create an action step to deploy to [Netlify](https://www.netlify.com)
-#'
-#' Wraps the external [netlify cli action](https://github.com/netlify/actions).
-#'
-#' @description
+#' @section Netlify:
 #' **Remember to provide `NETLIFY_AUTH_TOKEN` and `NETLIFY_SITE_ID` (optional) as secrets to the GitHub UI.**
-#'
-#' @param dir `[character(1)]`
-#' giving the path relative from your `/github/workspace` to the directory to be published.
 #'
 #' @param prod `[logical(1)]`
 #' giving whether the deploy should be to production.
@@ -220,30 +204,22 @@ ghpages <- function(`if` = "github.ref == 'refs/heads/master'",
 #' @param site `[character(1)]`
 #' giving a site ID to deploy to.
 #'
-#' @inheritParams step
-#'
-#' @inheritDotParams step -run -uses
-#'
-#' @family steps
-#' @family actions
-#' @family deployment
-#'
 #' @export
 netlify <- function(name = "Deploy to Netlify",
                     `if` = "github.ref == 'refs/heads/master'",
-                    dir = "$DEPLOY_PATH",
+                    src = "$DEPLOY_PATH",
                     prod = TRUE,
                     with = NULL,
                     env = NULL,
                     site,
                     ...) {
-  checkmate::assert_string(x = dir, na.ok = FALSE, null.ok = FALSE)
+  checkmate::assert_string(x = src, na.ok = FALSE, null.ok = FALSE)
   checkmate::assert_string(x = site, na.ok = FALSE, null.ok = FALSE)
   checkmate::assert_flag(x = prod, na.ok = FALSE, null.ok = FALSE)
 
   # prepare args
   args <- c(
-    glue::glue('--dir {dir}'),
+    glue::glue('--dir {src}'),
     if (prod) "prod" else NULL,
     glue::glue('--site {site}')
   )
@@ -267,30 +243,19 @@ netlify <- function(name = "Deploy to Netlify",
   )
 }
 
-#' Create an action step to deploy to [Google Firebase](http://firebase.google.com)
-#'
-#' Wraps the external [Google Firebase CLI action](https://github.com/w9jds/firebase-action).
-#'
-#' @description
-#' **Remember to provide `FIREBASE_TOKEN` as a secret to the GitHub UI.**
+#' @describeIn ghpages Wraps the external [Google Firebase CLI action](https://github.com/w9jds/firebase-action) to deploy to [Google Firebase](http://firebase.google.com).
 #'
 #' @param PROJECT_ID `[character(1)]`
 #' giving a specific project to use for all commands, not required if you specify a project in your `.firebaserc`` file.
 #'
-#' @inheritParams step
+#' @section Google Firebase:
+#' **Remember to provide `FIREBASE_TOKEN` as a secret to the GitHub UI.**
 #'
-#' @inheritDotParams step -run -uses
-#'
-#' @details
 #' Configuration details other than `PROJECT_ID` are read from the `firebase.json` at the root of your repository.
 #'
-#' Because firebase gets the deploy directory from a `firebase.json` file, it cannot use `DEPLOY_DIR`.
+#' Because firebase gets the deploy directory from a `firebase.json` file, it cannot use `$DEPLOY_DIR`.
 #' Manually edit your `firebase.json` to provide the deploy path.
 # tracked in https://github.com/maxheld83/ghactions/issues/80
-#'
-#' @family steps
-#' @family actions
-#' @family deployment
 #'
 #' @export
 firebase <- function(name = "Deploy to Firebase",

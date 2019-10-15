@@ -2,12 +2,12 @@
 #'
 #' Sets up workflow automation, including continuous integration and deployment (CI/CD) for different kinds of R projects on GitHub actions.
 #' This function
-#' - Picks a set of sensible defaults for your project,
-#' - transforms a list into the GitHub actions syntax.
+#' - transforms a list into the GitHub actions syntax,
 #' - writes it out to `.github/workflows/` in your repository.
 #'
 #' @param workflow `[list(list())]`
-#' A named list of as created by one of the [workflow()] functions.
+#' A named list as created by one of the [workflow()] functions.
+#' Defaults to [website()].
 #'
 #' @inherit usethis::use_template return
 #'
@@ -69,16 +69,13 @@ use_ghactions <- function(workflow = website()) {
 
 #' README badges
 #'
-#' Add markdown syntax for README badge, see [usethis::use_badge()].
-#'
+#' @inherit usethis::use_badge description
 #' @inheritParams usethis::use_badge
 #'
 #' @param workflow_name `[character(1)]`
-#' Giving the name of the workflow as given in the [`name:`](https://help.github.com/en/articles/workflow-syntax-for-github-actions#name) field of your `*.yml`.
+#' Giving the name of the workflow as specified in the [`name:`](https://help.github.com/en/articles/workflow-syntax-for-github-actions#name) field of your `*.yml`.
 #' If no `name: ` is given, this is the file path of the `*.yml` from the repository root.
 #' Defaults to `NULL`, in which case the first workflow in the first `*.yml` at `.github/workflows/` is used.
-#'
-#' @inherit
 #'
 #' @family setup
 #'
@@ -116,6 +113,8 @@ use_ghactions_badge <- function(workflow_name = NULL,
 #' See [usethis::edit()] for details.
 #'
 #' @family setup
+#'
+#' @inherit usethis::edit return
 #'
 #' @export
 edit_workflow <- function() {
