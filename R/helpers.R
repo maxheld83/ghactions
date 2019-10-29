@@ -1,4 +1,4 @@
-#' Test whether runtime is GitHub actions
+#' Test whether the runtime is GitHub actions
 #'
 #' @export
 #'

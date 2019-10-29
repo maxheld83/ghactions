@@ -2,11 +2,11 @@
 % Please edit documentation in R/helpers.R
 \name{is_github_actions}
 \alias{is_github_actions}
-\title{Test whether runtime is GitHub actions}
+\title{Test whether the runtime is GitHub actions}
 \usage{
 is_github_actions()
 }
 \description{
-Test whether runtime is GitHub actions
+Test whether the runtime is GitHub actions
 }
 \concept{helpers}
