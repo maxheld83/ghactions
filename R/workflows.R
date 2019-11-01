@@ -25,7 +25,7 @@ website <- function(name = "Render and Deploy RMarkdown Website",
     name = name,
     jobs = job(
       id = "build",
-      runs_on = "ubuntu-18.04",
+      `runs-on` = "ubuntu-18.04",
       container = "rocker/verse:latest",
       steps = c(
         list(
