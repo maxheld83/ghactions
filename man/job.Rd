@@ -4,7 +4,7 @@
 \alias{job}
 \title{Create nested list for \emph{one} \href{https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobs}{job}}
 \usage{
-job(id, name = NULL, needs = NULL, runs_on = "ubuntu-18.04",
+job(id, name = NULL, needs = NULL, `runs-on` = "ubuntu-18.04",
   steps = NULL, timeout_minutes = NULL, strategy = NULL,
   container = NULL, services = NULL)
 }
@@ -16,11 +16,6 @@ Defaults to \code{NULL}.}
 \item{needs}{\code{[character()]}
 giving the jobs that must complete successfully before this job is run.
 Defaults to \code{NULL} for no dependencies.}
-
-\item{runs_on}{\code{[character(1)]}
-giving the type of virtual host machine to run the job on.
-Defaults to \code{"ubuntu-18.04"}.
-Must be one of \link{ghactions_vms}.}
 
 \item{steps}{\code{[list()]}
 giving an \emph{unnamed} list of steps, with each element as returned by \code{\link[=step]{step()}}.
@@ -43,6 +38,11 @@ Defaults to \code{NULL}.}
 giving additional containers to host services for a job in a workflow in a \emph{named} list.
 Use \code{\link[=container]{container()}} to construct the list elements.
 Defaults to \code{NULL}.}
+
+\item{`runs-on`}{\code{[character(1)]}
+giving the type of virtual host machine to run the job on.
+Defaults to \code{"ubuntu-18.04"}.
+Must be one of \link{ghactions_vms}.}
 }
 \description{
 Create nested list for \emph{one} \href{https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobs}{job}

@@ -1,5 +1,5 @@
 my_job:
-  runs_on: ubuntu-18.04
+  runs-on: ubuntu-18.04
   container:
     image: node:10.16-jessie
     env:

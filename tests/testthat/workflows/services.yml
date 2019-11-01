@@ -1,5 +1,5 @@
 my_job:
-  runs_on: ubuntu-18.04
+  runs-on: ubuntu-18.04
   services:
     nginx:
       image: nginx

@@ -164,7 +164,7 @@ ghactions_events <- c(
 #' giving the jobs that must complete successfully before this job is run.
 #' Defaults to `NULL` for no dependencies.
 #'
-#' @param runs_on `[character(1)]`
+#' @param `runs-on` `[character(1)]`
 #' giving the type of virtual host machine to run the job on.
 #' Defaults to `"ubuntu-18.04"`.
 #' Must be one of [ghactions_vms].
@@ -197,7 +197,7 @@ ghactions_events <- c(
 job <- function(id,
                 name = NULL,
                 needs = NULL,
-                runs_on = "ubuntu-18.04",
+                `runs-on` = "ubuntu-18.04",
                 steps = NULL,
                 timeout_minutes = NULL,
                 strategy = NULL,
@@ -212,7 +212,7 @@ job <- function(id,
     null.ok = TRUE
   )
   checkmate::assert_choice(
-    x = runs_on,
+    x = `runs-on`,
     choices = ghactions_vms,
     null.ok = FALSE
   )

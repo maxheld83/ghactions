@@ -3,4 +3,4 @@ some_job:
   needs:
     - zap
     - zong
-  runs_on: ubuntu-18.04
+  runs-on: ubuntu-18.04
