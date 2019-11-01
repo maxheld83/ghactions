@@ -94,6 +94,7 @@ use_ghactions_badge <- function(workflow_name = NULL,
   if (is.null(workflow_name)) {
     workflow_name <- workflows[[1]]$name
   }
+  workflow_name <- utils::URLencode(workflow_name)
   reposlug <- glue::glue(
     '{gh::gh_tree_remote()$username}/{gh::gh_tree_remote()$repo}'
   )
