@@ -48,7 +48,7 @@ use_ghactions <- function(workflow = website()) {
   usethis::use_directory(path = ".github/workflows", ignore = TRUE)
 
   new <- usethis::write_over(
-    path = ".github/workflows/main",
+    path = ".github/workflows/main.yml",
     lines = r2yaml(workflow),
     quiet = TRUE
   )
