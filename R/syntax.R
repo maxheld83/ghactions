@@ -164,7 +164,7 @@ ghactions_events <- c(
 #' giving the jobs that must complete successfully before this job is run.
 #' Defaults to `NULL` for no dependencies.
 #'
-#' @param `runs-on` `[character(1)]`
+#' @param runs-on `[character(1)]`
 #' giving the type of virtual host machine to run the job on.
 #' Defaults to `"ubuntu-18.04"`.
 #' Must be one of [ghactions_vms].
