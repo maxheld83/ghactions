@@ -114,7 +114,7 @@ ghpages <- function(src = "$DEPLOY_PATH",
     `if` = `if`,
     uses = "maxheld83/ghpages@v0.2.0",
     env = list(
-      BUILD_DIR = src,
+      BUILD_DIR = "_site/",
       GH_PAT = "${{ secrets.GH_PAT }}"
     ),
     ...

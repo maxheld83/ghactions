@@ -34,7 +34,7 @@ website <- function(name = "Render and Deploy RMarkdown Website",
           rscript(
             expr = c(
             "deploy_path <- rmarkdown::render_site(encoding = 'UTF-8')",
-            "Sys.setenv(DEPLOY_PATH = deploy_path)"
+            "Sys.setenv(DEPLOY_PATH = '_site/')"
             )
           )
         ),
