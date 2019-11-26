@@ -5,7 +5,7 @@
 \alias{on_push}
 \alias{on_pull_request}
 \alias{on_schedule}
-\title{Create nested list for an \code{on:} field}
+\title{Create nested list for an \verb{on:} field}
 \usage{
 on(event, ...)
 
@@ -16,23 +16,23 @@ on_pull_request(tags = NULL, branches = NULL, paths = NULL)
 on_schedule(cron = NULL)
 }
 \arguments{
-\item{event}{\code{[character(1)]}
+\item{event}{\verb{[character(1)]}
 giving the event on which to filter.
 Must be \emph{one} of \code{c("push", "pull_request", "schedule")}.}
 
-\item{...}{\code{[character()]}
+\item{...}{\verb{[character()]}
 giving the filters on which to run.
 Must correspond to the filters allowed by \code{event}.}
 
-\item{tags, branches, paths}{\code{[character()]}
+\item{tags, branches, paths}{\verb{[character()]}
 giving the \href{https://help.github.com/en/articles/workflow-syntax-for-github-actions#onpushpull_requesttagsbranches}{tags, branches} or \href{https://help.github.com/en/articles/workflow-syntax-for-github-actions#onpushpull_requestpaths}{modified paths} on which to run the workflow.
 Defaults to \code{NULL} for no additional filters.}
 
-\item{cron}{\code{[character(1)]}
+\item{cron}{\verb{[character(1)]}
 giving UTC times using \href{https://pubs.opengroup.org/onlinepubs/9699919799/utilities/crontab.html#tag_20_25_07}{POSIX cron syntax}.}
 }
 \description{
-Create nested list for an \code{on:} field
+Create nested list for an \verb{on:} field
 }
 \details{
 See the \href{https://help.github.com/en/articles/workflow-syntax-for-github-actions}{GitHub Actions workflow syntax} for details.
@@ -53,10 +53,14 @@ on(
 )
 }
 \seealso{
-Other syntax: \code{\link{container}},
-  \code{\link{gh_matrix}}, \code{\link{ghactions_events}},
-  \code{\link{ghactions_vms}}, \code{\link{job}},
-  \code{\link{step}}, \code{\link{strategy}},
-  \code{\link{workflow}}
+Other syntax: 
+\code{\link{container}()},
+\code{\link{gh_matrix}()},
+\code{\link{ghactions_events}},
+\code{\link{ghactions_vms}},
+\code{\link{job}()},
+\code{\link{step}()},
+\code{\link{strategy}()},
+\code{\link{workflow}()}
 }
 \concept{syntax}

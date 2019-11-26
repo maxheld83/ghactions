@@ -7,55 +7,55 @@
 install_deps(name = "Install Package Dependencies", ...)
 }
 \arguments{
-\item{name}{\code{[character(1)]}
+\item{name}{\verb{[character(1)]}
 giving additional options for the step.
 Multiline strings are not supported.
 Defaults to \code{NULL}.}
 
-\item{...}{Arguments passed on to \code{step}
-\describe{
-  \item{id}{\code{[character(1)]}
+\item{...}{
+  Arguments passed on to \code{\link[=step]{step}}
+  \describe{
+    \item{\code{id}}{\verb{[character(1)]}
 giving additional options for the step.
 Multiline strings are not supported.
 Defaults to \code{NULL}.}
-  \item{if}{\code{[character(1)]}
+    \item{\code{if}}{\verb{[character(1)]}
 giving additional options for the step.
 Multiline strings are not supported.
 Defaults to \code{NULL}.}
-  \item{name}{\code{[character(1)]}
+    \item{\code{shell}}{\verb{[character(1)]}
 giving additional options for the step.
 Multiline strings are not supported.
 Defaults to \code{NULL}.}
-  \item{shell}{\code{[character(1)]}
-giving additional options for the step.
-Multiline strings are not supported.
-Defaults to \code{NULL}.}
-  \item{with}{\code{[list()]}
+    \item{\code{with}}{\verb{[list()]}
 giving a named list of additional parameters.
 Defaults to \code{NULL}.}
-  \item{env}{\code{[list()]}
+    \item{\code{env}}{\verb{[list()]}
 giving a named list of additional parameters.
 Defaults to \code{NULL}.}
-  \item{working-directory}{\code{[character(1)]}
+    \item{\code{working-directory}}{\verb{[character(1)]}
 giving the default working directory.
 Defaults to \code{NULL}.}
-  \item{continue-on-error}{\code{[logical(1)]}
+    \item{\code{continue-on-error}}{\verb{[logical(1)]}
 giving whether to allow a job to pass when this step fails.
 Defaults to \code{NULL}.}
-  \item{timeout-minutes}{\code{[integer(1)]}
+    \item{\code{timeout-minutes}}{\verb{[integer(1)]}
 giving the maximum number of minutes to run the step before killing the process.
 Defaults to \code{NULL}.}
-}}
+  }}
 }
 \description{
 Installs R package dependencies from a \code{DESCRIPTION} at the repository root.
 }
 \seealso{
-Other steps: \code{\link{checkout}},
-  \code{\link{deploy_static}}, \code{\link{pkg_dev}},
-  \code{\link{rscript}}
+Other steps: 
+\code{\link{checkout}()},
+\code{\link{deploy_static}},
+\code{\link{pkg_dev}},
+\code{\link{rscript}()}
 
-Other installation: \code{\link{checkout}}
+Other installation: 
+\code{\link{checkout}()}
 }
 \concept{installation}
 \concept{steps}

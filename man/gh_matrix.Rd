@@ -7,10 +7,10 @@
 gh_matrix(..., exclude = NULL, include = NULL)
 }
 \arguments{
-\item{...}{\code{[character()]}
+\item{...}{\verb{[character()]}
 giving values for variable for the matrix build.}
 
-\item{exclude, include}{\code{[list(list(character(1)))]}
+\item{exclude, include}{\verb{[list(list(character(1)))]}
 giving unnamed lists of combinations of variables to ex- or include.
 Defaults to \code{NULL}.}
 }
@@ -18,10 +18,14 @@ Defaults to \code{NULL}.}
 Create nested list for the \href{https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idstrategy}{matrix} field in \code{\link[=strategy]{strategy()}}
 }
 \seealso{
-Other syntax: \code{\link{container}},
-  \code{\link{ghactions_events}},
-  \code{\link{ghactions_vms}}, \code{\link{job}},
-  \code{\link{on}}, \code{\link{step}},
-  \code{\link{strategy}}, \code{\link{workflow}}
+Other syntax: 
+\code{\link{container}()},
+\code{\link{ghactions_events}},
+\code{\link{ghactions_vms}},
+\code{\link{job}()},
+\code{\link{on}()},
+\code{\link{step}()},
+\code{\link{strategy}()},
+\code{\link{workflow}()}
 }
 \concept{syntax}

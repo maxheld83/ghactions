@@ -16,10 +16,15 @@ ghactions_vms
 
 }
 \seealso{
-Other syntax: \code{\link{container}},
-  \code{\link{gh_matrix}}, \code{\link{ghactions_events}},
-  \code{\link{job}}, \code{\link{on}}, \code{\link{step}},
-  \code{\link{strategy}}, \code{\link{workflow}}
+Other syntax: 
+\code{\link{container}()},
+\code{\link{gh_matrix}()},
+\code{\link{ghactions_events}},
+\code{\link{job}()},
+\code{\link{on}()},
+\code{\link{step}()},
+\code{\link{strategy}()},
+\code{\link{workflow}()}
 }
 \concept{syntax}
 \keyword{datasets}

@@ -7,26 +7,30 @@
 strategy(matrix = NULL, `fail-fast` = NULL, `max-parallel` = NULL)
 }
 \arguments{
-\item{matrix}{\code{[list(list(c()))]}
+\item{matrix}{\verb{[list(list(c()))]}
 giving the values for each variable for the matrix build.
 See \code{\link[=gh_matrix]{gh_matrix()}} for additional options.
 Defaults to \code{NULL}.}
 
-\item{fail-fast}{\code{[logical()]}
+\item{fail-fast}{\verb{[logical()]}
 giving whether GitHub should cancel all in-progress jobs if any matrix job fails.
 Defaults to \code{NULL}.}
 
-\item{max-parallel}{\code{[integer(1)]}
+\item{max-parallel}{\verb{[integer(1)]}
 giving the maximum number of jobs to run simultaneously when using a matrix job strategy.}
 }
 \description{
 Create nested list for the \href{https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idstrategy}{strategy} field in \code{\link[=job]{job()}}
 }
 \seealso{
-Other syntax: \code{\link{container}},
-  \code{\link{gh_matrix}}, \code{\link{ghactions_events}},
-  \code{\link{ghactions_vms}}, \code{\link{job}},
-  \code{\link{on}}, \code{\link{step}},
-  \code{\link{workflow}}
+Other syntax: 
+\code{\link{container}()},
+\code{\link{gh_matrix}()},
+\code{\link{ghactions_events}},
+\code{\link{ghactions_vms}},
+\code{\link{job}()},
+\code{\link{on}()},
+\code{\link{step}()},
+\code{\link{workflow}()}
 }
 \concept{syntax}

@@ -4,14 +4,13 @@
 \alias{use_ghactions_badge}
 \title{README badges}
 \usage{
-use_ghactions_badge(workflow_name = NULL,
-  badge_name = "Actions Status")
+use_ghactions_badge(workflow_name = NULL, badge_name = "Actions Status")
 }
 \arguments{
-\item{workflow_name}{\code{[character(1)]}
-Giving the name of the workflow as specified in the \href{https://help.github.com/en/articles/workflow-syntax-for-github-actions#name}{name:} field of your \code{*.yml}.
-If no \code{name: } is given, this is the file path of the \code{*.yml} from the repository root.
-Defaults to \code{NULL}, in which case the first workflow in the first \code{*.yml} at \code{.github/workflows/} is used.}
+\item{workflow_name}{\verb{[character(1)]}
+Giving the name of the workflow as specified in the \href{https://help.github.com/en/articles/workflow-syntax-for-github-actions#name}{\verb{name:}} field of your \verb{*.yml}.
+If no \verb{name: } is given, this is the file path of the \verb{*.yml} from the repository root.
+Defaults to \code{NULL}, in which case the first workflow in the first \verb{*.yml} at \verb{.github/workflows/} is used.}
 
 \item{badge_name}{Badge name. Used in error message and alt text}
 }
@@ -24,7 +23,8 @@ ensure your badge block starts with a line containing only
 \code{<!-- badges: end -->}.
 }
 \seealso{
-Other setup: \code{\link{edit_workflow}},
-  \code{\link{use_ghactions}}
+Other setup: 
+\code{\link{edit_workflow}()},
+\code{\link{use_ghactions}()}
 }
 \concept{setup}

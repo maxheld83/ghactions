@@ -14,7 +14,8 @@ Open \code{.github/workflows/main} configuration file for GitHub actions.
 See \code{\link[usethis:edit]{usethis::edit()}} for details.
 }
 \seealso{
-Other setup: \code{\link{use_ghactions_badge}},
-  \code{\link{use_ghactions}}
+Other setup: 
+\code{\link{use_ghactions_badge}()},
+\code{\link{use_ghactions}()}
 }
 \concept{setup}

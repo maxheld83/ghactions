@@ -7,7 +7,7 @@
 use_ghactions(workflow = website())
 }
 \arguments{
-\item{workflow}{\code{[list(list())]}
+\item{workflow}{\verb{[list(list())]}
 A named list as created by one of the \code{\link[=workflow]{workflow()}} functions.
 Defaults to \code{\link[=website]{website()}}.}
 }
@@ -19,7 +19,7 @@ Sets up workflow automation, including continuous integration and deployment (CI
 This function
 \itemize{
 \item transforms a list into the GitHub actions syntax,
-\item writes it out to \code{.github/workflows/} in your repository.
+\item writes it out to \verb{.github/workflows/} in your repository.
 }
 }
 \examples{
@@ -28,7 +28,8 @@ use_ghactions(workflow = website())
 }
 }
 \seealso{
-Other setup: \code{\link{edit_workflow}},
-  \code{\link{use_ghactions_badge}}
+Other setup: 
+\code{\link{edit_workflow}()},
+\code{\link{use_ghactions_badge}()}
 }
 \concept{setup}

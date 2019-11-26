@@ -4,22 +4,21 @@
 \alias{container}
 \title{Create nested list for the \href{https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idcontainer}{container} field in \code{\link[=job]{job()}}}
 \usage{
-container(image, env = NULL, ports = NULL, volumes = NULL,
-  options = NULL)
+container(image, env = NULL, ports = NULL, volumes = NULL, options = NULL)
 }
 \arguments{
-\item{image}{\code{[character(1)]}
+\item{image}{\verb{[character(1)]}
 giving the published docker image to use as the container to run the action.}
 
-\item{env}{\code{[list()]}
+\item{env}{\verb{[list()]}
 giving environment variables for the container as a \emph{named} list.
 Defaults to \code{NULL}.}
 
-\item{ports, volumes}{\code{[list()]}
+\item{ports, volumes}{\verb{[list()]}
 giving ports to expose, and volumes for the container to use as an \emph{unnamed} list.
 Defaults to \code{NULL}.}
 
-\item{options}{\code{[character()]}
+\item{options}{\verb{[character()]}
 giving additional options.
 Defaults to \code{NULL}.}
 }
@@ -27,10 +26,14 @@ Defaults to \code{NULL}.}
 Create nested list for the \href{https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idcontainer}{container} field in \code{\link[=job]{job()}}
 }
 \seealso{
-Other syntax: \code{\link{gh_matrix}},
-  \code{\link{ghactions_events}},
-  \code{\link{ghactions_vms}}, \code{\link{job}},
-  \code{\link{on}}, \code{\link{step}},
-  \code{\link{strategy}}, \code{\link{workflow}}
+Other syntax: 
+\code{\link{gh_matrix}()},
+\code{\link{ghactions_events}},
+\code{\link{ghactions_vms}},
+\code{\link{job}()},
+\code{\link{on}()},
+\code{\link{step}()},
+\code{\link{strategy}()},
+\code{\link{workflow}()}
 }
 \concept{syntax}

@@ -17,19 +17,19 @@ read_workflows(path = ".github/workflows")
 read_workflow(file, ...)
 }
 \arguments{
-\item{x}{\code{[list()]}
+\item{x}{\verb{[list()]}
 as created by the workflow functions.}
 
 \item{file}{either a character string naming a file or a \link{connection}
     open for writing}
 
-\item{...}{arguments to \code{\link{as.yaml}}}
+\item{...}{arguments to \code{\link[yaml]{as.yaml}}}
 
-\item{path}{\code{[character()]} giving the directory from the repository root where to find GitHub Actions workflows.
+\item{path}{\verb{[character()]} giving the directory from the repository root where to find GitHub Actions workflows.
 Defaults to \code{".github/workflows"}.}
 }
 \value{
-\code{[list()]} of lists from yaml.
+\verb{[list()]} of lists from yaml.
 }
 \description{
 Reading and writing GitHub Actions workflow files
@@ -37,7 +37,7 @@ Reading and writing GitHub Actions workflow files
 \details{
 It is not necessary to escape characters with special meaning in yaml; the underlying \code{\link[yaml:write_yaml]{yaml::write_yaml()}} does this automatically.
 
-If a workflow is \emph{not} \code{name:}d, the file name will be used as a \code{name: }, as per the \href{https://help.github.com/en/articles/workflow-syntax-for-github-actions#name}{GitHub Actions documentation}.
+If a workflow is \emph{not} \verb{name:}d, the file name will be used as a \verb{name: }, as per the \href{https://help.github.com/en/articles/workflow-syntax-for-github-actions#name}{GitHub Actions documentation}.
 }
 \section{Functions}{
 \itemize{

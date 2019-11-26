@@ -4,35 +4,44 @@
 \alias{step}
 \title{Create nested list for \emph{one} \href{https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobs}{job}}
 \usage{
-step(name = NULL, id = NULL, `if` = NULL, uses = NULL,
-  run = NULL, shell = NULL, with = NULL, env = NULL,
-  `working-directory` = NULL, `continue-on-error` = NULL,
-  `timeout-minutes` = NULL)
+step(
+  name = NULL,
+  id = NULL,
+  `if` = NULL,
+  uses = NULL,
+  run = NULL,
+  shell = NULL,
+  with = NULL,
+  env = NULL,
+  `working-directory` = NULL,
+  `continue-on-error` = NULL,
+  `timeout-minutes` = NULL
+)
 }
 \arguments{
-\item{id, if, name, uses, shell}{\code{[character(1)]}
+\item{id, if, name, uses, shell}{\verb{[character(1)]}
 giving additional options for the step.
 Multiline strings are not supported.
 Defaults to \code{NULL}.}
 
-\item{run}{\code{[character()]}
+\item{run}{\verb{[character()]}
 giving commands to run.
 Will be turned into a multiline string.
 Defaults to \code{NULL}.}
 
-\item{with, env}{\code{[list()]}
+\item{with, env}{\verb{[list()]}
 giving a named list of additional parameters.
 Defaults to \code{NULL}.}
 
-\item{working-directory}{\code{[character(1)]}
+\item{working-directory}{\verb{[character(1)]}
 giving the default working directory.
 Defaults to \code{NULL}.}
 
-\item{continue-on-error}{\code{[logical(1)]}
+\item{continue-on-error}{\verb{[logical(1)]}
 giving whether to allow a job to pass when this step fails.
 Defaults to \code{NULL}.}
 
-\item{timeout-minutes}{\code{[integer(1)]}
+\item{timeout-minutes}{\verb{[integer(1)]}
 giving the maximum number of minutes to run the step before killing the process.
 Defaults to \code{NULL}.}
 }
@@ -40,10 +49,14 @@ Defaults to \code{NULL}.}
 Create nested list for \emph{one} \href{https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobs}{job}
 }
 \seealso{
-Other syntax: \code{\link{container}},
-  \code{\link{gh_matrix}}, \code{\link{ghactions_events}},
-  \code{\link{ghactions_vms}}, \code{\link{job}},
-  \code{\link{on}}, \code{\link{strategy}},
-  \code{\link{workflow}}
+Other syntax: 
+\code{\link{container}()},
+\code{\link{gh_matrix}()},
+\code{\link{ghactions_events}},
+\code{\link{ghactions_vms}},
+\code{\link{job}()},
+\code{\link{on}()},
+\code{\link{strategy}()},
+\code{\link{workflow}()}
 }
 \concept{syntax}

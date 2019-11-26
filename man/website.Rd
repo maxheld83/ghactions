@@ -4,18 +4,21 @@
 \alias{website}
 \title{Render and deploy an \href{https://rmarkdown.rstudio.com}{rmarkdown} project}
 \usage{
-website(name = "Render and Deploy RMarkdown Website",
-  deploy = list(ghpages()), on = c("push", "pull_request"))
+website(
+  name = "Render and Deploy RMarkdown Website",
+  deploy = list(ghpages()),
+  on = c("push", "pull_request")
+)
 }
 \arguments{
-\item{name}{\code{[character(1)]}
+\item{name}{\verb{[character(1)]}
 giving the \href{https://help.github.com/en/articles/workflow-syntax-for-github-actions#name}{name} of the workflow.
 Defaults to \code{NULL}, for no name, in which case GitHub will use the file name.}
 
-\item{deploy}{\code{[list(1)]}
+\item{deploy}{\verb{[list(1)]}
 giving a list of deploy functions.}
 
-\item{on}{\code{[character()]}
+\item{on}{\verb{[character()]}
 giving the \href{https://help.github.com/en/articles/events-that-trigger-workflows}{GitHub Event} on which to trigger the workflow.
 Must be a subset of \link{ghactions_events}.
 Defaults to \code{"push"}, in which case the workflow is triggered on every push event.

@@ -7,17 +7,17 @@
 workflow(name = NULL, on = "push", jobs = NULL)
 }
 \arguments{
-\item{name}{\code{[character(1)]}
+\item{name}{\verb{[character(1)]}
 giving the \href{https://help.github.com/en/articles/workflow-syntax-for-github-actions#name}{name} of the workflow.
 Defaults to \code{NULL}, for no name, in which case GitHub will use the file name.}
 
-\item{on}{\code{[character()]}
+\item{on}{\verb{[character()]}
 giving the \href{https://help.github.com/en/articles/events-that-trigger-workflows}{GitHub Event} on which to trigger the workflow.
 Must be a subset of \link{ghactions_events}.
 Defaults to \code{"push"}, in which case the workflow is triggered on every push event.
 Can also be a named list as returned by \code{\link[=on]{on()}} for additional filters.}
 
-\item{jobs}{\code{[list()]}
+\item{jobs}{\verb{[list()]}
 giving a \emph{named} list of jobs, with each list element as returned by \code{\link[=job]{job()}}.}
 }
 \description{
@@ -32,10 +32,14 @@ workflow(
 
 }
 \seealso{
-Other syntax: \code{\link{container}},
-  \code{\link{gh_matrix}}, \code{\link{ghactions_events}},
-  \code{\link{ghactions_vms}}, \code{\link{job}},
-  \code{\link{on}}, \code{\link{step}},
-  \code{\link{strategy}}
+Other syntax: 
+\code{\link{container}()},
+\code{\link{gh_matrix}()},
+\code{\link{ghactions_events}},
+\code{\link{ghactions_vms}},
+\code{\link{job}()},
+\code{\link{on}()},
+\code{\link{step}()},
+\code{\link{strategy}()}
 }
 \concept{syntax}

@@ -18,52 +18,55 @@ rscript(options = NULL, expr = NULL, file = NULL, args = NULL, ...)
 
 \item{args}{arguments to be passed to the script in \code{file}.}
 
-\item{...}{Arguments passed on to \code{step}
-\describe{
-  \item{id}{\code{[character(1)]}
+\item{...}{
+  Arguments passed on to \code{\link[=step]{step}}
+  \describe{
+    \item{\code{id}}{\verb{[character(1)]}
 giving additional options for the step.
 Multiline strings are not supported.
 Defaults to \code{NULL}.}
-  \item{if}{\code{[character(1)]}
+    \item{\code{if}}{\verb{[character(1)]}
 giving additional options for the step.
 Multiline strings are not supported.
 Defaults to \code{NULL}.}
-  \item{name}{\code{[character(1)]}
+    \item{\code{name}}{\verb{[character(1)]}
 giving additional options for the step.
 Multiline strings are not supported.
 Defaults to \code{NULL}.}
-  \item{uses}{\code{[character(1)]}
+    \item{\code{uses}}{\verb{[character(1)]}
 giving additional options for the step.
 Multiline strings are not supported.
 Defaults to \code{NULL}.}
-  \item{shell}{\code{[character(1)]}
+    \item{\code{shell}}{\verb{[character(1)]}
 giving additional options for the step.
 Multiline strings are not supported.
 Defaults to \code{NULL}.}
-  \item{with}{\code{[list()]}
+    \item{\code{with}}{\verb{[list()]}
 giving a named list of additional parameters.
 Defaults to \code{NULL}.}
-  \item{env}{\code{[list()]}
+    \item{\code{env}}{\verb{[list()]}
 giving a named list of additional parameters.
 Defaults to \code{NULL}.}
-  \item{working-directory}{\code{[character(1)]}
+    \item{\code{working-directory}}{\verb{[character(1)]}
 giving the default working directory.
 Defaults to \code{NULL}.}
-  \item{continue-on-error}{\code{[logical(1)]}
+    \item{\code{continue-on-error}}{\verb{[logical(1)]}
 giving whether to allow a job to pass when this step fails.
 Defaults to \code{NULL}.}
-  \item{timeout-minutes}{\code{[integer(1)]}
+    \item{\code{timeout-minutes}}{\verb{[integer(1)]}
 giving the maximum number of minutes to run the step before killing the process.
 Defaults to \code{NULL}.}
-}}
+  }}
 }
 \description{
 Create a step to run \link[utils:Rscript]{utils::Rscript}
 }
 \seealso{
-Other steps: \code{\link{checkout}},
-  \code{\link{deploy_static}}, \code{\link{install_deps}},
-  \code{\link{pkg_dev}}
+Other steps: 
+\code{\link{checkout}()},
+\code{\link{deploy_static}},
+\code{\link{install_deps}()},
+\code{\link{pkg_dev}}
 }
 \concept{script}
 \concept{steps}

@@ -8,87 +8,110 @@
 \alias{firebase}
 \title{Create an (action) step to deploy static assets}
 \usage{
-ghpages(src = "$DEPLOY_PATH", name = "Deploy to GitHub Pages",
-  `if` = "github.ref == 'refs/heads/master'", ...)
+ghpages(
+  src = "$DEPLOY_PATH",
+  name = "Deploy to GitHub Pages",
+  `if` = "github.ref == 'refs/heads/master'",
+  ...
+)
 
-rsync(src = "$DEPLOY_PATH", name = "Deploy via RSync",
-  `if` = "github.ref == 'refs/heads/master'", HOST_NAME, HOST_IP,
-  HOST_FINGERPRINT, user, dest, env = NULL, with = NULL, ...)
+rsync(
+  src = "$DEPLOY_PATH",
+  name = "Deploy via RSync",
+  `if` = "github.ref == 'refs/heads/master'",
+  HOST_NAME,
+  HOST_IP,
+  HOST_FINGERPRINT,
+  user,
+  dest,
+  env = NULL,
+  with = NULL,
+  ...
+)
 
-netlify(src = "$DEPLOY_PATH", name = "Deploy to Netlify",
-  `if` = "github.ref == 'refs/heads/master'", prod = TRUE,
-  with = NULL, env = NULL, site, ...)
+netlify(
+  src = "$DEPLOY_PATH",
+  name = "Deploy to Netlify",
+  `if` = "github.ref == 'refs/heads/master'",
+  prod = TRUE,
+  with = NULL,
+  env = NULL,
+  site,
+  ...
+)
 
-firebase(name = "Deploy to Firebase",
-  `if` = "github.ref == 'refs/heads/master'", PROJECT_ID = NULL,
-  with = NULL, env = NULL, ...)
+firebase(
+  name = "Deploy to Firebase",
+  `if` = "github.ref == 'refs/heads/master'",
+  PROJECT_ID = NULL,
+  with = NULL,
+  env = NULL,
+  ...
+)
 }
 \arguments{
-\item{src}{\code{[character(1)]}
-giving the path relative from your \code{/github/workspace} to the directory to be published \strong{without trailing slash}.
+\item{src}{\verb{[character(1)]}
+giving the path relative from your \verb{/github/workspace} to the directory to be published \strong{without trailing slash}.
 Defaults to \code{"$DEPLOY_PATH"}, an environment variable containing the path set by \code{\link[=website]{website()}}.}
 
-\item{name}{\code{[character(1)]}
+\item{name}{\verb{[character(1)]}
 giving addtional options for the step.
 Multiline strings are not supported.
 Defaults to a name for the deploy step.}
 
-\item{if}{\code{[character(1)]}
+\item{if}{\verb{[character(1)]}
 giving additional options for the step.
 Multiline strings are not supported.
 Defaults to \code{"github.ref == 'refs/heads/master'"} to only deploy from branch \code{master}.}
 
-\item{...}{Arguments passed on to \code{step}
-\describe{
-  \item{id}{\code{[character(1)]}
+\item{...}{
+  Arguments passed on to \code{\link[=step]{step}}
+  \describe{
+    \item{\code{id}}{\verb{[character(1)]}
 giving additional options for the step.
 Multiline strings are not supported.
 Defaults to \code{NULL}.}
-  \item{if}{\code{[character(1)]}
-giving additional options for the step.
-Multiline strings are not supported.
-Defaults to \code{NULL}.}
-  \item{working-directory}{\code{[character(1)]}
+    \item{\code{working-directory}}{\verb{[character(1)]}
 giving the default working directory.
 Defaults to \code{NULL}.}
-  \item{continue-on-error}{\code{[logical(1)]}
+    \item{\code{continue-on-error}}{\verb{[logical(1)]}
 giving whether to allow a job to pass when this step fails.
 Defaults to \code{NULL}.}
-  \item{timeout-minutes}{\code{[integer(1)]}
+    \item{\code{timeout-minutes}}{\verb{[integer(1)]}
 giving the maximum number of minutes to run the step before killing the process.
 Defaults to \code{NULL}.}
-}}
+  }}
 
-\item{HOST_NAME}{\code{[character(1)]}
+\item{HOST_NAME}{\verb{[character(1)]}
 giving the name of the server you wish to deploy to, such as \code{foo.example.com}.}
 
-\item{HOST_IP}{\code{[character(1)]}
-giving the IP of the server you wish to deploy to, such as \code{111.111.11.111}.}
+\item{HOST_IP}{\verb{[character(1)]}
+giving the IP of the server you wish to deploy to, such as \verb{111.111.11.111}.}
 
-\item{HOST_FINGERPRINT}{\code{[character(1)]}
+\item{HOST_FINGERPRINT}{\verb{[character(1)]}
 giving the fingerprint of the server you wish to deploy to, can have different formats.}
 
-\item{user}{\code{[character(1)]}
+\item{user}{\verb{[character(1)]}
 giving the user at the target \code{HOST_NAME}.}
 
-\item{dest}{\code{[character(1)]}
+\item{dest}{\verb{[character(1)]}
 giving the directory from the root of the \code{HOST_NAME} target to write to.}
 
-\item{env}{\code{[list()]}
+\item{env}{\verb{[list()]}
 giving a named list of additional parameters.
 Defaults to \code{NULL}.}
 
-\item{with}{\code{[list()]}
+\item{with}{\verb{[list()]}
 giving a named list of additional parameters.
 Defaults to \code{NULL}.}
 
-\item{prod}{\code{[logical(1)]}
+\item{prod}{\verb{[logical(1)]}
 giving whether the deploy should be to production.}
 
-\item{site}{\code{[character(1)]}
+\item{site}{\verb{[character(1)]}
 giving a site ID to deploy to.}
 
-\item{PROJECT_ID}{\code{[character(1)]}
+\item{PROJECT_ID}{\verb{[character(1)]}
 giving a specific project to use for all commands, not required if you specify a project in your `.firebaserc`` file.}
 }
 \description{
@@ -134,14 +157,16 @@ The secret must be called \code{GH_PAT}.
 
 Configuration details other than \code{PROJECT_ID} are read from the \code{firebase.json} at the root of your repository.
 
-Because firebase gets the deploy directory from a \code{firebase.json} file, it cannot use \code{$DEPLOY_DIR}.
+Because firebase gets the deploy directory from a \code{firebase.json} file, it cannot use \verb{$DEPLOY_DIR}.
 Manually edit your \code{firebase.json} to provide the deploy path.
 }
 
 \seealso{
-Other steps: \code{\link{checkout}},
-  \code{\link{install_deps}}, \code{\link{pkg_dev}},
-  \code{\link{rscript}}
+Other steps: 
+\code{\link{checkout}()},
+\code{\link{install_deps}()},
+\code{\link{pkg_dev}},
+\code{\link{rscript}()}
 }
 \concept{actions}
 \concept{static deployment}
