@@ -34,7 +34,7 @@ website <- function(name = "Render and Deploy RMarkdown Website",
           step(
             name = "Render Site",
             run = c(
-              "Rscript -e \"rmarkdown::render_site(encoding = \"UTF-8\")'",
+              "Rscript -e \"rmarkdown::render_site(encoding = \'UTF-8\')\"",
               "echo \"::set-env name=DEPLOY_PATH::$(Rscript -e \"cat(rmarkdown::site_config()[[\'output_dir\']])\")\""
             )
           )
