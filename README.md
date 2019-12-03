@@ -38,7 +38,7 @@ GitHub actions just requires a special file in a special directory at the root o
 To quickly set up such a file for frequently used project kinds, run:
 
 ```r
-ghactions::use_ghactions(workflow = website())
+ghactions::use_ghactions(workflow = ghactions::website())
 ```
 
 See the documentation for implied defaults and alternatives.
