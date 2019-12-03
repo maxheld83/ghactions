@@ -76,7 +76,7 @@ This package is also heavily modeled on, and indebted to the [usethis](https://u
 ## Related Work
 
 There are plenty of other proven ways to run CI/CD for R.
-Many rely on [R support on TravisCI](https://docs.travis-ci.com/user/languages/r/), maintained by [Jeron Ooms](https://github.com/jeroen) and [Jim Hester](https://www.jimhester.com).
+Many rely on [R support on TravisCI](https://docs.travis-ci.com/user/languages/r/), maintained by [Jeroen Ooms](https://github.com/jeroen) and [Jim Hester](https://www.jimhester.com).
 The [travis](https://ropenscilabs.github.io/travis/) and [tic](https://ropenscilabs.github.io/tic/) packages make it easier to work with them.
 You can use [AppVeyor](http://appveyor.com)'s Windows-based system via the [r-appveyor](https://github.com/krlmlr/r-appveyor) package.
 
