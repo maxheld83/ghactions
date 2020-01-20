@@ -1,8 +1,8 @@
-# GitHub Actions for R <img src="https://github.com/r-lib/ghactions/blob/master/logo.png?raw=true" align="right" height=140/>
+# GitHub Actions for R <img src="https://github.com/maxheld83/ghactions/blob/master/logo.png?raw=true" align="right" height=140/>
 
 <!-- badges: start -->
-[![Actions Status](https://github.com/r-lib/ghactions/workflows/.github/workflows/main.yml/badge.svg)](https://github.com/r-lib/ghactions/actions)
-[![codecov](https://codecov.io/gh/r-lib/ghactions/branch/master/graph/badge.svg)](https://codecov.io/gh/r-lib/ghactions)
+[![Actions Status](https://github.com/maxheld83/ghactions/workflows/.github/workflows/main.yml/badge.svg)](https://github.com/maxheld83/ghactions/actions)
+[![codecov](https://codecov.io/gh/maxheld83/ghactions/branch/master/graph/badge.svg)](https://codecov.io/gh/maxheld83/ghactions)
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![CRAN status](https://www.r-pkg.org/badges/version/ghactions)](https://cran.r-project.org/package=ghactions)
 [![License: MIT](https://img.shields.io/github/license/r-lib/ghactions.svg?style=flat)](https://opensource.org/licenses/MIT)
@@ -16,8 +16,6 @@ This package helps R users get started quickly with GitHub Actions:
 2. It wraps and curates relevant existing **external actions**, such as those to deploy to GitHub Pages or Netlify.
 3. It exposes the GitHub Actions workflow **syntax** and lets you write GitHub Actions `*.yml`s from R. 
   (Which isn't saying that *should* be doing that.)
-
-
 
 
 ## Installation
