@@ -17,17 +17,15 @@ This package helps R users get started quickly with GitHub Actions:
 3. It exposes the GitHub Actions workflow **syntax** and lets you write GitHub Actions `*.yml`s from R. 
   (Which isn't saying that *should* be doing that.)
 
-
 ## Installation
 
 To install, run:
 
 ```r
-remotes::install_github("r-lib/ghactions")
+remotes::install_github("maxheld83/ghactions")
 ```
 
 Because you're likely only to ever use it *once*, **you need not take on ghactions as a dependency in your projects.**
-
 
 ## Quick Start
 
