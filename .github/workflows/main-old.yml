@@ -1,0 +1,37 @@
+name: CICD
+
+"on":
+  - push
+  - pull_request
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    container:
+      image: rstudio/r-base:3.6-bionic
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v1
+      - name: Install System Dependencies
+        run: |
+          sudo apt-get update && apt-get install -y --no-install-recommends \
+          libxml2-dev \
+          libssl-dev \
+          libcurl4-openssl-dev
+      - name: Install Package Dependencies
+        run: |-
+          Rscript -e "install.packages('remotes', repos = 'https://demo.rstudiopm.com/all/__linux__/bionic/latest')"
+          Rscript -e "remotes::install_deps(dependencies = TRUE, repos = 'https://demo.rstudiopm.com/all/__linux__/bionic/latest')"
+      - name: Check Package
+        run: Rscript -e "rcmdcheck::rcmdcheck(error_on = 'error', check_dir = 'check')"
+      - name: Run Code Coverage
+        run: Rscript -e "covr::codecov(quiet = FALSE, commit = '$GITHUB_SHA', branch = '$GITHUB_REF', token = '$${{ secrets.CODECOV_TOKEN }}')"
+      - name: Document Package
+        run: |
+          Rscript -e "pkgdown::build_site(override = list(devel = FALSE, external = FALSE))"
+      - name: Deploy to GitHub Pages
+        if: github.ref == 'refs/heads/master'
+        uses: maxheld83/ghpages@v0.2.0
+        env:
+          BUILD_DIR: docs
+          GH_PAT: ${{ secrets.GH_PAT }}

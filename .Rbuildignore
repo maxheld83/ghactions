@@ -26,3 +26,6 @@ pres_files/
 pres.html
 pres.Rmd
 ^azure-pipelines\.yml$
+^\.ccache$
+^clang-.*
+^tic\.R$
