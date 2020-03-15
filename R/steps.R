@@ -321,6 +321,7 @@ checkout <- function() {
 #' Installs R package dependencies from a `DESCRIPTION` at the repository root.
 #'
 #' @inheritParams step
+#' @param ... Passed to [rscript()]
 #'
 #' @inheritDotParams step -run -uses
 #'
@@ -349,8 +350,6 @@ install_deps <- function(name = "Install Package Dependencies", ...) {
 #' @name pkg_dev
 #'
 #' @inheritParams step
-#'
-#' @inheritDotParams step -run -uses
 #'
 #' @family steps
 #' @family pkg_development

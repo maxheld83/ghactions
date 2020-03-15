@@ -4,7 +4,9 @@
 \name{ghactions_events}
 \alias{ghactions_events}
 \title{Supported events to trigger GitHub actions}
-\format{An object of class \code{character} of length 28.}
+\format{
+An object of class \code{character} of length 28.
+}
 \usage{
 ghactions_events
 }

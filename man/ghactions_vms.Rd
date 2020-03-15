@@ -4,7 +4,9 @@
 \name{ghactions_vms}
 \alias{ghactions_vms}
 \title{Virtual machines \href{https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idruns-on}{available} on GitHub Actions}
-\format{An object of class \code{character} of length 8.}
+\format{
+An object of class \code{character} of length 8.
+}
 \usage{
 ghactions_vms
 }
