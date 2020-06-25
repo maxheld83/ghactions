@@ -2,7 +2,7 @@
 
 <!-- badges: start -->
 [![Actions Status](https://github.com/maxheld83/ghactions/workflows/.github/workflows/main.yml/badge.svg)](https://github.com/maxheld83/ghactions/actions)
-[![R CMD Check via {tic}](https://img.shields.io/github/workflow/status/maxheld83/ghactions/R%20CMD%20Check%20via%20%7Btic%7D?logo=github&label=R%20CMD%20Check%20via%20{tic}&style=flat-square)](https://github.com/maxheld83/ghactions/actions)
+[![tic](https://github.com/maxheld83/ghactions/workflows/tic/badge.svg?branch=master)](https://github.com/maxheld83/ghactions/actions)
 [![codecov](https://codecov.io/gh/maxheld83/ghactions/branch/master/graph/badge.svg)](https://codecov.io/gh/maxheld83/ghactions)
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![CRAN status](https://www.r-pkg.org/badges/version/ghactions)](https://cran.r-project.org/package=ghactions)
