@@ -133,7 +133,7 @@ Create an (action) step to deploy static assets
 \strong{Remember to provide a GitHub personal access token secret named \code{GH_PAT} to the GitHub UI.}
 \enumerate{
 \item Set up a new PAT.
-You can use \code{\link[usethis:browse_github_pat]{usethis::browse_github_pat()}} to get to the right page.
+You can use \code{\link[usethis:browse_github_token]{usethis::browse_github_pat()}} to get to the right page.
 Remember that this PAT is \emph{not} for your local machine, but for GitHub actions.
 \item Copy the PAT to your clipboard.
 \item Go to the settings of your repository, and paste the PAT as a secret.
